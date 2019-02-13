@@ -11,7 +11,7 @@ See the founding [charter][charter]
 ### Meetings
 
 The contributors and maintainers of all OCI projects have monthly meetings, which are usually at 2:00 PM (USA Pacific) on the first Wednesday of every month.
-There is an [iCalendar][rfc5545] format for the meetings [here](meeting.ics).
+There are [iCalendar][rfc5545] format for the meetings [here](https://calendar.google.com/calendar/ical/linuxfoundation.org_i0sado0i37eknar51vsu8md5hg%40group.calendar.google.com/public/basic.ics) and Google Calendar [here](https://calendar.google.com/calendar/embed?src=linuxfoundation.org_i0sado0i37eknar51vsu8md5hg%40group.calendar.google.com&ctz=America%2FLos_Angeles).
 Everyone is welcome to participate via [UberConference web][uberconference] or audio-only: +1 415 968 0849 (no PIN needed).
 An initial agenda will be posted to the [mailing list](#mailing-list) in the week before each meeting, and everyone is welcome to propose additional topics or suggest other agenda alterations there.
 Minutes are posted to the [mailing list](#mailing-list) and minutes from past calls are archived [here][minutes], with minutes from especially old meetings (September 2015 and earlier) archived [here][runtime-wiki].
