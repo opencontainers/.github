@@ -22,7 +22,7 @@ Initiative, you've come to the right place!
 
 ## Containers
 
-A container is generally an encapsulated environment that is created from one or more binaries (images) to provide some form of isolation. Read more about [containers here]({{ site.baseurl }}docs/introduction/container-images/)
+A container is generally an encapsulated environment that is created from one or more binaries (images) to provide some form of isolation. Read more about [containers here]({{ site.baseurl }}docs/introduction/container-images/).
 
 ## What is OCI?
 

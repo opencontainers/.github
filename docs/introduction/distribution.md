@@ -18,11 +18,11 @@ parent: Introduction
 
 [Distribution](https://www.merriam-webster.com/dictionary/distribution):
 
-> _the action of sharing something out among a number of recipients.
+> _the action of sharing something out among a number of recipients._
 
 Distribution, or sharing of container images, is just as important as building
-them in the first place. If you can't easily distribute your container, we lose
-a [lot of the benefits]({{ site.baseurl }}docs/introduction/container-images/#what-problems-do-containers-solve) we outlined in the first place.
+them in the first place. If you can't easily distribute your container, you lose
+a [lot of the benefits]({{ site.baseurl }}docs/introduction/container-images/#what-problems-do-containers-solve) that we outlined in the first place.
 
 Generally, you can think of distribution as having different components. I should be able to easily:
 

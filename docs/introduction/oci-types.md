@@ -15,7 +15,7 @@ parent: Introduction
 
 ## Understanding How Specifications Meet Goals
 
-The core of OCI are the specifications for container images, registries (called "distributions") 
+The core of OCI are the specifications for container images, registries (for the distribution of containers) 
 and runtime. Let's step back and talk about what this actually means. If you are a developer, as 
 we discuss these specifications, think about them in the context of answering these questions:
 

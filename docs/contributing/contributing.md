@@ -66,12 +66,12 @@ Once discussion starts to die down, it's important to try and synthesize the con
  - *Show Me Action*: The most likely result of you wanting a new thing will be a request for a dummy implementation. It doesn't need to be perfect, but you must *show* that your idea has feet, and solves the problem that you stated. 
  - *Feature Request Action* It could be that your idea was succinct and strong, and a new feature is called for development. This likely will result in one or more developers (including you!) coming up with a plan of action. This is less likely an option, because changes to the specifications tend to be more conservative.
 
-Generally, you will want to find support for your action, whether it be advice or actual help from others in the list. We do this step before detailed feedback in the case that your idea doesn't need furter investigation (already solved or being worked on, for example). What should never happen is anything that goes against the [code of conduct](https://github.com/opencontainers/org/blob/master/code-of-conduct.md). You should not be put down, ridiculed for your ideas, or otherwise have someone treat you poorly.
+Generally, you will want to find support for your action, whether it be advice or actual help from others in the list. We do this step before detailed feedback in the case that your idea doesn't need further investigation (already solved or being worked on, for example). What should never happen is anything that goes against the [code of conduct](https://github.com/opencontainers/org/blob/master/code-of-conduct.md). You should not be put down, ridiculed for your ideas, or otherwise have someone treat you poorly.
 
 ### 4. Detailed Feedback
 
 After you've posted your idea to the list, I can almost guarantee you someone else will be interested or
-excited to give you feedback. The list (or a Github issue) itself isn't really the place to hash out the details.
+excited to give you feedback. The list (or a GitHub issue) itself isn't really the place to hash out the details.
 Your final post on the discussion might be to share a link to a more formal write up of your idea. You
 probably already have it written into a document, and it makes sense
 to share this writeup with others for feedback (Google Docs, GitHub markdown, etc.). How long should you 

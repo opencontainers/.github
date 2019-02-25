@@ -7,7 +7,7 @@ permalink: /
 
 # The Open Container Initiative
 
-Welcome to the Open Containers Initiative documentation site! The Open Container 
+Welcome to the Open Container Initiative (OCI) documentation site! The Open Container 
 Initiative cares about open, industry standards for container technology.
 Broadly, technology encompasses two prominent ideas:
 
@@ -20,7 +20,7 @@ This is a collection of introductory material to help you to understand containe
 the specifications that were created to support them, and finally, how
 you can contribute to OCI.
 
- - [About Open Containers]({{ site.baseurl }}about)
+ - [About the Open Container Initiative]({{ site.baseurl }}about)
  - [Introductory Material]({{ site.baseurl }}introduction)
  - [Contributing]({{ site.baseurl }}contributing)
 
