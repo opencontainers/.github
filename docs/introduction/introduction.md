@@ -17,7 +17,7 @@ permalink: /introduction
 
 ---
 
-If you are looking for a gentle introduction to containers and the Open Containers
+If you are looking for a gentle introduction to containers and the Open Container
 Initiative, you've come to the right place!
 
 ## Containers
@@ -26,9 +26,9 @@ A container is generally an encapsulated environment that is created from one or
 
 ## What is OCI?
 
-OCI stands for the "Open Containers Initiative" and encompasses a group of people and a set of 
+OCI stands for the "Open Container Initiative" and encompasses a group of people and a set of 
 specifications for describing container formats and interactions. For more information about
-OCI, see [About Open Containers]({{ site.baseurl }}about/).
+OCI, see [About the Open Container Initiative]({{ site.baseurl }}about/).
 
 ## OCI Specification Types
 

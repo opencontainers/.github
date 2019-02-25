@@ -7,7 +7,7 @@ nav_order: 2
 
 ## About OCI
 
-The Open Containers Initiative was established in June 2015 by 
+The Open Container Initiative was established in June 2015 by 
 [Docker](https://en.wikipedia.org/wiki/Docker_(software)), one of the many
 early leaders of the container industry that provided an intuitive API to interact
 with [linux containers](https://en.wikipedia.org/wiki/Container_(virtualization)).

@@ -1,6 +1,6 @@
 # org
 
-Centralized documents and information for the Open Containers Initiative (OCI) organization and projects.
+Centralized documents and information for the Open Container Initiative (OCI) organization and projects.
 
 ## Charter
 

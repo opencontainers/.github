@@ -17,7 +17,7 @@ permalink: /contributing
 
 ---
 
-# Open Containers Initiative Contributions
+# Open Container Initiative Contributions
 
 Before you are ready to contribute, make sure that you understand:
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Open Containers
+title: The Open Container Initiative
 nav_order: 1
 permalink: /
 ---
