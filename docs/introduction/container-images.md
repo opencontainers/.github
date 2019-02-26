@@ -119,59 +119,8 @@ For those interested, there is a good talk about the history of the API developm
 In early containers, you could break from a container and become root on the host. This is bad, very bad.
 These core components are the same for all systems! They are unfortuntately very complex.
 
-A fun history fact (and maybe you already figured this about because you watched the video links above!). These two things (cgroups and namespaces) were developed by different open source groups. This came from an agreement at a conference in 2011 called the [Kernel Summit](https://lwn.net/Articles/KernelSummit2011/), literally a bunch of people sitting in a room that had both developed technologies they wanted added to the linux kernel, and had to go through component by component and argue their case for their thing. At the end we did get a single cohesive thing, but it had these very two different cgroups and namespaces. 
-
-For the applied amount us, the definitions of "namespaces" and "cgroups" is not satisfactory.
-I don't get it, show me! For a typical Linux OS (the example shown below is Ubuntu 16.04), 
-these ideas map to folders on your computer, and 
-the APIs generally work to create and modify content here, and dictate rules (permissions)
-for interactions.
-
-**Where are the namespaces?**
-
-Here are the namespaces:
-
-```
-$ ls -l /proc/self/ns/
-total 0
-lrwxrwxrwx 1 vanessa vanessa 0 Sep 11 12:42 cgroup -> cgroup:[4026531835]
-lrwxrwxrwx 1 vanessa vanessa 0 Sep 11 12:42 ipc -> ipc:[4026531839]
-lrwxrwxrwx 1 vanessa vanessa 0 Sep 11 12:42 mnt -> mnt:[4026531840]
-lrwxrwxrwx 1 vanessa vanessa 0 Sep 11 12:42 net -> net:[4026532009]
-lrwxrwxrwx 1 vanessa vanessa 0 Sep 11 12:42 pid -> pid:[4026531836]
-lrwxrwxrwx 1 vanessa vanessa 0 Sep 11 12:42 pid_for_children -> pid:[4026531836]
-lrwxrwxrwx 1 vanessa vanessa 0 Sep 11 12:42 user -> user:[4026531837]
-lrwxrwxrwx 1 vanessa vanessa 0 Sep 11 12:42 uts -> uts:[4026531838]
-```
-
-**Where are the cgroups?**
-
-Here! Each cgroup is separately mountable. 
-
-```bash
-ls -l /sys/fs/cgroup
-total 0
-dr-xr-xr-x 6 root root  0 Aug 29 15:00 blkio
-lrwxrwxrwx 1 root root 11 Aug 29 15:00 cpu -> cpu,cpuacct
-lrwxrwxrwx 1 root root 11 Aug 29 15:00 cpuacct -> cpu,cpuacct
-dr-xr-xr-x 6 root root  0 Aug 29 15:00 cpu,cpuacct
-dr-xr-xr-x 3 root root  0 Aug 29 15:00 cpuset
-dr-xr-xr-x 6 root root  0 Aug 29 15:00 devices
-dr-xr-xr-x 3 root root  0 Aug 29 15:00 freezer
-dr-xr-xr-x 3 root root  0 Aug 29 15:00 hugetlb
-dr-xr-xr-x 6 root root  0 Aug 29 15:00 memory
-lrwxrwxrwx 1 root root 16 Aug 29 15:00 net_cls -> net_cls,net_prio
-dr-xr-xr-x 3 root root  0 Aug 29 15:00 net_cls,net_prio
-lrwxrwxrwx 1 root root 16 Aug 29 15:00 net_prio -> net_cls,net_prio
-dr-xr-xr-x 3 root root  0 Aug 29 15:00 perf_event
-dr-xr-xr-x 6 root root  0 Aug 29 15:00 pids
-dr-xr-xr-x 2 root root  0 Aug 29 15:00 rdma
-dr-xr-xr-x 6 root root  0 Aug 29 15:00 systemd
-```
-
-Each of these is a folder, and the simplest one is "freezer." The way we control cgroups is via file system calls.
-So, to make a cgroup called "test" I create a directory called test.
-To move a process as a task into a cgroup, I can echo it there.
+A fun history fact (and maybe you already figured this about because you watched the video links above!). These two things (cgroups and namespaces) were developed by different open source groups. This came from an agreement at a conference in 2011 called the [Kernel Summit](https://lwn.net/Articles/KernelSummit2011/), literally a bunch of people sitting in a room that had both developed technologies they wanted added to the linux kernel, and had to go through component by component and argue their case for their thing. At the end we did get a single cohesive thing, but it had these very two different cgroups and namespaces.  If you are interested in learning about platform specific
+runtime differences, see the [runtime-spec](https://github.com/opencontainers/runtime-spec/blob/master/implementations.md) repository.
 
 ## Containers
 
