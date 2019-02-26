@@ -103,19 +103,19 @@ I found a nice slide to show the differences [here](https://www.slideshare.net/D
 ### Linux Container API
 
 So if containers are so great, why did they only "become a thing" around 2014? 
-It's because the linux containers API is pretty compiicated. Containers in linux are controlled by
-a Kernel API, and I found a good summary and diagram in the talk [here](https://www.youtube.com/watch?v=YsYzMPptB-k#t=18m10s) picture at 18 minutes, 10 seconds. There is quite some (people-based) history behind 
-the underlying API. Watch the same [talk a bit later](https://www.youtube.com/watch?v=YsYzMPptB-k#t=24m45s) for another useful picture. Generally, there are two components under discussion:
+The short answer is that Docker came along and gave us "mere mortals" an ecosystem for building, pushing, pulling and 
+running containers. This was the first API that simplified the complexity of underlying components: cgroups and namespaces.
 
  - *cgroups*: controls resources within the kernel (io, cpu, devices, memory, network). There is something called a "freezer" that you put a bunch of processes into and put them to sleep without worrying about resources between them.
  - *namespaces*: provide a pure isolation layer inside the kernel. Most of the time, resources only belong to a single one, for example:
-  - networking devices go in networking namespaces
-  - ipc namespace for messages between containers 
-  - mount namespace for filesystem tree
-  - pid namespace - init in linux needs to be running as pid 1 it isolates the process tree between containers     
-  - UTS namespace because each container needs a separate hostname, 
-  - User namespace is important for "pretending to be root" without being root.)
+   - networking devices go in networking namespaces
+   - ipc namespace for messages between containers 
+   - mount namespace for filesystem tree
+   - pid namespace - init in linux needs to be running as pid 1 it isolates the process tree between containers     
+   - UTS namespace because each container needs a separate hostname, 
+   - User namespace is important for "pretending to be root" without being root.)
 
+For those interested, there is a good talk about the history of the API development [here](https://www.youtube.com/watch?v=YsYzMPptB-k#t=18m10s).
 In early containers, you could break from a container and become root on the host. This is bad, very bad.
 These core components are the same for all systems! They are unfortuntately very complex.
 
@@ -204,13 +204,10 @@ So these containers also have their own set of cgroups.
 ## What about a container image?
 
 The words "container" and "image" are sometimes used synonymously, but are subtly two
-different things. The image is a binary sitting on your filesystem of actual stuff in
-some frozen state. In docker you start from a bunch of compressed archives put together,
-and some other container formats have specialized compressed filesystems as images.
-A really good metaphor I like to use is that the image is the filesystem / binary that
-you might have sitting somewhere, and the container is the instance of that binary. Just
-like a class has instances of it, an image has instances, and we call them containers.
-
+different things. You can think of a container image as a template, and a container 
+is one or more running instances of that template. In more concrete terms, the image 
+is some binary sitting on your filesystem that is ready to instantiate to create
+an isolated, encapsulated environment.
 
 ## Example Interactions
 
