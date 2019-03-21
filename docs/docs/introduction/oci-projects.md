@@ -152,4 +152,4 @@ Realistically, if you want to change runc, the first step would be to start disc
 
 What are you waiting for? We want to hear from you!
 
-[Contribute]({{ site.baseurl }}docs/contribute/){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[Contribute]({{ site.baseurl }}/docs/contribute/){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }

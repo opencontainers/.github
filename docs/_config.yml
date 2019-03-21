@@ -15,7 +15,7 @@
 # in the templates via {{ site.myvariable }}.
 title: OpenContainers
 description: Open containers man pages
-baseurl: "/org/" # the subpath of your site, e.g. /blog
+baseurl: "/org" # the subpath of your site, e.g. /blog
 # url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
 repo: https://www.github.com/opencontainers/org
@@ -23,6 +23,7 @@ repo: https://www.github.com/opencontainers/org
 permalink: pretty
 exclude: 
  - "*.gem"
+ - _site
  - "Gemfile"
  - "Gemfile.lock"
 

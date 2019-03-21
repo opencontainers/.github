@@ -3,7 +3,7 @@ layout: default
 title: Contributing
 nav_order: 4
 has_children: true
-permalink: /contributing
+permalink: /contributing/
 ---
 
 # Contributing
@@ -25,7 +25,7 @@ Before you are ready to contribute, make sure that you understand:
  2. What are applied usage examples of the specifications?
  3. How do I ask for help or clarification? 
 
-You can have a gentle introduction to containers [here]({{ site.baseurl }}introduction/container-images/), and read about the OCI types [here]({{ site.baseurl }}introduction/oci-projects/). 
+You can have a gentle introduction to containers [here]({{ site.baseurl }}/introduction/container-images/), and read about the OCI types [here]({{ site.baseurl }}/introduction/oci-projects/). 
 
 ## Kinds of contribution?
 

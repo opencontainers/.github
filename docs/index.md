@@ -20,9 +20,9 @@ This is a collection of introductory material to help you to understand containe
 the specifications that were created to support them, and finally, how
 you can contribute to OCI.
 
- - [About the Open Container Initiative]({{ site.baseurl }}about)
- - [Introductory Material]({{ site.baseurl }}introduction)
- - [Contributing]({{ site.baseurl }}contributing)
+ - [About the Open Container Initiative]({{ site.baseurl }}/about)
+ - [Introductory Material]({{ site.baseurl }}/introduction)
+ - [Contributing]({{ site.baseurl }}/contributing)
 
 
 {: .fs-6 .fw-300 }
