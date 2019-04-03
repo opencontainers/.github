@@ -15,7 +15,20 @@ The contributors and maintainers of all OCI projects have monthly meetings, whic
 Based on the current activity, meetings may increase frequency to weekly. 
 
 There are [iCalendar][rfc5545] format for the meetings [here](https://calendar.google.com/calendar/ical/linuxfoundation.org_i0sado0i37eknar51vsu8md5hg%40group.calendar.google.com/public/basic.ics) and Google Calendar [here](https://calendar.google.com/calendar/embed?src=linuxfoundation.org_i0sado0i37eknar51vsu8md5hg%40group.calendar.google.com&ctz=America%2FLos_Angeles).
-Everyone is welcome to participate via [UberConference web][uberconference] or audio-only: +1 415 968 0849 (no PIN needed).
+Everyone is welcome to participate via [Zoom](https://zoom.us/j/591648311).
+
+One tap mobile
++16699006833,,591648311# US (San Jose)
++16465588656,,591648311# US (New York)
+
+Dial by your location
+        +1 669 900 6833 US (San Jose)
+        +1 646 558 8656 US (New York)
+        877 369 0926 US Toll-free
+        855 880 1246 US Toll-free
+Meeting ID: 591 648 311
+Find your local number: https://zoom.us/u/aLDk4OXTu
+
 An initial agenda will be posted to the [mailing list](#mailing-list) in the week before each meeting, and everyone is welcome to propose additional topics or suggest other agenda alterations there.
 Minutes are posted to the [mailing list](#mailing-list) and minutes from past calls are archived [here][minutes], with minutes from especially old meetings (September 2015 and earlier) archived [here][runtime-wiki].
 
