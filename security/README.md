@@ -33,14 +33,14 @@ If you continue to leak information and break the policy outlined here, you will
 This is a team effort. As a member of the list you must carry some water. This
 could be in the form of the following:
 
-**Technical**
+#### Technical
 
 - Review and/or test the proposed patches and point out potential issues with
   them (such as incomplete fixes for the originally reported issues, additional
   issues you might notice, and newly introduced bugs), and inform the list of the
   work done even if no issues were encountered.
 
-**Administrative**
+#### Administrative
 
 - Help draft emails to the public disclosure mailing list.
 - Help with release notes.
@@ -50,17 +50,19 @@ could be in the form of the following:
 To be eligible for the security-announce@opencontainers.org mailing list, your
 distribution should:
 
-0. Have an actively monitored security email alias for our project.
+1. Have an actively monitored security email alias for our project.
 1. Have a user base not limited to your own organization.
-2. Have a publicly verifiable track record up to present day of fixing security
+1. Have a publicly verifiable track record up to present day of fixing security
    issues.
-3. Not be a downstream or rebuild of another distribution.
-4. Accept the [Embargo Policy](#embargo-policy) that is outlined above.
-5. Be willing to [contribute back](#contributing-back) as outlined above.
-6. Have someone already on the list vouch for the person requesting membership
+1. Not be a downstream or rebuild of another distribution.
+1. Accept the [Embargo Policy](#embargo-policy) that is outlined above.
+1. Be willing to [contribute back](#contributing-back) as outlined above.
+1. Have someone already on the list vouch for the person requesting membership
    on behalf of your distribution.
 
-**Removal**: If your distribution stops meeting one or more of these criteria
+#### Removal
+
+If your distribution stops meeting one or more of these criteria
 after joining the list then you will be unsubscribed.
 
 ### Requesting to Join
@@ -72,7 +74,7 @@ criterion listed in [Membership Criteria](#membership-criteria).
 
 Here is a psuedo example:
 
-```
+```email
 To: security@opencontainers.org
 Subject: Seven-Corp Membership to security-announce@opencontainers.org
 
@@ -118,3 +120,22 @@ distribution.
 
 ```
 
+### Templates
+
+These are templates used in correspondance on behalf of this security function.
+
+```email
+Welcome,
+
+You (or your list) have been identified as a contact for receiving security announcements from the Open Containers Initiative (OCI).
+This list (security-announce@opencontainers.org) is used to provide actionable information to multiple distribution vendors at once.
+This list is not intended for individuals to find out about security issues.
+You can find more information here: https://github.com/opencontainers/org/blob/master/security/README.md
+
+OCI is largely a specs organization and hosts a few software projects as well, notably `runc`.
+
+If you feel your inclusion on this list is in error, please notify "security@opencontainers.org" for removal.
+
+Thanks,
+Vincent Batts
+```
