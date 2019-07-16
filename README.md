@@ -8,17 +8,25 @@ See the founding [charter][charter]
 
 ## Communications
 
+### Code Of Conduct
+
+See our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+
 ### Meetings
 
-The contributors and maintainers of all OCI projects have monthly meetings, which are usually at 2:00 PM (USA Pacific) on the first Wednesday of every month.
+The contributors and maintainers of all OCI projects have weekly meetings every Wednesday at 2:00 PM (USA Pacific).
 
-Based on the current activity, meetings may increase frequency to weekly. 
+Based on activity and project needs, meetings may return to a lower frequency in the future; for example twice or once a month. This README will be updated as well as the iCal entry below if and when that occurs.
 
-There are [iCalendar][rfc5545] format for the meetings [here](https://calendar.google.com/calendar/ical/linuxfoundation.org_i0sado0i37eknar51vsu8md5hg%40group.calendar.google.com/public/basic.ics) and Google Calendar [here](https://calendar.google.com/calendar/embed?src=linuxfoundation.org_i0sado0i37eknar51vsu8md5hg%40group.calendar.google.com&ctz=America%2FLos_Angeles).
+You can also download meeting details as an [iCalendar][rfc5545] format invite [here](https://calendar.google.com/calendar/ical/linuxfoundation.org_i0sado0i37eknar51vsu8md5hg%40group.calendar.google.com/public/basic.ics) or view the full Google Calendar [here](https://calendar.google.com/calendar/embed?src=linuxfoundation.org_i0sado0i37eknar51vsu8md5hg%40group.calendar.google.com&ctz=America%2FLos_Angeles).
 
-URL: https://zoom.us/my/opencontainers
+Meetings are held via Zoom; the join URL and call-in details are as follows:
 
-One tap mobile
+**Meeting URL:** https://zoom.us/my/opencontainers
+
+**Join via phone:**
+```
+One tap mobile:
 +16465588656,,6449415895# US (New York)
 +16699006833,,6449415895# US (San Jose)
 
@@ -29,9 +37,15 @@ Dial by your location
         855 880 1246 US Toll-free
 Meeting ID: 644 941 5895
 Find your local number: https://zoom.us/u/aLDk4OXTu
+```
 
-An initial agenda will be posted to the [mailing list](#mailing-list) in the week before each meeting, and everyone is welcome to propose additional topics or suggest other agenda alterations there.
-Minutes are posted to the [mailing list](#mailing-list) and minutes from past calls are archived [here][minutes], with minutes from especially old meetings (September 2015 and earlier) archived [here][runtime-wiki].
+We currently use [HackMD][hackmd] to pre-announce agenda items, record attendance and meeting minutes. Anyone is free to edit the HackMD OCI meeting document and add agenda items, record your attendance, or help record minutes and notes from the weekly call.
+
+#### Minutes archives
+
+- 6 March 2019 - current: [HackMD][hackmd]
+- 7 Oct 2015 - 20 Mar 2019: [ircbot minutes][minutes]
+- 22 July 2015 - 30 Sep 2015: [wiki-minutes][runtime-wiki]
 
 ### Mailing List
 
@@ -64,5 +78,5 @@ Unless otherwise noted, code and docs of OCI projects are released under the [Ap
 [irc-logs]: http://ircbot.wl.linuxfoundation.org/eavesdrop/%23opencontainers/
 [rfc5545]: https://tools.ietf.org/html/rfc5545
 [minutes]: http://ircbot.wl.linuxfoundation.org/meetings/opencontainers/
-[uberconference]: https://www.uberconference.com/opencontainers
 [runtime-wiki]: https://github.com/opencontainers/runtime-spec/wiki
+[hackmd]: https://hackmd.io/El8Dd2xrTlCaCG59ns5cwg
