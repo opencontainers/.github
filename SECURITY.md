@@ -130,7 +130,7 @@ Welcome,
 You (or your list) have been identified as a contact for receiving security announcements from the Open Containers Initiative (OCI).
 This list (security-announce@opencontainers.org) is used to provide actionable information to multiple distribution vendors at once.
 This list is not intended for individuals to find out about security issues.
-You can find more information here: https://github.com/opencontainers/org/blob/master/security/README.md
+You can find more information here: https://github.com/opencontainers/org/blob/master/SECURITY.md
 
 OCI is largely a specs organization and hosts a few software projects as well, notably `runc`.
 

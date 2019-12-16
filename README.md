@@ -71,7 +71,7 @@ The [TOB](https://github.com/opencontainers/tob) is responsible for managing con
 
 ## Security
 
-See [the security doc](./security/) for reporting process and disclosure communications.
+See [the security doc](./SECURITY.md) for reporting process and disclosure communications.
 
 ## License
 
