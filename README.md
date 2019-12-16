@@ -1,4 +1,4 @@
-# org
+# OCI Organization
 
 Centralized documents and information for the Open Containers Initiative (OCI) organization and projects.
 
