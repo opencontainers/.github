@@ -6,6 +6,10 @@ Centralized documents and information for the Open Containers Initiative (OCI) o
 
 See the founding [charter][charter]
 
+## Code Of Conduct
+
+See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+
 ## Communications
 
 ### Code Of Conduct
@@ -67,7 +71,7 @@ The [TOB](https://github.com/opencontainers/tob) is responsible for managing con
 
 ## Security
 
-See [the security doc](./security.md) for reporting process and disclosure communications.
+See [the security doc](./security/) for reporting process and disclosure communications.
 
 ## License
 
