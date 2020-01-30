@@ -41,7 +41,8 @@ I want to pull it!
 I might be tempted to do this:
 
 ```bash
-$ Using default tag: latest
+$ docker pull busybox
+Using default tag: latest
 latest: Pulling from library/busybox
 697743189b6d: Pull complete 
 Digest: sha256:061ca9704a714ee3e8b80523ec720c64f6209ad3f97c0ff7cb9ec7d19f15149f
