@@ -47,7 +47,8 @@ We currently use [HackMD][hackmd] to pre-announce agenda items, record attendanc
 
 #### Minutes archives
 
-- 6 March 2019 - current: [HackMD][hackmd]
+- 1 April 2020 - current: [HackMD][hackmd]
+- 6 March 2019 - 25 March 2020: [HackMD Archive](./meeting-notes/oci-weekly-notes-2019-mar-2020-mar.md)
 - 7 Oct 2015 - 20 Mar 2019: [ircbot minutes][minutes]
 - 22 July 2015 - 30 Sep 2015: [wiki-minutes][runtime-wiki]
 
