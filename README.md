@@ -64,8 +64,6 @@ OCI discussion happens on #opencontainers on Freenode ([logs][irc-logs]).
 
 In addition to IRC, https://opencontainers.slack.com/ provides discussions with markdown formatting, with several channels enabling focused discussions.
 
-Gain access to OCI Slack here: https://chat.opencontainers.org/
-
 ## Technical Oversight Board (TOB)
 
 The [TOB](https://github.com/opencontainers/tob) is responsible for managing conflicts, violations of procedures or guidelines and any cross-project or high-level issues that cannot be resolved in the TDC for OCI Projects. The TOB shall also be responsible for adding, removing or reorganizing OCI Projects.
