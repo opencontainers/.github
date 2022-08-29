@@ -31,3 +31,10 @@ exclude:
 aux_links:
   "OpenContainers on GitHub":
     - "//github.com/opencontainers"
+
+footer_links:
+  "Developer Meetings": https://github.com/opencontainers/org#meetings
+  "Mailing List": https://groups.google.com/a/opencontainers.org/forum/#!forum/dev
+  "Slack": https://chat.opencontainers.org/
+  "GitHub": https://github.com/opencontainers
+  "Issue Tracker": https://github.com/opencontainers/org/issues

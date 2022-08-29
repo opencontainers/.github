@@ -52,7 +52,7 @@
             </nav>
           {% endif %}
         {% endunless %}
-        <div id="main-content" class="page-content" role="main">
+        <div id="main-content" class="page-content" role="main" style="padding-bottom:30px">
           {{ content }}
 
           {% if page.has_children == true and page.has_toc != false %}
@@ -70,9 +70,12 @@
           </ul>
           {% endif %}
         </div>
+        {% if site.footer_links %}<footer>
+            <ul class="list-style-none text-small mt-md-1 mb-md-1 pb-4 pb-md-0">
+              {% for link in site.footer_links %}
+                <li class="d-inline-block my-0{% unless forloop.last %} mr-2{% endunless %}"><a href="{{ link.last }}">{{ link.first }}</a></li>{% if forloop.last %}{% else %}<span style="margin-left:3px; margin-right:5px">-</span>{% endif %}{% endfor %}</ul></footer>{% endif %}
       </div>
     </div>
   </div>
-
 </body>
 </html>
