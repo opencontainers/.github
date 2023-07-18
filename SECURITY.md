@@ -7,6 +7,11 @@ request on GitHub. Instead, disclose the issue responsibly by sending an email
 to security@opencontainers.org (which is inhabited only by the maintainers of
 the various OCI projects).
 
+A report should include:
+- Exploitability of the vulnerability
+- The affected version
+- Your GitHub ID (if you have), so that you can be credited in GitHub Security Advisory.
+
 The maintainers take security seriously. If you discover a security issue,
 please bring it to their attention right away!
 
