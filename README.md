@@ -62,9 +62,9 @@ OCI discussion happens on #opencontainers on Freenode ([logs][irc-logs]).
 
 ## Slack
 
-In addition to IRC, https://opencontainers.slack.com/ provides discussions with markdown formatting, with several channels enabling focused discussions.
+In addition to IRC, [Slack][slack] provides discussions with markdown formatting, with several channels enabling focused discussions.
 
-Gain access to OCI Slack here: https://chat.opencontainers.org/
+Gain access to OCI Slack here: [Slack inviter][slack-inviter]
 
 ## Technical Oversight Board (TOB)
 
@@ -85,3 +85,5 @@ Unless otherwise noted, code and docs of OCI projects are released under the [Ap
 [minutes]: http://ircbot.wl.linuxfoundation.org/meetings/opencontainers/
 [runtime-wiki]: https://github.com/opencontainers/runtime-spec/wiki
 [hackmd]: https://hackmd.io/El8Dd2xrTlCaCG59ns5cwg
+[slack]: https://opencontainers.slack.com/
+[slack-inviter]: https://communityinviter.com/apps/opencontainers/join-the-oci-community
