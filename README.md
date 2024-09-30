@@ -78,7 +78,7 @@ See [the security doc](./SECURITY.md) for reporting process and disclosure commu
 
 Unless otherwise noted, code and docs of OCI projects are released under the [Apache 2.0 license](LICENSE).
 
-[charter]: https://www.opencontainers.org/about/governance
+[charter]: https://github.com/opencontainers/tob/blob/main/CHARTER.md
 [dev-list]: https://groups.google.com/a/opencontainers.org/forum/#!forum/dev
 [irc-logs]: http://ircbot.wl.linuxfoundation.org/eavesdrop/%23opencontainers/
 [rfc5545]: https://tools.ietf.org/html/rfc5545
