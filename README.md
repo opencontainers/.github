@@ -1,5 +1,9 @@
 # OCI Organization
+<<<<<<< HEAD
 ## By Mudassir Alam
+=======
+#By Mudass9ir Alam
+>>>>>>> origin/patch-1
 
 Centralized documents and information for the Open Containers Initiative (OCI) organization and projects.
 
