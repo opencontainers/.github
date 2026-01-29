@@ -4,10 +4,11 @@
 
 When reporting a security issue, do not create an issue or file a pull
 request on GitHub. Instead, disclose the issue responsibly by sending an email
-to security@opencontainers.org (which is inhabited only by the maintainers of
+to <security@opencontainers.org> (which is inhabited only by the maintainers of
 the various OCI projects).
 
 A report should include:
+
 - Exploitability of the vulnerability
 - The affected version
 - Your GitHub ID (if you have), so that you can be credited in GitHub Security Advisory.
@@ -22,13 +23,13 @@ This list is not intended for individuals to find out about security issues.
 
 ### Embargo Policy
 
-The information members receive on security-announce@opencontainers.org must not be made public, shared, nor even hinted at anywhere beyond the need-to-know within your specific team except with the list's explicit approval.
+The information members receive on <security-announce@opencontainers.org> must not be made public, shared, nor even hinted at anywhere beyond the need-to-know within your specific team except with the list's explicit approval.
 This holds true until the public disclosure date/time that was agreed upon by the list.
 Members of the list and others may not use the information for anything other than getting the issue fixed for your respective distribution's users.
 
 Before any information from the list is shared with respective members of your team required to fix said issue, they must agree to the same terms and only find out information on a need-to-know basis.
 
-In the unfortunate event you share the information beyond what is allowed by this policy, you must urgently inform the security@opencontainers.org mailing list of exactly what information leaked and to whom.
+In the unfortunate event you share the information beyond what is allowed by this policy, you must urgently inform the <security@opencontainers.org> mailing list of exactly what information leaked and to whom.
 A retrospective will take place after the leak so we can assess how to not make the same mistake in the future.
 
 If you continue to leak information and break the policy outlined here, you will be removed from the list.
@@ -52,7 +53,7 @@ could be in the form of the following:
 
 ### Membership Criteria
 
-To be eligible for the security-announce@opencontainers.org mailing list, your
+To be eligible for the <security-announce@opencontainers.org> mailing list, your
 distribution should:
 
 1. Have an actively monitored security email alias for our project.
@@ -72,7 +73,7 @@ after joining the list then you will be unsubscribed.
 
 ### Requesting to Join
 
-New membership requests are sent to security@opencontainers.org
+New membership requests are sent to <security@opencontainers.org>.
 
 In the body of your request please specify how you qualify and fulfill each
 criterion listed in [Membership Criteria](#membership-criteria).
@@ -135,7 +136,7 @@ Welcome,
 You (or your list) have been identified as a contact for receiving security announcements from the Open Containers Initiative (OCI).
 This list (security-announce@opencontainers.org) is used to provide actionable information to multiple distribution vendors at once.
 This list is not intended for individuals to find out about security issues.
-You can find more information here: https://github.com/opencontainers/org/blob/master/SECURITY.md
+You can find more information here: https://github.com/opencontainers/.github/blob/main/SECURITY.md
 
 OCI is largely a specs organization and hosts a few software projects as well, notably `runc`.
 

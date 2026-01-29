@@ -12,9 +12,7 @@ See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 
 ## Communications
 
-### Code Of Conduct
-
-See our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+All communications are subject to our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 
 ### Meetings
 
@@ -22,14 +20,15 @@ The contributors and maintainers of all OCI projects have weekly meetings every 
 
 Based on activity and project needs, meetings may return to a lower frequency in the future; for example twice or once a month. This README will be updated as well as the iCal entry below if and when that occurs.
 
-You can also download meeting details as an [iCalendar][rfc5545] format invite [here](https://calendar.google.com/calendar/ical/linuxfoundation.org_i0sado0i37eknar51vsu8md5hg%40group.calendar.google.com/public/basic.ics) or view the full Google Calendar [here](https://calendar.google.com/calendar/embed?src=linuxfoundation.org_i0sado0i37eknar51vsu8md5hg%40group.calendar.google.com&ctz=America%2FLos_Angeles).
+You can also download meeting details as an [iCalendar][rfc5545] format [invite](https://calendar.google.com/calendar/ical/linuxfoundation.org_i0sado0i37eknar51vsu8md5hg%40group.calendar.google.com/public/basic.ics) or view the [full Google Calendar](https://calendar.google.com/calendar/embed?src=linuxfoundation.org_i0sado0i37eknar51vsu8md5hg%40group.calendar.google.com&ctz=America%2FLos_Angeles).
 
 Meetings are held via Zoom; the join URL and call-in details are as follows:
 
-**Meeting URL:** https://zoom.us/my/opencontainers
+**Meeting URL:** <https://zoom.us/my/opencontainers>
 
 **Join via phone:**
-```
+
+```text
 One tap mobile:
 +16465588656,,6449415895# US (New York)
 +16699006833,,6449415895# US (San Jose)
@@ -47,10 +46,10 @@ We currently use [HackMD][hackmd] to pre-announce agenda items, record attendanc
 
 #### Minutes archives
 
-- 1 April 2020 - current: [HackMD][hackmd]
-- 6 March 2019 - 25 March 2020: [HackMD Archive](./meeting-notes/oci-weekly-notes-2019-mar-2020-mar.md)
-- 7 Oct 2015 - 20 Mar 2019: [ircbot minutes][minutes]
-- 22 July 2015 - 30 Sep 2015: [wiki-minutes][runtime-wiki]
+- last archive - current: [HackMD][hackmd]
+- 2019-03-06 - last archive: [HackMD Archives](./meeting-notes/)
+- 2015-10-07 - 2019-03-20: [ircbot minutes][minutes]
+- 2015-07-22 - 2015-09-30: [wiki-minutes][runtime-wiki]
 
 ### Mailing List
 

@@ -1,435 +1,4 @@
-# OCI Weekly Dev Meeting Notes Archive - April 2021 to March 2022
-
-## March 31, 2022
-
-### Attendees:
-- Brandon Mitchell
-- Tianon
-- vbatts
-- Samuel Karp
-- giinglis
-- Syed Ahmed
-- Brandon Klein
-- Brian Goff
-- Sajay Antony
-- Ramkumar Chinchani
-
-### Note Taker:
-- _add note taker_
-
-### Actionable Agenda Items:
-- Recordings for Ref Type Working Group (Brandon)
-- _add your items_
-
-### Presentation/Discussion Agenda Items:
-- [Extensibility clarification](https://github.com/opencontainers/image-spec/pull/902) (Brandon)
-    - Should distribution-spec also be updated to define http status codes by registries that filter/validate manifests?
-- [Annotations for end-of-life/support](https://github.com/opencontainers/image-spec/pull/903) (Brandon)
-    - Recommendation to use reference types WG to append/dynamically EOL to existing images instead of picking a fixed time up front.
-- _add your items_
-
-### Notes:
-
-## March 24, 2022
-
-### Attendees:
-- vbatts
-- Brandon Mitchell
-- Josh
-- Sajay Antony
-- Tianon
-
-### Note Taker:
-- _add note taker_
-
-### Actionable Agenda Items:
-- _add your items_
-
-### Presentation/Discussion Agenda Items:
-- KubeCon EU attendees?
-- grooming?
-
-### Notes:
-
-
-## March 17, 2022
-
-### Attendees:
-- Phil Estes (AWS)
-- Tianon
-- Brandon Mitchell
-- Samuel Karp
-- Steve Lasker
-- Mike Brown (IBM)
-- Vincent Batts
-
-### Note Taker:
-- _add note taker_
-
-### Actionable Agenda Items:
-- _add your items_
-
-### Presentation/Discussion Agenda Items:
-- How should/can GC handle potential loops with reference types (Brandon)
-    - https://groups.google.com/a/opencontainers.org/g/dev/c/mIv5XjKlBX0/m/RTH9IB1bDQAJ
-- _add your items_
-
-### Notes:
-
-## March 10, 2022
-
-
-
-
-### Attendees:
-- vbatts
-- Brandon Mitchell
-- Tianon
-- derek mcgowan
-- brandon klein
-- sajay antony
-- mike brown
-- ramkumar (ram) chinchani
-
-### Note Taker:
-- vbatts
-
-### Actionable Agenda Items:
-- _add your items_
-
-### Presentation/Discussion Agenda Items:
-
-
-### Notes:
-- CNCF supply chain wg https://docs.google.com/document/d/1MTM782nluFl4_ybG-fXHmRT2k4bPN18ifdzpUltQQCw/edit#heading=h.1tv8gumsrtbf
-- updates of our references WG from Brandon
-- good to ensure CNCF Supply TAG and our references WG stay in the loop together
-- OCI image layout
-    -  wishing to see layout used in various CI pipelines, etc
-    -  tagging vs digests, and how to best handle multi-arch
-    -  work done in https://github.com/regclient/regclient
-- sore spot: spec'ing out auth
-    - https://github.com/opencontainers/distribution-spec/issues/110 ?
-    - https://github.com/opencontainers/distribution-spec/issues/240
-    - pains on edge cases of users that can push to multiple repos
-    - there is no way to have say a load-balancer that routes GET to a read-only, and say PUT/POST/PATCH/DELETE to even a simple htpasswd backend, due to early token auth on the first GET
-    - the problem of auth/and container image lifecyle needs more focus.. how do we ensure these images for specific users with specific access (push/pull mirror/local cache to gc of the mirrors/local caches (and killing of running containers)) "now expanding to phase II for adding security/cache policies of container images at the pod spec level and possible moving kubelet image manager/image gc manager code to the container runtime stack"
-    - https://github.com/kubernetes/enhancements/issues/2535
-    - https://github.com/kubernetes/kubernetes/pull/94899
-    - (vb) this important enough that it needs to be coded into spec. Currently by not being specified, services and tools are primarily focused on not breaking their customers and tools. By coding it and where there is gray-space or rough edges, then implementations can more confidently unify and know they aren't breaking their customers, but also are reaching a broader set up tools and use-cases.
-- 
-
-
----
-
-## March 3, 2022
-
-### Attendees:
-- Jon Johnson
-- Brandon Mitchell
-- Ramkumar Chinchani (Cisco)
-- Josh Dolitsky
-- Vincent
-- Sajay Antony
-- Nisha
-- _add yourself_
-
-### Note Taker:
-- _add note taker_
-
-### Actionable Agenda Items:
-- _add your items_
-
-### Presentation/Discussion Agenda Items:
-- `data` field (Jon)
-    - https://github.com/opencontainers/image-spec/pull/826
-    - (Would love to hear from ECR folks.)
-- Charter Link is 404'ing: <https://github.com/opencontainers/image-spec/pull/898> (Brandon)
-
-### Notes:
-
----
-
-## February 24, 2022
-
-**recording**: https://youtu.be/BP2jjOSj6JI
-
-### Attendees:
-- Brandon Mitchell
-- Samuel Karp
-- Vincent Batts
-- Phil Estes
-- Jon Johnson
-- Josh Dolitsky
-- Brandon T Klein
-- Ramkumar Chinchani
-- Sajay Antony
-
-### Note Taker:
-- Phil
-
-### Actionable Agenda Items:
-- _add your items_
-
-### Presentation/Discussion Agenda Items:
-- image-spec PRs (Brandon)
-    - Data field: https://github.com/opencontainers/image-spec/pull/826
-    - https://github.com/opencontainers/image-spec/pull/865
-    - https://github.com/opencontainers/image-spec/pull/885
-    - https://github.com/opencontainers/image-spec/pull/892
-      - Related: https://github.com/containerd/containerd/pull/6479
-    - https://github.com/opencontainers/artifacts/pull/53
-
-### Notes:
-- Reviewing open image-spec PRs: https://github.com/opencontainers/image-spec/pulls
-- Side chat (in the actual Zoom chat) about continued slow progress and potential we still have fully inactive maintainers
-  - Sam commented about a potential proposal to charter to handle this situation.
-  - Josh: since this call isn't required for any kind of maintainer quorum should it just be presentations/demos? Maintainers would have to organize their own triage sync-ups
-
----
-
-## February 17, 2022
-
-**Recording**: https://youtu.be/SRdPdwwOahk
-
-### Attendees:
-- Samuel Karp
-- Sajay Antony
-- Brandon T Klein
-- Steve Lasker (Microsoft)
-
-### Note Taker:
-- _add note taker_
-
-### Actionable Agenda Items:
-- _add your items_
-
-### Presentation/Discussion Agenda Items:
-- Distribution spec milestone review
-
-### Notes:
-
----
-
-## February 10, 2022
-
-**Recording**: https://youtu.be/VKjFEJY_Hfw
-
-### Attendees:
-- Nisha Kumar
-- Lachlan Evenson
-- Phil Estes
-- Ramkumar Chinchani (Cisco)
-- Samuel Karp
-- Brandon Mitchell
-- Jason Hall (Red Hat)
-- Josh Dolitsky
-- Tiano
-- ASP
-- vbatts
-- Sajay Antony
-- Syed Ahmed
-- _add yourself_
-
-### Note Taker:
-- Lachlan Evenson
-- Jason 🥈 🍭
-
-### Actionable Agenda Items:
-- _add your items_
-
-### Presentation/Discussion Agenda Items:
-- Governance Discussion: (Nisha)
-    - https://github.com/opencontainers/tob/issues/110 (Nisha)
-        - How does the community reach out ot the TOB?
-        - Seems to been 3 modes of comms - meeting, GH issues, email
-        - Is there a priority?
-        - Feel like we need a consolidated point where discussions on a topic happen
-        - For things that require action, they should go through the mailing list (Josh)
-        - From the charter - c. The TOB shall operate transparently with any discussions and mailing lists open to the community. (Samuel)
-        - The language in the charter seems to enshrine the mailing list however any written format that's transparent should be okay (Samuel). Are we trying to capture preferences or what the charter says?
-        - The spirit is operating transparently are we have different forums to do that (Nisha)
-        - We can redirect as necessary (Phil)
-        - Is the determination that community can reach out via any forum however we can redirect to the right forum if needed? (Nisha)
-        - Where does TOB have their meeting? (Nisha)
-        - This meeting is not meant for TOB business (Samuel)
-        - It's published on the TOB repo, they don't happen often but are open (Samuel) - It's as needed (Phil)
-        - There is not a single conclusive place to raise or close a conversation because other channels have come online. (Vincent)
-        - Hope people come to this meeting to get maintainers' attention, not TOB's attention (Phil)
-        - Are you concerned that things aren't being responded to? (Samuel)
-        - Let's move these conversations to the mailing list (Nisha)
-    - Charter Amendments - new and existing
-- Dist spec 1.1.0-rc1 ? (Josh)
-    - Can we put out a 1.1? Are there concerns with doing that? There's a milestone that has auth on there, can we remove? (Josh)
-    - Should this be a 1.0.2 rather than a 1.1.0. I don't know if/what there are new features (Vincent)
-    - Let's talk more in Github (Josh)
-    - I feel like we could have a 1.0.2 (Vincent)
-    - The risk is that without testing extensions could change underneath. We need a mechanism to test (Josh)
-    - I'll start an issue with our next release (Josh)
-
-### Notes:
-- Do we think there are providers our there that won't want to list extensions via discovery? (Brandon)
--- 
----
-
-## February 3, 2022
-
-**Recording**: https://youtu.be/IeMYGjCXDOc
-
-
-### Attendees:
-- Phil Estes (AWS)
-- Tianon
-- Brandon Mitchell
-- Samuel Karp (AWS)
-- vbatts (MSFT)
-- Brian Goff (MSFT)
-- Flavian Missi
-- Sajay Antony (MSFT)
-- Ramkumar Chinchani (Cisco)
-- Josh Dolitsky (Chainguard)
-
-### Note Taker:
-
-- Nisha Kumar
-
-### Actionable Agenda Items:
-- _add your items_
-
-### Presentation/Discussion Agenda Items:
-- TOB: Process documentation items? (Nisha)
-- PR #111 - https://github.com/opencontainers/distribution-spec/pull/111 (sajay) 
-- _add your items_
-
-### Notes
-
-Things to document
-- How to become maintainers
-- Policies can be separate from CHARTER
-- CHARTER has PRs
-- What is stale about the CHARTER
-    - TDC is outdated, not well-defined
-- CHARTER amendmends
-    - Linux Foundation has legal oversight
-    - In practice Chris and Amye helps with this and it's something we can write down
-
-Note taking:
-- Call out for notetaker
-
-Triaging:
-- Call for triage
-
-Issue #111:
-- Need distribution spec maintainers to merge
-- Sajay who can approve this PR?
-    - 3 maintainers on the call
-    - Steve approved
-    - Jon will take a look
-    - Tianon will also look
-- Reference types WG update
-    - User stories organized and categorized by Josh
-    - Know things, Discover things, and Store things
-    - Idea: push, pull, discover, manage
-    - Working 
-    - Doc: https://docs.google.com/document/d/1ky0LMAvWL_XRnfId9h5GBswV7GGko5GejuyaMWCGX-Y/edit#heading=h.34dabm576nd3
-
----
-
-## January 27, 2022
-
-**Recording**: https://youtu.be/4jmcLPiZzME
-
-### Attendees:
-- Mike Brown (IBM)
-- Sajay Antony (Microsoft)
-- Phil Estes (AWS)
-- Samuel Karp (AWS)
-- Josh Dolitsky (Chainguard)
-- Vincent Batts
-- Michael Brown (AWS)
-- Lachlan Evenson (Microsoft)
-- Brandon Mitchell
-- _add your name_
-
-### Actionable Agenda Items:
-- _add your items_
-
-### Presentation/Discussion Agenda Items:
-- Extension proposal?
-    - https://github.com/opencontainers/distribution-spec/pull/111 (sajay)
-    - 
-
-### Notes:
-
-
-## January 20, 2022
-
-**Recording**: https://www.youtube.com/watch?v=-sNpTfB_UFs
-
-### Attendees:
-- Josh Dolitsky
-- Mike Brown (IBM)
-- Sajay Antony (Microsoft)
-- Samuel Karp (AWS)
-- Brandon Mitchell
-
-### Actionable Agenda Items:
-- Notes to ref types wg: [_add your items_](https://docs.google.com/document/d/1SVOWQTowigXzbYdorzfa7tMmrcm91yK12LvSONqziJY/edit#heading=h.xzjuckal2b2a)
-
-### Presentation/Discussion Agenda Items:
-- _add your items_
-
-### Notes:
- - Discuss the [extensions PR #111](https://github.com/opencontainers/distribution-spec/pull/111) for next week and maybe consider merging in the current state depending on input from others. [sajay]
-
-## January 13, 2022
-
-**Recording**: https://www.youtube.com/watch?v=bJ3yqhzK0_o
-
-### Attendees:
-- Sajay Antony (Microsoft)
-- Steve Lasker (Microsoft)
-- Brandon Mitchell
-- Samuel Karp (AWS)
-- Mike Brown (IBM)
-- Ramkumar Chinchani (Cisco)
-
-### Actionable Agenda Items:
-- <https://github.com/opencontainers/image-spec/pull/880>
-- <https://github.com/opencontainers/distribution-spec/pull/111>
-- _add your items_
-
-### Presentation/Discussion Agenda Items:
-- _add your items_
-
-### Notes:
-
-## January 6, 2022 🎉
-
-**Recording**: https://youtu.be/Zr13sRtxlac
-
-### Attendees:
-- Tianon
-- Brian Goff - MSFT
-- Mike Brown (IBM)
-- Brandon Mitchell (BoxBoat/IBM)
-- Steve Lasker (Microsoft)
-
-### Actionable Agenda Items:
-
-- Reminder: [Reference Type Doodle Poll](https://doodle.com/poll/4z8s3bpgqdmg4c49) All times Pacific! 
-- _add your items_
-
-### Presentation/Discussion Agenda Items:
-- _add your items_
-
-### Notes:
-
-- No agenda, ended meeting early
-
-### Notes:
-
-Open discussion
+# OCI Weekly Dev Meeting Notes Archive - 2021
 
 ## December 9, 2021
 
@@ -447,7 +16,6 @@ Open discussion
 ### Notes:
 - No items - cancelling this week
 - If folks have content for next week (Dec 16), we can meet. Or work over email and enjoy the holiday break
-
 
 ## December 2, 2021
 
@@ -1484,3 +1052,389 @@ Cancelled
 ## April 7, 2021 - NO CALL
 
 - Cancelled
+
+## March 31, 2021
+**Recording:** https://www.youtube.com/watch?v=09NkIzIZhpM
+
+### Attendees:
+- Steve Lasker (Microsoft)
+- Phil Estes (AWS)
+- Nisha Kumar (VMware)
+- Justin Cormack (Docker)
+- Chris Aniszczyk (LF)
+- Brandon Klein (Sandia National Labs)
+- Mike Brown (IBM)
+- Josh Dolitsky
+- Sarah Novotny (Microsoft)
+- Aidan Delaney
+- Derek McGowan
+- Samuel Karp (AWS)
+- Mark Peek (VMware)
+- Amye SP (LF)
+- Bo Liu (Alibaba Cloud)
+- Hank Donnay (Quay)
+- Jon Johnson (Google)
+- Jason Hall (Red Hat)
+- _add yourself_
+
+### Agenda
+
+Reserving the majority of time to discuss how registries can support additional concepts. Including properties, linked references and signing.
+
+**Can we instead go over the topics that were preempted on the 24th first? Specifically:
+    ""- We have a few design choices that are based on whether we can or can't make changes to the existing manifests. Let's discuss what and how we'd make changes as this will focus our proposals going forward.
+"
+
+We'll start with [Justins proposal](https://gist.github.com/justincormack/523dc229f0dd7b882edf19c60aed1581) as it's the most holistic. If we beleive it's the general north star, the [references PR](https://github.com/opencontainers/image-spec/pull/828) and [oci.artifact.manifest spec](https://github.com/opencontainers/artifacts/pull/29) become moot.
+
+The [Descriptors as first-class manifests](https://github.com/opencontainers/distribution-spec/issues/252) is an additional concept. I suspect the above will take the majority of the hour. If something changes, we can bring this in.
+
+### Actionable Agenda Items:
+- Audit OCI Inactive Maintainers + Call For New Maintainers: https://github.com/opencontainers/tob/issues/95
+
+### Presentation/Discussion Agenda Items
+
+- [Justin's draft doc](https://gist.github.com/justincormack/523dc229f0dd7b882edf19c60aed1581) (Justin)
+- How to add schema, and change rules to `image.manifest` and `image.index` (Steve)
+  - We have a few design choices that are based on whether we can or can't make changes to the existing manifests. Let's discuss what and how we'd make changes as this will focus our proposals going forward.
+- [Follow-up discussions about references](https://github.com/opencontainers/image-spec/pull/828) (Dan)
+- [Linked Artifacts, enabling Notary v2, SBoMs, Nydus and other types](https://github.com/opencontainers/artifacts/pull/29) (Steve)
+- [Descriptors as first-class manifests](https://github.com/opencontainers/distribution-spec/issues/252) (Jon)
+- [Deduplicate uploads](https://github.com/opencontainers/distribution-spec/issues/236) (Sargun)
+- **Announcement**: Distribution Spec v1.0.0-rc2 [released ](https://groups.google.com/a/opencontainers.org/g/dev/c/Ga-ZYyAab8w/m/wbWL2iQ8BgAJ) (Josh)
+    - v1.0.0-rc3 will be the last release before v1.0.0
+    - See [v1.0.0-rc3 milestone](https://github.com/opencontainers/distribution-spec/milestone/7) for last minute items
+- _add your items_
+
+### Notes:
+ - **Important note** for anyone who sees the agenda above and wants to watch the recording to learn about those items: **please note** that we set the agenda aside today to talk through ways to reorganize current efforts within the OCI and help navigate some of the "stuck-ness" being experienced due to lack of active maintainer participation in some OCI projects. Please *do* watch the recording and provide us feedback on how to structure the working groups in a way that will meet the needs of the OCI constituent groups. - *Phil on behalf of the TOB.*
+
+## March 24, 2021
+**Recording:** https://www.youtube.com/watch?v=X6jeM4gAQAs
+
+### Attendees:
+- Steve Lasker (Microsoft)
+- Jason Hall (Red Hat)
+- Phil Estes (AWS)
+- Justin Cormack (Docker)
+- Nisha Kumar (VMware)
+- Aidan Delaney
+- Dan Lorenc (Google)
+- Marina Moore (NYU)
+- Josh Dolitsky
+- Bo Liu (Alibaba Cloud)
+- Brian Goff (Microsoft)
+- Derek McGowan
+- Samuel Karp (AWS)
+- Michael Brown (AWS)
+- Brandon Klein (Sandia National Labs)
+- Mike Brown (IBM)
+- _add yourself_
+
+### Actionable Agenda Items:
+- [Base image annotations](https://github.com/opencontainers/image-spec/pull/822) (Jason)
+- [Fix CI?](https://github.com/opencontainers/image-spec/pull/814) (jon/vbatts)
+    - TODO: Move image to OCI org on Docker Hub
+    - TODO: Move to GitHub Actions
+    - TODO: Get more image-spec maintainers
+- [Merge `data` field?](https://github.com/opencontainers/image-spec/pull/826) (Jon)
+    - TODO: Define a minimum size that implementations SHOULD support?
+
+### Presentation/Discussion Agenda Items:
+- How to add schema, and change rules to `image.manifest` and `image.index` (Steve)
+    - We have a few design choices that are based on whether we can or can't make changes to the existing manifests. Let's discuss what and how we'd make changes as this will focus our proposals going forward.
+- [Descriptors as first-class manifests](https://github.com/opencontainers/distribution-spec/issues/252) (Jon)
+- [Follow-up discussions about references](https://github.com/opencontainers/image-spec/pull/828) (Dan)
+- [Linked Artifacts, enabling Notary v2, SBoMs, Nydus and other types](https://github.com/opencontainers/artifacts/pull/29) (Steve)
+- [Justin's draft doc](https://gist.github.com/justincormack/523dc229f0dd7b882edf19c60aed1581) (Justin)
+
+### Notes:
+- 
+
+## March 17, 2021
+**Recording:** https://www.youtube.com/watch?v=gFZQplmiSDc
+
+### Attendees:
+- Vincent Batts (kinvolk)
+- Steve Lasker (Microsoft)
+- Tianon
+- Jon Johnson
+- Samuel Karp (AWS)
+- Dan Lorenc (Google)
+- Mike Brown (IBM)
+- Phil Estes (AWS)
+- Bo Liu (Alibaba))
+- Aidan Delaney
+- Brandon Klein (Sandia National Labs)
+- Mark Peek (VMware)
+- _add yourself_
+
+### Actionable Agenda Items:
+- https://github.com/opencontainers/image-spec/pull/822
+    - Standard Base Image Annotations
+    - Please review or give actionable feedback.
+- https://github.com/opencontainers/image-spec/pull/826
+    - Please review or give actionable feedback.
+- 
+
+### Presentation/Discussion Agenda Items:
+- https://github.com/opencontainers/distribution-spec/pull/251
+- Linking Proposal (Dan): https://github.com/opencontainers/image-spec/pull/828 and https://github.com/opencontainers/image-spec/issues/827
+
+### Notes:
+
+## March 10, 2021
+**Recording:** https://www.youtube.com/watch?v=GBrUEctHkYg
+
+### Attendees:
+- Phil Estes (AWS)
+- Steve Lasker (Microsoft)
+- Mike Brown (IBM)
+- Tianon
+- Josh Dolitsky
+- Aidan Delaney
+- Brian Goff (Microsoft)
+- Brandon Klein (Sandia National Labs)
+- Samuel Karp (AWS)
+- _add yourself_
+### Actionable Agenda Items:
+- _add your items_
+
+### Presentation/Discussion Agenda Items:
+- [`Content-Encoding`](https://github.com/opencontainers/distribution-spec/issues/235) (Jon)
+- [`Upload deduplication`](https://github.com/opencontainers/distribution-spec/issues/236) (Sargun)
+- [Base image annotations proposal](https://github.com/opencontainers/image-spec/pull/822) going back to describing a single base image (Jason; can't attend)
+
+### Notes:
+
+
+## March 3rd, 2021
+**Recording:** https://www.youtube.com/watch?v=WwZplxfZ0fk
+
+### Attendees:
+- Mike Brown (IBM)
+- Phil Estes (AWS)
+- Bo Liu (Alibaba Cloud)
+- Steve Lasker (Microsoft)
+- Samuel Karp (AWS)
+- Aidan Delaney
+- Mark Peek (VMware)
+- Jon Johnson
+- _add yourself_
+
+### Actionable Agenda Items:
+
+- Base image annotation PR [image-spec#822](https://github.com/opencontainers/image-spec/pull/822)
+- _add your items_
+
+### Presentation/Discussion Agenda Items:
+- [`Content-Encoding`](https://github.com/opencontainers/distribution-spec/issues/235) (Jon)
+- Descriptor [`data` field](https://github.com/opencontainers/image-spec/blob/master/descriptor.md#reserved) (Jon)
+- Monolithic uploads + deprecation | Pt. 2 (Josh)
+    - [Original issue](https://github.com/opencontainers/distribution-spec/issues/234)
+    - PR: (https://github.com/opencontainers/distribution-spec/pull/239)
+        - Is this good now? https://github.com/opencontainers/distribution-spec/pull/230
+    - After merged,  will proceed with distribution-spec v1.0.0-rc2 release
+    - RC2 milestone (FYI) https://github.com/opencontainers/distribution-spec/milestone/5
+    - New readme: https://github.com/opencontainers/distribution-spec/blob/master/README.md
+- What’s the story with ORAS? | Pt. 2 (Josh)
+    - Will not be a supported OCI project
+    - Maybe to be submitted into CNCF sandbox (adoption from Helm/OPA/etc, and uses Containerd Go libraries)
+    - Build a pure OCI distribution client as a [Umoci CAS Engine](https://github.com/opencontainers/umoci/blob/master/oci/cas/cas.go#L65) implementation and see where that goes (do what `skopeo copy` does)
+    - Maybe later ORAS drops Containerd under the hood and uses the Umoci library once it matures
+
+
+### Notes:
+
+## February 24, 2021
+
+### Agenda Items:
+- Cancelled
+
+## February 17, 2021
+**Recording:** https://www.youtube.com/watch?v=x4TTgLRVumE
+
+### Attendees:
+
+- Jason Hall (Red Hat)
+- Phil Estes
+- Steve Lasker (Microsoft)
+- Josh Dolitsky
+- Wayne Warren (Digitalocean)
+- Mark Peek (VMware)
+- Samuel Karp
+- William Fielder (Red Hat)
+- Tianon
+- Mike Brown (IBM)
+
+### Actionable Agenda Items:
+- _add your items_
+
+### Presentation/Discussion Agenda Items:
+- [Proposal: Standard Base Image Annotations](https://github.com/opencontainers/image-spec/issues/821) ([@ImJasonH](https://github.com/imjasonh))
+    - https://hackmd.io/EKf0U1b7Reu5FneC1dQgXw?view
+    - There was general agreement that these additional image annotations for the base manifest and reference are useful extensions. A PR will be opened against opencontainers/image-spec.
+- [Is it time to adopt extensions? Discussion #238](https://github.com/opencontainers/distribution-spec/discussions/238)? (Steve)
+    - General concensus to move forward with `_ext/` model. A discussion for numbered or named extensions. Steve to reachout to Vincnent, Derek and Cormack as they all expressed interest as well.
+- _add your items_
+
+### Notes:
+
+## February 10, 2021
+**Recording:** https://www.youtube.com/watch?v=2xRfoKhdAcM
+
+### Attendees:
+- Tianon
+- Steve Lasker (Microsoft)
+- Jon Johnson
+- Mark Peek
+- Nisha Kumar
+- Bo Liu (Alibaba Cloud)
+- Brian Goff (Microsoft)
+- Samuel Karp
+- Brandon Lum (IBM)
+- Josh Dolitsky
+- Amye SP (OCI)
+- Fu, Wei (Alibaba Cloud)
+- _add yourself_
+- 
+
+### Actionable Agenda Items:
+- _add your items_
+
+### Presentation/Discussion Agenda Items:
+- Monolithic uploads + deprecation (Jon)
+    - https://github.com/opencontainers/distribution-spec/issues/234
+- [OCI Artifact Manifest](https://github.com/opencontainers/artifacts/blob/3e34f029537052639eed59b469cb6c43706ac3d0/artifact-manifest.md) Update [PR #29](https://github.com/opencontainers/artifacts/pull/29)- I've reduced this down to the reverse lookup capabilities of a `manifests` collection.  
+  Weak `references` to other artifacts are deferred until we can work through the [registry/repo mapping discussions](https://github.com/notaryproject/nv2/discussions/31) (Steve)
+
+### Notes:
+
+ 
+## February 3, 2021
+**Recording:** https://www.youtube.com/watch?v=0RZXhmqS_OE
+
+### Attendees:
+- Tianon
+- Mike Brown (IBM)
+- Phil Estes
+- Jon Johnson
+- Samuel Karp
+- Mark Peek
+- William Fielder
+- Ram Chinchani
+- Adam Wolfe Gordon
+- Erwin van Eyk
+- Jimmy Z
+- Neelendra Bhandari
+- Petar Galic
+- Serge Hallyn
+- Shivam Mishra
+- Toddy Mladenov
+- William Lambert
+- Nisha Kumar
+- Josh Dolitsky
+
+### Actionable Agenda Items:
+- _add your items_
+
+### Presentation/Discussion Agenda Items:
+- CReB -- a Container Registry Benchmark
+    - Petar Galic (Vrije Universiteit Amsterdam) presentation & ideas for further collaboration
+    - https://github.com/pgalic96/registry_benchmark
+- Listing stuff (Jon)
+    - [Proposal: Add a manifest list API #222](https://github.com/opencontainers/distribution-spec/issues/222)
+    - [Listing API Requirements #229](https://github.com/opencontainers/distribution-spec/pull/229)
+    - [Show/Get-Info API Requirements #232](https://github.com/opencontainers/distribution-spec/pull/232)
+- ETags + 412 thoughts (Jon)
+    - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag
+    - https://tools.ietf.org/html/rfc7232#section-2.3
+- _add your items_
+
+### Notes:
+
+- Viewable link of the CReB presentation: https://docs.google.com/presentation/d/1vL4a8Wfr4pHmOUxgBF6JA1mOfcfoolVRbHwPsmXbxQo/edit?usp=sharing
+- KEP-like proposal format would be useful (vbatts extensions were similar?)
+- "We got off a little bit in the weeds." -Steve  (QOTD)
+
+## January 27, 2021
+**Recording:** https://www.youtube.com/watch?v=VQ60WB1IvI8
+
+### Attendees:
+- Mike Brown (IBM)
+- Tianon
+- Hank Donnay (quay)
+- Neil Johnson
+- Jon Johnson
+- Adam Wolfe Gordon
+- Brian Goff
+- Derek McGowan
+- Josh Dolitsky
+- Kershaw Mehta
+- Neelendra
+- Nisha Kumar
+- Peter Engelbert
+- Phil Estes
+- Ram Chinchani
+- Samuel Karp
+- Shivam Mishra
+- Steve Lasker (Microsoft)
+- Bo Liu (Alibaba Cloud)
+- William Fielder (Red Hat)
+- Tao Peng (Ant Group)
+- Vincent Batts
+- Amye Scavarda Perrin
+- Serge Hallyn (Cisco)
+
+### Agenda Items:
+- IBM z/OS as a Native Platform for OCI
+  - Neil Johnson (IBM z/OS) brief introduction(s)
+- What's the story with ORAS? (Josh + Nisha)
+    - How can it be redesigned to work better with images?
+    - See: https://github.com/opencontainers/tob/pull/68
+    - Perhaps (josh)
+        - `umoci new --image new_image:new_tag --cache ./someplace`
+        - `oras push new_image:new_tag --cache ./someplace`
+        - OR `umoci new --image new_image:new_tag --export | oras push --stdin`
+    - building blocks discussion: https://github.com/google/go-containerregistry/blob/main/pkg/v1/remote/transport/README.md
+- Distribution-spec release check in (Josh)
+    - 1.0.0-rc2 milestone: https://github.com/opencontainers/distribution-spec/milestone/5
+    - Targeting end of feb. SPEAK NOW OR HOLD PEACE
+- Initial discussions for [OCI Artifact Manifest](https://github.com/SteveLasker/artifacts/blob/artifact-manifest/artifact-manifest/artifact-manifest.md) for managing reference types like Notary v2, Helm, CNAB, WASM and others (Steve)
+    - More artifact like [nydus image](https://github.com/dragonflyoss/image-service/blob/master/docs/nydus-design.md), [nydus artifact type](https://github.com/liubogithub/artifacts/blob/oci/artifact-manifest/artifact-manifest.md#nydus-image-reference) (Bo Liu)
+- Updates on Seccomp Notify in OCI runtime-spec and runc.
+  - [PR#1074](https://github.com/opencontainers/runtime-spec/pull/1074) (spec)
+  - [runc PR#2682](https://github.com/opencontainers/runc/pull/2682) (implementation in runc)
+- Listing stuff (Jon)
+    - https://github.com/opencontainers/distribution-spec/issues/222
+
+
+### Notes:
+
+- IBM z/OS as a Native Platform for OCI
+  - Possibly similar to Windows LCOW/WCOW, so possible collaboration with the Windows folks
+- ORAS and Images
+    - Unable to pull from Docker Hub
+    - Historical question why ORAS doesn't support images. Is that part of the goal?
+    - Should we add a roadmap for ORAS to OCI
+    - Nisha - using Docker and Buildah
+    - Would like push and build in-sync with each other
+    - Isn't a client tool that supports OCI Artifact type images. Can ORAS be that tool?
+    - Steve - ORAS was initiall intended to deal with everything else that would get pushed to a registry that wasn't an image. It could reference images, but not meant to manipulate images as there are other tools.
+    - Steve [Added Discussions to ORAS](https://github.com/deislabs/oras/discussions/) to enable further collaboration and discussions
+    - Phil - there area a bunch of registry tools evolving in GitHub. 
+    - [TOB Notes for ORAS discussion](https://github.com/opencontainers/tob/pull/76)
+- Artifacts
+    - Jon
+        - weak references in the registry would be a generally useful abstraction
+        - wary of intermingling mutable things within the CAS
+
+## January 20, 2021
+
+### Agenda Items:
+- Cancelled
+
+## January 13, 2021
+
+### Agenda Items:
+- Cancelled, no agenda items
