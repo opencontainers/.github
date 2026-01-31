@@ -1,8 +1,4 @@
-# OCI Weekly Dev Meeting Notes Archive - April 2025 to March 2026
-
-## January 1, 2026
-
-Canceled for New Years Day.
+# OCI Weekly Dev Meeting Notes Archive - 2025
 
 ## December 25, 2025
 
@@ -1671,3 +1667,635 @@ Notes from the zoom chat:
 
 00:26:29	Arnaud Meukam:	https://docs.google.com/presentation/d/1Vdr7BhbYXeWjwmLjGmqnUkvJr_eOUdU0x-JxfXWxUT8/edit#slide=id.g2f0d2381f13_0_852
 00:30:48	Phil Estes:	https://github.com/opencontainers/runtime-spec/pull/1271
+
+## March 27, 2025
+
+**Recording**: https://youtu.be/AKbZPkAzwLU
+
+### Attendees:
+
+- Jory Burson
+- Tianon
+- Brandon Mitchell
+- Samuel Karp
+- Sajay Antony
+- Brian Goff
+- Syed Ahmed
+- Jeff Carter
+
+### Actionable Agenda Items:
+
+- Ready for review:
+  - Fixing image-spec badge: <https://github.com/opencontainers/image-spec/pull/1251>
+- Container Plumbing Days CFP is open, promotions encouraged: <https://groups.google.com/a/opencontainers.org/g/dev/c/lWLddPSeyRU/m/w1KTQ-hLBAAJ>
+- KubeCon EU in-person meeting Tuesday, April 1, 10am-11am BST @ Level 1, ICC Prince Regent Room 1
+
+### Presentation/Discussion Agenda Items:
+
+- Should we include non-OCI media types in the spec: <https://github.com/opencontainers/image-spec/pull/1191>
+
+### Notes:
+
+Notes from the zoom chat:
+
+00:10:54	Sajay Antony:	Sorry folks been out of the country for the last 2 weeks so just catching up.
+00:12:43	Jory Burson (LF):	KubeCon EU meeting has been added to the cal for April 1
+00:12:49	Tianon (he/him):	mounting untrusted filesystems directly into the kernel 🥳  <homer-hides-in-the-hedge.gif>
+00:18:50	Sajay Antony:	Thanks all.
+
+## March 20, 2025
+
+**Recording**: https://youtu.be/XojSHq6L0mI
+
+### Attendees:
+
+- Jory Burson
+- Tianon
+- Brandon Mitchell
+- Ramkumar Chinchani
+- Brian Goff
+- Syed Ahmed
+
+### Actionable Agenda Items:
+
+- Ready for review:
+  - Fixing image-spec badge: <https://github.com/opencontainers/image-spec/pull/1251>
+- Container Plumbing Days Update
+  - Help promote CFP!
+  - Boost on LinkedIn / Twitter
+
+### Presentation/Discussion Agenda Items:
+
+- image-spec bumping dependencies: <https://github.com/opencontainers/image-spec/pull/1253>
+  - Concerns on bumping the Go version for this considering how much it has been imported.
+- distribution-spec conformance dependencies: <https://github.com/opencontainers/distribution-spec/pull/571>
+  - Since this is only in conformance, we can likely bump the Go version to get this to build.
+
+### Notes:
+
+Notes from the zoom chat:
+
+00:12:43	Brian Goff (@cpuguy83):	Oh I came at just the right time.
+00:14:03	Brian Goff (@cpuguy83):	I have a rant about this every go release.
+00:14:11	Tianon (he/him):	the longer I use Go, the more heavily https://fasterthanli.me/articles/i-want-off-mr-golangs-wild-ride resonates with me
+00:14:25	Ramkumar Chinchani:	if we disagree with their approach, we should write our own language&compiler
+00:16:23	Jory Burson (LF):	Preach. Tianon!
+
+## March 13, 2025
+
+**Recording**: https://youtu.be/bOq246XSSq8
+
+### Attendees:
+
+- Brandon Mitchell
+- Tianon
+- Miloslav Trmac
+- Brian Goff
+- Derek McGowan
+- Jon Johnson
+- Jory Burson
+- Samuel Karp
+- Jeff Carter
+
+### Actionable Agenda Items:
+
+- Ready for review:
+  - Canonical JSON: <https://github.com/opencontainers/image-spec/pull/1249>
+    - Merged
+  - Fixing image-spec badge: <https://github.com/opencontainers/image-spec/pull/1251>
+
+### Presentation/Discussion Agenda Items:
+
+- Annotation for an "instance" in a source repo: <https://github.com/opencontainers/image-spec/issues/1046>
+  - Disagreement on whether this should be part of the source url, a path, a unique instance per image built, or a 3rd party annotation.
+- Async delete: <https://github.com/opencontainers/distribution-spec/issues/570>
+  - Agreement that 202 means async and implementations may not immediately delete the manifest, PR needed, no volunteers.
+  - Jon would like a structured error message when a manifest delete is blocked for data integrity, listing the other digests referencing the content being deleted
+- Jory has details for Container Plumbing Days CFP up <https://events.linuxfoundation.org/container-plumbing-days/program/cfp/>
+- In-person meeting at KubeCon EU, 10 AM Tuesday April 1
+
+### Notes:
+
+Notes from the zoom chat:
+
+00:29:55	Tianon (he/him):	"As implied by the 202 status code, deletion may happen asynchronously."
+00:30:25	Tianon (he/him):	Replying to ""As implied by the 2..." sorry, MAY
+00:35:23	Jory Burson (LF):	Tuesday, 1 April, from 10:00-12:00
+00:36:37	Jeff Carter:	there is a "I'm a teapot" code, maybe there should be a "i'm a wizard" code
+00:36:41	Brian Goff (@cpuguy83):	Because http/2 requires wizardry.
+00:40:53	Jeff Carter:	how is the json formatted?
+00:42:23	Samuel Karp:	need to drop, thanks
+00:42:41	Tianon (he/him):	Replying to "how is the json form..." in the canonical way (as opposed to canonical json)
+00:54:22	Tianon (he/him):	I'll blow away those 10 thousand manifests to the tune of the famous disturbed song too
+
+## March 6, 2025
+
+**Recording**: https://youtu.be/pVBydQhEP2E
+
+### Attendees:
+
+- Brandon Mitchell
+- Tianon
+- Harry Randazzo
+- Ramkumar Chinchani
+- Brian Goff
+- Philip Laine
+- Samuel Karp
+
+### Actionable Agenda Items:
+
+none
+
+### Presentation/Discussion Agenda Items:
+
+- Canonical JSON in image-spec: <https://github.com/opencontainers/image-spec/pull/1249>
+  - No objections and no other maintainers around to review this week
+- In-person meeting at KubeCon EU?
+  - Follow up with <operations@opencontainers.org>
+
+### Notes:
+
+From the zoom chat:
+
+00:03:05	Tianon (he/him):	Harry starting right into a landmine 😀
+00:03:49	Tianon (he/him):	https://github.com/opencontainers/image-spec/blob/v1.1.1/annotations.md#pre-defined-annotation-keys:~:text=org.opencontainers.image.ref.name
+00:08:26	Ramkumar Chinchani:	This SHOULD be a fully qualified reference name, without any assumed default registry. (e.g., registry.example.com/my-org/my-image:tag instead of my-org/my-image:tag). only for base.name?
+00:10:49	Tianon (he/him):	@Brian Goff (@cpuguy83) gonna pipe up for his Microsoft friends that he wants UTF-16 instead 😂
+00:11:08	Tianon (he/him):	Replying to "@Brian Goff (@cpuguy..." the untold horrors of the Windows ecosystem
+00:11:32	Brian Goff (@cpuguy83):	And we're not there 🙂
+00:12:18	Harry Randazzo:	Gotta drop early, I'll come next week with more landmines 😅
+00:13:50	Brian Goff (@cpuguy83):	Replying to "@Brian Goff (@cpuguy..." 16 is better than 8 right?
+00:14:21	Brian Goff (@cpuguy83):	Quick someone say something controversial
+
+## February 27, 2025
+
+**Recording**: https://youtu.be/NWn9I09lx2k
+
+### Attendees:
+
+- Tianon
+- Brandon Mitchell
+- Brian Goff
+- Jeff Carter
+- Syed Ahmed
+- Sajay Antony
+- Harry Randazzo
+- W. Trevor King
+- Ramkumar Chinchani
+
+### Actionable Agenda Items:
+
+- Vote:
+  - image-spec v1.1.1: <https://github.com/opencontainers/image-spec/pull/1247>
+  - runtime-spec v1.2.1: <https://github.com/opencontainers/runtime-spec/pull/1278>
+- Review needed:
+  - Registering blake3 algorithm: <https://github.com/opencontainers/image-spec/pull/1240>
+
+### Presentation/Discussion Agenda Items:
+
+- Including uncompressed layer size in descriptors: <https://github.com/opencontainers/image-spec/issues/1246>
+  - Many agree transport level compression is an ideal state.
+  - Some concern on supporting range requests.
+  - OCI Layout may need to be updated to support compression extensions on blob files to effectively have transport level compression on blobs in a Layout.
+- Blob HEAD vs GET: <https://github.com/opencontainers/distribution-spec/issues/569>
+  - No objection, this bug violated both HTTP and distribution specs
+
+### Notes:
+
+Notes from the zoom chat:
+
+00:05:34	Brian Goff (@cpuguy83):	Kelvin or bust.
+00:09:48	Tianon (he/him):	https://github.com/docker-library/official-images/issues/17720#issuecomment-2450200677
+00:13:40	Brian Goff (@cpuguy83):	Much easier to add the field... that said transport layer compression is ideal.
+00:15:11	Brian Goff (@cpuguy83):	Oh no, Sajay is gone.
+00:15:18	Brian Goff (@cpuguy83):	Oh nevermind,
+00:15:25	Brian Goff (@cpuguy83):	UI disappeared.
+00:15:34	Sajay Antony:	I'm just staying silent on this one @Brian.
+00:16:22	Brian Goff (@cpuguy83):	Good news, Go is going to add content negotiation to the stdlib.
+00:17:00	Tianon (he/him):	Replying to "Good news, Go is goi..." https://github.com/golang/go/issues/19307 for folks unfamiliar with that discussion
+00:18:10	Sajay Antony:	Server side CPU and compression offloading will really have to evaluated is my guess.
+00:18:47	Ramkumar Chinchani:	i am also hearing transcoding?
+00:19:28	Brandon Mitchell:	https://github.com/opencontainers/image-spec/blob/main/image-layout.md
+00:19:38	Sajay Antony:	Image downloading 5-10GB models onto 100s of VMs.
+00:19:54	Sajay Antony:	"Imagine"
+00:27:01	Tianon (he/him):	KILL DIFFID
+00:27:07	Jeff Carter:	We’ve started to see 150 gb models recently
+00:29:42	Brian Goff (@cpuguy83):	Not compressing layers fixes a lot of issues at the runtime side.
+00:30:39	W. Trevor King:	I have to drop for another meeting; fun times :)
+00:36:39	Tianon (he/him):	Replying to "Not compressing laye..." yeah, for sure -- compression is what makes mounting tarballs hairy (making a map of the files in the tar is trivial otherwise)
+00:38:04	Ramkumar Chinchani:	main concern is ... is there enough information at all places (servers and clients) where gzip(gunzip(gzip(blob)) = gzip(blob) etc
+00:38:21	Sajay Antony:	Hoops we have to jump through @Brian - containerd/accelerated-container-image: A production-ready remote container image format (overlaybd) and snapshotter based on block-device.
+00:41:30	Brandon Mitchell:	Hat tip to Ram for directly asking the question I was too polite to ask. :D
+00:49:08	Brian Goff (@cpuguy83):	Definitely my assumption as well.
+00:53:07	Brian Goff (@cpuguy83):	I guess in this case the registry would only really be able to store this using the lowest common denominator compression... assuming it wouldn't want to store the same compressed data in 2 (or more) different formats.
+00:53:37	Brian Goff (@cpuguy83):	Which makes zstd a no-go here.
+00:56:20	Brian Goff (@cpuguy83):	Oh that's a great point, @Tianon (he/him)
+00:57:03	Ramkumar Chinchani:	network is cheap/free is a myth - i keep getting ratelimited everywhere there are other cheap/free myths about CPU and memory
+
+## February 20, 2025
+
+**Recording**: https://youtu.be/wlIuxqH818k
+
+### Attendees:
+
+- Jory Burson
+- Tianon
+- W Trevor King
+- Sajay Antony
+- Brandon Mitchell
+- Josh Dolitsky
+- Brian Goff
+- Harry Randazzo
+- Ramkumar Chanchani
+- Samuel Karp
+- Mike Brown
+
+### Actionable Agenda Items:
+
+- Review needed:
+  - Referrers tag schema: <https://github.com/opencontainers/distribution-spec/pull/563>
+  - Registering blake3 algorithm: <https://github.com/opencontainers/image-spec/pull/1240>
+
+### Presentation/Discussion Agenda Items:
+
+- (Josh) Add optional tagType query param to tags list endpoint
+    - https://github.com/opencontainers/distribution-spec/pull/568
+    - Regex another possibility, but feels messy
+- Reformating distribution-spec: <https://github.com/opencontainers/distribution-spec/issues/566>
+- Refactoring conformance tests: <https://github.com/opencontainers/distribution-spec/pull/543#issuecomment-2666202571>
+
+### Notes:
+
+Notes from the zoom chat:
+
+00:03:04	Sajay Antony:	Good to see you Josh.
+00:06:49	Brian Goff (@cpuguy83):	<shudderas as I look at my Teams window>
+00:07:30	Brandon Mitchell:	The browser app is the only way I share a screen in zoom now.
+00:19:28	Tianon (he/him):	https://oci.dag.dev/?repo=tomcat 😅  (more advanced filtering would be awesome IMO, but I don't have high confidence that it's realistic to expect registries to implement it)
+00:19:49	Sajay Antony:	There are older issues for improved tag listing
+00:19:49	Sajay Antony:	 - [RFP] replace catalog API functionality · Issue #22 · opencontainers/distribution-spec
+00:19:49	Sajay Antony:	Lexial discussion - Proposal: Allow listing tags in reverse lexical order · Issue #545 · opencontainers/distribution-spec
+00:19:49	Sajay Antony:	There have been a lot of request for better tag listing/searching
+00:22:26	Tianon (he/him):	image index 👀
+00:23:34	Sajay Antony:	John had pointed to GCR manifest/list endpoint in one of those issues and also - docs: initial commit for search extension by rchincha · Pull Request #504 · opencontainers/distribution-spec
+00:25:47	Tianon (he/him):	see https://oci.dag.dev/?repo=gcr.io/go-containerregistry/crane for the data GCR provides in practice
+00:26:06	Tianon (he/him):	Replying to "see https://oci.dag...." "timeCreatedMs": "-6795364578871", this is adorable though
+00:29:36	Tianon (he/him):	https://github.com/opencontainers/distribution-spec/issues/443 + https://github.com/opencontainers/distribution-spec/issues/446
+00:31:21	Ramkumar Chinchani:	https://github.com/opencontainers/wg-auth
+00:33:56	Ramkumar Chinchani:	Replying to "https://github.com/o..." auth not in the spec is messed up
+00:35:37	W. Trevor King:	I think it's worth trying to find things that can improve the conformance tests in a bunch of tiny pivots, instead of trying to address all the sticky points in one big pivot.  Yes, there will be lots of bits that stay sticky until eventually all the issues get polished out, but you aren't hamstrung in the meantime
+00:36:53	Sajay Antony:	@Ramkumar Chinchani does zot support 512 manifests?
+00:39:32	Ramkumar Chinchani:	Replying to "@Ramkumar Chinchani ..." Yes it does. We moved away from hardcoded digest algos a while ago.
+00:41:04	Ramkumar Chinchani:	Replying to "@Ramkumar Chinchani ..." But as always, trust but verify.
+00:41:33	Sajay Antony:	NTD for another call folks. Hard to skip that one.
+00:43:53	W. Trevor King:	I'm also not Quay, but was poking around re: referrer API pessimisim and found https://www.redhat.com/en/blog/announcing-open-container-initiativereferrers-api-quayio-step-towards-enhanced-security-and-compliance from December
+00:44:07	Samuel Karp:	Which redirect?
+00:45:33	Samuel Karp:	https://opencontainers.org/about/governance
+
+## February 13, 2025
+
+**Recording**: https://youtu.be/XukRCe16WEU
+
+### Attendees:
+
+- Brandon Mitchell
+- Tianon
+- Kyle Crane
+- Abhishek Jha
+- Sajay Antony
+- Jory Burson
+- Ramkumar Chinchani
+- Michael Brown
+- Shama Kashyap
+
+### Actionable Agenda Items:
+
+- Review needed:
+  - Governance redirect: <https://github.com/opencontainers/opencontainers.org/pull/158>
+  - TOB in readme: <https://github.com/opencontainers/tob/pull/146>
+  - TOB on website: <https://github.com/opencontainers/opencontainers.org/pull/160>
+  - Referrers tag schema: <https://github.com/opencontainers/distribution-spec/pull/563>
+
+### Presentation/Discussion Agenda Items:
+
+- Opentofu is adding OCI artifact support: <https://github.com/opentofu/opentofu/pull/2163>
+- Registering blake3 in image-spec: <https://github.com/opencontainers/image-spec/pull/1240>
+- Header / identifier for OCI scanners: <https://github.com/opencontainers/distribution-spec/issues/564>
+- Reformating distribution-spec: <https://github.com/opencontainers/distribution-spec/issues/566>
+
+### Notes:
+
+Notes from the zoom chat:
+
+00:08:51	Brandon Mitchell:	https://github.com/C2SP/C2SP/blob/main/BLAKE3.md
+00:09:40	Jory Burson (LF):	Merging https://github.com/opencontainers/tob/pull/146
+00:24:40	Tianon (he/him):	"Go-http-client" shaking my fist at Go
+00:28:16	Sajay Antony:	I like the idea of an intent honestly.
+00:29:15	Jory Burson (LF):	Brb - need to take a quick call
+00:32:21	Tianon (he/him):	retention policies and a truly content-addressable store are concepts that are somewhat at odds, and that is part of why this is a hard conversation we keep having 😄
+00:32:53	Sajay Antony:	@Michael @shama - do you folks see scanners being able to produce this header.
+00:32:57	Tianon (he/him):	Replying to "retention policies a..." ie, can't have meaningful content-addressable storage if the content you're trying to address goes away 😅
+00:37:03	Sajay Antony:	That compounded usecase is what I am concerned about.
+00:41:52	Kyle Crane:	I am new to the community.
+00:42:03	Sajay Antony:	Good discussion and seems like I got involved in  his and missed an overlapping meeting. NTD folks.
+00:42:20	Sajay Antony:	*this -> scanner
+00:42:30	Tianon (he/him):	Replying to "I am new to the comm..." at the risk of being a little bit weird, I really love your name and hope you're familiar with https://github.com/google/go-containerregistry/tree/main/cmd/crane  😄❤️
+00:45:44	Kyle Crane:	Replying to "I am new to the comm..." Full disclosure, I am working on https://www.signal.fyi/ . Here to make sure I am building in alignment with community best practice. This is the normal name reference I get: https://dyinglight.fandom.com/wiki/Kyle_Crane
+00:53:33	Jory Burson (LF):	I came back!
+00:56:00	Jory Burson (LF):	DAG-nabbit!
+
+## February 6, 2025
+
+**Recording**: https://youtu.be/tEyIaHmtVlI
+
+### Attendees:
+
+- Mike Brown
+- Tianon
+- Sajay Antony
+- Brandon Mitchell
+- Jory Burson
+- Ramkumar Chinchani
+- Mrunal Patel
+- Michael Brown
+- W. Trevor King
+
+### Actionable Agenda Items:
+
+- TOB Chair nomination window closing tomorrow: <https://github.com/opencontainers/tob/issues/147>
+
+### Presentation/Discussion Agenda Items:
+
+- Referrers tag schema with alternate hash algorithms:
+  - <https://github.com/opencontainers/distribution-spec/pull/563>
+  - Algorithms do not have a length limit and may contain separators, both of which can break a tag: <https://github.com/opencontainers/image-spec/blob/main/descriptor.md#digests>
+  - Should we limit referrers tag schema to only registered algorithms?
+- Should blake3 be registered in image-spec before adding to go-digest?
+  - <https://github.com/opencontainers/go-digest/pull/66>
+- Ecosystem
+  - Docker adding support for mounting images as volumes: <https://github.com/moby/moby/pull/48798>
+  - Podman adding support for OCI artifacts: <https://blog.podman.io/2025/01/podman-introduces-support-for-oci-artifacts/>
+
+### Notes:
+
+Notes from the zoom chat:
+
+00:10:44	Brandon Mitchell:	https://github.com/opencontainers/distribution-spec/blob/7872490e9d4943b20f11e21475bc13fd2e02b7d8/spec.md#L164-L166
+00:11:48	Ramkumar Chinchani:	Maybe some alg-names are special keywords and become an exception
+00:12:01	Sajay Antony:	Do we know why are they using the tag schema?
+00:12:43	Tianon (he/him):	a fun example of different ways these length limits become load-bearing in sometimes unexpected ways: https://github.com/goharbor/harbor/issues/15067
+00:14:13	Mike Brown:	https://github.com/opencontainers/distribution-spec/pull/256
+00:17:06	Jory Burson (LF):	Imma get a Blake3 hat for this call
+00:18:48	Tianon (he/him):	Replying to "Imma get a Blake3 ha..." if you actually do so, you should reach out to Jon because he's definitely a hat guy and would probably love this
+00:22:36	Brandon Mitchell:	https://github.com/opencontainers/image-spec/blob/fbb4662eb53b80bd38f7597406cf1211317768f0/descriptor.md#L156-L162
+00:25:57	Tianon (he/him):	"finding holes in stuff [we] never even considered" is wking's historic OCI legacy 🙂
+00:26:30	Sajay Antony:	What client/registry is this facing a problem with?
+00:28:02	Tianon (he/him):	Replying to "What client/registry..." given Mrunal is back too, I'm guessing this is FIPS-related (where Uncle Sam has decided that SHA-512 is "post-quantum safe" even though it just moves the goalpost further out) 👀
+00:36:21	Ramkumar Chinchani:	Replying to "What client/registry..." isn't all crypto like that?
+00:37:56	Tianon (he/him):	Replying to "What client/registry..." sure, but if the goal is explicitly the combination of FIPS compliance and post-quantum, I think there might be other hashing algorithms we should consider as well/instead
+00:38:14	Tianon (he/him):	Replying to "What client/registry..." ie, if we have to break a lot of stuff to get SHA-512 working, let's do that work for something more interesting instead
+00:41:50	Tianon (he/him):	Replying to "What client/registry..." I talked to a few folks (who I unfortunately couldn't convince to join this call) about post-quantum hashing who have a lot more experience with it than I do (which doesn't take much but it's something), and their honest recommendation was that blake3 is probably worth considering over SHA-512, but with the important caveat that it's not FIPS-approved
+00:43:56	Mrunal Patel:	Replying to "What client/registry..." I think it would be best to make it configurable so both aspects are covered. 1. Being compliant with FIPS  2. Using the most secure / best crypto export recommended algorithm that FIPS hasn't caught up to yet.
+00:45:37	Tianon (he/him):	Replying to "What client/registry..." the "fractal of complexity" option, yep, I dig it 😁 (that's in-line with how the formats are designed for sure, and I imagine is part of why in-toto's "descriptor" analogue has digests be a list instead of a single value)
+00:52:17	Tianon (he/him):	https://github.com/CloudNativeAI/model-spec/blob/main/docs/spec.md fwiw, someone's been listening and these are tar-based 🙂
+00:53:30	Brandon Mitchell:	Replying to "https://github.com/C..." I chimed in on that one when they wanted to make it an Artifact without tars.
+00:55:10	Tianon (he/him):	https://github.com/moby/moby/pull/48798 merged yesterday 👀
+
+## January 30, 2025
+
+**Recording**: <https://youtu.be/cu5qD5I0T7Q>
+
+### Attendees:
+
+- Brandon Mitchell
+- Ramkumar Chinchani
+- Tianon
+- Jory Burson
+- Mrunal Patel
+- Mike Brown
+- Syed Ahmed
+- Samuel Karp
+
+### Actionable Agenda Items:
+
+- Website update needs approval: <https://github.com/opencontainers/opencontainers.org/pull/157>
+  - Jory has a notice going out for members, 30 days ends March 1
+
+### Presentation/Discussion Agenda Items:
+
+- distribution-spec v1.1.1 released: <https://github.com/opencontainers/distribution-spec/releases/tag/v1.1.1>
+- TOB election needs to be run for chair:
+  - <https://github.com/opencontainers/tob/pull/146>
+  - Chair election from last year: <https://github.com/opencontainers/tob/issues/143>
+  - Chair election for 2025: <https://github.com/opencontainers/tob/issues/147>
+  - New board members can send a bio to Brandon for the website
+- (Mrunal) sha 512 support in distribution spec for PQC
+  - <https://github.com/opencontainers/distribution-spec/issues/494>
+  - <https://github.com/opencontainers/distribution-spec/pull/543/files>
+- <https://github.com/kubernetes-sigs/node-feature-discovery/releases/tag/v0.17.0>
+
+### Notes:
+
+Notes from zoom chat:
+
+00:02:39	Brandon Mitchell:	https://opencontainers.org/about/tob/
+00:13:39	Samuel Karp:	I'm guessing I missed this; is there a short summary of the motivation for sha512 over sha256?
+00:14:43	Ramkumar Chinchani:	We have been discussing BLAKE3 for performance reasons https://crypto.stackexchange.com/questions/88585/post-quantum-security-of-the-blake-family
+00:15:13	Samuel Karp:	Yeah, performance reasons for BLAKE3 make sense, but both sha256 and sha512 are from the SHA-2 family.
+00:16:11	Ramkumar Chinchani:	In general, the theme is a future of mixed crypto is near, possibly very near
+00:16:17	Syed Ahmed:	It’s a suggestion from CNSA
+00:16:56	Syed Ahmed:	https://media.defense.gov/2022/Sep/07/2003071836/-1/-1/0/CSI_CNSA_2.0_FAQ_.PDF
+00:17:42	Jory Burson (LF):	(TOB election, in case someone wants to nominate cough Sam cough
+00:17:47	Jory Burson (LF):	https://github.com/opencontainers/tob/issues/147
+00:18:06	Mike Brown:	PAUL SCHWEIGERT  paulschw@us.ibm.com  ibm research working on quantum safe algs.. or at least would have the links
+00:18:33	Mrunal Patel:	Thanks Mike!
+00:19:32	Tianon (he/him):	Replying to "https://media.defens..." my reading of this is "if you're using SHA, make sure it's 384 or 512", not "you should use SHA-512", but maybe I've missed something 😅
+00:20:52	Syed Ahmed:	Replying to "https://media.defens..." No, that’s what I read as well. looks like we have the option of 384/512
+00:29:12	Mike Brown:	https://github.com/opencontainers/image-spec/blob/main/descriptor.md#digests
+00:29:28	Mrunal Patel:	Thanks!
+00:30:19	Mike Brown:	“Registered algorithms: While the algorithm component of the digest string allows the use of a variety of cryptographic algorithms, compliant implementations SHOULD use SHA-256.”
+00:35:53	Ramkumar Chinchani:	https://zotregistry.dev/ zot should also support this imo out of the box
+00:36:07	Brandon Mitchell:	https://github.com/olareg/olareg
+00:36:22	Mrunal Patel:	Thanks for the links!
+00:36:26	Mike Brown:	https://github.com/opencontainers/go-digest
+00:36:48	Brandon Mitchell:	https://github.com/regclient/regclient
+00:36:57	Brandon Mitchell:	"regctl image mod"
+00:48:13	Jory Burson (LF):	@Brandon Mitchell I’ve readied the member notice for the release, any questions before that goes out
+00:48:35	Brandon Mitchell:	Replying to "@Brandon Mitchell I’..." None from me, ship it
+00:49:18	Jory Burson (LF):	Replying to "@Brandon Mitchell I’..." 30 day period ends on March 1, FYI
+00:57:26	Brandon Mitchell:	https://github.com/kubernetes-sigs/node-feature-discovery/releases/tag/v0.17.0
+01:02:19	Ramkumar Chinchani:	ntd
+
+## January 23, 2025
+
+**Recording**: https://youtu.be/bWmUfnFMmjY
+
+### Attendees:
+
+- Tianon
+- Mike Brown
+- Ramkumar Chinchani
+- Brian Goff
+- Brandon Mitchell
+- Derek McGowan
+- Jory Burson
+- Michael Brown
+- Samuel Karp
+
+### Actionable Agenda Items:
+
+None
+
+### Presentation/Discussion Agenda Items:
+
+- distribution-spec needs releases for `actions.yml` to avoid breaking everyone's CI:
+  - <https://github.com/opencontainers/distribution-spec/pull/560>
+  - <https://github.blog/changelog/2024-04-16-deprecation-notice-v3-of-the-artifact-actions/>
+  - <https://github.com/opencontainers/distribution-spec/pull/561>
+- Jory is looking for committee members for Container Plumbing Days at OSS EU
+  - Mike and Brandon volunteered
+- Request to cut an image-spec release:
+  - External projects want to cleanup their dependencies <https://github.com/opencontainers/image-spec/pull/1189>
+- Erofs in containerd: <https://github.com/containerd/containerd/pull/10705>
+  - discussed how image selection could work when erofs is seen by older runtimes
+
+### Notes:
+
+Notes from the zoom chat:
+
+00:04:12	Ramkumar Chinchani:	https://github.com/containerd/containerd/pull/10705 just fyi, if folks not already aware
+00:07:45	Brandon Mitchell:	https://github.com/opencontainers/image-spec/releases/tag/v1.0.2
+00:11:19	Jory Burson (LF):	That explains it, I was hanging out in the wrong zoom 🤦‍♀️
+00:18:22	Tianon (he/him):	pretty sure the major.minor.patch terminology predates semver 😅
+00:25:20	Derek McGowan:	Co-located with which event?
+00:33:08	Samuel Karp:	I won't be able to attend Amsterdam
+00:35:47	Mike Brown:	container plumbing days / mini summit for oci.. spin it with some AI related projects how does oci enable ___
+00:37:07	Tianon (he/him):	"miner patch"
+00:41:28	Mike Brown:	optimize process for handling oci media types… more than “convert"
+00:42:49	Mike Brown:	“only one mount is required for each container image instead of one mount per layer "
+00:42:54	Mike Brown:	interesting ^^
+00:43:29	Samuel Karp:	the container mountns only sees one mount that is the rootfs, but we do have more mounts outside the container mountns
+00:45:22	Brandon Mitchell:	https://github.com/opencontainers/wg-image-compatibility/tree/main/docs/proposals
+00:47:45	Brandon Mitchell:	https://github.com/opencontainers/image-spec/blob/main/image-index.md
+00:50:28	Mike Brown:	https://github.com/opencontainers/image-spec/blob/main/specs-go/v1/descriptor.go#L52-L72
+00:50:44	Brandon Mitchell:	https://github.com/regclient/regclient/pull/775
+00:52:28	Mike Brown:	ah missed you guys were talking about some new prefer… vs first of a specific match to a set of platform fields
+00:52:56	Mike Brown:	thought we were going with the later.. for k8s like scenarios
+00:56:55	Derek McGowan:	https://github.com/containerd/platforms/pull/20
+00:58:43	Brian Goff:	buildkit...
+00:58:51	Brandon Mitchell:	My prefer string is ugly https://github.com/regclient/regclient/pull/775/files#diff-fa22c7f98e5449042e7dd1aba9e5cfdfec3e706dad98dbf18f9bec0a65039087R134-R138
+01:01:20	Mike Brown:	standards .. he who merges first..
+01:01:20	Jory Burson (LF):	I have to drop, talk to you folks soon!
+01:02:56	Mike Brown:	where I get nervous is trying to “partial” match or match one way before using a field and a different way after updating a tool
+01:05:40	Samuel Karp:	have to drop now
+
+## January 16, 2025
+
+**Recording**: https://youtu.be/SrYt6Y2GnX0
+
+### Attendees:
+
+- Brandon Mitchell
+- Jory Burson
+- Sajay Antony
+- Joseph Ferguson
+- Ramkumar Chinchani
+
+Regrets:
+
+- Mike Brown (can't attend today containerd summit)
+
+### Actionable Agenda Items:
+
+None
+
+### Presentation/Discussion Agenda Items:
+
+- Jory still needs one TM board member to vote for budget
+- Planning for container plumbing days / August mini-summit
+- go-digest dropped sha384: <https://github.com/opencontainers/go-digest/pull/97>
+  - Discussing blake3 and mixed content
+- os.features syntax: <https://github.com/opencontainers/image-spec/issues/1237>
+- Should Gradle implementation be added: <https://github.com/opencontainers/image-spec/pull/1156>
+- Should layers like estargz be defined by the spec: <https://github.com/opencontainers/image-spec/pull/877>
+  - Don't want to standardize stuff documented outside of OCI, but it would be good to document the OCI media types, annotations, and validation process.
+- Should we update release steps to update specs web page: <https://github.com/opencontainers/specs.opencontainers.org/pull/7>
+  - No objection to sending a PR for release steps, few know this page exists.
+- Canonical JSON could use more opinions: <https://github.com/opencontainers/image-spec/issues/1226>
+  - Ram would like to see Go implementations output canonical JSON
+
+### Notes:
+
+Notes from the zoom chat:
+
+00:16:46	Brandon Mitchell:	Golang discussion on Blake3: https://github.com/golang/go/issues/36632
+00:17:30	Brandon Mitchell:	Also at https://github.com/golang/go/issues/32447
+00:26:33	Sajay Antony:	I see the love for Blake3 and want to front load all the conversations with the Security folks.
+00:27:05	Sajay Antony:	NTD>
+00:37:16	Ramkumar Chinchani:	https://specs.opencontainers.org/
+00:37:21	Ramkumar Chinchani:	^ this is a real thing?
+
+## January 9, 2025
+
+**Recording**: https://youtu.be/FwppRjliSb0
+
+### Attendees:
+
+- Tianon
+- Brian Goff
+- Brandon Klein
+- Brandon Mitchell
+- Sajay Antony
+- Mike Brown
+- Jory Burson
+- Samuel Karp
+
+### Actionable Agenda Items:
+
+- Ready for review
+  - <https://github.com/opencontainers/image-spec/pull/1225>
+  - <https://github.com/opencontainers/image-spec/pull/1227>
+  - <https://github.com/opencontainers/image-spec/pull/1228>
+  - <https://github.com/opencontainers/image-spec/pull/1229>
+  - <https://github.com/opencontainers/image-spec/pull/1230>
+
+### Presentation/Discussion Agenda Items:
+
+- Annotation for artwork: <https://github.com/opencontainers/image-spec/issues/1231>
+- Trailing spec vs trailing implementations: <https://github.com/opencontainers/distribution-spec/issues/485>
+
+### Notes:
+
+Notes from zoom chat:
+
+00:04:34	Tianon (he/him):	ouch
+00:04:40	Tianon (he/him):	I'm losing feeling in my toes just thinking about that
+00:05:40	Tianon (he/him):	I used to live in a place that gets snow, and now I live in Las Vegas, and that's very much not a coincidence
+00:10:23	Brian Goff:	referrers 🙂
+00:13:16	Tianon (he/him):	plop a new entry in the index; platform: { os: "metadata", architecture: "logo" }
+00:13:25	Tianon (he/him):	Replying to "plop a new entry in ..." (for the avoidance of doubt, this is mostly trolling Brandon)
+00:17:20	Brandon Mitchell:	https://oci.dag.dev/
+00:18:02	Tianon (he/him):	Replying to "https://oci.dag.dev/..." OSS, too: https://github.com/jonjohnsonjr/dagdotdev
+00:18:11	Tianon (he/him):	Replying to "https://oci.dag.dev/..." (so you can run your own instance and access private data, if you need to)
+00:19:18	Tianon (he/him):	make the registry accept otherwise-invalid tags like xxx:_metadata to store repo-level data 👀
+00:22:38	Sajay Antony:	Replying to "make the registry ac..." Yep we agreed on some tag like that to have teams push their repo metadata to have the front end expose the content on the UX.
+00:24:37	Mike Brown:	sure would be nice if someone open sourced their registry api
+00:25:05	Tianon (he/him):	Replying to "sure would be nice i..." https://pkg.go.dev/cuelabs.dev/go/oci/ociregistry
+00:26:17	Sajay Antony:	Docker Blue .... 😂
+00:26:23	Brandon Mitchell:	https://github.com/opencontainers/distribution-spec/issues/485
+00:26:30	Brian Goff:	Is the API for Hub even published?
+00:26:53	Jory Burson (LF):	That’s the funniest thing I’ve heard in a long while
+00:27:35	Tianon (he/him):	Replying to "That’s the funniest ..." gonna quit tech and become a comedian ❤️
+00:29:53	Jory Burson (LF):	I will have to drop at the half hour but my update is that I don’t have any updates today! The Trademark Board is missing a vote or two to finish ratifying OCI’s budget. But that’s it!
+00:34:17	Samuel Karp:	https://github.com/opencontainers/tob#members
+00:39:58	Tianon (he/him):	I don't know anyone with an affinity for old software (cough https://github.com/tianon/oci-schema1  cough)
+00:42:31	Brian Goff:	That's some jq
+00:46:16	Brandon Mitchell:	https://github.com/opencontainers/distribution-spec/pull/391
+00:47:51	Samuel Karp:	Mute?
+00:49:52	Sajay Antony:	zoom is messing me with. compounded with remote machine.
+00:50:38	Brandon Mitchell:	https://github.com/opencontainers/image-spec/pull/1225
+00:50:40	Sajay Antony:	I'll take a look at 1225.
+
+## January 2, 2025
+
+Canceled for holidays
