@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">22:03:46</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">OCI 2/1</span>
+<a name="l-2"></a><span class="tm">22:03:46</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Feb  1 22:03:46 2017 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">22:03:46</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">22:03:46</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to 'oci_2_1'
+<a name="l-5"></a><span class="tm">22:03:54</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">CLI API</span>
+<a name="l-6"></a><span class="tm">22:04:06</span><span class="nk"> &lt;mrunalp&gt;</span> We can proceed with 513 and fix runc later
+<a name="l-7"></a><span class="tm">22:04:17</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#chair </span><span class="cmdline">vbatts</span>
+<a name="l-8"></a><span class="tm">22:04:17</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp vbatts
+<a name="l-9"></a><span class="tm">22:04:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> should I remove the console portions of #513?  Or do we intend to update that as we get more clarity on the desired console API?
+<a name="l-10"></a><span class="tm">22:05:37</span><span class="nk"> &lt;mrunalp&gt;</span> wking, It should reflect what the final intended solution is.
+<a name="l-11"></a><span class="tm">22:06:17</span><span class="nk"> &lt;wking&gt;</span> do we know what that is with #663 in the air?
+<a name="l-12"></a><span class="tm">22:08:35</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">vbatts:</span> RobDolinMS PRs would need to be rebased as git validation should be fixed
+<a name="l-13"></a><span class="tm">22:08:56</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/672
+<a name="l-14"></a><span class="tm">22:09:19</span><span class="nk"> &lt;RobDolinMS&gt;</span> Thanks wking for getting the git validation issue fixed
+<a name="l-15"></a><span class="tm">22:13:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I'm here now, can you chair me?
+<a name="l-16"></a><span class="tm">22:13:52</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-17"></a><span class="tm">22:13:52</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp vbatts wking
+<a name="l-18"></a><span class="tm">22:14:59</span><span class="nk"> &lt;RobDolinMS&gt;</span> Go-Digest maintainers encouraged to vote: https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/f_iszYlOmpk
+<a name="l-19"></a><span class="tm">22:15:14</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">go-digest rc0 release</span>
+<a name="l-20"></a><span class="tm">22:15:17</span><span class="nk"> &lt;wking&gt;</span> https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/f_iszYlOmpk
+<a name="l-21"></a><span class="tm">22:16:51</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec 1.0 milestone</span>
+<a name="l-22"></a><span class="tm">22:17:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> some of these still need rebasing.  It would be nice to have that shown on the PR list
+<a name="l-23"></a><span class="tm">22:17:21</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/668
+<a name="l-24"></a><span class="tm">22:17:44</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">ambient capabilities</span>
+<a name="l-25"></a><span class="tm">22:17:51</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/668</span>
+<a name="l-26"></a><span class="tm">22:18:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I looked that over a while ago, but not recently
+<a name="l-27"></a><span class="tm">22:18:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> do we want a separate setting?
+<a name="l-28"></a><span class="tm">22:18:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> then it's up to the creator to get things right
+<a name="l-29"></a><span class="tm">22:18:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'd rather it be separate
+<a name="l-30"></a><span class="tm">22:18:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> should it be a boolean, or do we want admin capabilities listed explicitly
+<a name="l-31"></a><span class="tm">22:18:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we have four sets of capabilities
+<a name="l-32"></a><span class="tm">22:19:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> there are some rules about relationships between those sets
+<a name="l-33"></a><span class="tm">22:19:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> do we want to expose that explicitly, or do we just want a boolean for "ambient"?
+<a name="l-34"></a><span class="tm">22:19:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I thought you either use one or the other
+<a name="l-35"></a><span class="tm">22:19:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> some combinations may not be possible
+<a name="l-36"></a><span class="tm">22:20:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I think the boolean should cover most use cases
+<a name="l-37"></a><span class="tm">22:20:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we might have to check with justincormack
+<a name="l-38"></a><span class="tm">22:20:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> since caps is a whitelist
+<a name="l-39"></a><span class="tm">22:21:29</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">mount underspecified</span>
+<a name="l-40"></a><span class="tm">22:21:52</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/issues/470</span>
+<a name="l-41"></a><span class="tm">22:22:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> I think this is pretty much covered now
+<a name="l-42"></a><span class="tm">22:22:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I want John Howard to give his two cents on this, but it may be done
+<a name="l-43"></a><span class="tm">22:22:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> there's still a question about whether ntfs is the only supported value
+<a name="l-44"></a><span class="tm">22:23:13</span><span class="nk"> &lt;wking&gt;</span> ^ yes, or if Windows implementations are required to support ntfs or not
+<a name="l-45"></a><span class="tm">22:23:25</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/673</span>
+<a name="l-46"></a><span class="tm">22:23:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> I've been trying to clean up some of these ambiguities^
+<a name="l-47"></a><span class="tm">22:24:06</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/issues/303</span>
+<a name="l-48"></a><span class="tm">22:24:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> we also need wider feedback here^.  Do all platform folks think their platform's wording is clear and sufficient
+<a name="l-49"></a><span class="tm">22:24:53</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">are man page references normative?</span>
+<a name="l-50"></a><span class="tm">22:25:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> in discussion in https://github.com/opencontainers/runtime-spec/pull/673
+<a name="l-51"></a><span class="tm">22:25:20</span><span class="nk"> &lt;wking&gt;</span> the process.capabilities spec currently links the Linux man page
+<a name="l-52"></a><span class="tm">22:25:26</span><span class="nk"> &lt;wking&gt;</span> is that "
+<a name="l-53"></a><span class="tm">22:25:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> is that "for example", or "runtimes MUST support those values"?
+<a name="l-54"></a><span class="tm">22:26:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> if we're going for MUST, that's a lot of man page links
+<a name="l-55"></a><span class="tm">22:26:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> and Oracle/Solaris has a lot of link churn
+<a name="l-56"></a><span class="tm">22:26:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> philips and I have gone over this before, and there are times when it makes sense to quote the pieces you need
+<a name="l-57"></a><span class="tm">22:27:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> if you have a full name a subsection name, you can still find the right docs without stable URLs
+<a name="l-58"></a><span class="tm">22:27:30</span><span class="nk"> &lt;wking&gt;</span> although ick^ ;)
+<a name="l-59"></a><span class="tm">22:27:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'm not excited about relying on external sources
+<a name="l-60"></a><span class="tm">22:28:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> but if we inline the sections we rely on, it would bloat the spec
+<a name="l-61"></a><span class="tm">22:28:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> we might also have platforms without public APIs (e.g. their API is behind a paywall)
+<a name="l-62"></a><span class="tm">22:28:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> the question isn't whether the runtime MUST support the values
+<a name="l-63"></a><span class="tm">22:29:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> the point is that the values vary between platforms
+<a name="l-64"></a><span class="tm">22:31:04</span><span class="nk"> &lt;wking&gt;</span> I think you do need "the runtime MUST/SHOULD/MAY support this value"
+<a name="l-65"></a><span class="tm">22:31:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> I thought the runtime should ignore unknown values
+<a name="l-66"></a><span class="tm">22:31:27</span><span class="nk"> &lt;wking&gt;</span> do we actually have that rule^?  I think it should choke and die
+<a name="l-67"></a><span class="tm">22:33:24</span><span class="nk"> &lt;wking&gt;</span> [I missed some stuff here]
+<a name="l-68"></a><span class="tm">22:33:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> how far down that rabbit hole do we want to go
+<a name="l-69"></a><span class="tm">22:33:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> we could define some values for a particular spec version.  Do we bump the spec after kernel updates?
+<a name="l-70"></a><span class="tm">22:34:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> for the most part, the values are similar between Solaris and Linux.  I'm less clear on documenting valid values for Windows
+<a name="l-71"></a><span class="tm">22:34:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> if we're going to get really specific, things could get pretty ugly
+<a name="l-72"></a><span class="tm">22:35:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stephenrwalli:</span> are there conditions for when you're in one path or the other on this question?
+<a name="l-73"></a><span class="tm">22:35:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stephenrwalli:</span> how do you know when you need to specify supported values vs. leaving it implementation-defined?
+<a name="l-74"></a><span class="tm">22:36:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> it seems like a case-by-case basis.  Sometimes you need to crash-and-burn instead of ignoring unknown values
+<a name="l-75"></a><span class="tm">22:37:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stephenrwalli:</span> sometimes the values are different enough that you can't give a single value set for all platforms
+<a name="l-76"></a><span class="tm">22:37:32</span><span class="nk"> &lt;wking&gt;</span> I don't think you need a single set (e.g. for mount types, we have different sets for each platform)
+<a name="l-77"></a><span class="tm">22:38:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> it's hard to get generalizations right.  But nobody likes getting down into nitpicking at the "which kernel version" level
+<a name="l-78"></a><span class="tm">22:38:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> otherwise we might as well say "as of the Linux 4.0 kernel", but even that doesn't work with distro patching, config options, etc.
+<a name="l-79"></a><span class="tm">22:39:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> what do we think about a general statement that the implementation has to ensure the config/platform combo is valid (e.g. die if you're on a kernel too old for the given config)
+<a name="l-80"></a><span class="tm">22:39:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> then we can add clarifying language, but valid values would be platform/runtime dependent
+<a name="l-81"></a><span class="tm">22:40:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> so generalized, but with teeth
+<a name="l-82"></a><span class="tm">22:40:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> does that sound like a blanket statement "if you're running on this platform, the runtime MUST support..." might work?
+<a name="l-83"></a><span class="tm">22:41:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> as long as some enterprising individual could write a linter to convert that statement into tests
+<a name="l-84"></a><span class="tm">22:41:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> a similar situation is StopSignal on the image side
+<a name="l-85"></a><span class="tm">22:41:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if we over-validate we could block otherwise-functional configs
+<a name="l-86"></a><span class="tm">22:42:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> what's actionable about getting these errors?  Do you rebuild the image?  Rebuild the runtime config?  Can the user do anything?
+<a name="l-87"></a><span class="tm">22:42:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> it will be a lot easier than encoding these platform differences
+<a name="l-88"></a><span class="tm">22:42:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> I totally agree.  A goal is to stay abstract enough that we don't overspecify
+<a name="l-89"></a><span class="tm">22:43:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> the runtime is responsible for making sure it can run (and maybe for passing meaningful failures back to the caller?)
+<a name="l-90"></a><span class="tm">22:43:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> I'd like to see "CAPFOO is not real" rather than choking
+<a name="l-91"></a><span class="tm">22:43:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> but we don't need a whitelist in the spec
+<a name="l-92"></a><span class="tm">22:43:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> we don't want to have to document the Linux kernel
+<a name="l-93"></a><span class="tm">22:45:34</span><span class="nk"> &lt;wking&gt;</span> My only concern is that the abstract wording needs to be clear enough that runtime-tools can write compliance tests and know if a runtime is still compliant if it fails on a given CAP* (or whatever)
+<a name="l-94"></a><span class="tm">22:46:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> so "this is a valid value for this platform and your runtime died", are you still compliant?
+<a name="l-95"></a><span class="tm">22:46:11</span><span class="nk"> &lt;wking&gt;</span> ^ I think not ;)
+<a name="l-96"></a><span class="tm">22:46:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I don't think that makes it noncompliant
+<a name="l-97"></a><span class="tm">22:46:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we don't want to have to document the Linux/Solaris/BSD kernels
+<a name="l-98"></a><span class="tm">22:47:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> I'd much rather say "for the field foo, all the values your platform supports are good"
+<a name="l-99"></a><span class="tm">22:47:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> what's the alternative?
+<a name="l-100"></a><span class="tm">22:47:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> SHOULD is ok, or the runtime can refuse requests early if it knows more about the platform
+<a name="l-101"></a><span class="tm">22:48:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> getting more specific, process.capabilites is OPTIONAL.  If it's set, without a statement on valid values, the runtime could say "I don't support CAP_AUDIT_READ", is it still valid?
+<a name="l-102"></a><span class="tm">22:48:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> it can depend on which version of the library you're built on.  Should it still apply?
+<a name="l-103"></a><span class="tm">22:49:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> so it's still valid?
+<a name="l-104"></a><span class="tm">22:49:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> so should the runtime error out or silently ignore the value?
+<a name="l-105"></a><span class="tm">22:49:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the runtime should error out at the edge, not in a validation layer
+<a name="l-106"></a><span class="tm">22:49:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I don't want to see silent ignores
+<a name="l-107"></a><span class="tm">22:50:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> maybe this is about validation tooling?
+<a name="l-108"></a><span class="tm">22:50:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> on "error or ignore?", I think it should error out at the moment where it has to make that decision
+<a name="l-109"></a><span class="tm">22:51:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> maybe capabilities aren't the best example.  Linux can give you "invalid argument" for caps.  But some things can look like they work but not actually work
+<a name="l-110"></a><span class="tm">22:52:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> sometimes you can figure out supported caps early.  Sometimes you might want to wait for the runtime to fail in the attempt to set a value (and not pre-validate)
+<a name="l-111"></a><span class="tm">22:52:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> filesystem type might be a better example.
+<a name="l-112"></a><span class="tm">22:53:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> what if a runtime only supports a handful of filesystem, and somebody sets zfs, but the runtime doesn't support it for whatever reason
+<a name="l-113"></a><span class="tm">22:53:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlbutler:</span> is that runtime still compliant?
+<a name="l-114"></a><span class="tm">22:53:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'm game to help with wording if jlbutler wants to work something up
+<a name="l-115"></a><span class="tm">22:54:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I just want error instead of ignoring, and late errors being allowed (instead of requiring early validation)
+<a name="l-116"></a><span class="tm">22:54:35</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec index / manifest-list</span>
+<a name="l-117"></a><span class="tm">22:54:46</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/533</span>
+<a name="l-118"></a><span class="tm">22:54:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> please review this^
+<a name="l-119"></a><span class="tm">22:55:07</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/546</span>
+<a name="l-120"></a><span class="tm">22:55:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I've filed the rename in a separate PR^
+<a name="l-121"></a><span class="tm">22:55:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think the only issue for #533 is the elements/descriptors/manifests discussion
+<a name="l-122"></a><span class="tm">22:55:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm trying to be conservative
+<a name="l-123"></a><span class="tm">22:56:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> if we leave the name 'manifests' and don't have a separate field (so non-manifests would be in 'manifests')
+<a name="l-124"></a><span class="tm">22:56:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> is the assumption that consumers which account mediaTypes they don't support should silently ignore those entries?
+<a name="l-125"></a><span class="tm">22:56:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> yeah, although it's not explicit
+<a name="l-126"></a><span class="tm">22:57:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> Docker's logic is: which types to I support?  Which platforms am I on?  Find that one
+<a name="l-127"></a><span class="tm">22:57:24</span><span class="nk"> &lt;stephenrwalli&gt;</span> I need to wander off … cheers, all.
+<a name="l-128"></a><span class="tm">22:57:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think the AppStream isn't a manifest, but I'm not going to get too hung up on the semantics (as long as we have a way to differentiate entries)
+<a name="l-129"></a><span class="tm">22:57:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> the only sticky part with one descriptor array is the implied semantics of the 'manifests' name
+<a name="l-130"></a><span class="tm">22:58:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> but if we drop the secondary descriptor array and make the generic-ness more explicit (ignoring types you don't support)
+<a name="l-131"></a><span class="tm">22:58:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> and we can write out the logic
+<a name="l-132"></a><span class="tm">22:58:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'm not wild about 'manifests', but I understand the backwards-compat concern
+<a name="l-133"></a><span class="tm">22:59:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'd really like this to be a smooth transition without "hey, we've encoutered an OCI... and don't know what to do"
+<a name="l-134"></a><span class="tm">22:59:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the field name would be nice as 'descriptors', but 'manifests' is reasonable
+<a name="l-135"></a><span class="tm">23:00:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> and it could be a continuity manifest, or tar-split headers, or whatever
+<a name="l-136"></a><span class="tm">23:00:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'll take a stab at that this week.  And let me know on the separate rename PR
+<a name="l-137"></a><span class="tm">23:00:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> we won't add a separate field.  We'll just clarify the 'manifests' content and SHOULD support for manifest-like media types
+<a name="l-138"></a><span class="tm">23:01:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> the only other piece is elimitating refs/, but we can discuss that in the PRs
+<a name="l-139"></a><span class="tm">23:01:32</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

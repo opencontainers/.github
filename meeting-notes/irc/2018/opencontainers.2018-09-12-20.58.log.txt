@@ -1,0 +1,46 @@
+20:58:07 <vbatts|work> #startmeeting 2018-08-12 discussion
+20:58:07 <collabot> Meeting started Wed Sep 12 20:58:07 2018 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+20:58:07 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+20:58:07 <collabot> The meeting name has been set to '2018_08_12_discussion'
+21:04:39 <vbatts|work> #topic cra - feedback on certification proposal
+21:04:52 <vbatts|work> dongsu had a proposal
+21:05:03 <vbatts|work> crosby had feedback on that
+21:05:24 <cracra> [caniszczyk, Open Container Initiative] https://github.com/opencontainers/certification/issues/36#issuecomment-419155816
+21:05:34 <cracra> [caniszczyk, Open Container Initiative] #link https://github.com/opencontainers/certification/issues/36#issuecomment-419155816
+21:05:37 <vbatts|work> !link https://github.com/opencontainers/certification/issues/36#issuecomment-419155816
+21:05:39 <vbatts|work> 679016
+21:06:14 <vbatts|work> crosby says just have a test harness,
+21:12:01 <vbatts|work> we had the cli-spec, but it's trailing runc
+21:12:12 <vbatts|work> runc isn't 1.0, so don't firm up a cli-spec
+21:12:35 <vbatts|work> this certification/conformance is recommended to be a harness using the cli-spec
+21:12:43 <vbatts|work> (that is not official)
+21:13:52 <cracra> [caniszczyk, Open Container Initiative] runc api https://github.com/opencontainers/runc/pull/1788
+21:20:05 <vbatts|work> the cli-spec seems insufficeint
+21:20:34 <vbatts|work> derek's read on crosby was that runtimes need another interface.
+21:20:50 <vbatts|work> #link https://github.com/opencontainers/runc/pull/1788
+21:21:34 <vbatts|work> #link https://github.com/opencontainers/certification/issues/36#issuecomment-419155816
+21:21:49 <vbatts|work> #topic kinvolk help
+21:22:02 <vbatts|work> cra, get their help on distribution-spec
+21:28:50 <vbatts|work> this whole expectation that something about the runtime will be testable has been an assumption since the beginning,
+21:29:23 <vbatts|work> and only the goodwill of the regression tests _against_ runc via projects like docker and containerd, are the promise of how to conform
+21:30:02 <vbatts|work> there must be a requirement on runtimes, like runc, to have a conformance infterface for testing against
+21:30:43 <vbatts|work> derek, is this test ensuring that parameters passed to runtime are reflected inside of the resulting container?
+21:32:55 <vbatts|work> derek, it would be interesting to have a shim for test cases
+21:34:08 <vbatts|work> like a golang package to import, and do typical testing.T like tests, and the shell out shim to the runtime could be provided
+21:39:40 <vbatts|work> delivering a set of tests, with that have a shim/proxy that for you to do conformance testing and can easily include this certification testing package
+21:40:03 <vbatts|work> and it would ensure that your implementation is "runc enough"
+21:43:17 <vbatts|work> #action everybody to have ideas that can move this forward
+21:44:06 <vbatts|work> mikebrown, reuse runc's integration tests
+21:46:45 <vbatts|work> #topic distribution-spec
+21:47:01 <vbatts|work> accommodating a non-tar future of image-spec
+21:47:21 <vbatts|work> derek: the spec is likely around 90% complete
+21:48:13 <vbatts|work> conformance can surely begin there, since it's mostly there. likely only the catalog API is the biggest change
+21:49:56 <vbatts|work> cra, can the conformance expectation be a bit more defined than what we've had for runtime?
+21:50:17 <vbatts|work> derek, since it's just HTTP, it ought to be more simple and straight forward
+21:50:25 <vbatts|work> barring authentication differences
+21:50:52 <vbatts|work> #action derek to email a follow-up on distribution conformance testing
+21:53:17 <cracra> [dug, Open Container Initiative] let vbatts drive - he feels the need for speed
+21:53:19 <vbatts|work> #topic runtime-spec backlogs
+21:53:45 <vbatts|work> there are loads of issues and PRs, someone needs to get mean to clean up house
+21:56:34 <vbatts|work> #action vbatts add to the agenda for next call to use some time for runtime-spec issue reconciling
+21:56:39 <vbatts|work> #endmeeting

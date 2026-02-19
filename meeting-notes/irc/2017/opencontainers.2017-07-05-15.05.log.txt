@@ -1,0 +1,17 @@
+15:05:01 <vbatts|work> #startmeeting 2017-07-05 discussion
+15:05:01 <collabot`> Meeting started Wed Jul  5 15:05:01 2017 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+15:05:01 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+15:05:01 <collabot`> The meeting name has been set to '2017_07_05_discussion'
+15:05:16 <vbatts|work> #link https://github.com/opencontainers/runtime-spec/milestone/7
+15:06:10 <vbatts|work> stevvooe: i thnk we should do an rc7, then have that be v1
+15:10:04 <cracra> [caniszczyk, Open Container Initiative] I don't think there's anything that prevents doing an RC7 and declaring that as v1.0
+15:19:31 <duglin> vbatts - is the concern with doing an rc7 that it’ll delay the release another week?
+15:19:36 <cracra> [caniszczyk, Open Container Initiative] vincent, what git hash (or git tag) would be v1.0?
+15:30:53 <vbatts|work> #link https://github.com/opencontainers/runtime-spec/pull/880
+15:34:24 <duglin> chris - following links I get to: https://www.opencontainers.org/governance   which gives a 404 - where’s the proper spot for the oci governance doc?
+15:34:45 <cracra> [caniszczyk, Open Container Initiative] https://www.opencontainers.org/about/governance
+15:35:10 <duglin> thanks
+15:35:16 <cracra> [caniszczyk, Open Container Initiative] doug, release governance is here though https://github.com/opencontainers/runtime-spec/blob/master/RELEASES.md
+15:36:09 <vbatts|work> #action vbatts PR for perma-urls pointing to v1.0.0 runtime links
+15:36:36 <vbatts|work> #action vbatts rc vote with language about this being the precise git commit that will become v1.0.0 tag
+15:38:22 <vbatts|work> #endmeeting

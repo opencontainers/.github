@@ -1,0 +1,34 @@
+14:59:06 <vbatts|work> #startmeeting 2017-05-24 discussion
+14:59:06 <collabot`> Meeting started Wed May 24 14:59:06 2017 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+14:59:06 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+14:59:06 <collabot`> The meeting name has been set to '2017_05_24_discussion'
+15:02:49 <vbatts|work> #chair mrunalp
+15:02:49 <collabot`> Current chairs: mrunalp vbatts|work
+15:02:53 <vbatts|work> #chair wking
+15:02:53 <collabot`> Current chairs: mrunalp vbatts|work wking
+15:02:56 <vbatts|work> ?
+15:05:44 <stevvooe> unfortunately, the audio cut when you went to screen sharing
+15:05:54 <vbatts|work> stevvooe: :-(
+15:06:08 <vbatts|work> can you reconnect
+15:06:10 <vbatts|work> ?
+15:06:12 <cracra> [caniszczyk, Open Container Initiative] I still hear Vincent, I would just relogin back into Uberconf or dial in
+15:09:54 <vbatts|work> #link https://github.com/opencontainers/runtime-spec/milestone/15
+15:12:08 <cracra> [caniszczyk, Open Container Initiative] I'd probably set a 1.0.1 or 1.1 milestone in GH?
+15:12:52 <vbatts|work> cracra: or a "1.next-maybe"
+15:14:01 <cracra> [caniszczyk, Open Container Initiative] sure w/e works, I'll just assume we will have a 1.1 in the future
+15:23:51 <vbatts|work> we'll use the v1.0.0 milestone as the marker of what will make it in. Everything else i 'v1.NEXT-maybe'
+15:24:03 <vbatts|work> label
+15:30:40 <vbatts|work> focused work through on open issues to whether they go into 1.0 or deferred
+15:32:04 <cracra> [caniszczyk, Open Container Initiative] if you want to do an F2F summit, OCI has funding, we can use space at the LF or we can have someone like Docker host at HQ?
+15:33:50 <mrunalp> cracra, Yeah, I think it will be useful.
+15:34:50 <vbatts|work> brb
+15:36:34 <cracra> [caniszczyk, Open Container Initiative] another option is to do it virtually but it's all up to you
+15:36:34 <vbatts|work> back
+15:42:34 <vbatts|work> https://github.com/opencontainers/runtime-spec/pull/829
+15:45:24 <vbatts|work> https://github.com/opencontainers/runtime-spec/pull/680
+15:48:25 <vbatts|work> https://github.com/opencontainers/runtime-spec/pull/735
+15:49:46 <vbatts|work> https://github.com/opencontainers/runtime-spec/pull/745/files
+15:52:08 <vbatts|work> https://github.com/opencontainers/runtime-spec/pull/795
+15:56:38 <vbatts|work> https://github.com/opencontainers/image-spec/pull/671
+16:02:19 <cracra> [caniszczyk, Open Container Initiative] just a heads up that the OCI Trademark Board uses the same line, so people should close up the meeting in about ~5 minutes :)
+17:04:23 <wking> #endmeeting

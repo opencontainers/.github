@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2015-09-30 discussion</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2015-09-30 discussion</h1>
+<span class="details">
+Meeting started by vbatts|work at 17:00:15 UTC
+(<a href="opencontainers.2015-09-30-17.00.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">vbatts - top down spec</b> <span class="details">(<a href='opencontainers.2015-09-30-17.00.log.html#l-11'>vbatts|work</a>, 17:04:41)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">vbatts more
+    work on the overview</span> <span class="details">(<a
+    href='opencontainers.2015-09-30-17.00.log.html#l-13'>wking</a>,
+    17:06:47)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/specs/pull/185">https://github.com/opencontainers/specs/pull/185</a>
+    <span class="details">(<a
+    href='opencontainers.2015-09-30-17.00.log.html#l-17'>wking</a>,
+    17:08:12)</span></li>
+  <li><a
+    href="https://github.com/vbatts/specs/pull/1">https://github.com/vbatts/specs/pull/1</a>
+    <span class="details">(<a
+    href='opencontainers.2015-09-30-17.00.log.html#l-20'>vbatts|work</a>,
+    17:09:37)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">Carry the hypervisor discussion on to the mailing-list and next week’s</b> <span class="details">(<a href='opencontainers.2015-09-30-17.00.log.html#l-26'>vbatts|work</a>, 17:17:10)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">rob will send
+    docs to the list</span> <span class="details">(<a
+    href='opencontainers.2015-09-30-17.00.log.html#l-38'>wking</a>,
+    17:20:39)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">brandon - summarize discussion on bundle identity</b> <span class="details">(<a href='opencontainers.2015-09-30-17.00.log.html#l-41'>vbatts|work</a>, 17:21:07)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">he's drafting
+    right now</span> <span class="details">(<a
+    href='opencontainers.2015-09-30-17.00.log.html#l-43'>vbatts|work</a>,
+    17:21:38)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">mrunal - review oct patterns of environment and/or write an initial environment validation tool, to be run as a bundle.</b> <span class="details">(<a href='opencontainers.2015-09-30-17.00.log.html#l-44'>vbatts|work</a>, 17:22:02)</span>
+<br></li>
+<li><b class="TOPIC">clarifying docs</b> <span class="details">(<a href='opencontainers.2015-09-30-17.00.log.html#l-45'>vbatts|work</a>, 17:22:49)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">duglin to
+    open a PR to clarify principles</span> <span class="details">(<a
+    href='opencontainers.2015-09-30-17.00.log.html#l-50'>vbatts|work</a>,
+    17:27:06)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">duglin will
+    PR clarified language</span> <span class="details">(<a
+    href='opencontainers.2015-09-30-17.00.log.html#l-64'>wking</a>,
+    17:36:19)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">doug to
+    review and open PR for clarity</span> <span class="details">(<a
+    href='opencontainers.2015-09-30-17.00.log.html#l-65'>vbatts</a>,
+    17:36:35)</span></li>
+  <li><a
+    href="https://groups.google.com/a/opencontainers.org/d/msg/dev/frUXLljXy8Y/_sg-BidnAwAJ">https://groups.google.com/a/opencontainers.org/d/msg/dev/frUXLljXy8Y/_sg-BidnAwAJ</a>
+    <span class="details">(<a
+    href='opencontainers.2015-09-30-17.00.log.html#l-68'>wking</a>,
+    17:37:09)</span></li>
+  <li><a
+    href="https://groups.google.com/a/opencontainers.org/d/msg/dev/frUXLljXy8Y/_sg-BidnAwAJ">https://groups.google.com/a/opencontainers.org/d/msg/dev/frUXLljXy8Y/_sg-BidnAwAJ</a>
+    wking's most recent attempt to summarize <span class="details">(<a
+    href='opencontainers.2015-09-30-17.00.log.html#l-72'>RobDolinMS</a>,
+    17:40:13)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">wking to PR
+    the lifecycle docs</span> <span class="details">(<a
+    href='opencontainers.2015-09-30-17.00.log.html#l-78'>wking</a>,
+    17:44:55)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 17:45:57 UTC
+(<a href="opencontainers.2015-09-30-17.00.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>vbatts more work on the overview</li>
+  <li>rob will send docs to the list</li>
+  <li>he's drafting right now</li>
+  <li>duglin to open a PR to clarify principles</li>
+  <li>duglin will PR clarified language</li>
+  <li>doug to review and open PR for clarity</li>
+  <li>wking to PR the lifecycle docs</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> duglin <ol>
+    <li>duglin to open a PR to clarify principles</li>
+    <li>duglin will PR clarified language</li>
+  </ol></li>
+  <li> vbatts <ol>
+    <li>vbatts more work on the overview</li>
+  </ol></li>
+  <li> wking <ol>
+    <li>wking to PR the lifecycle docs</li>
+  </ol></li>
+  <li><b>UNASSIGNED</b><ol>
+    <li>rob will send docs to the list</li>
+    <li>he's drafting right now</li>
+    <li>doug to review and open PR for clarity</li>
+  </ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (41)</li>
+  <li>vbatts|work (19)</li>
+  <li>duglin (6)</li>
+  <li>vbatts (5)</li>
+  <li>collabot (3)</li>
+  <li>mrunalp (2)</li>
+  <li>RobDolinMS (2)</li>
+  <li>jojy_mesos (2)</li>
+  <li>crosbymichael (1)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

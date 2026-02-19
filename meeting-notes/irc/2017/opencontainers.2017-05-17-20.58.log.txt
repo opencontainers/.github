@@ -1,0 +1,24 @@
+20:58:49 <vbatts|work> #startmeeting 2017-05-17 discussion
+20:58:49 <collabot> Meeting started Wed May 17 20:58:49 2017 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+20:58:49 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+20:58:49 <collabot> The meeting name has been set to '2017_05_17_discussion'
+20:59:02 <vbatts|work> cracra: yeah.
+21:01:39 <mrunalp> crosbymichael, stevvooe: Joining?
+21:03:50 <stevvooe> mrunalp: im on
+21:04:30 <vbatts|work> #link https://github.com/opencontainers/image-spec/milestone/13
+21:07:11 <vbatts|work> #link https://github.com/opencontainers/image-spec/pull/678
+21:12:18 <vbatts|work> #action vbatts update #678 for semantic MAY
+21:14:14 <vbatts|work> #link https://github.com/opencontainers/image-spec/pull/671
+21:20:03 <vbatts|work> https://tools.ietf.org/html/rfc3986#appendix-A
+21:21:01 <cyphar> You could do scheme://thing#blah
+21:36:18 <stevvooe> vbatts|work: we might be able to get https://github.com/opencontainers/image-spec/pull/650 merged
+21:37:22 <vbatts|work> related to windows, i closed https://github.com/opencontainers/runtime-spec/pull/810
+21:38:59 <vbatts|work> #link https://github.com/opencontainers/runtime-spec/labels/platforms%2Fwindows
+21:39:07 <mrunalp> https://github.com/opencontainers/runtime-spec/issues/817
+21:40:04 <vbatts|work> #link https://github.com/opencontainers/image-spec/pull/492
+21:46:07 <cyphar> #action cyphar -> relax the "user/converter" dichotomy in https://github.com/opencontainers/image-spec/pull/492
+21:48:31 <stevvooe> #action vbatts -> LGTM on https://github.com/opencontainers/image-spec/pull/650
+21:48:35 <cracra> [caniszczyk, Open Container Initiative] so is the plan to do an RC6 for both specs now and then call a freeze after the RC6 release?
+21:49:10 <cracra> [caniszczyk, Open Container Initiative] do you want to set a time frame for the freeze before a final vote would be called?
+21:50:49 <vbatts|work> #action _someone_ add some verbiage non-linux platforms are preview status
+21:59:05 <vbatts|work> #endmeeting

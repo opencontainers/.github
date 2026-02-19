@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">17:01:45</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">OCI 3/30</span>
+<a name="l-2"></a><span class="tm">17:01:45</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Mar 30 17:01:45 2016 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">17:01:45</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">17:01:45</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to 'oci_3_30'
+<a name="l-5"></a><span class="tm">17:01:57</span><span class="nk"> &lt;duglin&gt;</span> <span class="hi">RobDolinMS:</span> priorities!!
+<a name="l-6"></a><span class="tm">17:01:57</span><span class="nk"> &lt;philips&gt;</span> I am at Linux Collab summit so #conferencewifi
+<a name="l-7"></a><span class="tm">17:02:04</span><span class="nk"> &lt;mrunalp&gt;</span> no worries :)
+<a name="l-8"></a><span class="tm">17:03:01</span><span class="nk"> &lt;duglin&gt;</span> <span class="hi">wking:</span> do you have a url to the start/create split email?
+<a name="l-9"></a><span class="tm">17:03:18</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/specs/issues/357</span>
+<a name="l-10"></a><span class="tm">17:03:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I'll look it up
+<a name="l-11"></a><span class="tm">17:04:18</span><span class="nk"> &lt;RobDolinMS&gt;</span> On the question of renaming the spec, I don't have a strong preference as to the exact name, but good to rename "spec" to foo-spec
+<a name="l-12"></a><span class="tm">17:04:35</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#action </span><span class="cmdline">Brandon to email LF to go ahead with the rename</span>
+<a name="l-13"></a><span class="tm">17:04:55</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">Create/start split</span>
+<a name="l-14"></a><span class="tm">17:05:02</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://groups.google.com/a/opencontainers.org/forum/#!msg/dev/qWHoKs8Fsrk/k55FQrBzBgAJ</span>
+<a name="l-15"></a><span class="tm">17:07:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> what if the initial PID 1 dies, can you run another start?
+<a name="l-16"></a><span class="tm">17:07:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> no, you'd be starting another container with another container ID
+<a name="l-17"></a><span class="tm">17:08:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> one think that's nice about proposal 3 is that it the PID / container relationship is clear
+<a name="l-18"></a><span class="tm">17:08:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> does having a separate stop make sense?  Or separate stop/delete?  It sounds like the container process dies, and everything gets stopped and deleted
+<a name="l-19"></a><span class="tm">17:09:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> if you want to keep the namespaces around, you could (via bind mounts or whatever), but there wouldn't be an explicit stop/delete
+<a name="l-20"></a><span class="tm">17:10:17</span><span class="nk"> &lt;wking&gt;</span> the process namespace is going away when it's PID 1 dies, regardless of anything we do in OCI
+<a name="l-21"></a><span class="tm">17:10:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> if you start a new container reusing the mount namespace, there may be leftover files, etc., from the previous container
+<a name="l-22"></a><span class="tm">17:11:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> if you're just creating a container to preserve the namespaces, you don't have to ever start it, just leave the idling init and launch sub-containers
+<a name="l-23"></a><span class="tm">17:11:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> that's supported now via namespace paths
+<a name="l-24"></a><span class="tm">17:11:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> yes, and that's what we all want for exec implementations.
+<a name="l-25"></a><span class="tm">17:12:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> if we go back to a single stop/delete, do we need a hook?  Or push all cleanup to after the namespaces are gone
+<a name="l-26"></a><span class="tm">17:12:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> we already run post-stop hooks after the container process is dead
+<a name="l-27"></a><span class="tm">17:13:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> this seems super complex
+<a name="l-28"></a><span class="tm">17:13:26</span><span class="nk"> &lt;vbatts|work&gt;</span> here
+<a name="l-29"></a><span class="tm">17:13:51</span><span class="nk"> &lt;JakeWarner|Work&gt;</span> (is anyone able to participate in these meetings?)
+<a name="l-30"></a><span class="tm">17:14:02</span><span class="nk"> &lt;mrunalp&gt;</span> yep
+<a name="l-31"></a><span class="tm">17:14:13</span><span class="nk"> &lt;mrunalp&gt;</span> uberconference.com/ssaul
+<a name="l-32"></a><span class="tm">17:14:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> this is less complicated than proposal 2 (from the list), because we don't need any bind mounting of namespaces, etc
+<a name="l-33"></a><span class="tm">17:14:56</span><span class="nk"> &lt;vishh&gt;</span> Flexibility is running hooks is the main use case..
+<a name="l-34"></a><span class="tm">17:15:04</span><span class="nk"> &lt;vishh&gt;</span> *in running
+<a name="l-35"></a><span class="tm">17:15:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> and if you want a combined start you can skip the named socket (https://groups.google.com/a/opencontainers.org/d/msg/dev/qWHoKs8Fsrk/ug4PNraWBwAJ)
+<a name="l-36"></a><span class="tm">17:15:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> proposal 3 talks about a Unix socket...
+<a name="l-37"></a><span class="tm">17:16:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> that's so a later 'start' call can tell the init process (launched from 'create') what user-code it should execute
+<a name="l-38"></a><span class="tm">17:16:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> this is basically what we're doing now (with a pipe between the runtime and container process)
+<a name="l-39"></a><span class="tm">17:17:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> yeah, we already have this dance going on, and if you know at 'create' time what you want to run, in which case this devolves to the current behaviour
+<a name="l-40"></a><span class="tm">17:17:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> and after 'start' is called, we follow the current lifecycle?
+<a name="l-41"></a><span class="tm">17:17:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> yes
+<a name="l-42"></a><span class="tm">17:17:52</span><span class="nk"> &lt;wking&gt;</span> vishh (I think): what about preserving the current namespaces?
+<a name="l-43"></a><span class="tm">17:18:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> with this proposal we don't have to distinguish between the container"
+<a name="l-44"></a><span class="tm">17:18:21</span><span class="nk"> &lt;wking&gt;</span> * "the sandbox" and "the container process"
+<a name="l-45"></a><span class="tm">17:18:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> which means any namespace, including the process namespace, are consistently alive or dead
+<a name="l-46"></a><span class="tm">17:19:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> but in reality you setup the sandbox, and then invoke the user process, and after that process dies you want to do stuff with the sandbox
+<a name="l-47"></a><span class="tm">17:20:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> vishh, what does "sandbox" mean to you?  Does it include process namespaces?
+<a name="l-48"></a><span class="tm">17:20:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> no, it doesn't include the process namespace
+<a name="l-49"></a><span class="tm">17:21:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> if you want to preserve other namespaces, create a container to hold the namespaces open, and then use sub-containers inside that persistent wrapping container
+<a name="l-50"></a><span class="tm">17:21:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> we want simple concepts that multiple users can bend to their wishes
+<a name="l-51"></a><span class="tm">17:22:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I think proposal 3 is that simple concept, because the lifecycle of the sandbox (whatever you want it to be) are all tied to a single container process
+<a name="l-52"></a><span class="tm">17:22:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> it's more complicated if you start special-casing sandboxes.  Sometimes it's fine without a process namespace in the sandbox, and sometimes you need the process namespace to be part of the sandbox
+<a name="l-53"></a><span class="tm">17:23:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the problem I see with putting this into runC is that it only works in a particular way, but runC works fine right now
+<a name="l-54"></a><span class="tm">17:23:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> this would force runC to implement the lifecycle of namespaces in a particular way
+<a name="l-55"></a><span class="tm">17:23:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> right now runC doesn't support a distinction between "sandbox" and "container process", and I'm not sure we want it to
+<a name="l-56"></a><span class="tm">17:24:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> with proposal 3, runC looks almost identical to it's current state.  The only cost is idling the init process
+<a name="l-57"></a><span class="tm">17:24:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> but that seems like a small cost, especially compared to bind-mounting namespaces and the associated cleanup handling
+<a name="l-58"></a><span class="tm">17:25:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we want a separate "sandbox" concept that's not tied to a container ID, then you can start a container in that sandbox
+<a name="l-59"></a><span class="tm">17:25:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> that way you can separate the lifecycle of the container and the lifecycle of the sandbox
+<a name="l-60"></a><span class="tm">17:26:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> that's my problem, I *don't* think we want to separate the sandbox from the container process, because we can't agree on what "the sandbox" means (e.g. if it includes the process namespace)
+<a name="l-61"></a><span class="tm">17:26:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> But propsal 3 seems to cover all of our use cases, and proposal 2 does not
+<a name="l-62"></a><span class="tm">17:27:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> so the main issue is the complication in runC?
+<a name="l-63"></a><span class="tm">17:27:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> yes, but there are also some unclear corner cases
+<a name="l-64"></a><span class="tm">17:27:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> we know the edge cases, because this is the same as what we do now, just with an idling pause in the init process
+<a name="l-65"></a><span class="tm">17:28:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> vishh might disagree with you on that, because he cares about the bind mounts
+<a name="l-66"></a><span class="tm">17:28:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> the split between create and start is awesome, but I want a split between the death of the container process and the sandbox cleanup
+<a name="l-67"></a><span class="tm">17:29:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> you can do that with sub-containers or bind mounts; either will keep the namespaces alive
+<a name="l-68"></a><span class="tm">17:29:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> create would create all the namespaces, bind mount them, and keep PID 1 running.  I haven't seen a case for preserving process namespaces, but I do want to preserve the mount namespaces
+<a name="l-69"></a><span class="tm">17:30:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> you could setup bind mounts after 'create' finishes, before running 'start' if you wanted
+<a name="l-70"></a><span class="tm">17:31:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> crosbymichael is already concerned about complexity, so we don't need to build in help for bind-mounting namespaces
+<a name="l-71"></a><span class="tm">17:31:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> but you could build that into the spec if you wanted to
+<a name="l-72"></a><span class="tm">17:32:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> vishh, so you want two separate steps for 'stop' and 'delete', preserving all namespaces except for the process namespace until 'delete'
+<a name="l-73"></a><span class="tm">17:32:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> and you can still do that with sub-containers and not kill the wrapping container.  No need for bind mounts
+<a name="l-74"></a><span class="tm">17:32:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> killing the wrapping container's PID 1 is like 'delete'
+<a name="l-75"></a><span class="tm">17:33:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> you can do all of this in many ways.  This seems too invasive/low-level for going into the spec
+<a name="l-76"></a><span class="tm">17:34:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> we've talked about punting 'exec' to a higher level, and it's not hard to build 'exec' on top of this
+<a name="l-77"></a><span class="tm">17:34:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I'm not disagreeing.  This is a step in the right direction.
+<a name="l-78"></a><span class="tm">17:34:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> we should also consider more separation between the sandbox and the process at a later stage
+<a name="l-79"></a><span class="tm">17:35:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> vishh, would you be ok with proposal 3 with a split stop/delete?
+<a name="l-80"></a><span class="tm">17:35:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I'm ok.  I'd rather not expose cgroups and namespaces, but if you have to leak them out, I'm ok with that for now
+<a name="l-81"></a><span class="tm">17:35:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I'm also worried about requiring consumers to bind-mount thing
+<a name="l-82"></a><span class="tm">17:35:58</span><span class="nk"> &lt;wking&gt;</span> julz_ keeps pointing out that user's don't need to bind-mount anything, and should use sub-containers ;)
+<a name="l-83"></a><span class="tm">17:37:39</span><span class="nk"> &lt;duglin&gt;</span> we have something else besides Linux?  :-)
+<a name="l-84"></a><span class="tm">17:37:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> with option 3 we can express all of these use-cases.  You can always wright higher-level wrappers.  With option 2, there are some workflows you can't express, and that's harder to work around
+<a name="l-85"></a><span class="tm">17:38:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> how to express this on other operating systems?
+<a name="l-86"></a><span class="tm">17:38:19</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">duglin:</span> heh
+<a name="l-87"></a><span class="tm">17:38:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> it's hard to predict what's hard/easy on other OSes.  I suspect creating everything except the user process seems easier with VMs
+<a name="l-88"></a><span class="tm">17:39:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I just want to avoid making life overly difficult for other OSes
+<a name="l-89"></a><span class="tm">17:40:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> maybe make the create/start split optional, so OSes where that's a problem can expose only a unified create/start command
+<a name="l-90"></a><span class="tm">17:40:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I'd rather keep the spec more consistent across OSes
+<a name="l-91"></a><span class="tm">17:40:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> agreed
+<a name="l-92"></a><span class="tm">17:40:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I want an explicit create/delete for the sandbox and explicit start/stop for the container process.  I don't care about the process namespace
+<a name="l-93"></a><span class="tm">17:41:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> you'd still have to bind-mount to separate stop from delete, but I'm not sure how this translates to other OSes
+<a name="l-94"></a><span class="tm">17:41:25</span><span class="nk"> &lt;JakeWarner|Work&gt;</span> What's the definition of sandbox that we're going with here?
+<a name="l-95"></a><span class="tm">17:41:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> so there's a create/start split and a stop/delete split.  I think we both agree that create/start is a good split with all the namespaces.
+<a name="l-96"></a><span class="tm">17:41:55</span><span class="nk"> &lt;duglin&gt;</span> mainly all NSs - whether it includes PID varies
+<a name="l-97"></a><span class="tm">17:42:02</span><span class="nk"> &lt;duglin&gt;</span> <span class="hi">JakeWarner|Work:</span> ^^
+<a name="l-98"></a><span class="tm">17:42:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> it may also be useful to split stop/delete and preserve namespaces after the container process dies, and you can do that with bind-mounts, but that seems orthogonal
+<a name="l-99"></a><span class="tm">17:42:26</span><span class="nk"> &lt;JakeWarner|Work&gt;</span> Got it.
+<a name="l-100"></a><span class="tm">17:42:29</span><span class="nk"> &lt;JakeWarner|Work&gt;</span> Thanks
+<a name="l-101"></a><span class="tm">17:42:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> isn't the goal to have some pre-start and post-stop things for a pod?  It could be an init-system, or bind-mounts.  Why be specific for the spec?
+<a name="l-102"></a><span class="tm">17:43:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I agree.  These implementation differences don't matter, but the bind-mount approach has a user-visible difference (no process namespace or container PID)
+<a name="l-103"></a><span class="tm">17:44:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> the spec is currently 1:1 with runC, so we don't consider spec changes until we see if something is implementable in runC
+<a name="l-104"></a><span class="tm">17:44:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> the question is "do we want to implement this in runC"
+<a name="l-105"></a><span class="tm">17:44:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> if I was implementing this myself, I would use an init system to spawn processes.  There are options that don't require bind mounts or application processes running as PID 1
+<a name="l-106"></a><span class="tm">17:45:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I suspect we should define this in a way that you can implement things like that
+<a name="l-107"></a><span class="tm">17:46:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> for hooks, you can have multiple ways of running the hooks, but it should be tied to the container lifecycle clearly enough to make the changes you need
+<a name="l-108"></a><span class="tm">17:46:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> there is an argument about breaking down runC into smaller steps, so you don't have to build everything in.  But there are also arguments for building things in.
+<a name="l-109"></a><span class="tm">17:47:06</span><span class="nk"> &lt;philips&gt;</span> thanks for taking notes wking
+<a name="l-110"></a><span class="tm">17:47:11</span><span class="nk"> &lt;wking&gt;</span> np
+<a name="l-111"></a><span class="tm">17:47:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> but if you make it easy to have a runC create join an existing namespace, you can do that without exposing all the lower-level details
+<a name="l-112"></a><span class="tm">17:47:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> so what do we do next?
+<a name="l-113"></a><span class="tm">17:47:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I dunno
+<a name="l-114"></a><span class="tm">17:47:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> maybe a concrete proposal that covers everything?
+<a name="l-115"></a><span class="tm">17:48:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> we should PR a spec change and argue there
+<a name="l-116"></a><span class="tm">17:48:14</span><span class="nk"> &lt;duglin&gt;</span> +1 to a concrete spec change PR so we can see the exact proposal
+<a name="l-117"></a><span class="tm">17:48:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> this has stalled because there wasn't an implementation in runC, but now we have a runC implementation.
+<a name="l-118"></a><span class="tm">17:48:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> a concrete spec change would give us something more concrete to argue about
+<a name="l-119"></a><span class="tm">17:48:51</span><span class="nk"> &lt;JakeWarner|Work&gt;</span> +1 to spec as well
+<a name="l-120"></a><span class="tm">17:49:01</span><span class="nk"> &lt;anush&gt;</span> +1 to spec
+<a name="l-121"></a><span class="tm">17:49:25</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/issues/299</span>
+<a name="l-122"></a><span class="tm">17:49:25</span><span class="nk"> &lt;tianon&gt;</span> I'm always +1 to a concrete PR-form proposal
+<a name="l-123"></a><span class="tm">17:49:39</span><span class="nk"> &lt;wking&gt;</span> ^ existing create/start proposal (proposal 2 in my summary email)
+<a name="l-124"></a><span class="tm">17:49:56</span><span class="nk"> &lt;philips&gt;</span> sorry, need to run off folks!
+<a name="l-125"></a><span class="tm">17:50:24</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#action </span><span class="cmdline">julz/duglin to create a new PR</span>
+<a name="l-126"></a><span class="tm">17:50:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I'll be off for the next two weeks, but I can work on a PR with julz_
+<a name="l-127"></a><span class="tm">17:50:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> other topics?
+<a name="l-128"></a><span class="tm">17:50:41</span><span class="nk"> &lt;duglin&gt;</span> s/off/traveling/    not vacation :-)
+<a name="l-129"></a><span class="tm">17:50:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> ah well ;)
+<a name="l-130"></a><span class="tm">17:50:59</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

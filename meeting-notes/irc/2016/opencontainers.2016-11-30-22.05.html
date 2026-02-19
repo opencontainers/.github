@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2016-11-30 discussion</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2016-11-30 discussion</h1>
+<span class="details">
+Meeting started by wking at 22:05:32 UTC
+(<a href="opencontainers.2016-11-30-22.05.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">runtime-spec command line API</b> <span class="details">(<a href='opencontainers.2016-11-30-22.05.log.html#l-6'>wking</a>, 22:05:48)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/513">https://github.com/opencontainers/runtime-spec/pull/513</a>
+    <span class="details">(<a
+    href='opencontainers.2016-11-30-22.05.log.html#l-7'>wking</a>,
+    22:05:54)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">crosbymichael
+    to comment about socket handling in the PR</span> <span
+    class="details">(<a
+    href='opencontainers.2016-11-30-22.05.log.html#l-8'>wking</a>,
+    22:06:08)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">anchor updates</b> <span class="details">(<a href='opencontainers.2016-11-30-22.05.log.html#l-11'>wking</a>, 22:06:50)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">RobDolinMS to
+    work up PRs for Markdown anchors for the rest of runtime-spec</span>
+    <span class="details">(<a
+    href='opencontainers.2016-11-30-22.05.log.html#l-15'>wking</a>,
+    22:08:47)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">runtime testing feedback</b> <span class="details">(<a href='opencontainers.2016-11-30-22.05.log.html#l-16'>wking</a>, 22:09:09)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">stephenrwalli
+    to PR Fedora notes for runtime-tools</span> <span
+    class="details">(<a
+    href='opencontainers.2016-11-30-22.05.log.html#l-21'>wking</a>,
+    22:10:30)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">RobDolinMS to
+    PR Ubuntu notes for runtime-tools</span> <span class="details">(<a
+    href='opencontainers.2016-11-30-22.05.log.html#l-22'>wking</a>,
+    22:10:42)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">image-spec rc3</b> <span class="details">(<a href='opencontainers.2016-11-30-22.05.log.html#l-24'>wking</a>, 22:11:49)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/438">https://github.com/opencontainers/image-spec/pull/438</a>
+    <span class="details">(<a
+    href='opencontainers.2016-11-30-22.05.log.html#l-49'>wking</a>,
+    22:22:36)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/blob/master/manifest-list.md">https://github.com/opencontainers/image-spec/blob/master/manifest-list.md</a>
+    <span class="details">(<a
+    href='opencontainers.2016-11-30-22.05.log.html#l-61'>stevvooe</a>,
+    22:27:51)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/438/files">https://github.com/opencontainers/image-spec/pull/438/files</a>
+    <span class="details">(<a
+    href='opencontainers.2016-11-30-22.05.log.html#l-68'>stevvooe</a>,
+    22:29:37)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">stevvooe to
+    add comments to the PR about a manifest-list approach</span> <span
+    class="details">(<a
+    href='opencontainers.2016-11-30-22.05.log.html#l-69'>wking</a>,
+    22:30:02)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/451">https://github.com/opencontainers/image-spec/pull/451</a>
+    <span class="details">(<a
+    href='opencontainers.2016-11-30-22.05.log.html#l-93'>stevvooe</a>,
+    22:41:01)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">Shipping runtime-spec configs</b> <span class="details">(<a href='opencontainers.2016-11-30-22.05.log.html#l-94'>wking</a>, 22:41:11)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/451">https://github.com/opencontainers/image-spec/pull/451</a>
+    <span class="details">(<a
+    href='opencontainers.2016-11-30-22.05.log.html#l-95'>wking</a>,
+    22:41:16)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">stevvooe to
+    post a comment explaining why this is a bad idea</span> <span
+    class="details">(<a
+    href='opencontainers.2016-11-30-22.05.log.html#l-115'>wking</a>,
+    22:47:35)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">image-tools maintenance</b> <span class="details">(<a href='opencontainers.2016-11-30-22.05.log.html#l-122'>wking</a>, 22:53:25)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">RobDolinMS to
+    open an issue about image-tools snage</span> <span
+    class="details">(<a
+    href='opencontainers.2016-11-30-22.05.log.html#l-125'>wking</a>,
+    22:53:56)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 22:54:15 UTC
+(<a href="opencontainers.2016-11-30-22.05.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>crosbymichael to comment about socket handling in the PR</li>
+  <li>RobDolinMS to work up PRs for Markdown anchors for the rest of runtime-spec</li>
+  <li>stephenrwalli to PR Fedora notes for runtime-tools</li>
+  <li>RobDolinMS to PR Ubuntu notes for runtime-tools</li>
+  <li>stevvooe to add comments to the PR about a manifest-list approach</li>
+  <li>stevvooe to post a comment explaining why this is a bad idea</li>
+  <li>RobDolinMS to open an issue about image-tools snage</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> RobDolinMS <ol>
+    <li>RobDolinMS to work up PRs for Markdown anchors for the rest of runtime-spec</li>
+    <li>RobDolinMS to PR Ubuntu notes for runtime-tools</li>
+    <li>RobDolinMS to open an issue about image-tools snage</li>
+  </ol></li>
+  <li> stephenrwalli <ol>
+    <li>stephenrwalli to PR Fedora notes for runtime-tools</li>
+  </ol></li>
+  <li> stevvooe <ol>
+    <li>stevvooe to add comments to the PR about a manifest-list approach</li>
+    <li>stevvooe to post a comment explaining why this is a bad idea</li>
+  </ol></li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (111)</li>
+  <li>stevvooe (10)</li>
+  <li>collabot` (3)</li>
+  <li>stephenrwalli (1)</li>
+  <li>mrunalp (1)</li>
+  <li>RobDolinMS (1)</li>
+  <li>duglin (1)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

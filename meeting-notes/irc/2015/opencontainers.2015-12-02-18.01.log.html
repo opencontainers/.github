@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">18:01:28</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2015-12-2 discussion</span>
+<a name="l-2"></a><span class="tm">18:01:28</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Dec  2 18:01:28 2015 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">18:01:28</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">18:01:28</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2015_12_2_discussion'
+<a name="l-5"></a><span class="tm">18:02:06</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">crosbymichael:</span> lk4d4: dqminh: philips: tianon: Joining?
+<a name="l-6"></a><span class="tm">18:02:30</span><span class="nk"> &lt;duglin&gt;</span> I’m at the airport so going to try to keep talking to a minimum
+<a name="l-7"></a><span class="tm">18:02:39</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">duglin:</span> okay, no worries
+<a name="l-8"></a><span class="tm">18:03:43</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">state location</span>
+<a name="l-9"></a><span class="tm">18:04:02</span><span class="nk"> &lt;wking&gt;</span> https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/q6TYqVZOcX8
+<a name="l-10"></a><span class="tm">18:04:16</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#info </span><span class="cmdline">List thread: https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/q6TYqVZOcX8</span>
+<a name="l-11"></a><span class="tm">18:05:30</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#info </span><span class="cmdline">Command line API thread: https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/BIxya5eSNLo</span>
+<a name="l-12"></a><span class="tm">18:07:29</span><span class="nk"> &lt;duglin&gt;</span> IMO it all comes down to what level of interop we’re supposed to define - if none then our value decreases
+<a name="l-13"></a><span class="tm">18:10:17</span><span class="nk"> &lt;wking&gt;</span> jlb13 and vbatts suggesting a command-line API (or whatever, could be REST) spec associated with a lifecycle spec
+<a name="l-14"></a><span class="tm">18:10:56</span><span class="nk"> &lt;wking&gt;</span> vbatts prefers REST to a command-line API spec
+<a name="l-15"></a><span class="tm">18:11:10</span><span class="nk"> &lt;duglin&gt;</span> we could do a rest api but then are we really signing up to define an entire http server?
+<a name="l-16"></a><span class="tm">18:11:22</span><span class="nk"> &lt;wking&gt;</span> julz concerned about performance over REST
+<a name="l-17"></a><span class="tm">18:11:33</span><span class="nk"> &lt;wking&gt;</span> I'm not sure how terminal-binding would work over REST
+<a name="l-18"></a><span class="tm">18:11:40</span><span class="nk"> &lt;lk4d4&gt;</span> I think sh &lt;-&gt; http mapping is pretty straightforward
+<a name="l-19"></a><span class="tm">18:12:22</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">lk4d4:</span> yeah, agree
+<a name="l-20"></a><span class="tm">18:12:40</span><span class="nk"> &lt;duglin&gt;</span> if we don’t do a REST APIs and we don’t do a cmd, what other option is there? All I can think of is the filesystem like we do today
+<a name="l-21"></a><span class="tm">18:13:03</span><span class="nk"> &lt;lk4d4&gt;</span> so, I think "actions" discussion is more valuable for spec :)
+<a name="l-22"></a><span class="tm">18:13:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> provide the minimal command-line API for testing, and then you're free to provide other APIs as you see fit
+<a name="l-23"></a><span class="tm">18:13:19</span><span class="nk"> &lt;duglin&gt;</span> <span class="hi">lk4d4:</span> sure but how are those actions exposed?
+<a name="l-24"></a><span class="tm">18:13:54</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chairs </span><span class="cmdline">mrunalp wking RobDolinMS</span>
+<a name="l-25"></a><span class="tm">18:13:58</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp wking RobDolinMS</span>
+<a name="l-26"></a><span class="tm">18:13:58</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: RobDolinMS mrunalp vbatts wking
+<a name="l-27"></a><span class="tm">18:14:00</span><span class="nk"> &lt;lk4d4&gt;</span> <span class="hi">duglin:</span> whatever way you desire I think, but if you want to be replaceable with runc - you have no choice :)
+<a name="l-28"></a><span class="tm">18:14:12</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">duglin:</span> Yeah, it is abstract but testing needs more concrete inputs
+<a name="l-29"></a><span class="tm">18:14:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> maybe base command-line API work on duglin's actions: https://github.com/opencontainers/specs/pull/225
+<a name="l-30"></a><span class="tm">18:14:43</span><span class="nk"> &lt;mikebrow&gt;</span> abstract spec with a compliant implementation example
+<a name="l-31"></a><span class="tm">18:15:02</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">mikebrow:</span> That is runc in a way but others just have to copy it
+<a name="l-32"></a><span class="tm">18:15:29</span><span class="nk"> &lt;duglin&gt;</span> not sure I understand what “minimal cmd-line API for testing” really is because it sure sounds like we’re defining a cmd line just trying to avoid calling it that.
+<a name="l-33"></a><span class="tm">18:15:54</span><span class="nk"> &lt;lk4d4&gt;</span> <span class="hi">duglin:</span> I agree :)
+<a name="l-34"></a><span class="tm">18:16:01</span><span class="nk"> &lt;lk4d4&gt;</span> it's cli or not
+<a name="l-35"></a><span class="tm">18:16:05</span><span class="nk"> &lt;duglin&gt;</span> yup
+<a name="l-36"></a><span class="tm">18:16:10</span><span class="nk"> &lt;julz&gt;</span> ^ yup
+<a name="l-37"></a><span class="tm">18:16:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> "minimal" just means, "your runtime can add additional stuff if you want, but you must support at least this command-line API"
+<a name="l-38"></a><span class="tm">18:16:25</span><span class="nk"> &lt;wking&gt;</span> your additional stuff doesn't need to be CLI
+<a name="l-39"></a><span class="tm">18:16:34</span><span class="nk"> &lt;julz&gt;</span> yes, maybe with some sort of way of saying it's a vendor option?
+<a name="l-40"></a><span class="tm">18:16:39</span><span class="nk"> &lt;duglin&gt;</span> perhaps we should list the options here:  1) filesystem,  2) rest  3) cmd line  4) nothing and just define abstract action.  Anything else?
+<a name="l-41"></a><span class="tm">18:17:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I think this discussion is more general, not just about /run/opencontainer/containers
+<a name="l-42"></a><span class="tm">18:17:00</span><span class="nk"> &lt;duglin&gt;</span> although 1 may still need 2 or 3
+<a name="l-43"></a><span class="tm">18:17:20</span><span class="nk"> &lt;duglin&gt;</span> 1 is just for sharing state, not necessarily actions
+<a name="l-44"></a><span class="tm">18:17:25</span><span class="nk"> &lt;wking&gt;</span> yeah
+<a name="l-45"></a><span class="tm">18:17:51</span><span class="nk"> &lt;duglin&gt;</span> so for actions,  rest  vs   cmd line,  is there anything else?
+<a name="l-46"></a><span class="tm">18:18:39</span><span class="nk"> &lt;lk4d4&gt;</span> gRpc, whatever :)
+<a name="l-47"></a><span class="tm">18:18:42</span><span class="nk"> &lt;lk4d4&gt;</span> a lot of options
+<a name="l-48"></a><span class="tm">18:18:57</span><span class="nk"> &lt;duglin&gt;</span> but ones we want to consider
+<a name="l-49"></a><span class="tm">18:19:09</span><span class="nk"> &lt;lk4d4&gt;</span> but I think actions is just keyword + config, which can be mapped to any scheme
+<a name="l-50"></a><span class="tm">18:19:50</span><span class="nk"> &lt;lk4d4&gt;</span> I like cmdline better
+<a name="l-51"></a><span class="tm">18:19:57</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">lk4d4:</span> you are suggesting something like for e.g. &lt;runtime&gt; action &lt;json_describing_action&gt;
+<a name="l-52"></a><span class="tm">18:20:00</span><span class="nk"> &lt;mrunalp&gt;</span> ?
+<a name="l-53"></a><span class="tm">18:20:08</span><span class="nk"> &lt;mrunalp&gt;</span> A simple cmdline like runc isn't bad
+<a name="l-54"></a><span class="tm">18:20:14</span><span class="nk"> &lt;lk4d4&gt;</span> yes
+<a name="l-55"></a><span class="tm">18:20:32</span><span class="nk"> &lt;lk4d4&gt;</span> I think just nature of spec is supposing local execution rather than "remote"
+<a name="l-56"></a><span class="tm">18:20:49</span><span class="nk"> &lt;lk4d4&gt;</span> so, cli more natural :)
+<a name="l-57"></a><span class="tm">18:21:01</span><span class="nk"> &lt;duglin&gt;</span> so back to state, do we want to have a “query” type of action?
+<a name="l-58"></a><span class="tm">18:21:01</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">lk4d4:</span> Agree
+<a name="l-59"></a><span class="tm">18:21:11</span><span class="nk"> &lt;mrunalp&gt;</span> REST could be added on top if one wants
+<a name="l-60"></a><span class="tm">18:21:13</span><span class="nk"> &lt;julz&gt;</span> <span class="hi">lk4d4:</span> xactly, yeah
+<a name="l-61"></a><span class="tm">18:21:16</span><span class="nk"> &lt;duglin&gt;</span> and then leave state management up to the impl?
+<a name="l-62"></a><span class="tm">18:21:18</span><span class="nk"> &lt;jlb13&gt;</span> yep, sure
+<a name="l-63"></a><span class="tm">18:21:19</span><span class="nk"> &lt;lk4d4&gt;</span> if there will be cases for it
+<a name="l-64"></a><span class="tm">18:21:31</span><span class="nk"> &lt;julz&gt;</span> I think yeah, but I'd prefer just query, not list, personally
+<a name="l-65"></a><span class="tm">18:21:32</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://gist.github.com/wking/1d69118ba8b750f85bfc</span>
+<a name="l-66"></a><span class="tm">18:21:40</span><span class="nk"> &lt;julz&gt;</span> I think getting in to listing is probably higher level, personally
+<a name="l-67"></a><span class="tm">18:21:40</span><span class="nk"> &lt;mikebrow&gt;</span> "query" and "push"?
+<a name="l-68"></a><span class="tm">18:21:50</span><span class="nk"> &lt;wking&gt;</span> ^ my WIP based on julz initial work for the command line API
+<a name="l-69"></a><span class="tm">18:22:17</span><span class="nk"> &lt;jlb13&gt;</span> i agree duglin, i was thinking mgmt would be an upper layer concern
+<a name="l-70"></a><span class="tm">18:22:23</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">mrunal:</span> We should have a CL runtime state
+<a name="l-71"></a><span class="tm">18:22:47</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">doug:</span> Is this a query action that returns data or where to go find it?
+<a name="l-72"></a><span class="tm">18:23:04</span><span class="nk"> &lt;mrunalp&gt;</span> I think returining the data in defined json form would be good
+<a name="l-73"></a><span class="tm">18:23:13</span><span class="nk"> &lt;lk4d4&gt;</span> definitely
+<a name="l-74"></a><span class="tm">18:23:20</span><span class="nk"> &lt;duglin&gt;</span> yea, location of data isn’t ideal to me - just return the data
+<a name="l-75"></a><span class="tm">18:23:54</span><span class="nk"> &lt;duglin&gt;</span> of course we may need to deal with notifications at some point but I think that can be thought of after we define query
+<a name="l-76"></a><span class="tm">18:24:22</span><span class="nk"> &lt;mikebrow&gt;</span> kk query option
+<a name="l-77"></a><span class="tm">18:24:45</span><span class="nk"> &lt;duglin&gt;</span> I’m still hearing conflicting statements on the phone.
+<a name="l-78"></a><span class="tm">18:25:05</span><span class="nk"> &lt;duglin&gt;</span> we don’t need to talk about priv. if “query” returns state
+<a name="l-79"></a><span class="tm">18:25:14</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Jesse:</span> There's a higher-level question here: how much of multiple instance state management will the CLI be responsible for?
+<a name="l-80"></a><span class="tm">18:25:58</span><span class="nk"> &lt;julz&gt;</span> <span class="hi">jesse:</span> strongly agree with that, runc should be 1:1 with a container, to me
+<a name="l-81"></a><span class="tm">18:26:11</span><span class="nk"> &lt;duglin&gt;</span> if it blocks then it seems we must support a 2nd instance of the exe being able to share state with the 1st.
+<a name="l-82"></a><span class="tm">18:26:17</span><span class="nk"> &lt;wking&gt;</span> yeah, I'm in favor of not handling state management in OCI
+<a name="l-83"></a><span class="tm">18:26:29</span><span class="nk"> &lt;wking&gt;</span> higher level can always plug it in via hooks
+<a name="l-84"></a><span class="tm">18:26:43</span><span class="nk"> &lt;lk4d4&gt;</span> <span class="hi">wking:</span> what is management?
+<a name="l-85"></a><span class="tm">18:26:45</span><span class="nk"> &lt;duglin&gt;</span> I’d prefer to leave this as an impl detail - as long as “some exe” can return state of a container I asked for then that’s enough.
+<a name="l-86"></a><span class="tm">18:26:58</span><span class="nk"> &lt;lk4d4&gt;</span> <span class="hi">duglin:</span> that was my thoughts too
+<a name="l-87"></a><span class="tm">18:27:16</span><span class="nk"> &lt;duglin&gt;</span> but I do think “query” needs to return “list of containers” because if 3rd party tool comes in late then it needs ot know what’s already running.
+<a name="l-88"></a><span class="tm">18:27:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">lk4d4:</span> duglin points out that a 'func state --id &lt;container-id&gt;' command would have to get information from another func process
+<a name="l-89"></a><span class="tm">18:27:31</span><span class="nk"> &lt;mikebrow&gt;</span> Agree, 1:1 minimum requirement
+<a name="l-90"></a><span class="tm">18:27:33</span><span class="nk"> &lt;dqminh&gt;</span> so for tools like cadvisor, how will it discover applications in the system if we pun this to upper layer ?
+<a name="l-91"></a><span class="tm">18:27:35</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">duglin:</span> lk4d4: Yeah agree on that
+<a name="l-92"></a><span class="tm">18:27:51</span><span class="nk"> &lt;wking&gt;</span> passing that information between func processes is "state management" (or whatever, happy to use other terminology"
+<a name="l-93"></a><span class="tm">18:28:48</span><span class="nk"> &lt;julz&gt;</span> <span class="hi">dqminh:</span> imo that's a problem for a higher level spec/tool
+<a name="l-94"></a><span class="tm">18:28:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> runtime implementation is much simpler if we punt state management to a higher layer
+<a name="l-95"></a><span class="tm">18:29:07</span><span class="nk"> &lt;duglin&gt;</span> leaving to the higher level leaves me wondering how we find out what’s running? If we say “ask the higher level” then the point of interop will be at that level not OCI
+<a name="l-96"></a><span class="tm">18:29:24</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">duglin:</span> docker starts runc wiht --id and stores it in a list
+<a name="l-97"></a><span class="tm">18:29:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> yeah, or put your own hooks in to keep track
+<a name="l-98"></a><span class="tm">18:29:36</span><span class="nk"> &lt;mikebrow&gt;</span> punt at the spec level but we can still implement a simple management example in runc
+<a name="l-99"></a><span class="tm">18:29:37</span><span class="nk"> &lt;mrunalp&gt;</span> It can then use that id to interact with that container
+<a name="l-100"></a><span class="tm">18:29:39</span><span class="nk"> &lt;mikebrow&gt;</span> ?
+<a name="l-101"></a><span class="tm">18:29:40</span><span class="nk"> &lt;lk4d4&gt;</span> <span class="hi">wking:</span> I don't think it will be easy
+<a name="l-102"></a><span class="tm">18:29:54</span><span class="nk"> &lt;lk4d4&gt;</span> what if you reconnecting to existing runc processes?
+<a name="l-103"></a><span class="tm">18:29:58</span><span class="nk"> &lt;julz&gt;</span> right, docker/cloudfoundry/kube etc. can all support a list command and just pass it to cadvisor, I don'
+<a name="l-104"></a><span class="tm">18:30:05</span><span class="nk"> &lt;julz&gt;</span> t think it's a huge deal if that isn't specified
+<a name="l-105"></a><span class="tm">18:30:19</span><span class="nk"> &lt;julz&gt;</span> but wherever it's specified shouldn't be oci, to me
+<a name="l-106"></a><span class="tm">18:30:22</span><span class="nk"> &lt;lk4d4&gt;</span> yeah, list is okay
+<a name="l-107"></a><span class="tm">18:30:26</span><span class="nk"> &lt;jlb13&gt;</span> yeah, that's how we do it with docker - docker manages its container instances, which are created/started/stopped by runz
+<a name="l-108"></a><span class="tm">18:30:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">lk4d4:</span> I posted the content for emulating /runc/ in https://groups.google.com/a/opencontainers.org/d/msg/dev/q6TYqVZOcX8/GQs0zkRHBwAJ
+<a name="l-109"></a><span class="tm">18:30:34</span><span class="nk"> &lt;vbatts&gt;</span> so tying https://github.com/opencontainers/specs/blob/master/ROADMAP.md#define-standard-container-actions and https://github.com/opencontainers/specs/blob/master/ROADMAP.md#full-lifecycle-hooks together?
+<a name="l-110"></a><span class="tm">18:30:36</span><span class="nk"> &lt;wking&gt;</span> * emulating /run/opencontainer
+<a name="l-111"></a><span class="tm">18:30:42</span><span class="nk"> &lt;lk4d4&gt;</span> like oci state $(oci list)
+<a name="l-112"></a><span class="tm">18:30:50</span><span class="nk"> &lt;julz&gt;</span> 'cos at the end of the day, all of those high level tools will have to have a way to list anyway, and I doubt any of them want to delegate that down
+<a name="l-113"></a><span class="tm">18:31:04</span><span class="nk"> &lt;jlb13&gt;</span> right.
+<a name="l-114"></a><span class="tm">18:31:47</span><span class="nk"> &lt;lk4d4&gt;</span> my personal opinion is that list crucial if we have no standard state storage
+<a name="l-115"></a><span class="tm">18:32:02</span><span class="nk"> &lt;duglin&gt;</span> not sure how do to “list containers” with hooks
+<a name="l-116"></a><span class="tm">18:32:44</span><span class="nk"> &lt;lk4d4&gt;</span> there is no way
+<a name="l-117"></a><span class="tm">18:32:50</span><span class="nk"> &lt;mikebrow&gt;</span> a registry hook
+<a name="l-118"></a><span class="tm">18:33:04</span><span class="nk"> &lt;duglin&gt;</span> <span class="hi">wking:</span> but how do we get interop on “list” ?
+<a name="l-119"></a><span class="tm">18:33:08</span><span class="nk"> &lt;lk4d4&gt;</span> what if my "registry" app crashed badly?
+<a name="l-120"></a><span class="tm">18:33:13</span><span class="nk"> &lt;duglin&gt;</span> if each hook stores it differently
+<a name="l-121"></a><span class="tm">18:33:20</span><span class="nk"> &lt;lk4d4&gt;</span> only tool can be source of truth
+<a name="l-122"></a><span class="tm">18:33:28</span><span class="nk"> &lt;mikebrow&gt;</span> registry could be a file
+<a name="l-123"></a><span class="tm">18:33:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> why do you need interop on list?
+<a name="l-124"></a><span class="tm">18:33:45</span><span class="nk"> &lt;lk4d4&gt;</span> hehe
+<a name="l-125"></a><span class="tm">18:34:00</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Updates on Roadmap</span>
+<a name="l-126"></a><span class="tm">18:34:02</span><span class="nk"> &lt;lk4d4&gt;</span> yeah, files exactly what we want to avoid with dropping standard way of storing
+<a name="l-127"></a><span class="tm">18:34:03</span><span class="nk"> &lt;duglin&gt;</span> so some 3rd party tool can know what to monitor
+<a name="l-128"></a><span class="tm">18:34:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> you can tell the 3rd party tools what to monitor (so push to them, instead of having them poll)
+<a name="l-129"></a><span class="tm">18:34:27</span><span class="nk"> &lt;mikebrow&gt;</span> eggzactly
+<a name="l-130"></a><span class="tm">18:34:38</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">mrunal:</span> Lifecycle PR is close to being ready to merge
+<a name="l-131"></a><span class="tm">18:34:50</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">mrunal:</span> OCI Tools coming along nicely
+<a name="l-132"></a><span class="tm">18:34:51</span><span class="nk"> &lt;duglin&gt;</span> right, so the interop point becomes with the higher level not OCI
+<a name="l-133"></a><span class="tm">18:35:01</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/pull/231</span>
+<a name="l-134"></a><span class="tm">18:35:10</span><span class="nk"> &lt;duglin&gt;</span> if all interactions end up going thru the higher tool why do I need interop on OCI’s cmd line
+<a name="l-135"></a><span class="tm">18:35:30</span><span class="nk"> &lt;wking&gt;</span> "keeping a list of containers" is not "all interactions" ;)
+<a name="l-136"></a><span class="tm">18:35:38</span><span class="nk"> &lt;julz&gt;</span> I think interop almost has to be higher level, like what if I want to cadvisor only files owned by a certain user? are we going to get in to filtering and other things?
+<a name="l-137"></a><span class="tm">18:35:44</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">mrunal:</span> we have some agreement, who will work on this?
+<a name="l-138"></a><span class="tm">18:35:47</span><span class="nk"> &lt;julz&gt;</span> files-&gt;containers
+<a name="l-139"></a><span class="tm">18:35:51</span><span class="nk"> &lt;lk4d4&gt;</span> I agree with Doug here
+<a name="l-140"></a><span class="tm">18:35:51</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Doug:</span> I'll work with Trevor
+<a name="l-141"></a><span class="tm">18:35:55</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Jesse:</span> I'm in to help too
+<a name="l-142"></a><span class="tm">18:36:00</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">duglin work on command-line API</span>
+<a name="l-143"></a><span class="tm">18:36:02</span><span class="nk"> &lt;lk4d4&gt;</span> oci tool always will have containers list
+<a name="l-144"></a><span class="tm">18:36:06</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">wking work on command-line API</span>
+<a name="l-145"></a><span class="tm">18:36:19</span><span class="nk"> &lt;lk4d4&gt;</span> and it will be definitely more precise than any other list
+<a name="l-146"></a><span class="tm">18:36:21</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">jlb13 work on command-line API</span>
+<a name="l-147"></a><span class="tm">18:36:21</span><span class="nk"> &lt;mikebrow&gt;</span> I think the idea was just to have a few helper examples of higher level management implementations to make oci useful without one of the higher level tools
+<a name="l-148"></a><span class="tm">18:36:37</span><span class="nk"> &lt;mikebrow&gt;</span> samples
+<a name="l-149"></a><span class="tm">18:36:53</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vincent:</span> What's the point of adding multiple owners?
+<a name="l-150"></a><span class="tm">18:36:57</span><span class="nk"> &lt;julz&gt;</span> if you want an OCI wrapper that gives you a list of containers that seems very easy to build on top of a defined standardised command line
+<a name="l-151"></a><span class="tm">18:37:06</span><span class="nk"> &lt;julz&gt;</span> without the command line having to pick up the ability to manage that state
+<a name="l-152"></a><span class="tm">18:37:24</span><span class="nk"> &lt;julz&gt;</span> no need even for hooks, just wrap the binary you call
+<a name="l-153"></a><span class="tm">18:38:33</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vincent:</span> Ideal to have one owner and additional participants
+<a name="l-154"></a><span class="tm">18:38:41</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vishnu:</span> I"m just back from travel
+<a name="l-155"></a><span class="tm">18:39:20</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

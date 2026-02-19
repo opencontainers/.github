@@ -1,0 +1,81 @@
+22:00:24 <wking> #startmeeting 2018-02-07 discussion
+22:00:24 <collabot`> Meeting started Wed Feb  7 22:00:24 2018 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:00:24 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:00:24 <collabot`> The meeting name has been set to '2018_02_07_discussion'
+22:00:29 <wking> #chair mrunalp
+22:00:29 <collabot`> Current chairs: mrunalp wking
+22:02:19 <wking> #link https://github.com/opencontainers/runc/issues/1709
+22:02:31 <wking> mrunalp: we can continue to discuss runc 1.0 asynchronously
+22:02:50 <wking> mikebrow: I think we need another rc before the release
+22:03:08 <wking> mrunalp: yeah, that makes sense.  Especially with the delay since the last rc
+22:03:21 <wking> mikebrow: and announce that this rc is likely to be the last rc before 1.0
+22:03:24 <wking> mrunalp: yup
+22:03:35 <wking> mrunalp: that's all I had
+22:04:51 <wking> cracra (earlier): I'll likely reroll https://github.com/opencontainers/tob/pull/35 in the next week or so to address some of the open comments
+22:06:32 <stevvooe> Is there a new meeting invite with the conference number?
+22:06:47 <cracra> [caniszczyk, Open Container Initiative] tel:415-968-0849
+22:07:31 * stevvooe says thanks
+22:08:03 <wking> vbatts: there are a number of comments on the open distribution spec proposal.  Last I looked it was pretty much synced up with my expectations
+22:08:34 <wking> cracra: there have been a lot of comments on https://github.com/opencontainers/tob/pull/35, but I haven't gone through that yet
+22:09:06 <wking> stevvooe: the specification is open to extention, but we want to bring things in without working on it, and can evolve the scope afterwards
+22:09:32 <wking> stevvooe: we already had a public discussion on this specification
+22:09:51 <wking> vbatts: and a lot of us were already involved in this discussion
+22:10:31 <wking> cracra: my goal is not to do a formal vote until the new TOB is established, and that will take another week or so
+22:10:50 <wking> mikebrow: I don't think there were big issues with the initial proposal.
+22:11:04 <wking> mikebrow: the discussion has been about how specific to be with the scope
+22:11:40 <wking> stevvooe: there are some PRs against the spec in distribution, and we can merge those pre-transfer, but we want those additions to land at some point (they're bandwidth limited)
+22:12:08 <wking> vbatts: I haven't reviewed any PRs against the distribution repo except the OCI manifest one
+22:12:27 <wking> stevvooe: the OCI manifest one doesn't touch the spec.  I think the biggest change we'll want in the spec is decoupling the media types
+22:13:18 <wking> stevvooe: the two PRs referenced from the current proposal were blocked by implementation issues, but those issues have been resolved by subsequent implementation changes
+22:14:36 <wking> dmcg: some of the endpoints may be registry-specific.  We need different handling for manifests and blobs
+22:14:43 <wking> (something about linking, which I missed)
+22:15:04 <wking> vbatts: things like mounting a blob that you don't have access too
+22:15:23 <wking> stevvooe: I don't think these details need to be worked out in the proposal.  The proposal just needs to allow for them later
+22:15:48 <wking> vbatts: the scope table may be useful for guiding future extentions.  But I'm in favor of making it narrow for a lateral move
+22:16:13 <wking> stevvooe: we don't allow underscores in names, partly due to the backend.  We might use characters to denote particular extentions
+22:16:26 <wking> stevvooe: we don't allow underscores at the beginning of the name components
+22:16:48 <wking> stevvooe: there's a concept of an afixing verb.  Like tags and manifests.  That would be an area for extention
+22:17:06 <wking> stevvooe: we can do this in a safe way that we weren't as comfortable with early on
+22:17:27 <wking> stevvooe: but I want to keep the scope of the proposal fairly narrow and let the maintainers work without introducing a bunch of new stuff
+22:17:47 <wking> mrunalp: I'm stepping out now, and handing note-taking off to you
+22:17:54 <mrunalp> wking: okay
+22:17:58 <mrunalp> thanks!
+22:18:27 <mrunalp> vbatts|work: Any other topics?
+22:19:10 <mrunalp> stevvooe: image tools project release process
+22:20:35 <mrunalp> dmcg: What is the scope of the project?
+22:20:54 <mrunalp> stevvooe: It is challenging as goals of the PR are not clear
+22:21:01 <mrunalp> PRs
+22:21:57 <mrunalp> stevvooe: validation of bundle and output
+22:23:01 <mrunalp> vbatts|work: bundle conversion, bundle creating, assemble layers
+22:23:09 <mrunalp> vbatts|work: tools around basic image functions
+22:23:26 <mrunalp> vbatts|work: with one oci-image-tool
+22:23:51 <mrunalp> cracra: Use for certification to validate a bundle
+22:23:55 <mrunalp> stevvooe: We just clarify these goals
+22:24:05 <mrunalp> stevvooe: It seems premature to jump from 0.4 to 1.0
+22:24:15 <mrunalp> stevvooe: 0.5 would be more acceptable
+22:24:47 <mrunalp> stevvooe: used dockers archive package in containerd as image tools project wasn't ready
+22:26:35 <mrunalp> stevvooe: Question on a PR wasn't answered and was self-merged and used to satisfy some requirements for release.
+22:26:55 <mrunalp> cracra: 1.0 should require more discussion
+22:27:19 <mrunalp> dmcg: Is there roadmap/acceptance criteria for 1.0
+22:27:27 <mrunalp> stevvooe: There is one but w/o much feedback
+22:27:52 <mrunalp> stevvooe: Should clarify whether it is a CLI or a go pkg
+22:28:25 <mrunalp> stevvooe: Having a better workflow defined would help
+22:30:55 <mrunalp> cracra: Any other topics?
+22:31:03 <mrunalp> vbatts|work: Anyone from Intel, Hyper or Kata?
+22:31:25 <mrunalp> vbatts|work: VMs for OCI should be on this year
+22:32:22 <mrunalp> vbatts|work: What would be needed to support most generic VMs
+22:32:37 <mrunalp> david-lyle: Encouraging hyper to comment on the issue.
+22:32:45 <mrunalp> david-lyle: will track that down
+22:34:57 <mrunalp> vbatts|work: Could start fresh PR referencing that original PR
+22:36:10 <mrunalp> stevvooe: What are the missing pieces?
+22:36:21 <mrunalp> david-lyle: being able to specify kernel for the VM
+22:36:28 <mrunalp> stevvooe: PR that specifies the kernel path?
+22:36:33 <mrunalp> david-lyle: yes
+22:36:49 <mrunalp> vbatts|work: Some configs optional when running in a VM
+22:37:38 <mrunalp> mrunalp: Example of namespace specified to be host
+22:37:54 <mrunalp> david-lyle: will talk with sameo to figure out where we are
+22:38:38 <stevvooe> #link https://github.com/opencontainers/runtime-spec/pull/405/files
+22:39:31 <sameo> stevvooe: being able to specify kernel+guest image per container. As described on PR #405
+22:40:41 <sameo> stevvooe, mrunalp: I can give a kata update to the next OCI meeting to discuss this, if needed.
+22:40:58 <mrunalp> sameo: cool, sounds good!
+22:41:57 <mrunalp> #endmeeting

@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">22:03:08</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-01-04 discussion</span>
+<a name="l-2"></a><span class="tm">22:03:08</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Jan  4 22:03:08 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">22:03:08</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">22:03:08</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2017_01_04_discussion'
+<a name="l-5"></a><span class="tm">22:03:17</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp</span>
+<a name="l-6"></a><span class="tm">22:03:17</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp wking
+<a name="l-7"></a><span class="tm">22:04:15</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec issues for 1.0</span>
+<a name="l-8"></a><span class="tm">22:05:04</span><span class="nk"> &lt;wking&gt;</span> I think the command-line API is still blocking on crosbymichael / cyphar looking into the socket alternatives
+<a name="l-9"></a><span class="tm">22:05:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> RobDolinMS also has an outstanding anchor-tag PR which needs a rebase
+<a name="l-10"></a><span class="tm">22:05:37</span><span class="nk"> &lt;chatter&gt;</span> hey guys
+<a name="l-11"></a><span class="tm">22:06:37</span><span class="nk"> &lt;chatter&gt;</span> Allah is doing
+<a name="l-12"></a><span class="tm">22:06:44</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/427</span>
+<a name="l-13"></a><span class="tm">22:06:56</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/532</span>
+<a name="l-14"></a><span class="tm">22:07:00</span><span class="nk"> &lt;chatter&gt;</span> sun is not doing allah is doing
+<a name="l-15"></a><span class="tm">22:07:03</span><span class="nk"> &lt;chatter&gt;</span> to accept Islam say that i bear witness that there is no deity worthy of worship except Allah and Muhammad peace be upon him is his slave and messenger
+<a name="l-16"></a><span class="tm">22:08:35</span><span class="nk"> &lt;wking&gt;</span> it looks like there's good milestone tagging on issues, but not on PRs
+<a name="l-17"></a><span class="tm">22:08:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I'll look over the open PRs and milestone them
+<a name="l-18"></a><span class="tm">22:08:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> any image-spec maintainers?
+<a name="l-19"></a><span class="tm">22:09:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> any other topics?
+<a name="l-20"></a><span class="tm">22:09:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I just joined.  What's going on with anchors?
+<a name="l-21"></a><span class="tm">22:09:30</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] I need to catch up with Stephen Day about go-digest, but I don't think he's back until tomorrow
+<a name="l-22"></a><span class="tm">22:09:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> mostly they're merged, but one is still open
+<a name="l-23"></a><span class="tm">22:09:57</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/635</span>
+<a name="l-24"></a><span class="tm">22:10:21</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/614</span>
+<a name="l-25"></a><span class="tm">22:10:36</span><span class="nk"> &lt;wking&gt;</span> ^ open anchor PRs
+<a name="l-26"></a><span class="tm">22:11:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> anything else?
+<a name="l-27"></a><span class="tm">22:11:21</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

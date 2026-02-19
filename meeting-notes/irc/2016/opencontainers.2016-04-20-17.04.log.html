@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">17:04:30</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-04-20</span>
+<a name="l-2"></a><span class="tm">17:04:30</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Apr 20 17:04:30 2016 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">17:04:30</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">17:04:30</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2016_04_20'
+<a name="l-5"></a><span class="tm">17:06:36</span><span class="nk"> &lt;duglin&gt;</span> FYI will try to look at the split PR comments later today - been traveling a bit so I’m way way behind
+<a name="l-6"></a><span class="tm">17:07:01</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">issues / PRs</span>
+<a name="l-7"></a><span class="tm">17:07:07</span><span class="nk"> &lt;vbatts&gt;</span> thanks duglin
+<a name="l-8"></a><span class="tm">17:07:19</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/23</span>
+<a name="l-9"></a><span class="tm">17:10:35</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/VKpZNs-qYoI</span>
+<a name="l-10"></a><span class="tm">17:14:19</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/22</span>
+<a name="l-11"></a><span class="tm">17:18:08</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/35</span>
+<a name="l-12"></a><span class="tm">17:18:08</span><span class="nk"> &lt;philips&gt;</span> philips talked about thinking of the on-disk format as something that you point some tool like oci-root-setup file:///path/to/manifest and then adjacent to that manifest you have a blobs directory with all of the cas object necessary for setup
+<a name="l-13"></a><span class="tm">17:18:36</span><span class="nk"> &lt;philips&gt;</span> vbatts said that we should start laying out those thoughts on issue 35
+<a name="l-14"></a><span class="tm">17:18:47</span><span class="nk"> &lt;philips&gt;</span> <span class="cmd">#help</span><span class="cmdline"></span>
+<a name="l-15"></a><span class="tm">17:19:47</span><span class="nk"> &lt;philips&gt;</span> <span class="cmd">#action </span><span class="cmdline">philips needs to write down his thoughts on issue 35</span>
+<a name="l-16"></a><span class="tm">17:20:52</span><span class="nk"> &lt;philips&gt;</span> philips we need to have the spec of after you transport everything required for an image to disk, what do you do next
+<a name="l-17"></a><span class="tm">17:22:29</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chairs </span><span class="cmdline">philips</span>
+<a name="l-18"></a><span class="tm">17:23:54</span><span class="nk"> &lt;philips&gt;</span> <span class="cmd">#action </span><span class="cmdline">philips to email all of the maintainers of the image-spec to attend the weekly call</span>
+<a name="l-19"></a><span class="tm">17:24:20</span><span class="nk"> &lt;philips&gt;</span> wking asks why don't we just standardize a single tarball that is gpg signed instead of worrying about a CAS
+<a name="l-20"></a><span class="tm">17:25:18</span><span class="nk"> &lt;philips&gt;</span> vbatts the most basic layer of it I want to have a tarball that people can download and pull down that folks can just run from my github
+<a name="l-21"></a><span class="tm">17:25:44</span><span class="nk"> &lt;philips&gt;</span> vbatts the second part of our discussion is what is the translation to a runtime layout
+<a name="l-22"></a><span class="tm">17:27:02</span><span class="nk"> &lt;philips&gt;</span> <span class="cmd">#action </span><span class="cmdline">someone needs to build a flow diagram from image to runtime spec fs layout</span>
+<a name="l-23"></a><span class="tm">17:29:04</span><span class="nk"> &lt;philips&gt;</span> <span class="topic">#topic </span><span class="topicline">code of conduct</span>
+<a name="l-24"></a><span class="tm">17:29:04</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/375</span>
+<a name="l-25"></a><span class="tm">17:29:10</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/375</span>
+<a name="l-26"></a><span class="tm">17:30:53</span><span class="nk"> &lt;philips&gt;</span> dolan my thinking is that if there are files that should be exactly the same across all repos we should put them in the tob
+<a name="l-27"></a><span class="tm">17:32:33</span><span class="nk"> &lt;philips&gt;</span> wking one other way to handle this is to have a template repo and pull from that into all N repos
+<a name="l-28"></a><span class="tm">17:32:36</span><span class="nk"> &lt;duglin&gt;</span> even with a template we still have the “edit issue” that Rob mentioned - I’d prefer pointers
+<a name="l-29"></a><span class="tm">17:34:03</span><span class="nk"> &lt;philips&gt;</span> philips LICENSE is special as it has to be audited by everyone
+<a name="l-30"></a><span class="tm">17:34:34</span><span class="nk"> &lt;philips&gt;</span> someone another concern is our signed-off-by language should be shared
+<a name="l-31"></a><span class="tm">17:38:04</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#help </span><span class="cmdline">action</span>
+<a name="l-32"></a><span class="tm">17:38:13</span><span class="nk"> &lt;wking&gt;</span> it's #action stuff
+<a name="l-33"></a><span class="tm">17:38:24</span><span class="nk"> &lt;philips&gt;</span> <span class="cmd">#action </span><span class="cmdline">vbatts document when to merge</span>
+<a name="l-34"></a><span class="tm">17:38:41</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runc/blob/master/MAINTAINERS_GUIDE.md#how-are-decisions-made</span>
+<a name="l-35"></a><span class="tm">17:38:49</span><span class="nk"> &lt;philips&gt;</span> <span class="cmd">#action </span><span class="cmdline">vbatts make bbq</span>
+<a name="l-36"></a><span class="tm">17:38:49</span><span class="nk"> &lt;wking&gt;</span> ^ runC docs around landing PRs
+<a name="l-37"></a><span class="tm">17:39:04</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runc/blob/master/MAINTAINERS_GUIDE.md#who-decides-what</span>
+<a name="l-38"></a><span class="tm">17:43:08</span><span class="nk"> &lt;philips&gt;</span> <span class="cmd">#end</span><span class="cmdline"></span>
+<a name="l-39"></a><span class="tm">17:43:11</span><span class="nk"> &lt;philips&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span>
+<a name="l-40"></a><span class="tm">17:43:20</span><span class="nk"> &lt;vbatts&gt;</span> ...
+<a name="l-41"></a><span class="tm">17:43:24</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

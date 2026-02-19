@@ -1,0 +1,28 @@
+00:03:11 <mrunalp> #startmeeting OCI_5_3_2017
+00:03:11 <collabot> Meeting started Thu May  4 00:03:11 2017 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+00:03:11 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+00:03:11 <collabot> The meeting name has been set to 'oci_5_3_2017'
+00:04:59 <mrunalp> #topic https://github.com/opencontainers/runtime-spec/issues/726
+00:05:31 <mrunalp> crosbymichael, Tests running on docker integration
+00:05:37 <mrunalp> SELinux may have some issues
+00:05:43 <mrunalp> It is really close
+00:05:54 <mrunalp> ~6 fails from 100s tests
+00:07:29 <mrunalp> There may be an issue around ambient capabilities
+00:09:59 <mrunalp> crosbymichael, We could setup a hangout for Friday to go over remaining issues
+00:10:32 <mrunalp> #topic image
+00:10:38 <stevvooe> https://github.com/opencontainers/image-spec/issues/661#issuecomment-299035017
+00:10:45 <mrunalp> stevvooe, Discussion around ARM
+00:11:06 <mrunalp> stevvooe suggested a table. There is still some confusion that needs to be addressed.
+00:11:14 <mrunalp> #654
+00:11:21 <stevvooe> https://github.com/opencontainers/image-spec/pull/654
+00:11:24 <mrunalp> stevvooe and vbatts have arrived at some agreement
+00:11:41 <mrunalp> Can cut a rc-6 after those are merged
+00:11:51 <mrunalp> Somebody needs a take a crack at ref.name
+00:11:55 <mrunalp> #634
+00:12:03 <stevvooe> https://github.com/opencontainers/image-spec/pull/634
+00:12:07 <mrunalp> To be included in rc6
+00:12:37 <mrunalp> rc6 could then be a final RC
+00:13:04 <mrunalp> stevvooe, Proposes to go back to old time.
+00:13:45 <mrunalp> crosbymichael people who we changed time for aren't showing up
+00:14:01 <mrunalp> Better to go back to old time to get stakeholders on the call to get to 1.0
+00:15:42 <mrunalp> #endmeeting

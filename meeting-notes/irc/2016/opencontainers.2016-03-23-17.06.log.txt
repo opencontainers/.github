@@ -1,0 +1,32 @@
+17:06:53 <mrunalp> #startmeeting OCI 3/23
+17:06:53 <collabot> Meeting started Wed Mar 23 17:06:53 2016 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:06:53 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:06:53 <collabot> The meeting name has been set to 'oci_3_23'
+17:07:48 <mrunalp> #topic open PR/specs
+17:08:24 <julz_> https://github.com/opencontainers/runc/issues/680
+17:11:18 <mrunalp> #topic build issues
+17:16:12 <mrunalp> https://github.com/opencontainers/specs/pull/348/files
+17:17:19 <mrunalp> https://github.com/opencontainers/specs/pull/347
+17:18:21 <RobDolinMS> (when ready, I have an additional agenda topic
+17:19:15 <RobDolinMS> #topic TOB Update
+17:19:42 <RobDolinMS> #info New project proposal approved by TOB
+17:23:00 <RobDolinMS> #topic Request from Cert WG for conformance statements
+17:23:28 <RobDolinMS> #info Mrunal is asking if there are other (outside of OCI) projects that have "conformance" verbiage that we could learn from
+17:25:09 <wking> RFC 2119?
+17:25:11 <RobDolinMS> #topic OCI Tools Project
+17:25:38 <RobDolinMS> #info Mrunal asks if OCI Tools should be a new project or part of spec project
+17:27:23 <mrunalp> #topic optional cgroups
+17:27:24 <RobDolinMS> #topic cgroups
+17:28:03 <RobDolinMS> #link https://groups.google.com/a/opencontainers.org/d/msg/dev/sowYaeS0cCY/6Am-g_CtAwAJ
+17:28:22 <RobDolinMS> #link http://ircbot.wl.linuxfoundation.org/eavesdrop/%23opencontainers/%23opencontainers.2016-03-17.log.html#t2016-03-17T22:51:13
+17:28:49 <RobDolinMS> (Did someone do a start meeting at the beginning?)
+17:28:56 <mrunalp> I did
+17:30:44 <wking> it is very quiet.  Is everyone else still there?  Or have I dropped off?
+17:30:50 <mrunalp> wking, I can't hear you
+17:30:50 <mrunalp> you seem to be on mute
+17:30:58 <mrunalp> I am also kicked out. will rejoin.
+17:30:58 <wking> I'm muted now
+17:33:32 <RobDolinMS> Decision: hold-off on optional cgroups until someone else expresses interest
+17:34:03 <vishh> I guess you guys cannot hear me
+17:34:54 <mrunalp> vishh, Maybe discuss on duglin's PR and resume next week?
+17:34:57 <mrunalp> #endmeeting

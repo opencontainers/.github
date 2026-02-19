@@ -1,0 +1,44 @@
+21:59:34 <vbatts|work> #startmeeting 2019-02-27 discussion
+21:59:35 <collabot`> Meeting started Wed Feb 27 21:59:34 2019 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:59:35 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:59:35 <collabot`> The meeting name has been set to '2019_02_27_discussion'
+22:04:28 <vbatts|work> #topic [org] contribution workflow
+22:04:33 <vbatts|work> #link https://github.com/opencontainers/org/pull/6
+22:08:05 <v[m]1> <https://vsoch.github.io/man-opencontainers/>
+22:12:01 <vbatts|work> split the PR into two things: 1) move the CoC and security; 2) the web render for contributions
+22:21:18 <tianon> https://help.github.com/en/articles/adding-a-code-of-conduct-to-your-project
+22:25:28 <vbatts|work> #topic what's needed for distribution-spec v1? (lasker)
+22:25:56 <vbatts|work> search could be one of those things. But could be added later.
+22:27:14 <vbatts|work> process for registering media-types
+22:29:01 <vbatts|work> annotations are okay for _optional_ metadata
+22:29:41 <vbatts|work> but this is not suitable for scanners that need required/expected information to determine the artifact type
+22:31:32 <tianon> https://github.com/SteveLasker/RegistryArtifactTypes/blob/master/mediaTypes.md
+22:33:24 <vbatts|work> [notice] let it be known that lasker is the first sucessful screen share on uberconference. Also, not using a linux host (_windows_)
+22:36:19 <vbatts|work> https://github.com/opencontainers/image-spec/blob/master/media-types.md
+22:39:12 <vbatts|work> application/vnd.oci.image.ext.*
+22:40:52 <estesp[m]> new challenge for cyphar when it's morning his time: wire up uberconf chat window to matrix to IRC to Slack and back 😂
+22:41:03 <vbatts|work> estesp[m]: lol yes
+22:41:31 <KenBrooks[m]> don't cross the streams
+22:46:54 <vbatts|work> #link https://github.com/SteveLasker/RegistryArtifactTypes/blob/master/mediaTypeMappings.json
+22:51:07 <vbatts|work> vbatts likes the idea of a handshake where mediatypes are shared from the server so the client can decide.
+22:52:05 <vbatts|work> what the server exports doesn't _have_ to be the exclusive set, but maybe there could be a boolean saying the server side does do blacklist/whitelist
+22:52:21 <vbatts|work> error codes need to be clear
+22:52:32 <vbatts|work> this approach does not break backwards compat
+22:53:13 <KenBrooks[m]> agree...
+22:54:16 <v[m]1> Couldn't registries having (or not having support) for a particular media type be used for some malicious entity looking for registries not updated?
+22:54:26 <v[m]1> Like Wordpress putting the version string on the login page?
+22:56:21 <v[m]1> +1!
+22:56:44 <bacongobbler[m]> I'm not too sure if it would or wouldn't. To me it sounds a lot like associating human-readable names for a given file extension. `application/vnd.oci.image.config.v1+json` is to Docker as `.tar.gz` is to Tarballs
+22:58:27 <vbatts|work> #link https://github.com/opencontainers/distribution-spec/issues/58
+22:59:23 <vbatts|work> atlas and lasker: the image-index is not quite useful
+22:59:25 <vbatts|work> #link https://github.com/opencontainers/image-spec/blob/master/image-index.md
+23:00:04 <tianon> #TooManySlack
+23:00:10 <v[m]1> lol
+23:00:17 <v[m]1> #SlackOverflow
+23:00:24 <tianon> xD
+23:00:35 <KenBrooks[m]> As an end user of registries (and someone running one) I can get behind this approach of not trying to define it too strictly and just allowing each repo maintainer to decide when/how/what they support as long as they have a way to identify what type of image that artifact represents via the media types..   and just notify (error response) on unsupported.
+23:02:29 <KenBrooks[m]> yes please on some sort of proposal approach/framework.. gives us a place to rally specific discussions around.
+23:03:00 <vbatts|work> #topic weekly meetings? (atlas)
+23:03:49 <vbatts|work> vbatts|work: I know everyone has too many meeting, though i think that may be helpful here and keep progress rolling.
+23:04:45 <vbatts|work> vbatts|work: also, having a proposal workflow like a write-up (markdown or google doc) where comments and conversation can more directly track across mailing-list, slack, etc.
+23:05:44 <vbatts|work> #endmeeting

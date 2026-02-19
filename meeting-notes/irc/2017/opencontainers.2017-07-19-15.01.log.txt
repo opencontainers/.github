@@ -1,0 +1,15 @@
+15:01:23 <vbatts> #startmeeting 2017-07-19 discussion
+15:01:23 <collabot> Meeting started Wed Jul 19 15:01:23 2017 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+15:01:23 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+15:01:23 <collabot> The meeting name has been set to '2017_07_19_discussion'
+15:01:23 <vbatts> wjimenez5271: https://www.uberconference.com/opencontainers
+15:01:59 <wjimenez5271> ah cool
+15:02:33 <vbatts> #chair vbatts|work
+15:02:33 <collabot> Current chairs: vbatts vbatts|work
+15:02:58 <vbatts|work> ok
+15:09:50 <vbatts|work> #topic slow the calls to every two weeks. Still alternating times
+15:11:11 <vbatts|work> #topic good job to those rebasing
+15:15:11 <tianon> #link https://github.com/docker/distribution/pull/2076
+15:15:18 <tianon> (from mike brown -- looking for more eyes)
+15:15:50 <tianon> (pushing/pulling OCI v1.0.0 images to/from docker's registry :D)
+15:16:51 <vbatts|work> #endmeeting

@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">17:06:53</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">OCI 3/23</span>
+<a name="l-2"></a><span class="tm">17:06:53</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Mar 23 17:06:53 2016 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">17:06:53</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">17:06:53</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to 'oci_3_23'
+<a name="l-5"></a><span class="tm">17:07:48</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">open PR/specs</span>
+<a name="l-6"></a><span class="tm">17:08:24</span><span class="nk"> &lt;julz_&gt;</span> https://github.com/opencontainers/runc/issues/680
+<a name="l-7"></a><span class="tm">17:11:18</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">build issues</span>
+<a name="l-8"></a><span class="tm">17:16:12</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/specs/pull/348/files
+<a name="l-9"></a><span class="tm">17:17:19</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/specs/pull/347
+<a name="l-10"></a><span class="tm">17:18:21</span><span class="nk"> &lt;RobDolinMS&gt;</span> (when ready, I have an additional agenda topic
+<a name="l-11"></a><span class="tm">17:19:15</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">TOB Update</span>
+<a name="l-12"></a><span class="tm">17:19:42</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">New project proposal approved by TOB</span>
+<a name="l-13"></a><span class="tm">17:23:00</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Request from Cert WG for conformance statements</span>
+<a name="l-14"></a><span class="tm">17:23:28</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Mrunal is asking if there are other (outside of OCI) projects that have "conformance" verbiage that we could learn from</span>
+<a name="l-15"></a><span class="tm">17:25:09</span><span class="nk"> &lt;wking&gt;</span> RFC 2119?
+<a name="l-16"></a><span class="tm">17:25:11</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">OCI Tools Project</span>
+<a name="l-17"></a><span class="tm">17:25:38</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Mrunal asks if OCI Tools should be a new project or part of spec project</span>
+<a name="l-18"></a><span class="tm">17:27:23</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">optional cgroups</span>
+<a name="l-19"></a><span class="tm">17:27:24</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">cgroups</span>
+<a name="l-20"></a><span class="tm">17:28:03</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://groups.google.com/a/opencontainers.org/d/msg/dev/sowYaeS0cCY/6Am-g_CtAwAJ</span>
+<a name="l-21"></a><span class="tm">17:28:22</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#link </span><span class="cmdline">http://ircbot.wl.linuxfoundation.org/eavesdrop/%23opencontainers/%23opencontainers.2016-03-17.log.html#t2016-03-17T22:51:13</span>
+<a name="l-22"></a><span class="tm">17:28:49</span><span class="nk"> &lt;RobDolinMS&gt;</span> (Did someone do a start meeting at the beginning?)
+<a name="l-23"></a><span class="tm">17:28:56</span><span class="nk"> &lt;mrunalp&gt;</span> I did
+<a name="l-24"></a><span class="tm">17:30:44</span><span class="nk"> &lt;wking&gt;</span> it is very quiet.  Is everyone else still there?  Or have I dropped off?
+<a name="l-25"></a><span class="tm">17:30:50</span><span class="nk"> &lt;mrunalp&gt;</span> wking, I can't hear you
+<a name="l-26"></a><span class="tm">17:30:50</span><span class="nk"> &lt;mrunalp&gt;</span> you seem to be on mute
+<a name="l-27"></a><span class="tm">17:30:58</span><span class="nk"> &lt;mrunalp&gt;</span> I am also kicked out. will rejoin.
+<a name="l-28"></a><span class="tm">17:30:58</span><span class="nk"> &lt;wking&gt;</span> I'm muted now
+<a name="l-29"></a><span class="tm">17:33:32</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Decision:</span> hold-off on optional cgroups until someone else expresses interest
+<a name="l-30"></a><span class="tm">17:34:03</span><span class="nk"> &lt;vishh&gt;</span> I guess you guys cannot hear me
+<a name="l-31"></a><span class="tm">17:34:54</span><span class="nk"> &lt;mrunalp&gt;</span> vishh, Maybe discuss on duglin's PR and resume next week?
+<a name="l-32"></a><span class="tm">17:34:57</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

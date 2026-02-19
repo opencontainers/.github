@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">17:02:18</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-04-16 discussion</span>
+<a name="l-2"></a><span class="tm">17:02:18</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Apr 27 17:02:18 2016 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">17:02:18</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">17:02:18</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2016_04_16_discussion'
+<a name="l-5"></a><span class="tm">17:02:25</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chair </span><span class="cmdline">philips</span>
+<a name="l-6"></a><span class="tm">17:02:25</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: philips vbatts
+<a name="l-7"></a><span class="tm">17:02:33 </span><span class="nka">* vbatts</span> <span class="ac">did it right this time</span>
+<a name="l-8"></a><span class="tm">17:02:36</span><span class="nk"> &lt;philips&gt;</span> boooom
+<a name="l-9"></a><span class="tm">17:03:08</span><span class="nk"> &lt;duglin&gt;</span> https://github.com/opencontainers/runtime-spec/pull/395
+<a name="l-10"></a><span class="tm">17:03:41</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">split start/stop hooks</span>
+<a name="l-11"></a><span class="tm">17:03:41</span><span class="nk"> &lt;duglin&gt;</span> ya know… if we just accept 384 we can ignore 395  :-)
+<a name="l-12"></a><span class="tm">17:03:46</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/395</span>
+<a name="l-13"></a><span class="tm">17:04:22</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/384</span>
+<a name="l-14"></a><span class="tm">17:05:38</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">crosbymichael:</span> before we change the spec, lets get the semantics right and test it
+<a name="l-15"></a><span class="tm">17:06:51</span><span class="nk"> &lt;duglin&gt;</span> we do have the split PR out there -it just doesn’t do the special sleep/process logic
+<a name="l-16"></a><span class="tm">17:07:04</span><span class="nk"> &lt;duglin&gt;</span> (PR for runc)
+<a name="l-17"></a><span class="tm">17:08:42</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">julz_:</span> be explicit on what happens when pid1 exits
+<a name="l-18"></a><span class="tm">17:11:08</span><span class="nk"> &lt;RobDolinMS_&gt;</span> FWIW, it may be useful for have a write-up of current/required operations and prototyped/optional/experimental operations
+<a name="l-19"></a><span class="tm">17:14:10</span><span class="nk"> &lt;RobDolinMS_&gt;</span> Thanks for that explanation Michael
+<a name="l-20"></a><span class="tm">17:15:30 </span><span class="nka">* vbatts</span> <span class="ac">forgot to note</span>
+<a name="l-21"></a><span class="tm">17:15:48</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">duglin:</span> what are the concerns to solve, to get this merged into runc?
+<a name="l-22"></a><span class="tm">17:17:08</span><span class="nk"> &lt;vbatts&gt;</span> blocking in create?
+<a name="l-23"></a><span class="tm">17:17:39</span><span class="nk"> &lt;vbatts&gt;</span> does "create" do a bind mount?
+<a name="l-24"></a><span class="tm">17:17:52</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">mrunalp:</span> what is the problem being solved?
+<a name="l-25"></a><span class="tm">17:17:54</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> What is the problem we're trying to solve?
+<a name="l-26"></a><span class="tm">17:18:06</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">julz_:</span> it removes the need for hooks
+<a name="l-27"></a><span class="tm">17:18:18</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">mrunalp:</span> but at-least pre-start is still needed
+<a name="l-28"></a><span class="tm">17:18:31</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chair </span><span class="cmdline">RobDolinMS</span>
+<a name="l-29"></a><span class="tm">17:18:31</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: RobDolinMS philips vbatts
+<a name="l-30"></a><span class="tm">17:18:50</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">mrunalp:</span> delete,checkpoint,restore, what happens?
+<a name="l-31"></a><span class="tm">17:19:20</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">julz_:</span> you can acheive some of this with hooks, but ...
+<a name="l-32"></a><span class="tm">17:19:48</span><span class="nk"> &lt;RobDolinMS_&gt;</span> (vbatts would you please #chair RobDolinMS_ )
+<a name="l-33"></a><span class="tm">17:19:54</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chair </span><span class="cmdline">RobDolinMS_</span>
+<a name="l-34"></a><span class="tm">17:19:54</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: RobDolinMS RobDolinMS_ philips vbatts
+<a name="l-35"></a><span class="tm">17:20:35</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">julz_:</span> allowing for create, start steps. not being bound to hooks
+<a name="l-36"></a><span class="tm">17:21:04</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">julz_:</span> lets the orchestrator have much more control on handling actions between steps
+<a name="l-37"></a><span class="tm">17:22:45</span><span class="nk"> &lt;duglin&gt;</span> <span class="hi">mrunalp:</span> can you state your usecase again? the one for pre-start hooks
+<a name="l-38"></a><span class="tm">17:26:12</span><span class="nk"> &lt;RobDolinMS_&gt;</span> <span class="hi">mrunal:</span> So you don't need to pass ~10 arguments
+<a name="l-39"></a><span class="tm">17:26:40</span><span class="nk"> &lt;RobDolinMS_&gt;</span> <span class="hi">Vish:</span> It would help if you could send an email explaining what needs to be satisfied
+<a name="l-40"></a><span class="tm">17:26:58</span><span class="nk"> &lt;RobDolinMS_&gt;</span> <span class="hi">Mrunal:</span> I can send a pointer to a GitHub repo
+<a name="l-41"></a><span class="tm">17:27:08</span><span class="nk"> &lt;RobDolinMS_&gt;</span> <span class="topic">#topic </span><span class="topicline">Post Stop Hook</span>
+<a name="l-42"></a><span class="tm">17:27:49</span><span class="nk"> &lt;RobDolinMS_&gt;</span> <span class="hi">Vish:</span> want to be able to get some info from the container before it is destroyed
+<a name="l-43"></a><span class="tm">17:28:07</span><span class="nk"> &lt;RobDolinMS_&gt;</span> <span class="hi">Mrunal:</span> When the container process exits, everything goes away
+<a name="l-44"></a><span class="tm">17:28:24</span><span class="nk"> &lt;RobDolinMS_&gt;</span> <span class="hi">Doug:</span> Should we do a split b/w Stop and Delete ?
+<a name="l-45"></a><span class="tm">17:30:23</span><span class="nk"> &lt;duglin&gt;</span> I feel like there are a lot of moving parts here - really wish we were all in the same room :-(
+<a name="l-46"></a><span class="tm">17:30:30</span><span class="nk"> &lt;RobDolinMS_&gt;</span> So are we looking at: Create (postcreate) ... (prestart) Start (poststart) ... (prestop) Stop (poststop) ... (predelete) Delete
+<a name="l-47"></a><span class="tm">17:32:51</span><span class="nk"> &lt;wking&gt;</span> I'm back, should I start taking minutes?
+<a name="l-48"></a><span class="tm">17:33:07</span><span class="nk"> &lt;RobDolinMS_&gt;</span> @wking - That would be great.
+<a name="l-49"></a><span class="tm">17:33:07</span><span class="nk"> &lt;collabot`&gt;</span> <span class="hi">RobDolinMS_:</span> Error: "wking" is not a valid command.
+<a name="l-50"></a><span class="tm">17:33:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> you can pass ocitools a template, and have it modify something (e.g. a namespace path)
+<a name="l-51"></a><span class="tm">17:33:21</span><span class="nk"> &lt;RobDolinMS_&gt;</span> wking - that would be great.  My audio is a bit flaky
+<a name="l-52"></a><span class="tm">17:33:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> you can write tooling to make cross-platform, exec-like stuff simple
+<a name="l-53"></a><span class="tm">17:34:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> it's nice to keep a single container/process idea, instead of attempting to distinguish processes from sandboxes
+<a name="l-54"></a><span class="tm">17:34:27</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-55"></a><span class="tm">17:34:27</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: RobDolinMS RobDolinMS_ philips vbatts wking
+<a name="l-56"></a><span class="tm">17:36:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I think we went down a bad path with 'exec'.  It almost handled what we need, so we didn't get the infrastructure we need to easily do this sort of thing with containers
+<a name="l-57"></a><span class="tm">17:37:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> one nice feature of of Linux namespaces is that you can enter a subset without joining them all
+<a name="l-58"></a><span class="tm">17:37:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> we already have to support that for the current Docker UI
+<a name="l-59"></a><span class="tm">17:37:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> but how does that relate to this conversation?
+<a name="l-60"></a><span class="tm">17:38:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> should we have one workflow for all use-cases, or can we split the spec to have distinct phases to let the programmers represent whatever they want to achieve in a portable manner?
+<a name="l-61"></a><span class="tm">17:38:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I agree with the goal, and just think it's unachievable
+<a name="l-62"></a><span class="tm">17:39:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> are you saying you want a 'create' that just sets up the namespaces and a 'delete' that tears them down.  But while that container is running, you can attach to the container, run what you want, and die without killing the parent?
+<a name="l-63"></a><span class="tm">17:39:49</span><span class="nk"> &lt;duglin&gt;</span> Ican’t hear anyone - gonna redial
+<a name="l-64"></a><span class="tm">17:39:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I'm saying "everything is a container", and Docker containers today have to be able to join a subset of a current container's namespaces
+<a name="l-65"></a><span class="tm">17:40:14</span><span class="nk"> &lt;duglin&gt;</span> I’m back
+<a name="l-66"></a><span class="tm">17:40:23</span><span class="nk"> &lt;duglin&gt;</span> sorry - don’t know what happened
+<a name="l-67"></a><span class="tm">17:40:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> For me, there's no such thing as 'exec', there are just containers, and those containers can enter a subset of another container's namespaces
+<a name="l-68"></a><span class="tm">17:40:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> So julz_ is saying, "we don't need the separation, and users can just deal with it"
+<a name="l-69"></a><span class="tm">17:40:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I feel like this discussion isn't going anywhere, maybe for a good reason
+<a name="l-70"></a><span class="tm">17:41:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> If we focus on use cases, right now the post-stop use-case isn't satisfied
+<a name="l-71"></a><span class="tm">17:41:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> post-stop is satisfied.  You can use a pre-start bind-mount or add a flag to runC to do the bind mount for us
+<a name="l-72"></a><span class="tm">17:41:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> but we don't want to have bind mounts.  It's possible now without needing hooks
+<a name="l-73"></a><span class="tm">17:41:50</span><span class="nk"> &lt;duglin&gt;</span> runc createC --name=test
+<a name="l-74"></a><span class="tm">17:41:51</span><span class="nk"> &lt;duglin&gt;</span> runc createC --attach=test --ns=all --process=bash
+<a name="l-75"></a><span class="tm">17:41:51</span><span class="nk"> &lt;duglin&gt;</span> runc deleteD --name=test
+<a name="l-76"></a><span class="tm">17:41:52</span><span class="nk"> &lt;duglin&gt;</span> ??
+<a name="l-77"></a><span class="tm">17:41:59</span><span class="nk"> &lt;duglin&gt;</span> s/deleteD/deleteC/
+<a name="l-78"></a><span class="tm">17:42:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> we don't want to require callers to understand what's going on under the hood
+<a name="l-79"></a><span class="tm">17:42:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I think we need to make the spec and tooling good enough to handle subcontainers clearly without requiring under-the-hood knowledge
+<a name="l-80"></a><span class="tm">17:42:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> Like crosbymichael was saying, we want to stick with the things we know are working today
+<a name="l-81"></a><span class="tm">17:43:01</span><span class="nk"> &lt;duglin&gt;</span> julz_ ^^
+<a name="l-82"></a><span class="tm">17:43:07 </span><span class="nka">* vbatts</span> <span class="ac">back</span>
+<a name="l-83"></a><span class="tm">17:43:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> we should standardize what we have and build things to make that simpler
+<a name="l-84"></a><span class="tm">17:43:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I'm not against a bind-mount option, but I am nervous about making it a first-class flow, because it's not what we're useful
+<a name="l-85"></a><span class="tm">17:44:19</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/391</span>
+<a name="l-86"></a><span class="tm">17:44:27</span><span class="nk"> &lt;wking&gt;</span> ^ notes on supporting 'exec' with the current spec
+<a name="l-87"></a><span class="tm">17:44:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> Docker uses runC now, so I don't think it needs anything we don't already have
+<a name="l-88"></a><span class="tm">17:45:50</span><span class="nk"> &lt;duglin&gt;</span> <span class="hi">julz_:</span>  https://gist.github.com/duglin/cc799056126143d93bd9c2e0c8a88a5d
+<a name="l-89"></a><span class="tm">17:45:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> you can handle post-stop hooks before the mount namespace is gone, you can do that by calling post-stop hooks before the runtime waiting on the container process
+<a name="l-90"></a><span class="tm">17:46:09</span><span class="nk"> &lt;wking&gt;</span> ^ I'm not sure if I got that right, but there was some discussion of wait timing
+<a name="l-91"></a><span class="tm">17:47:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> crosbymichael and I are both happy with #395, as long as it only has to be a best-effort to run post-stop hooks while the mount namespace is still there
+<a name="l-92"></a><span class="tm">17:48:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I think #395 needs bind mounts, and I'm ok with that
+<a name="l-93"></a><span class="tm">17:49:06</span><span class="nk"> &lt;duglin&gt;</span> <span class="hi">crosbymichael:</span> does this make any sense to you?   https://gist.github.com/duglin/cc799056126143d93bd9c2e0c8a88a5d
+<a name="l-94"></a><span class="tm">17:49:20</span><span class="nk"> &lt;wking&gt;</span> preserving namespaces after container-process death sounds like a big shift to me
+<a name="l-95"></a><span class="tm">17:49:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I don't see why we're afraid of pinning namespaces if it's not exposed to the user
+<a name="l-96"></a><span class="tm">17:49:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> it makes cleanup awkward.  Who cleans up the pinned namespaces if the host process dies
+<a name="l-97"></a><span class="tm">17:50:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> for example, I don't want an IP address from a dead container persisting
+<a name="l-98"></a><span class="tm">17:50:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> the host process will cleanup the pins
+<a name="l-99"></a><span class="tm">17:50:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> but what if the host process was killed before that?
+<a name="l-100"></a><span class="tm">17:50:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> today there's a cleanup daemon.
+<a name="l-101"></a><span class="tm">17:51:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> this gets into the kill/stop distinction
+<a name="l-102"></a><span class="tm">17:51:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> but the current spec is simpler without the daemon requirement
+<a name="l-103"></a><span class="tm">17:51:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> this is the same problem as cgroup cleanup
+<a name="l-104"></a><span class="tm">17:52:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> that's fair, we're just doubling down on the cgroup cleanup issue
+<a name="l-105"></a><span class="tm">17:52:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> but this is extending our exposure (e.g. pinning IP addresses in the network namespace)
+<a name="l-106"></a><span class="tm">17:53:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> if a user cares a lot about garbage collection, they should run their own garbage collector
+<a name="l-107"></a><span class="tm">17:54:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I don't think pinning is the right answer.  Just use sub-containers
+<a name="l-108"></a><span class="tm">17:54:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> we have to support that anyway, so why require pinning separately?
+<a name="l-109"></a><span class="tm">17:55:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> there's less technical overhead for config authors if we pin past post-start hooks
+<a name="l-110"></a><span class="tm">17:56:11</span><span class="nk"> &lt;philips&gt;</span> sorry have to run, byes
+<a name="l-111"></a><span class="tm">17:56:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> the spec is supposed to be a low-level, generic thing.  I agree we should make this easier, but we can do that in high level tools
+<a name="l-112"></a><span class="tm">17:56:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> the problem with building lots of features into the bottom is that it's harder to decouple later
+<a name="l-113"></a><span class="tm">17:57:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> we can always push things down if they're super useful
+<a name="l-114"></a><span class="tm">17:57:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> there will be at least one layer of tools between the user's keyboard and the runtime-spec config
+<a name="l-115"></a><span class="tm">17:58:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> but it makes the spec less useful if you require tooling
+<a name="l-116"></a><span class="tm">17:58:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> then what's the point of the spec?
+<a name="l-117"></a><span class="tm">17:58:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I want us to spend energy on the tooling to make 'exec' an easy flow, and we've already decided not to put that in the spec
+<a name="l-118"></a><span class="tm">17:58:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> and the post-stop pinning seems like a more peripheral case than 'exec'
+<a name="l-119"></a><span class="tm">17:59:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> the problem with 'exec' is that there wasn't agreement about the concept
+<a name="l-120"></a><span class="tm">17:59:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> so I don't know if the 'exec' example applies here (we all agree on what post-stop pinning means)
+<a name="l-121"></a><span class="tm">18:00:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> my point is that we pulled out 'exec' because you could reimplement it in higher-level tooling
+<a name="l-122"></a><span class="tm">18:00:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> you can also build tooling that makes pinning easy without having to bake it into the spec
+<a name="l-123"></a><span class="tm">18:00:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> going back to cleanup, there's no way to get the kernel to automatically reap cgroups, but if we avoid pinning we can have the kernel clean up namespaces
+<a name="l-124"></a><span class="tm">18:00:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we could make it optional ;)
+<a name="l-125"></a><span class="tm">18:02:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> is my earlier Gist (https://gist.github.com/duglin/cc799056126143d93bd9c2e0c8a88a5d) what julz_ is proposing?
+<a name="l-126"></a><span class="tm">18:02:09</span><span class="nk"> &lt;RobDolinMS_&gt;</span> Need to drop for 11am.  Have a great day everyone :)
+<a name="l-127"></a><span class="tm">18:02:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> that's the create/start split, and we've shifted over to talk more about the post-stop pinning vs. sub-containers
+<a name="l-128"></a><span class="tm">18:03:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> that's what I'm doing in the Gist (https://gist.github.com/duglin/cc799056126143d93bd9c2e0c8a88a5d#file-gistfile1-txt-L9 &lt;-- sub-container)
+<a name="l-129"></a><span class="tm">18:03:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> we can't use 'docker (re?)start' because we need to collect container content before the mount namespace is destroyed
+<a name="l-130"></a><span class="tm">18:04:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> what's the problem with the sub-container approach and having the parent hold the mount-namespace open?
+<a name="l-131"></a><span class="tm">18:04:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> that's fine, and you could do that in a tooling API, but then the tooling API becomes a spec, effectively
+<a name="l-132"></a><span class="tm">18:05:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> yeah, and this is effectively a pod
+<a name="l-133"></a><span class="tm">18:05:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I'm not talking about pods
+<a name="l-134"></a><span class="tm">18:06:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> to me, once you say the lifecycle of the process is different from the lifecycle of the sandbox, I think you're getting into the pod landscape.  I think we should just embrace it
+<a name="l-135"></a><span class="tm">18:07:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I see what you mean, it's not much of a stretch from a single container, but I think it *is* past the single container stage
+<a name="l-136"></a><span class="tm">18:07:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> for sub-namespaces you need a dummy process in the parent, and it could die
+<a name="l-137"></a><span class="tm">18:08:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> you could have tooling that handled this post-stop pinning via bind mounts
+<a name="l-138"></a><span class="tm">18:08:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> this just pushes all the interesting stuff up into tooling
+<a name="l-139"></a><span class="tm">18:08:49</span><span class="nk"> &lt;wking&gt;</span> ^ I have no problem pushing interesting stuff up into tooling ;)
+<a name="l-140"></a><span class="tm">18:09:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I think it's too late to experiment on the standard, instead of testing ideas in tooling and then pushing them down into the standard if they have legs
+<a name="l-141"></a><span class="tm">18:10:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> how do we get past the uncertainty stage?
+<a name="l-142"></a><span class="tm">18:10:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> it's too hard to have a conversation without a concrete process
+<a name="l-143"></a><span class="tm">18:10:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> how about an experimental branch of runC for testing these ideas, and then we can bless them after they're proven
+<a name="l-144"></a><span class="tm">18:10:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> what is "proven"
+<a name="l-145"></a><span class="tm">18:10:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we've tested all the edge cases
+<a name="l-146"></a><span class="tm">18:11:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> it should be written down what an author needs to do to convince the community that their change is proven
+<a name="l-147"></a><span class="tm">18:11:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> in this case, we can build a tool and judge by popularity.  If lots of users are using the tools, then merge them down
+<a name="l-148"></a><span class="tm">18:12:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> the bind-mount approach means we can't use 'docker restart', because you need an explicit phase to handle the bind-mounts
+<a name="l-149"></a><span class="tm">18:12:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> given you've bind-mounted in the pre-start, you can rely on the post-stop hooks having the namespaces pinned
+<a name="l-150"></a><span class="tm">18:12:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> if you want pinning, you should bind-mount in a pre-start hook for now
+<a name="l-151"></a><span class="tm">18:12:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> is the user doing this, or is the runtime doing it for them
+<a name="l-152"></a><span class="tm">18:13:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> you should opt-in with a argument
+<a name="l-153"></a><span class="tm">18:13:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we can give folks sample hooks, etc. as well
+<a name="l-154"></a><span class="tm">18:14:56</span><span class="nk"> &lt;mrunalp&gt;</span> wking, Thanks for the notes :)
+<a name="l-155"></a><span class="tm">18:15:19</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

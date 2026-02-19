@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">17:02:30</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2015-10-07 discussion</span>
+<a name="l-2"></a><span class="tm">17:02:30</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Oct  7 17:02:30 2015 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">17:02:30</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">17:02:30</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2015_10_07_discussion'
+<a name="l-5"></a><span class="tm">17:02:59</span><span class="nk"> &lt;vbatts|work&gt;</span> philips will not be making it today. Sounds like his batteries are dead, somewhere in dublin.
+<a name="l-6"></a><span class="tm">17:03:09</span><span class="nk"> &lt;mrunalp&gt;</span> okay
+<a name="l-7"></a><span class="tm">17:03:51</span><span class="nk"> &lt;RobDolinMS_&gt;</span> Good day
+<a name="l-8"></a><span class="tm">17:03:55</span><span class="nk"> &lt;duglin&gt;</span> Howdy
+<a name="l-9"></a><span class="tm">17:03:57</span><span class="nk"> &lt;wking&gt;</span> hi
+<a name="l-10"></a><span class="tm">17:03:59</span><span class="nk"> &lt;julz&gt;</span> yo
+<a name="l-11"></a><span class="tm">17:04:02</span><span class="nk"> &lt;Stefan&gt;</span> hi
+<a name="l-12"></a><span class="tm">17:04:05</span><span class="nk"> &lt;mikebrow&gt;</span> .
+<a name="l-13"></a><span class="tm">17:04:06</span><span class="nk"> &lt;lk4d4&gt;</span> hello
+<a name="l-14"></a><span class="tm">17:04:11</span><span class="nk"> &lt;jojy_mesos&gt;</span> aloha
+<a name="l-15"></a><span class="tm">17:04:20</span><span class="nk"> &lt;RobDolinMS_&gt;</span> <span class="cmd">#info </span><span class="cmdline">RobDolinMS_ from Microsoft in Seattle</span>
+<a name="l-16"></a><span class="tm">17:04:34</span><span class="nk"> &lt;jlb13&gt;</span> hi vbatts
+<a name="l-17"></a><span class="tm">17:05:06</span><span class="nk"> &lt;vbatts|work&gt;</span> o/
+<a name="l-18"></a><span class="tm">17:05:18</span><span class="nk"> &lt;vishh&gt;</span> Hello
+<a name="l-19"></a><span class="tm">17:05:30</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">duglin clarifying a couple of things</span>
+<a name="l-20"></a><span class="tm">17:05:49</span><span class="nk"> &lt;RobDolinMS_&gt;</span> <span class="cmd">#info </span><span class="cmdline">duglin is Doug Davis from IBM</span>
+<a name="l-21"></a><span class="tm">17:06:08</span><span class="nk"> &lt;duglin&gt;</span> https://github.com/opencontainers/specs/pull/209
+<a name="l-22"></a><span class="tm">17:06:23</span><span class="nk"> &lt;anuthan&gt;</span> hello
+<a name="l-23"></a><span class="tm">17:08:59</span><span class="nk"> &lt;duglin&gt;</span> https://github.com/opencontainers/specs/pull/210
+<a name="l-24"></a><span class="tm">17:09:04</span><span class="nk"> &lt;RobDolinMS&gt;</span> Suggested replacing "Equinox" with "fiber hotel" and Doug fixed
+<a name="l-25"></a><span class="tm">17:09:38</span><span class="nk"> &lt;RobDolinMS&gt;</span> (or will fix)
+<a name="l-26"></a><span class="tm">17:12:09</span><span class="nk"> &lt;wking&gt;</span> vbatts|work and mrunalp distinguishing between "filesystem bundles" and "on the wire bundles" for runtime.json
+<a name="l-27"></a><span class="tm">17:14:51</span><span class="nk"> &lt;wking&gt;</span> duglin points out that the bundle.md is just talking about filesystem bundles, and we're still not sure whether wire bundles are in or out of scope
+<a name="l-28"></a><span class="tm">17:15:33</span><span class="nk"> &lt;anuthan&gt;</span> solaris wouldn't be needing the runtime.json , so we prefer this be optional
+<a name="l-29"></a><span class="tm">17:16:02</span><span class="nk"> &lt;anuthan&gt;</span> Even for a running container on filesystem
+<a name="l-30"></a><span class="tm">17:16:43</span><span class="nk"> &lt;lk4d4&gt;</span> yeah, I agree, it should be optional everywhere
+<a name="l-31"></a><span class="tm">17:16:46</span><span class="nk"> &lt;mrunalp&gt;</span> Fair, it could be optional
+<a name="l-32"></a><span class="tm">17:17:54</span><span class="nk"> &lt;RobDolinMS&gt;</span> anuthan  is Abhijeeth Nuthan
+<a name="l-33"></a><span class="tm">17:18:09</span><span class="nk"> &lt;wking&gt;</span> crosbymichael asks where the runtime.json settings come from for Solaris
+<a name="l-34"></a><span class="tm">17:18:20</span><span class="nk"> &lt;RobDolinMS&gt;</span> anuthan explains how Solaris handles this
+<a name="l-35"></a><span class="tm">17:18:22</span><span class="nk"> &lt;wking&gt;</span> anuthan says they're part of the runtime's configuration outside of the bundle
+<a name="l-36"></a><span class="tm">17:18:51</span><span class="nk"> &lt;RobDolinMS&gt;</span> In config.json, there is a Linux object and a separate Solaris object
+<a name="l-37"></a><span class="tm">17:19:07</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">anuthan to mail the list with more details on how Solaris handles it</span>
+<a name="l-38"></a><span class="tm">17:19:14</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#action </span><span class="cmdline">anuthan to send an mail elaborating on this</span>
+<a name="l-39"></a><span class="tm">17:19:47</span><span class="nk"> &lt;RobDolinMS&gt;</span> Doh; double-posted with wking :)
+<a name="l-40"></a><span class="tm">17:20:16</span><span class="nk"> &lt;wking&gt;</span> ;)
+<a name="l-41"></a><span class="tm">17:20:20</span><span class="nk"> &lt;wking&gt;</span> more actions :)
+<a name="l-42"></a><span class="tm">17:20:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> asks how hooks are handled
+<a name="l-43"></a><span class="tm">17:20:42</span><span class="nk"> &lt;wking&gt;</span> anuthan says Solaris doesn't currently support hooks
+<a name="l-44"></a><span class="tm">17:21:10</span><span class="nk"> &lt;wking&gt;</span> he feels like hooks should be handled by the runtime itself, but it's complicated ;).  We'll wait for more details
+<a name="l-45"></a><span class="tm">17:22:57</span><span class="nk"> &lt;wking&gt;</span> should we amend #210 to make runtime.json optional?
+<a name="l-46"></a><span class="tm">17:23:23</span><span class="nk"> &lt;wking&gt;</span> mrunal thinks maybe, crosbymichael is concerned about leaving some config unspecified
+<a name="l-47"></a><span class="tm">17:23:46</span><span class="nk"> &lt;wking&gt;</span> I think we should land the #210 rewording as it stands and then have a separate discussion on the list about making runtime.json optional
+<a name="l-48"></a><span class="tm">17:25:42</span><span class="nk"> &lt;wking&gt;</span> vbatts|work thinks maybe the distinction is how much the bundle is asking for, vs. what the runtime is granting
+<a name="l-49"></a><span class="tm">17:26:35</span><span class="nk"> &lt;wking&gt;</span> anuthan configuration is set for the zone in which the container runs, so the zone config sets maximum caps on resources
+<a name="l-50"></a><span class="tm">17:27:14</span><span class="nk"> &lt;wking&gt;</span> anuthan we don't want to lose that runtime.json configuration when moving the container between hosts
+<a name="l-51"></a><span class="tm">17:28:53</span><span class="nk"> &lt;RobDolinMS&gt;</span> Anyone else have trouble hearing Vish?
+<a name="l-52"></a><span class="tm">17:29:16</span><span class="nk"> &lt;jlb13&gt;</span> yeah, his audio stream goes a bit underwater
+<a name="l-53"></a><span class="tm">17:31:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> maybe the config.json / runtime.json split makes sense, and the current Solaris stuff can be reshuffled to use both configs.
+<a name="l-54"></a><span class="tm">17:31:56</span><span class="nk"> &lt;jlb13&gt;</span> i think correct, yes
+<a name="l-55"></a><span class="tm">17:32:25</span><span class="nk"> &lt;wking&gt;</span> feel free to add your own language ;).  I'm just trying to paraphrase for the minutes :p
+<a name="l-56"></a><span class="tm">17:32:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> why require runtime.json if we can guess reasonable defaults
+<a name="l-57"></a><span class="tm">17:32:56</span><span class="nk"> &lt;wking&gt;</span> e.g. with 'runc spec'
+<a name="l-58"></a><span class="tm">17:33:12</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">duglin asks: If through runc spec we can produce valid defaults, why require runtime.json to be present?</span>
+<a name="l-59"></a><span class="tm">17:33:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we don't specify defaults in the spec (the runC values are runC-specific)
+<a name="l-60"></a><span class="tm">17:33:47</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">We don't currently have default values in spec.</span>
+<a name="l-61"></a><span class="tm">17:34:11</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">(said mrunalp)</span>
+<a name="l-62"></a><span class="tm">17:34:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> maybe you should be able to say "I don't care", and have them use unspecified defaults (whatever the runtime wants to use as the defaults)
+<a name="l-63"></a><span class="tm">17:35:34</span><span class="nk"> &lt;RobDolinMS&gt;</span> File can be required w/ some fields required and some fields optional.
+<a name="l-64"></a><span class="tm">17:35:53</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">lk4d4:</span> Your voice is breaking up
+<a name="l-65"></a><span class="tm">17:36:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">lk4d4:</span> doesn't like runtime-specific defaults
+<a name="l-66"></a><span class="tm">17:36:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> agrees, no runtime-specific defaults
+<a name="l-67"></a><span class="tm">17:36:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> clearly state which fields are optional and which are required
+<a name="l-68"></a><span class="tm">17:37:06</span><span class="nk"> &lt;lk4d4&gt;</span> <span class="hi">mrunalp:</span> seems like bluejeans wants too much memory from my laptop
+<a name="l-69"></a><span class="tm">17:37:16</span><span class="nk"> &lt;wking&gt;</span> ^^ we're getting better at that now, but we still have more to do
+<a name="l-70"></a><span class="tm">17:37:21</span><span class="nk"> &lt;lk4d4&gt;</span> <span class="hi">duglin:</span> require
+<a name="l-71"></a><span class="tm">17:37:33</span><span class="nk"> &lt;wking&gt;</span> ^ "a runtime.json"
+<a name="l-72"></a><span class="tm">17:37:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> is ok keeping it required for now, and revisit once we finish required/optional for the fields inside
+<a name="l-73"></a><span class="tm">17:38:00</span><span class="nk"> &lt;vishh&gt;</span> One more thing is that the standard container tools should take care of validation and defaulting.
+<a name="l-74"></a><span class="tm">17:38:06</span><span class="nk"> &lt;wking&gt;</span> I agree with duglin
+<a name="l-75"></a><span class="tm">17:38:19</span><span class="nk"> &lt;jlb13&gt;</span> +1 to duglin
+<a name="l-76"></a><span class="tm">17:38:21</span><span class="nk"> &lt;lk4d4&gt;</span> <span class="hi">vishh:</span> standart container tools like docker or like runc? :)
+<a name="l-77"></a><span class="tm">17:38:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> can you define "the standard container tools"?
+<a name="l-78"></a><span class="tm">17:38:27</span><span class="nk"> &lt;vishh&gt;</span> For example, in the case of linux, OCI should supply a validation and defaulting tool .
+<a name="l-79"></a><span class="tm">17:38:41</span><span class="nk"> &lt;wking&gt;</span> why not for other OSes?
+<a name="l-80"></a><span class="tm">17:38:48</span><span class="nk"> &lt;vishh&gt;</span> No. I mean tools officially supported by OCI.
+<a name="l-81"></a><span class="tm">17:39:01</span><span class="nk"> &lt;lk4d4&gt;</span> <span class="hi">vishh:</span> I agree, it would be supercool
+<a name="l-82"></a><span class="tm">17:39:06</span><span class="nk"> &lt;vishh&gt;</span> Once we move that to runc or docker or something else, it becomes implementation specific.
+<a name="l-83"></a><span class="tm">17:39:30</span><span class="nk"> &lt;RobDolinMS&gt;</span> next topic?
+<a name="l-84"></a><span class="tm">17:39:33</span><span class="nk"> &lt;lk4d4&gt;</span> <span class="hi">vbatts|work:</span> psst
+<a name="l-85"></a><span class="tm">17:40:23</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">everyone to add optional/required comments for fields that are missing them ;)</span>
+<a name="l-86"></a><span class="tm">17:40:24</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Everyone should continue reviewing :)</span>
+<a name="l-87"></a><span class="tm">17:40:43 </span><span class="nka">* wking</span> <span class="ac">disconnects the RobDolinMS mind-link</span>
+<a name="l-88"></a><span class="tm">17:40:50</span><span class="nk"> &lt;RobDolinMS&gt;</span> ;)
+<a name="l-89"></a><span class="tm">17:40:58</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">vbatts - top-down docs</span>
+<a name="l-90"></a><span class="tm">17:41:40</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">vbatts|work has been working on this</span>
+<a name="l-91"></a><span class="tm">17:42:56</span><span class="nk"> &lt;wking&gt;</span> vbatts|work maybe add directories for logically grouping things?  Maybe have a single spec.md?  Expects a PR in the next week or so
+<a name="l-92"></a><span class="tm">17:43:09</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">vbatts|work hoping to have a PR in the next week or two</span>
+<a name="l-93"></a><span class="tm">17:43:26</span><span class="nk"> &lt;wking&gt;</span> vbatts|work wants to make it easy to both get a high-level overview and to drill down onto a particular issue
+<a name="l-94"></a><span class="tm">17:43:50</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">vbatts|work to continue work on the top-down spec</span>
+<a name="l-95"></a><span class="tm">17:43:58</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">@crosbymichael:</span> "in vbatts we trust" ;)
+<a name="l-96"></a><span class="tm">17:43:58</span><span class="nk"> &lt;collabot&gt;</span> <span class="hi">RobDolinMS:</span> Error: "crosbymichael:" is not a valid command.
+<a name="l-97"></a><span class="tm">17:44:09</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">wking - lifecycle updates</span>
+<a name="l-98"></a><span class="tm">17:44:12</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">crosbymichael:</span> "in vbatts we trust" ;)
+<a name="l-99"></a><span class="tm">17:44:37</span><span class="nk"> &lt;wking&gt;</span> https://github.com/opencontainers/specs/pull/207
+<a name="l-100"></a><span class="tm">17:45:10</span><span class="nk"> &lt;duglin&gt;</span> coly cow - that one comment has 16 footnotes!  Gotta be close to a record!!
+<a name="l-101"></a><span class="tm">17:45:23</span><span class="nk"> &lt;vbatts|work&gt;</span> hahahahaha
+<a name="l-102"></a><span class="tm">17:45:25 </span><span class="nka">* vbatts|work</span> <span class="ac">ohmans</span>
+<a name="l-103"></a><span class="tm">17:47:05</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#help </span><span class="cmdline">people familiar with lifecycle to review wking's PR</span>
+<a name="l-104"></a><span class="tm">17:47:53</span><span class="nk"> &lt;wking&gt;</span> I'll make any changes that folks need to see to get this landed without getting to deep in low-level issues
+<a name="l-105"></a><span class="tm">17:48:05</span><span class="nk"> &lt;wking&gt;</span> we can revisit those later after we have a high-level scaffold in place
+<a name="l-106"></a><span class="tm">17:48:17</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">maintainers should review the PR</span>
+<a name="l-107"></a><span class="tm">17:48:50</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">virt containers</span>
+<a name="l-108"></a><span class="tm">17:48:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> #topic?
+<a name="l-109"></a><span class="tm">17:49:27</span><span class="nk"> &lt;wking&gt;</span> https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/gS-nvHPwJQ8
+<a name="l-110"></a><span class="tm">17:50:26</span><span class="nk"> &lt;RobDolinMS&gt;</span> Thanks wking :)
+<a name="l-111"></a><span class="tm">17:50:33</span><span class="nk"> &lt;wking&gt;</span> no problem
+<a name="l-112"></a><span class="tm">17:50:51</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">mrunalp - bundle validation</span>
+<a name="l-113"></a><span class="tm">17:51:06</span><span class="nk"> &lt;wking&gt;</span> should it go into the spec repo or be external
+<a name="l-114"></a><span class="tm">17:51:06</span><span class="nk"> &lt;wking&gt;</span> ?
+<a name="l-115"></a><span class="tm">17:51:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> ^
+<a name="l-116"></a><span class="tm">17:52:15</span><span class="nk"> &lt;wking&gt;</span> you can also develop it externally and then merge it in later
+<a name="l-117"></a><span class="tm">17:53:05</span><span class="nk"> &lt;wking&gt;</span> mrunalp's approach: point at a bundle, launch a well-known process like cat, something else...
+<a name="l-118"></a><span class="tm">17:53:21</span><span class="nk"> &lt;wking&gt;</span> I don't think we want to rely on having 'cat' inside the bundle
+<a name="l-119"></a><span class="tm">17:53:50</span><span class="nk"> &lt;wking&gt;</span> what sort of things are we going to be validating for the bundle?
+<a name="l-120"></a><span class="tm">17:53:57</span><span class="nk"> &lt;wking&gt;</span> can't this just be a static config check?
+<a name="l-121"></a><span class="tm">17:54:12</span><span class="nk"> &lt;wking&gt;</span> or are we checking to see that the container has valid content in the rootfs?
+<a name="l-122"></a><span class="tm">17:54:47</span><span class="nk"> &lt;wking&gt;</span> give it a runtime (e.g. runC), generate a bundle using e.g. cat, run the bundle and check the resulting container
+<a name="l-123"></a><span class="tm">17:54:58</span><span class="nk"> &lt;wking&gt;</span> this sounds more like a runtime-validator, not a bundle-validator
+<a name="l-124"></a><span class="tm">17:55:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> wants standard bundles that print pass/fail after running an internal check, and we can just launch those with the runtime being tested
+<a name="l-125"></a><span class="tm">17:55:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> has a working skeleton
+<a name="l-126"></a><span class="tm">17:56:08</span><span class="nk"> &lt;wking&gt;</span> currently a branch in ocitools
+<a name="l-127"></a><span class="tm">17:56:34</span><span class="nk"> &lt;wking&gt;</span> https://github.com/mrunalp/ocitools
+<a name="l-128"></a><span class="tm">17:57:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> if I want to know my resource constraints/identity/..., how does the application figure those out
+<a name="l-129"></a><span class="tm">17:57:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> currently mounting cgroups in the container, so the container can check there for those configs
+<a name="l-130"></a><span class="tm">17:57:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> do we want to mount the spec inside the container?
+<a name="l-131"></a><span class="tm">17:57:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> is the runtime updatable for a running container?
+<a name="l-132"></a><span class="tm">17:58:06</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">vishh to create and issue/mailing-list-thread to discuss further</span>
+<a name="l-133"></a><span class="tm">17:58:48</span><span class="nk"> &lt;RobDolinMS&gt;</span> Bunch of folks in Mt. View on/around Oct 21st; may coordinate a hacking session.
+<a name="l-134"></a><span class="tm">17:58:53</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">vbatts - hacking session</span>
+<a name="l-135"></a><span class="tm">17:59:00</span><span class="nk"> &lt;jlb13&gt;</span> ah, i'll just miss you. i get into sfo 10/24.
+<a name="l-136"></a><span class="tm">17:59:04</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Bunch of folks in Mt. View on/around Oct 21st; may coordinate a hacking session.</span>
+<a name="l-137"></a><span class="tm">17:59:26</span><span class="nk"> &lt;duglin&gt;</span> can you give more details as it gets nailed down so people can make travel plans?
+<a name="l-138"></a><span class="tm">17:59:42</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#action </span><span class="cmdline">vbatts|work to send more details</span>
+<a name="l-139"></a><span class="tm">18:00:08</span><span class="nk"> &lt;lk4d4&gt;</span> see you
+<a name="l-140"></a><span class="tm">18:01:09</span><span class="nk"> &lt;wking&gt;</span> Looks like #195 hasn't landed yet (it's where I looked up the ocitools link).  mrunalp's already LGTMed it, but can another maintainer take a minute to review/merge?  It should be a quick review ;)
+<a name="l-141"></a><span class="tm">18:01:14</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

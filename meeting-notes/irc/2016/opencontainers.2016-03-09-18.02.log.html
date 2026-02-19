@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">18:02:46</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-03-09 discussion</span>
+<a name="l-2"></a><span class="tm">18:02:46</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Mar  9 18:02:46 2016 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">18:02:46</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">18:02:46</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2016_03_09_discussion'
+<a name="l-5"></a><span class="tm">18:02:50</span><span class="nk"> &lt;vbatts&gt;</span> yes
+<a name="l-6"></a><span class="tm">18:02:53</span><span class="nk"> &lt;julz_&gt;</span> <span class="hi">mrunalp:</span> thanks yeah Im in
+<a name="l-7"></a><span class="tm">18:02:59</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chairs </span><span class="cmdline">wking</span>
+<a name="l-8"></a><span class="tm">18:03:02</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-9"></a><span class="tm">18:03:02</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: vbatts wking
+<a name="l-10"></a><span class="tm">18:03:15</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">seccomp and rlimits</span>
+<a name="l-11"></a><span class="tm">18:03:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> previous concerns about moving these under processes involved limits that weren't process specific
+<a name="l-12"></a><span class="tm">18:04:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> but that seems to not be the case, so these are pretty similar to capabilities (which are already under process)
+<a name="l-13"></a><span class="tm">18:04:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> what do we do about defaults?
+<a name="l-14"></a><span class="tm">18:04:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> check in config.json if a setting isn't in process.json
+<a name="l-15"></a><span class="tm">18:05:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> lets do the same thing we do with process.capabilities
+<a name="l-16"></a><span class="tm">18:05:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> you can just copy when setting up process.json, there's no need for requiring the runtime to look in two places
+<a name="l-17"></a><span class="tm">18:06:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> doesn't care which way that goes (runtime lookup or user copy)
+<a name="l-18"></a><span class="tm">18:06:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> doesn't care either, but wants consistent handling for rlimits and capabilities
+<a name="l-19"></a><span class="tm">18:07:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> wants to move cgroups over too, so you can exec a process with different limits
+<a name="l-20"></a><span class="tm">18:07:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> that's a lot more complicated, because cgroups are fundamental to a container
+<a name="l-21"></a><span class="tm">18:07:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> "container" is overloaded, we want to enable users to use sub-cgroups
+<a name="l-22"></a><span class="tm">18:08:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> have a copy in both?  Then it's up to the runtime and user
+<a name="l-23"></a><span class="tm">18:08:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> duplication is so you only have to specify overrides in process.json
+<a name="l-24"></a><span class="tm">18:11:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> doesn't want to pick and choose about moving stuff into process, because when do you stop
+<a name="l-25"></a><span class="tm">18:11:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> there are so many use cases for 'exec', maybe we should not specify it?
+<a name="l-26"></a><span class="tm">18:11:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> then runtimes can support whatever they want
+<a name="l-27"></a><span class="tm">18:12:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> exec is part of the everyday use of containers, so dropping it would remove a big piece
+<a name="l-28"></a><span class="tm">18:13:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> once people start using this, it will become obvious that exec needs to be controlled
+<a name="l-29"></a><span class="tm">18:13:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> maybe we should try floating a PR before we kill exec?
+<a name="l-30"></a><span class="tm">18:14:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> can we just say "exec launches a process in an existing container using the existing settings"
+<a name="l-31"></a><span class="tm">18:14:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> runtimes can always support more settings if they want
+<a name="l-32"></a><span class="tm">18:14:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> even if we don't specify exec, we still need to have the fields in the right place for exec to make sense
+<a name="l-33"></a><span class="tm">18:14:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> you don't need spec changes, just have the runtime do what it wants
+<a name="l-34"></a><span class="tm">18:15:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> for example, moving capabilities to the process setting makes it straightforward for a runtime to exec a process with well-defined capabilities (regardless of whether 'exec' is in the spec)
+<a name="l-35"></a><span class="tm">18:15:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> but cgroups are complicated
+<a name="l-36"></a><span class="tm">18:16:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I didn't mean to get into moving cgroups, I just don't think that defining 'exec' is an important consideration
+<a name="l-37"></a><span class="tm">18:16:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> what's the problem with devices?
+<a name="l-38"></a><span class="tm">18:17:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I guess the process could mknod what it wants if it's not there
+<a name="l-39"></a><span class="tm">18:17:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> maybe we want a proof-of-concept first, because we don't want to add it to the spec and then have noone implement it
+<a name="l-40"></a><span class="tm">18:18:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> we've been doing 'exec' for a while, and we don't see any issues.  So lets start with a spec change
+<a name="l-41"></a><span class="tm">18:18:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> namespaces are also process-specific, do we move those?
+<a name="l-42"></a><span class="tm">18:18:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> namespaces are part of containers, since they give an isolation barrier
+<a name="l-43"></a><span class="tm">18:19:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> cgroups are just about resource limitation, so they're less important
+<a name="l-44"></a><span class="tm">18:19:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> maybe remove process and just have everything in root
+<a name="l-45"></a><span class="tm">18:20:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> wasn't the main reason for adding a process to separate sandbox creation and process creation
+<a name="l-46"></a><span class="tm">18:20:27</span><span class="nk"> &lt;duglin&gt;</span> I’d like to see a complete proposal/PR/design-doc that lays out which property is for the container and which is for the process - so we can see them all at once instead of piecemeal
+<a name="l-47"></a><span class="tm">18:20:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> and 'create' was supposed to create cgroups at create time, not at 'start' time
+<a name="l-48"></a><span class="tm">18:20:52</span><span class="nk"> &lt;duglin&gt;</span> this can be done irrespective of whether its for exec or the main process
+<a name="l-49"></a><span class="tm">18:21:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> "freeze" is also tied in here.  We want freezing to freeze the whole container, but if you have an exec that didn't enter the freezer cgroup that won't work
+<a name="l-50"></a><span class="tm">18:21:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> but that's something the users did explicitly.  And a sub-cgroup would still be frozen
+<a name="l-51"></a><span class="tm">18:22:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> do cgroup namespaces make this easier?
+<a name="l-52"></a><span class="tm">18:22:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> probably not.  They're just for isolating different cgroup sets
+<a name="l-53"></a><span class="tm">18:22:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> can we move the fields we agree on, and continue other fields on the mailing list or an issue
+<a name="l-54"></a><span class="tm">18:23:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> sure, but how do we come to a conclusion.  We should lay out the pros and cons and give a day to make a decision.
+<a name="l-55"></a><span class="tm">18:23:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> crosbymichael has raised some concerns.  Maybe float some proposals and revisit next week
+<a name="l-56"></a><span class="tm">18:23:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> ok, but we want to get to the bottom of "sandbox" vs. "process" sooner rather than later
+<a name="l-57"></a><span class="tm">18:24:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we're probably not going to decide today
+<a name="l-58"></a><span class="tm">18:25:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> can we get a proposal that lays out all the properties?
+<a name="l-59"></a><span class="tm">18:25:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we should move the ones we do agree on (e.g. rlimits)
+<a name="l-60"></a><span class="tm">18:25:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> wants to wait, because that will keep our feet on the fire
+<a name="l-61"></a><span class="tm">18:26:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> also wants to get to the bottom of "sandbox" vs. "process".  start/exec vs. something more podlike
+<a name="l-62"></a><span class="tm">18:26:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> it would be great if we can make start/exec work
+<a name="l-63"></a><span class="tm">18:27:07</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">vishh to open an issue or start a thread about sandbox vs. process</span>
+<a name="l-64"></a><span class="tm">18:27:32</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">labels and annotations</span>
+<a name="l-65"></a><span class="tm">18:27:48</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#url </span><span class="cmdline">https://github.com/opencontainers/specs/pull/331</span>
+<a name="l-66"></a><span class="tm">18:28:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> vishh, can you post examples?
+<a name="l-67"></a><span class="tm">18:28:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I clarified that in the PR.  labels are for identifying for runtime grouping, annoations are opaque
+<a name="l-68"></a><span class="tm">18:28:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> the second confusion was "why do we need it in state?"
+<a name="l-69"></a><span class="tm">18:28:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> do we even need state?
+<a name="l-70"></a><span class="tm">18:29:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> state should have stuff that isn't in the config
+<a name="l-71"></a><span class="tm">18:29:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> you can get to the config.json from the bundle path stored in the state JSON
+<a name="l-72"></a><span class="tm">18:30:19</span><span class="nk"> &lt;wking&gt;</span> vbatts, RobDolinMS: I have to step out, can one of you pick up the minutes?
+<a name="l-73"></a><span class="tm">18:33:48</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chair </span><span class="cmdline">RobDolinMS</span>
+<a name="l-74"></a><span class="tm">18:33:48</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: RobDolinMS vbatts wking
+<a name="l-75"></a><span class="tm">18:34:06</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">wking:</span> i'll try, and hope that RobDolinMS steps up too
+<a name="l-76"></a><span class="tm">18:34:08</span><span class="nk"> &lt;vbatts&gt;</span> :-)
+<a name="l-77"></a><span class="tm">18:35:32</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">vishh:</span> effectively needing a unique bundle for every invocation, and the state labels/annotations would be usable from the config.json
+<a name="l-78"></a><span class="tm">18:37:11</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">mrunalp:</span> what about modifying a label of a running container?
+<a name="l-79"></a><span class="tm">18:38:02</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">crosbymichael:</span> the label/annotation field will not be enforced
+<a name="l-80"></a><span class="tm">18:39:58</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">vishh:</span> this primitive must be rock-solid, so that higher levels can utilitize it, but higher levels must not be _required_ for annotations
+<a name="l-81"></a><span class="tm">18:40:18</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">crosbymichael:</span> having the two fields (labels and annotations) is confusing
+<a name="l-82"></a><span class="tm">18:40:40</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">vishh:</span> labels is for listing and grouping, annotations is for metadata
+<a name="l-83"></a><span class="tm">18:42:15</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">duglin:</span> perhaps the terminology "grouping" could be more specific or clear for the runtime, not just in the orchestration sense
+<a name="l-84"></a><span class="tm">18:44:39</span><span class="nk"> &lt;vbatts&gt;</span> "where does this stop?" enabling simple UI vs adding every next filter request
+<a name="l-85"></a><span class="tm">18:48:10</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#action </span><span class="cmdline">vishh to update PR for only annotations</span>
+<a name="l-86"></a><span class="tm">18:48:34</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">json schema</span>
+<a name="l-87"></a><span class="tm">18:48:38</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/pull/313</span>
+<a name="l-88"></a><span class="tm">18:51:28</span><span class="nk"> &lt;duglin&gt;</span> I think the topic the @julz_ and @crosbymichael mentioned (boundary of runc vs something higher, like containerd) is a good topic we should clear up.  If in the end runc is really about running a SINGLE container then “runc list” probably doesn’t make sense and I think having a well-defined boundary for runc is very imporant. If for nothing else to get everyone on the same page
+<a name="l-89"></a><span class="tm">18:51:58</span><span class="nk"> &lt;julz_&gt;</span> regarding listing and state and efficiency of doing listing because there's no daemon, a lot of this is because we have the runtime owning state of all containers, which seems like a shame (it means you can't use an in-memory db or something); we had an idea floating a while ago to pass the state.json to commands that need it, and have commands that update
+<a name="l-90"></a><span class="tm">18:51:58</span><span class="nk"> &lt;julz_&gt;</span> it explicitly take a path to save it to - that way we get the runtime out of the business of listing, filtering and management of multiple containers which is something that really belongs to higher level tools
+<a name="l-91"></a><span class="tm">18:52:13</span><span class="nk"> &lt;julz_&gt;</span> (oh, what dug said :))
+<a name="l-92"></a><span class="tm">18:52:43</span><span class="nk"> &lt;vbatts&gt;</span> https://gist.github.com/vbatts/5ac2723c9598875ffb0e#file-config-json-L22
+<a name="l-93"></a><span class="tm">18:53:43</span><span class="nk"> &lt;vbatts&gt;</span> https://github.com/vbatts/specs/blob/json-schema/schema/schema.json#L113
+<a name="l-94"></a><span class="tm">18:54:43</span><span class="nk"> &lt;duglin&gt;</span> @crosbymichael I assume that if there were to be some kind of filter on a “list” command you’d prefer to see it in containerD and not runc, right?  If it were available at all.
+<a name="l-95"></a><span class="tm">18:54:43</span><span class="nk"> &lt;collabot`&gt;</span> <span class="hi">duglin:</span> Error: "crosbymichael" is not a valid command.
+<a name="l-96"></a><span class="tm">18:54:52</span><span class="nk"> &lt;duglin&gt;</span> @crosbymichael I assume that if there were to be some kind of filter on a “list” command you’d prefer to see it in containerD and not runc, right?  If it were available at all.
+<a name="l-97"></a><span class="tm">18:55:19</span><span class="nk"> &lt;vbatts&gt;</span> https://github.com/opencontainers/specs/pull/313/files#diff-03fdd7c9cbfa0f152151695060d85cb6R73
+<a name="l-98"></a><span class="tm">18:56:15</span><span class="nk"> &lt;duglin&gt;</span> if so, I can see an argument for then not having a label/annotation split and containerD woudl need to be the one to distinguish between the two, not runc
+<a name="l-99"></a><span class="tm">19:00:22</span><span class="nk"> &lt;mrunalp&gt;</span> specs-go
+<a name="l-100"></a><span class="tm">19:02:00</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span>
+<a name="l-101"></a><span class="tm">19:02:03</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, ^
+<a name="l-102"></a><span class="tm">19:02:05</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#action </span><span class="cmdline">vbatts rename the ./src/specs/ to ./specs-go/</span>
+<a name="l-103"></a><span class="tm">19:02:11</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#endmeething</span><span class="cmdline"></span>
+<a name="l-104"></a><span class="tm">19:02:16</span><span class="nk"> &lt;mrunalp&gt;</span> thing :D
+<a name="l-105"></a><span class="tm">19:02:17</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

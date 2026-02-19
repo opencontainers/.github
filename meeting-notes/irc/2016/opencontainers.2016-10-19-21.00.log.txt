@@ -1,0 +1,88 @@
+21:00:57 <wking> #startmeeting 2016-10-19 discussion
+21:00:57 <collabot> Meeting started Wed Oct 19 21:00:57 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:00:57 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:00:57 <collabot> The meeting name has been set to '2016_10_19_discussion'
+21:01:08 <wking> #chair mrunalp vbatts
+21:01:08 <collabot> Current chairs: mrunalp vbatts wking
+21:03:43 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/591
+21:04:04 <wking> #topic Allowing read-only containers: require mount destinations
+21:04:10 <wking> #link https://github.com/opencontainers/runtime-spec/pull/591
+21:04:30 <wking> mrunalp: we should do this https://github.com/opencontainers/runtime-spec/pull/591#issuecomment-254901271
+21:04:37 <wking> crosbymichael: you should get the same error either way
+21:04:46 <wking> crosbymichael: we still need to work on the pivot root stuff
+21:04:54 <wking> mrunalp: the tests were failing but it worked with manual testing
+21:04:59 <wking> mrunalp: other thoughts on this?
+21:05:15 <wking> mrunalp: should we wait for pivot-root to go through?
+21:05:25 <wking> #link https://github.com/opencontainers/runc/pull/1125
+21:05:43 <wking> crosbymichael: you can close it
+21:06:01 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/513
+21:07:14 <mrunalp> Discussion around what happens when terminal is false
+21:08:07 <mrunalp> wking: inherit-stdio would dup runtime's stdio down to container process
+21:08:40 <wking> #topic stdio container setup
+21:08:46 <wking> #link https://github.com/opencontainers/runtime-spec/pull/513
+21:09:23 <wking> mrunalp: ultimately, folks will want to log to a file.  You don't need to use the runtime's stdio for that
+21:09:54 <wking> crosbymichael: if you want to log to files, setup the runtime stdio to point at that file and pass the descriptor through to the container
+21:10:10 <wking> mrunalp: so runC itself opening these?
+21:10:19 <wking> crosbymichael: no, it's runC's 0, 1, and 2 getting passed through
+21:10:40 <wking> crosbymichael: no need for special syntax
+21:13:16 <mrunalp> wking, cyphar concerned about container writing to host when host tty is passed down to container process
+21:15:28 <wking> So is the consensus to use the --inherit-stdio behavior when process.terminal is not set?  And require callers to close fds they don't want to have passed through?
+21:16:40 <mrunalp> crosbymichael, Is the console-socket a fd or a path?
+21:17:02 <mrunalp> crosbymichael, It doesn't have to be a flag at all.
+21:18:43 <mrunalp> crosbymichael, It could be the last one
+21:19:05 <mrunalp> wking, It would probably work
+21:22:55 <wking> lots of discussion that I didn't get down.  I'll post a summary to #513
+21:23:24 <wking> #topic runtime-tools maintainers
+21:23:25 <mrunalp> https://github.com/opencontainers/runtime-tools/pull/249
+21:23:49 <wking> mrunalp: last call for runtime-tools topics
+21:24:33 <wking> #topic image-spec vote for rc2
+21:24:42 <mrunalp> I gotta drop off for a meeting! See ya all next week.
+21:24:52 <wking> https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/eurcUUQRLRs
+21:25:06 <wking> philips: there are a number of fuzzy issues where we need more input
+21:25:18 <wking> #link https://github.com/opencontainers/image-spec/issues/314
+21:25:44 <wking> philips: and splitting topics between -spec and -tools
+21:26:09 <wking> stevvooe: I've been working over those PRs.  I'll either create an organizational issue or just land the right PRs
+21:26:18 <wking> stevvooe: we probably want docs for the split somewhere too
+21:26:41 <wking> philips: there's not much else that's major.  Are there things we absolutely want for the next rc?
+21:27:08 <wking> stevvooe: I'm worried about signing coming in after an rc and being completely incompatible
+21:27:08 <stevvooe> https://github.com/opencontainers/image-spec/issues/22#issuecomment-254605473
+21:27:13 <wking> #topic image signing
+21:27:22 <wking> #link https://github.com/opencontainers/image-spec/issues/22
+21:27:31 <wking> stevvooe: do we agree that we need to agree on the signing targets?
+21:27:50 <wking> stevvooe: wking has another idea that changes the content being signed, and I don't want to go in that direction
+21:28:32 <wking> Actually, I don't think it's possible for CAS-based signing to change the content being signed ;)
+21:28:50 <wking> philips: I think we want to point out the Merkle DAG locations that are good for signing
+21:29:11 <wking> stevvooe: my general criticism is that proposals are focused on formats, and we already have lots of formats
+21:30:03 <wking> stevvooe: I don't want to delay 1.0, but I want to head off any wrong directions
+21:31:09 <wking> stevvooe: in early v2 registry API, we had a lot of problems with signature verification
+21:31:19 <wking> stevvooe: it was hard to coordinate sigs among multiple signers
+21:31:30 <wking> stevvooe: we had lots of sigs that were useless, or competing sigs on the same thing
+21:31:44 <wking> stevvooe: we need a statement to frame the proposals and maintain compatability
+21:31:58 <wking> #action stevvooe to file a 1.0 condition framing the signature approach
+21:32:24 <wking> philips: while you're writing it up, a common question is "why not put this in the descriptor type?"
+21:32:49 <wking> stevvooe: there are good reasons ;).  But we need to think about what changes when you sign something
+21:32:57 <wking> philips: step 1 is which digests to sign
+21:33:17 <wking> #topic image-spec conformance language
+21:33:27 <wking> RobDolinMS: wking suggested making this more specific
+21:33:33 <wking> RobDolinMS: can we run that to ground now?
+21:33:42 <wking> #link https://github.com/opencontainers/image-spec/pull/381
+21:34:01 <wking> philips: like the runtime-spec we need to be specific.  There are whole sections that are optional
+21:34:09 <wking> RobDolinMS: Do you have a suggestion on how to frame that?
+21:34:29 <philips> An implementation is not compliant for a given CPU architecture if it fails to satisfy one or more of the MUST, REQUIRED, or SHALL requirements for the protocols it implements. An implementation is compliant for a given CPU architecture if it satisfies all the MUST, REQUIRED, and SHALL requirements for the protocols it implements.
+21:34:35 <wking> philips: We should follow the runtime-spec which lists supported protocols
+21:35:03 <wking> philips: We need to specify the protocols that are optional (e.g. manifest-lists)
+21:35:38 <wking> stevvooe: my recommendation would be to not make manifest-lists optional
+21:35:50 <wking> stevvooe: the more implementations that support manifest-listsl, the better
+21:37:54 <wking> we need to be clear about whether this is optional for the image  (I think it should be) and whether support is optional for implementations (I think it should not be)
+21:39:19 <wking> but this is lower level than #381, which is about landing the framework for declaring these protocols at all (regardless of what the protocols are and whether they are required or not)
+21:39:44 <wking> stevvooe: I tested this out, and it works back to 1.10 in Docker.  So I think implementations should be able to handle manifest lists
+21:39:58 <wking> stevvooe: but if you're pushing an image, you don't need to push a manifest list
+21:40:30 <wking> #action philips to file a comment about cleaning up the existing manifest-list language
+21:40:36 <wking> philips: anything else?
+21:40:44 <wking> #topic KubeCon face to face
+21:40:48 <wking> RobDolinMS: do we want this^?
+21:40:54 <wking> philips: we could.  I'll be there
+21:41:00 <wking> RobDolinMS: It's in Seattle, so I'll be there
+21:41:10 <wking> philips: email the list?
+21:41:21 <wking> #action RobDolinMS to email the list about a KubeCon face-to-face
+21:41:48 <wking> #endmeeting

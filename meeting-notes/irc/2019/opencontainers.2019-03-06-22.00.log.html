@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">22:00:53</span><span class="nk"> &lt;estesp&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">OCI Weekly Dev Call</span>
+<a name="l-2"></a><span class="tm">22:00:53</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Mar  6 22:00:53 2019 UTC.  The chair is estesp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">22:00:53</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">22:00:53</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to 'oci_weekly_dev_call'
+<a name="l-5"></a><span class="tm">22:07:53</span><span class="nk"> &lt;estesp&gt;</span> <span class="topic">#topic </span><span class="topicline">potentially have a better shared mechanism to collaborate on agenda + actions/notes</span>
+<a name="l-6"></a><span class="tm">22:09:31</span><span class="nk"> &lt;estesp&gt;</span> <span class="hi">atlas:</span> potential to use org repo to store content/weekly discussion
+<a name="l-7"></a><span class="tm">22:10:55</span><span class="nk"> &lt;estesp&gt;</span> <span class="hi">vanessa:</span> shared doc during call lets people follow and focus
+<a name="l-8"></a><span class="tm">22:12:12</span><span class="nk"> &lt;estesp&gt;</span> <span class="hi">atlas:</span> obvious pros/cons to various methods
+<a name="l-9"></a><span class="tm">22:13:19</span><span class="nk"> &lt;estesp&gt;</span> <span class="hi">vbatts:</span> inline commenting in shared doc during call is good; but can be transcribed to markdown as summary for later (did I get that right?)
+<a name="l-10"></a><span class="tm">22:13:59</span><span class="nk"> &lt;estesp&gt;</span> <span class="hi">atlas:</span> try Google Docs next week (vanessa: or this week!)
+<a name="l-11"></a><span class="tm">22:15:31</span><span class="nk"> &lt;estesp&gt;</span> <span class="hi">lasker:</span> how about hackmd.io? like shared Google docs, but saves in markdown
+<a name="l-12"></a><span class="tm">22:16:26</span><span class="nk"> &lt;estesp&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://hackmd.io/El8Dd2xrTlCaCG59ns5cwg</span>
+<a name="l-13"></a><span class="tm">22:18:37</span><span class="nk"> &lt;estesp&gt;</span> <span class="topic">#topic </span><span class="topicline">cgroup v2</span>
+<a name="l-14"></a><span class="tm">22:19:01</span><span class="nk"> &lt;estesp&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/issues/1002</span>
+<a name="l-15"></a><span class="tm">22:19:59</span><span class="nk"> &lt;estesp&gt;</span> <span class="hi">vbatts:</span> looking more imminent; Ubuntu already has unified mount; Fedora 2? possibly switching
+<a name="l-16"></a><span class="tm">22:24:48</span><span class="nk"> &lt;estesp&gt;</span> <span class="topic">#topic </span><span class="topicline">distribution spec v1</span>
+<a name="l-17"></a><span class="tm">22:25:48</span><span class="nk"> &lt;estesp&gt;</span> <span class="hi">atlas:</span> removing references to docker v2 schema 1 is mostly done
+<a name="l-18"></a><span class="tm">22:26:15</span><span class="nk"> &lt;estesp&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/distribution-spec/milestone/3</span>
+<a name="l-19"></a><span class="tm">22:26:52</span><span class="nk"> &lt;estesp&gt;</span> <span class="hi">atlas:</span> vbatts: discussing vendor specific strings in headers
+<a name="l-20"></a><span class="tm">22:26:59</span><span class="nk"> &lt;estesp&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/distribution-spec/issues/26</span>
+<a name="l-21"></a><span class="tm">22:35:57</span><span class="nk"> &lt;estesp&gt;</span> vbatts adding issue #39 to the milestone
+<a name="l-22"></a><span class="tm">22:36:01</span><span class="nk"> &lt;estesp&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/distribution-spec/pull/39</span>
+<a name="l-23"></a><span class="tm">22:37:43</span><span class="nk"> &lt;estesp&gt;</span> <span class="topic">#topic </span><span class="topicline">moving common content to the org project</span>
+<a name="l-24"></a><span class="tm">22:38:01</span><span class="nk"> &lt;estesp&gt;</span> <span class="hi">vbatts:</span> code of conduct and security disclosure are already moved thanks to Vanessa
+<a name="l-25"></a><span class="tm">22:38:46</span><span class="nk"> &lt;estesp&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/org</span>
+<a name="l-26"></a><span class="tm">22:40:43</span><span class="nk"> &lt;estesp&gt;</span> <span class="hi">vanessa:</span> discussing the intro content PR and deploying it to a github pages site
+<a name="l-27"></a><span class="tm">22:46:23</span><span class="nk"> &lt;estesp&gt;</span> <span class="topic">#topic </span><span class="topicline">catalog/listing capabilities of registries</span>
+<a name="l-28"></a><span class="tm">22:49:25</span><span class="nk"> &lt;estesp&gt;</span> lasker, vbatts, atlas discussing potential for a proposal in this area
+<a name="l-29"></a><span class="tm">22:49:43</span><span class="nk"> &lt;estesp&gt;</span> <span class="hi">vbatts:</span> need a proposal for a way forward on issue #22
+<a name="l-30"></a><span class="tm">22:49:48</span><span class="nk"> &lt;estesp&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/distribution-spec/issues/22</span>
+<a name="l-31"></a><span class="tm">22:59:31</span><span class="nk"> &lt;estesp&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

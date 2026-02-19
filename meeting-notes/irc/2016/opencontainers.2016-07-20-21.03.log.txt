@@ -1,0 +1,86 @@
+21:03:27 <wking> #startmeeting 2016-07-20 discussion
+21:03:27 <collabot> Meeting started Wed Jul 20 21:03:27 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:03:27 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:03:27 <collabot> The meeting name has been set to '2016_07_20_discussion'
+21:03:35 <wking> #topic image-spec 0.4.0
+21:03:57 <wking> stevvooe: I've moved the whiteout docs onto the 0.4.0 milestone, let me know if anyone has problems with that
+21:04:23 <wking> stevvooe: There is an open PR about limiting integers to int64, but I'm not sure what the current status of that is
+21:04:43 <wking> stevvooe: there hasn't been more discussion about naming or signing.  Are we punting those?
+21:05:06 <wking> vbatts: I'm not sure what the int64 hangup was
+21:05:29 <wking> vbatts: I thought naming/signing was getting pushed into an optional layer.  We wanted the ability to add it later without breaking things
+21:05:57 <wking> stevvooe: do we need an action item to sketch naming/signing in broad strokes so we can talk about forward compat?
+21:06:20 <stevvooe> i said "do we need to define the shape of naming/signing?"
+21:06:26 <wking> vbatts: scopio (wking: maybe a typo?) has some of this in place, we should look at that to frame the discussion
+21:06:26 <stevvooe> :)
+21:06:32 <mrunalp> skopeo
+21:07:37 <wking> stevvooe: do we tackle this after we have an image layout in Docker?
+21:08:22 <wking> vbatts: I don't know.  You could parallelize them with blob/refs with signature information...
+21:09:00 <wking> stevvooe: the spec is missing parts, but we probably want Docker save/load to the image layout in a branch somewhere
+21:09:25 <wking> vbatts: Docker save/load mock up sounds good
+21:09:36 <wking> stevvooe: there's a containers/image that has some work in progress?
+21:09:45 <cyphar> url: https://github.com/containers/image
+21:10:03 <wking> vbatts: that's part of skopeo a tool that can pull from Docker / OCI / etc. and lay things out for runC
+21:10:21 <wking> vbatts: if there is support for that in Docker as well, that would be good for compatability
+21:10:25 <mrunalp> It is a library that was pulled out of skopeo
+21:10:37 <wking> stevvooe: should we take this offline?
+21:10:40 <mrunalp> skopeo is a utility built on top of that library
+21:11:06 <wking> thanks mrunalp / stevvooe for correcting me when I get things wrong ;)
+21:11:24 <wking> mrunalp: other image-spec topics?
+21:12:41 <wking> vbatts: I'd like to get type-export landed, but there's some pushback there
+21:13:13 <wking> vbatts: if anyone has spare cycles, ping us with things you want in 0.4.0
+21:13:24 <wking> vbatts: otherwise stevvooe and I will assign as we see fit
+21:13:32 <wking> vbatts: I arbitrarily put it on the 27th
+21:13:58 <RobDolinMS> Appreciate all of the work you're doing vbatts for managing release mechanics
+21:13:59 <wking> vbatts: comment on an issue you want in 0.4.0 if you don't have permissions to assign it yourself
+21:14:02 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/513/files
+21:14:09 <wking> #topic runtime-spec command line API
+21:14:23 <wking> https://github.com/opencontainers/runtime-spec/pull/511
+21:14:29 <wking> https://github.com/opencontainers/runtime-spec/pull/513
+21:15:06 <wking> cyphar: --console in runC works by having the runtime-caller creating a virtual terminal, and --console is for passing the slave end into runC
+21:15:18 <wking> cyphar: but that has some namespace issues, so we might change that at some point
+21:15:31 <wking> cyphar: but we need an ability for the caller to tell runC which console to use
+21:17:50 <wking> why do you need --console instead of duping the slave over the standard streams before launching runC
+21:18:10 <wking> cyphar: I'm not sure.  We do dup over the slave bits, but we don't do it the way you describe
+21:18:49 <wking> I was talking about ccon's handling, and didn't transcribe myself, but it's written up here: https://github.com/wking/ccon/tree/v0.4.0#terminal
+21:19:06 <wking> mrunalp: the pair could be created inside the container
+21:19:40 <wking> mrunalp: this is why tty's don't work in runC exec
+21:20:10 <wking> crosbymichael: so when we create this, we setns on the mount namespace, open the terminal, and then..?
+21:20:21 <duglin> did anyone get  a chance to review my PR:  https://github.com/opencontainers/runtime-spec/pull/511  ?
+21:21:32 <mikebrow> runc run -d --console /dev/pts/ptmx test_busybox
+21:21:37 <mikebrow> ^ works
+21:21:52 <wking> mrunalp: it could potentially be done by the caller
+21:22:09 <wking> cyphar: we need an API for the caller to get the master
+21:22:30 <cyphar> (both libcontainer and the runC runner)
+21:23:06 <wking> Daniel Dao: We don't want the container to interrupt the I/O
+21:23:38 <wking> cyphar: the '--console UNIX_SOCKET' approach might work (with runC pushing the master into that socket)
+21:24:03 <wking> mrunalp: where do we have this discussion?
+21:24:17 <wking> mrunalp: we'll need this specified for compliance testing in ocitools
+21:24:33 <wking> cyphar: the spec is pretty sparse around process.terminal anyway
+21:24:46 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/518
+21:24:58 <wking> cyphar: lets get something working in runC and then come back and figure out how to put it into the command-line spec
+21:26:29 <wking> I think we should focus on the container view in config.md, and just say "standard streams will be a terminal if you set process.terminal".  We can talk about the command line API later
+21:26:48 <wking> cyphar: we'll need clarity around the command-line API soon
+21:27:34 <wking> duglin: how much longer do we think this should take?
+21:28:22 <wking> mrunalp: what's the harm with supporting both approaches now?
+21:28:35 <wking> cyphar: runtime-callers and testers won't know which is ok if we don't specify one
+21:29:30 <wking> cyphar: what about --pid-file vs. state?
+21:29:51 <wking> https://github.com/opencontainers/runtime-spec/pull/513#issuecomment-232857404
+21:29:58 <wking> ^ my "why do we have a --pid-file?"
+21:30:22 <wking> crosbymichael: it's a standard way for interfacing with systemd, etc.
+21:31:21 <wking> #action wking will reroll #513 to add --pid-file
+21:32:02 <wking> cyphar: how do we test without 'run' in the spec?  Who holds the streams open?
+21:32:19 <wking> mrunalp: the caller handles that and exit-code collection.  I'll add support to ocitools
+21:32:38 <wking> #action cyphar to look at --console vs. the command line spec in the next week or so
+21:34:58 <wking> what about 'version'?  Do we drop it?
+21:35:07 <wking> duglin: I don't think we need it for interop
+21:36:00 <wking> duglin: any runtime is going to have some way to do that.  Do we need to agree on the API?
+21:40:42 <wking> duglin: -b is probably going to be popular, so we may want to require it be portable
+21:41:13 <wking> we can always add it later; it's hard to pull it out later (and I don't expect many folks will be typing this out by hand)
+21:41:18 <wking> duglin: agrees to punt on -b
+21:41:22 <cyphar> >> ^ works
+21:41:37 <cyphar> the command: runc run -d --console /dev/pts/ptmx test_busybox
+21:41:40 <wking> mrunalp: other topics?
+21:41:50 <wking> mrunalp: any other blockers for 1.0?
+21:42:00 <wking> crosbymichael: nothing off the top of my head
+21:42:28 <wking> mrunalp: figuring out the console will help ocitools tie up some loose ends
+21:42:38 <wking> #endmeeting

@@ -1,0 +1,28 @@
+18:16:15 <vbatts|work> #startmeeting 2017-05-12 image-spec
+18:16:15 <collabot> Meeting started Fri May 12 18:16:15 2017 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+18:16:15 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+18:16:15 <collabot> The meeting name has been set to '2017_05_12_image_spec'
+18:17:52 <vbatts|work> #link https://github.com/opencontainers/image-spec/issues/588
+18:18:08 <vbatts|work> #action stevvooe to comment on #588 from dockercon and close it
+18:18:47 <stevvooe> https://github.com/opencontainers/image-spec/pull/673
+18:18:59 <vbatts|work> #link https://github.com/opencontainers/image-spec/pull/672
+18:19:13 <jwendell> hey guys, I'm trying to build containers/image (go build ./...) and I'm getting errors about missing packages... do I have to run something before go build? (like for updating vendors?)
+18:21:00 <vbatts|work> jwendell: perhaps runcom can help
+18:21:06 <vbatts|work> #link https://github.com/opencontainers/image-spec/pull/492
+18:24:01 <vbatts|work> #link https://github.com/cyphar/image-spec/blob/c352aeff65ddc007ba30d7fe7250e4b2e393a9e3/conversion.md
+18:29:25 <stevvooe> #link https://github.com/opencontainers/image-spec/pull/492/files#diff-8aafbe2c3690162540381b8cdb157112R40
+18:33:31 <vbatts|work> #link https://github.com/opencontainers/image-spec/pull/651
+18:33:39 <vbatts|work> #link https://github.com/opencontainers/image-spec/pull/652
+18:34:49 <stevvooe> #link https://github.com/opencontainers/image-spec/pull/666
+18:39:15 <vbatts|work> #link https://github.com/opencontainers/image-spec/pull/668
+18:41:10 <vbatts|work> #link https://github.com/opencontainers/image-spec/pull/671
+18:43:40 <stevvooe> #link https://github.com/containerd/containerd/blob/master/reference/reference.go#L20
+18:44:25 <jwendell> vbatts|work, runcom fixed that, thanks
+18:47:09 <vbatts|work> jwendell: cool
+18:49:36 <stevvooe> #link https://github.com/opencontainers/image-spec/pull/668 <- rebased
+18:53:39 <vbatts|work> #link https://github.com/opencontainers/image-spec/pull/667
+18:55:21 <vbatts|work> https://github.com/opencontainers/go-digest/pull/34
+18:55:31 <vbatts|work> k
+18:55:47 <vbatts|work> #link https://github.com/opencontainers/image-spec/pull/665
+18:57:05 <stevvooe> #link https://github.com/opencontainers/image-spec/pull/665#discussion_r115630725
+19:06:55 <vbatts|work> #endmeeting

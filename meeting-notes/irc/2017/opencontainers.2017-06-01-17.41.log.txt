@@ -1,0 +1,90 @@
+17:41:06 <wking> #startmeeting 2017-06-01 runtime-spec PR review
+17:41:06 <collabot`> Meeting started Thu Jun  1 17:41:06 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:41:06 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:41:06 <collabot`> The meeting name has been set to '2017_06_01_runtime_spec_pr_review'
+17:41:14 <wking> #topic 863
+17:43:10 <wking> #link http://www.open-std.org/jtc1/sc22/wg14/www/C99RationaleV5.10.pdf#page=18
+17:44:34 <wking> #action wking to change "unspecified" ->
+17:44:39 <wking> #action wking to change "unspecified" -> "ignored"
+17:44:52 <wking> #topic 862
+17:46:35 <wking> #topic 860
+17:47:36 <wking> mrunalp: I think we should be consistent one way or the other (using cgroup-specified names or not)
+17:47:46 <wking> crosbymichael: I think this change is good
+17:48:02 <wking> crosbymichael: because memory and the other ones don't do this
+17:48:20 <wking> #topic 858
+17:49:08 <wking> crosbymichael: in the end, we'll probably want to delete all these references
+17:49:25 <wking> #topic 854
+17:52:01 <wking> He's following the pattern for process.user.uid (not a property on Windows) and process.capabilities (once we get back to having it not be a Windows property)
+17:52:08 <wking> crosbymichael: so we are ok following that approach
+17:52:15 <wking> mrunalp: I'll ask for a rebase
+17:52:19 <wking> #topic 852
+17:53:20 <wking> crosbymichael: I think we may want to remove the example on line 34
+17:53:42 <wking> #action wking to remove the retrieved-resource example line
+17:53:55 <wking> #topic 851
+17:54:31 <wking> crosbymichael: needs a rebase
+17:54:32 <wking> #topic 850
+17:56:13 <wking> crosbymichael: I don't know what to do with the platform
+17:56:21 <wking> mrunalp: mark it 1.0 and defer to the call?
+17:56:23 <wking> crosbymichael: yeah
+17:56:27 <wking> #topic 847
+17:57:44 <wking> #topic 844
+17:59:01 <wking> mrunalp: we haven't talked about optional runtime compilation flags
+17:59:22 <wking> mrunalp: if you compile a runtime without support for something, how should the runtime handle those properties?
+17:59:37 <wking> mrunalp: this is different from the underlying platform not supporting the property
+18:00:04 <wking> crosbymichael: especially with SELinux modes.  The runtime may support it but not enforce it
+18:00:07 <wking> mrunalp: so close it?
+18:00:14 <wking> crosbymichael: yeah, it's probably better to leave it as is
+18:00:19 <wking> mrunalp: I'll close it
+18:00:55 <wking> #topic 841
+18:02:03 <wking> I talked with vbatts|work about this and #746 yesterday.  He was going to file a comment about it, but hasn't let
+18:04:43 <wking> crosbymichael: we should require values and not have defaults
+18:05:59 <wking> crosbymichael: what do you think, mrunalp.  Defaults or explicit?
+18:06:07 <wking> mrunalp: I agree we should not have defaults
+18:06:27 <wking> Do we want to talk about devices.allow and devices.deny?
+18:06:52 <wking> crosbymichael (ealier): you can use -1 in the JSON to mean '*'
+18:07:34 <wking> #action crosbymichael to file a replacement PR removing the wildcards (and maybe talkinb about devices.allow and devices.deny?)
+18:07:38 <wking> #topic 840
+18:09:15 <wking> #topic 838
+18:12:03 <wking> crosbymichael: I just asked John Howard to review it
+18:12:06 <wking> #topic835
+18:12:08 <wking> #topic 835
+18:13:10 <wking> POSIX rlimits are a separate commit, so I'm happy to spin them out into their own PR if you'd like
+18:13:52 <wking> crosbymichael: It's bad to call it Linux-and-Solaris, because that will cause future issues if someone adds BSD
+18:14:37 <wking> I'm fine using POSIX.  Should I update process.user.uid too?  That was the pattern I was following
+18:15:39 <wking> crosbymichael: it makes sense to talk about POSIX
+18:15:56 <wking> should I update the platform list to say that 'linux' and 'solaris' fall under POSIX?
+18:16:03 <wking> mrunalp: should we have a 'posix' platform tag?
+18:16:12 <wking> crosbymichael: I don't think that Go tags work that way
+18:16:24 <wking> crosbymichael: POSIX is basically "not-windows"
+18:17:02 <wking> So I'll adjust the other parts, and leave any platform-level POSIX mapping to you ;)
+18:17:19 <wking> crosbymichael: we can start with the other parts for now.  It's pretty clear to the spec audience what POSIX is
+18:17:50 <wking> #action wking to consolidate the Markdown around POSIX
+18:18:10 <wking> #action crosbymichael to comment around POSIX consolidation
+18:18:19 <wking> #topic 834
+18:18:31 <wking> mrunalp: I added a comment a while back trying to outline the possibilities
+18:18:42 <wking> #link https://github.com/opencontainers/runtime-spec/pull/834#issuecomment-302579003
+18:19:49 <wking> crosbymichael: the new wording sounds more straightforward to me
+18:26:15 <vbatts|work> mrunalp: what do you want me to start closing? :-D
+18:36:56 <wking> #action mrunalp too take out line 188 in #834 and add some comment about what cgroups must be joinsd
+18:37:26 <wking> #topic 829
+18:37:38 <wking> mrunalp: line 113 looks good if you can split it out
+18:38:40 <wking> #action wking to split out the MAY from #829
+18:38:57 <wking> crosbymichael: it's about decoupling the spec from implementaitons
+18:41:43 <wking> #link https://github.com/opencontainers/runtime-tools/pull/354
+18:49:30 <wking> #topic 825
+18:49:34 <wking> crosbymichael: I asked him to rebase
+18:49:41 <wking> #topic 811
+18:49:47 <wking> I LGTMed it
+18:50:02 <wking> #topic 735
+18:50:08 <wking> crosbymichael: needs one more LGTM
+18:50:11 <wking> #topic 809
+18:53:34 <wking> crosbymichael: I'll ask for a rebase
+18:54:05 <wking> #topic 680
+18:54:36 <wking> crosbymichael: I don't know
+18:57:12 <wking> mrunalp: you can ignore properties that aren't defined for your platform, and don't want to error out (that is more burden on the runtime)
+18:57:16 <wking> crosbymichael: yeah
+18:58:38 <wking> do we want a new line for properties that are only defined for other platforms?
+18:58:42 <wking> crosbymichael: I think that would be more confusing
+18:58:54 <wking> mrunalp: this seems ok, but I'd like to get tianon's opinion
+19:00:13 <wking> crosbymichael: don't submit any more PRs until we're down to 5 open PRs
+19:02:42 <wking> #endmeeting

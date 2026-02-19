@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">22:01:00</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">OCI_3_8</span>
+<a name="l-2"></a><span class="tm">22:01:00</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Mar  8 22:01:00 2017 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">22:01:00</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">22:01:00</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to 'oci_3_8'
+<a name="l-5"></a><span class="tm">22:01:12</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#chairs </span><span class="cmdline">vbatts wking</span>
+<a name="l-6"></a><span class="tm">22:02:33</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime 1.0</span>
+<a name="l-7"></a><span class="tm">22:03:33</span><span class="nk"> &lt;mrunalp&gt;</span> vishh, Can you LGTM the runtime spec latest rc?
+<a name="l-8"></a><span class="tm">22:04:41</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, 2 weeks should be good
+<a name="l-9"></a><span class="tm">22:04:46</span><span class="nk"> &lt;mrunalp&gt;</span> final window for comments
+<a name="l-10"></a><span class="tm">22:04:56</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, cool with that
+<a name="l-11"></a><span class="tm">22:06:47</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, Lot of polishing
+<a name="l-12"></a><span class="tm">22:07:10</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, cyphar not around but would want to discuss image to runtime conversion
+<a name="l-13"></a><span class="tm">22:07:55</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, predictable runtime specs could be produced from the same image bundles
+<a name="l-14"></a><span class="tm">22:08:19</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, current doc is good. We can make it non-normative.
+<a name="l-15"></a><span class="tm">22:08:41</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, It is in danger of being over-specified
+<a name="l-16"></a><span class="tm">22:08:59</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, mostly how to map the fields
+<a name="l-17"></a><span class="tm">22:09:18</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, what can we do to automate the conversion and verify it
+<a name="l-18"></a><span class="tm">22:10:09</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, we can't overspecify things like on this system apply selinux or apparmor
+<a name="l-19"></a><span class="tm">22:10:29</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/pull/492
+<a name="l-20"></a><span class="tm">22:11:32</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, there is no guarantee that the runtime config will be the same
+<a name="l-21"></a><span class="tm">22:12:48</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, Most of it is process information that is stored anyways
+<a name="l-22"></a><span class="tm">22:12:49</span><span class="nk"> &lt;erikh&gt;</span> disregard that
+<a name="l-23"></a><span class="tm">22:12:51</span><span class="nk"> &lt;erikh&gt;</span> :)
+<a name="l-24"></a><span class="tm">22:13:22</span><span class="nk"> &lt;erikh&gt;</span> (for some reason my mic isn't workingO)
+<a name="l-25"></a><span class="tm">22:13:33</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, volumes is another are that is unclear
+<a name="l-26"></a><span class="tm">22:13:42</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, Should be leave it for the next milestone
+<a name="l-27"></a><span class="tm">22:13:45</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, agree
+<a name="l-28"></a><span class="tm">22:14:07</span><span class="nk"> &lt;wking&gt;</span> I think without some wording around the config conversion (in both directions) image configs aren't particularly useful
+<a name="l-29"></a><span class="tm">22:15:08</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, If we make it too narrow it will be hard to target different platforms
+<a name="l-30"></a><span class="tm">22:15:21</span><span class="nk"> &lt;wking&gt;</span> you can have different conversion targets for different platforms (so image-config &lt;-&gt; whatever).  But image-config &lt;-&gt; runtime config should be well-defined
+<a name="l-31"></a><span class="tm">22:16:05</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, That's outside the scope of the spec
+<a name="l-32"></a><span class="tm">22:16:31</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, It's not up to us. Users can decide what they want.
+<a name="l-33"></a><span class="tm">22:17:30</span><span class="nk"> &lt;erikh&gt;</span> I could do a bot thing
+<a name="l-34"></a><span class="tm">22:17:42</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, bots could be more helpful
+<a name="l-35"></a><span class="tm">22:18:08</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, docker bots does a lot of stuff like labeling, auto-assign, etc.
+<a name="l-36"></a><span class="tm">22:18:08</span><span class="nk"> &lt;erikh&gt;</span> lol
+<a name="l-37"></a><span class="tm">22:18:15</span><span class="nk"> &lt;duglin&gt;</span> need a bot to assign everything to vbatts
+<a name="l-38"></a><span class="tm">22:18:39</span><span class="nk"> &lt;vbatts&gt;</span> https://github.com/icecrime/poule
+<a name="l-39"></a><span class="tm">22:18:46</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">duglin:</span> no
+<a name="l-40"></a><span class="tm">22:18:49</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">duglin:</span> stahp
+<a name="l-41"></a><span class="tm">22:19:02</span><span class="nk"> &lt;erikh&gt;</span> yes I am on the call :) and I could help arnaud with any modifications necessary
+<a name="l-42"></a><span class="tm">22:19:11</span><span class="nk"> &lt;erikh&gt;</span> just gimme some requirements
+<a name="l-43"></a><span class="tm">22:19:26</span><span class="nk"> &lt;duglin&gt;</span> I gave you mine
+<a name="l-44"></a><span class="tm">22:19:26</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, poule has good integrations and will be  a good starting point rather than from scratch
+<a name="l-45"></a><span class="tm">22:19:31</span><span class="nk"> &lt;erikh&gt;</span> <span class="hi">duglin:</span> lol!
+<a name="l-46"></a><span class="tm">22:19:31</span><span class="nk"> &lt;vbatts&gt;</span> https://github.com/opencontainers/image-spec/issues/598
+<a name="l-47"></a><span class="tm">22:20:10</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, It will be good to use on various OCI projects
+<a name="l-48"></a><span class="tm">22:20:42</span><span class="nk"> &lt;jlbutler&gt;</span> as long as it has random swearing as a feature, i'll be happy
+<a name="l-49"></a><span class="tm">22:20:59</span><span class="nk"> &lt;crosbymichael&gt;</span> <span class="hi">erikh:</span> rate limiter
+<a name="l-50"></a><span class="tm">22:21:27</span><span class="nk"> &lt;erikh&gt;</span> ?
+<a name="l-51"></a><span class="tm">22:21:35</span><span class="nk"> &lt;crosbymichael&gt;</span> so that if people comment to much on an issue and derailing it, it limits them
+<a name="l-52"></a><span class="tm">22:21:38</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/issues/588
+<a name="l-53"></a><span class="tm">22:21:58</span><span class="nk"> &lt;erikh&gt;</span> can you mute people now?
+<a name="l-54"></a><span class="tm">22:22:03</span><span class="nk"> &lt;erikh&gt;</span> (you couldn't before)
+<a name="l-55"></a><span class="tm">22:22:04</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">jlbutler:</span> i'll add the old bsd fortune
+<a name="l-56"></a><span class="tm">22:22:04</span><span class="nk"> &lt;crosbymichael&gt;</span> no
+<a name="l-57"></a><span class="tm">22:22:05</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, cyphar had some issues with tress being processed
+<a name="l-58"></a><span class="tm">22:22:07</span><span class="nk"> &lt;erikh&gt;</span> oh lol
+<a name="l-59"></a><span class="tm">22:22:50</span><span class="nk"> &lt;crosbymichael&gt;</span> also reminder features when things are inactive for a while would be nice
+<a name="l-60"></a><span class="tm">22:24:21</span><span class="nk"> &lt;erikh&gt;</span> maybe a responder to "discuss this item" or some similar speech which would label it to be discussed/addressed at the next meeting?
+<a name="l-61"></a><span class="tm">22:24:31</span><span class="nk"> &lt;crosbymichael&gt;</span> that would be cool
+<a name="l-62"></a><span class="tm">22:24:38</span><span class="nk"> &lt;crosbymichael&gt;</span> it could build the meeting agenda for us
+<a name="l-63"></a><span class="tm">22:24:44</span><span class="nk"> &lt;erikh&gt;</span> yep
+<a name="l-64"></a><span class="tm">22:24:54</span><span class="nk"> &lt;mrunalp&gt;</span> +1
+<a name="l-65"></a><span class="tm">22:27:24</span><span class="nk"> &lt;vbatts&gt;</span> https://github.com/opencontainers/runtime-spec/pull/395
+<a name="l-66"></a><span class="tm">22:28:19</span><span class="nk"> &lt;vbatts&gt;</span> https://github.com/opencontainers/runtime-spec/pull/405
+<a name="l-67"></a><span class="tm">22:29:06</span><span class="nk"> &lt;stevvooe&gt;</span> one area we could save time on: close PRs that have had no prior discussion or issue
+<a name="l-68"></a><span class="tm">22:30:55</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#help</span><span class="cmdline"></span>
+<a name="l-69"></a><span class="tm">22:31:26</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#action </span><span class="cmdline">send email to vm folks to join a call (intel, hypersh, vmware?)</span>
+<a name="l-70"></a><span class="tm">22:31:45</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/pull/591 is an example: serious issue but we have an insufficient PR to capture the main problem
+<a name="l-71"></a><span class="tm">22:35:48</span><span class="nk"> &lt;vbatts&gt;</span> https://github.com/opencontainers/runtime-spec/pull/508
+<a name="l-72"></a><span class="tm">22:35:51</span><span class="nk"> &lt;vbatts&gt;</span> https://github.com/opencontainers/runtime-spec/pull/628
+<a name="l-73"></a><span class="tm">22:36:02</span><span class="nk"> &lt;vbatts&gt;</span> https://github.com/opencontainers/runtime-spec/pull/630
+<a name="l-74"></a><span class="tm">22:37:25</span><span class="nk"> &lt;wking&gt;</span> I'm for an event API ;)
+<a name="l-75"></a><span class="tm">22:38:08</span><span class="nk"> &lt;crosbymichael&gt;</span> we know
+<a name="l-76"></a><span class="tm">22:38:10</span><span class="nk"> &lt;crosbymichael&gt;</span> ;)
+<a name="l-77"></a><span class="tm">22:38:32</span><span class="nk"> &lt;wking&gt;</span> You can't add it back a higher level
+<a name="l-78"></a><span class="tm">22:39:21</span><span class="nk"> &lt;crosbymichael&gt;</span> who is "you"?  because I certainly can and have already implemented it
+<a name="l-79"></a><span class="tm">22:40:02</span><span class="nk"> &lt;wking&gt;</span> on top of a generic OCI runrime?
+<a name="l-80"></a><span class="tm">22:40:16</span><span class="nk"> &lt;wking&gt;</span> can youlink your code
+<a name="l-81"></a><span class="tm">22:42:07</span><span class="nk"> &lt;erikh&gt;</span> incapable
+<a name="l-82"></a><span class="tm">22:44:40</span><span class="nk"> &lt;wking&gt;</span> one Markdown file would be fine
+<a name="l-83"></a><span class="tm">22:47:40</span><span class="nk"> &lt;erikh&gt;</span> fwiw I found this: https://github.com/opencontainers/runtime-spec/issues/615 which is still open. Just wanted to make you all aware of it
+<a name="l-84"></a><span class="tm">22:48:51</span><span class="nk"> &lt;tianon&gt;</span> thanks erikh :)
+<a name="l-85"></a><span class="tm">22:49:11</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/pull/591
+<a name="l-86"></a><span class="tm">22:51:17</span><span class="nk"> &lt;vbatts&gt;</span> "app/org.gnome.gedit/x86_64/stable"
+<a name="l-87"></a><span class="tm">22:51:24</span><span class="nk"> &lt;erikh&gt;</span> 7:31 PST
+<a name="l-88"></a><span class="tm">22:52:50</span><span class="nk"> &lt;vbatts&gt;</span> https://github.com/opencontainers/image-spec/pull/407
+<a name="l-89"></a><span class="tm">23:03:10</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

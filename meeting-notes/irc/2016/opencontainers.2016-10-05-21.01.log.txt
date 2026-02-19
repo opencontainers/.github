@@ -1,0 +1,75 @@
+21:01:03 <wking> #startmeeting 2016-08-05 discussion
+21:01:03 <collabot> Meeting started Wed Oct  5 21:01:03 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:01:03 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:01:03 <collabot> The meeting name has been set to '2016_08_05_discussion'
+21:01:14 <wking> #chair mrunalp vbatts RobDolinMS
+21:01:14 <collabot> Current chairs: RobDolinMS mrunalp vbatts wking
+21:02:33 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/518
+21:02:42 <wking> #topic /dev/console handling in runtime-spec
+21:02:49 <wking> #link https://github.com/opencontainers/runtime-spec/pull/518
+21:03:16 <wking> mrunalp: do we need a switch to toggle bind mounting?
+21:03:31 <wking> crosbymichael: I don't think we need a special case in the docs.  Do we create the bind mounts by default?
+21:03:46 <wking> second sentence there was mrunalp^
+21:04:06 <wking> crosbymichael: The bind-mount doesn't matter.  It's that way because we used to pass in a terminal from outside
+21:04:14 <wking> mrunalp: so we should leave it up to the runtime?
+21:04:28 <wking> crosbymichael: yeah, it can be bind mounted or the runtime can create the terminal inside
+21:04:50 <wking> mrunalp: with the bind mounting, we're talking about bind-mounting the slave (regardless of whether it's from outside or inside)
+21:05:02 <wking> mrunalp: the real console (c5/1) is not namespaced, and that's dangerous
+21:05:35 <wking> crosbymichael: I'm not saying we should mount c5/1, I'm saying that something has to be at /dev/console, but what is implementation-determined
+21:05:57 <wking> crosbymichael: in cyphar's runC PR it's bind-mounting the internally-sourced pseudoterminal slave
+21:06:37 <wking> I think something should at /dev/console there regardless of process.terminal
+21:10:55 <duglin> I think this topic is upsetting someone  :-)
+21:11:05 <wking> Is there a reason why logging to the system console would depend on whether the container process needed a terminal?
+21:11:21 <duglin> the baby in the background is clearly not happy about it
+21:11:35 <mrunalp> :D
+21:13:46 <mrunalp> crosbymichael, legacy applications use /dev/console
+21:13:53 <mrunalp> crosbymichael, It is not just for logging
+21:15:30 <mrunalp> https://github.com/opencontainers/runtime-spec/pulls?q=is%3Aopen+is%3Apr+milestone%3A1.0.0
+21:15:38 <wking> I see no /dev/console hits in OpenSSH 7.2
+21:15:46 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/513
+21:15:59 <wking> #topic runtime-spec 1.0.0 milestone
+21:16:08 <wking> mrunalp: I think #513 should be part of 1.0
+21:17:36 <wking> mrunalp: any other PRs for 1.0?
+21:18:02 <crosbymichael> https://github.com/opencontainers/runc/issues/1094
+21:19:54 <wking> mrunalp: there's also https://github.com/opencontainers/runc/pull/1082
+21:21:00 <wking> crosbymichael: I think most of the people use the cgroups package
+21:21:37 <wking> vishh: kube uses libcontainer.  If upstream libcontainer doesn't support that use case, we might fork it.
+21:21:52 <wking> I'm not sure who else is using it, but we should at least keep the cgroups interfaces
+21:22:05 <wking> crosbymichael: I'm just suggesting changing libcontainer to depend on the runtime-spec
+21:22:17 <wking> vishh: we need a way to extend the spec to add more features to libcontainer
+21:22:32 <wking> crosbymichael: maybe we can embed the struct to get some breathing room
+21:22:46 <wking> vishh: that's fine.  As long as there's a way to extend cleanly, that's ok
+21:22:59 <wking> mrunalp: I don't think libcontainer extends the spec now
+21:23:26 <wking> vishh: I see the argument for leaning on the spec, but I want the ability to safely extend the spec to be there if we need it
+21:23:31 <wking> mrunalp: maybe post 1.0?
+21:23:47 <wking> mrunalp: any other 1.0 PRs?
+21:24:18 <wking> mrunalp: any other topics?  I don't see any image people...
+21:24:29 <wking> vishh: what is the timeline for 1.0?
+21:24:47 <wking> mrunalp: we have a few open PRs (mostly around console and the API)
+21:25:02 <wking> mrunalp: I don't know if there's a timeline beyond those blockers
+21:25:16 <wking> mrunalp: maybe target end of October?
+21:26:37 <wking> I don't know if landing #513 resets the rc* clock.  We probalby want to let that cook a bit after it lands
+21:27:01 <wking> mrunalp: With the console stuff landing soon, we'll have something very close to 1.0 by the end of the month
+21:27:20 <wking> RobDolinMS: we should look at interoperable implementations (e.g. having multiple rc2-based tools that work together)
+21:27:31 <wking> mrunalp: we have runC and ccon
+21:27:39 <wking> ?: what about rkt?
+21:27:57 <wking> mrunalp: I think rkt will have most of the features, but may not support the API
+21:28:10 <wking> crosbymichael: there are lots of spec-generating tools, but I think most of them use runC
+21:28:23 <wking> crosbymichael: there's a lot of low-level code in runC that most people don't care about
+21:28:44 <wking> mrunalp: I agree with crosbymichael.  I don't think we need to wait for more than runC on the Linux side
+21:29:19 <wking> should we wait until runtime-tools is ready to start stamping certifications?
+21:29:29 <wking> mrunalp: I'm not sure that is a blocker
+21:29:56 <wking> RobDolinMS: it hasn't been explicitly stated, but I think the expectation is to have tooling stabilized within a few months of the spec stabilizing
+21:30:54 <wking> RobDolinMS: if you find issues in the tooling, we may end up with 1.0.1 or 1.0.2
+21:31:18 <wking> RobDolinMS: The further along the tooling is, the more confidence there will be in the spec's stability
+21:31:21 <wking> agreed^
+21:31:55 <wking> mrunalp: to close this out, we'll look at getting the console and API stuff cut by the end of the month, and then we'll revist stability
+21:32:02 <wking> sounds good to me^
+21:32:16 <wking> RobDolinMS: what's the long pull now?  Is it just the console stuff?
+21:32:25 <wking> mrunalp: yeah.  We don't want to break existing consumers
+21:32:41 <wking> crosbymichael: the concerns are regressions from the console changes
+21:33:15 <wking> duglin: julz_ works on Garden
+21:33:25 <wking> crosbymichael: we need to contact him to make sure he's ok with the console changes
+21:33:48 <wking> mrunalp: crosbymichael, you can check Docker vs. the new console stuff
+21:33:53 <wking> mrunalp: I'll check kubernetes
+21:33:59 <wking> #endmeeting

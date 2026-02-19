@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">17:01:55</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">OCI 6/15</span>
+<a name="l-2"></a><span class="tm">17:01:55</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Jun 15 17:01:55 2016 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">17:01:55</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">17:01:55</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to 'oci_6_15'
+<a name="l-5"></a><span class="tm">17:02:05</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#chair </span><span class="cmdline">vbatts</span>
+<a name="l-6"></a><span class="tm">17:02:05</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: mrunalp vbatts
+<a name="l-7"></a><span class="tm">17:02:26</span><span class="nk"> &lt;philips&gt;</span> https://github.com/opencontainers/tob/pull/15
+<a name="l-8"></a><span class="tm">17:03:14</span><span class="nk"> &lt;wking&gt;</span> mrunalp, vbatts: can one of you chair me?
+<a name="l-9"></a><span class="tm">17:03:25</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-10"></a><span class="tm">17:03:25</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: mrunalp vbatts wking
+<a name="l-11"></a><span class="tm">17:03:28</span><span class="nk"> &lt;wking&gt;</span> thanks
+<a name="l-12"></a><span class="tm">17:03:49</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">release-approval process</span>
+<a name="l-13"></a><span class="tm">17:03:57</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/tob/pull/15</span>
+<a name="l-14"></a><span class="tm">17:04:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I still want more concrete criteria
+<a name="l-15"></a><span class="tm">17:04:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> if we hit a certain set of checkpoints, I want the release to be a no-brainer
+<a name="l-16"></a><span class="tm">17:05:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> this is stuff like "tests cover all required features.  Release notes help users through breaking changes.  Etc."
+<a name="l-17"></a><span class="tm">17:05:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah
+<a name="l-18"></a><span class="tm">17:05:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> would you be ok with landing the process independently of those criteria?
+<a name="l-19"></a><span class="tm">17:05:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I'd like to start making image-spec releases, and I don't want to block that while we wait for criteria
+<a name="l-20"></a><span class="tm">17:06:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah, we can work on that in parallel
+<a name="l-21"></a><span class="tm">17:06:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> the main motivator is an image-spec v0.3 this week
+<a name="l-22"></a><span class="tm">17:06:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we can finalize the process, and then land the criteria, and then get back to the 1.0 releases
+<a name="l-23"></a><span class="tm">17:06:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> that sounds good
+<a name="l-24"></a><span class="tm">17:06:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'll take another pass through tob#15 today
+<a name="l-25"></a><span class="tm">17:07:07</span><span class="nk"> &lt;stevvooe&gt;</span> my mic is having problems, did we have a minimum quorum requirement?
+<a name="l-26"></a><span class="tm">17:07:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> to confirm, we're keeping 1.0 paused until we get both the process and criteria
+<a name="l-27"></a><span class="tm">17:07:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yes
+<a name="l-28"></a><span class="tm">17:08:02</span><span class="nk"> &lt;stevvooe&gt;</span> i saw it, just wanted to make sure we agreed there was minimum quorum
+<a name="l-29"></a><span class="tm">17:08:13</span><span class="nk"> &lt;stevvooe&gt;</span> great!
+<a name="l-30"></a><span class="tm">17:08:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> essentially, we have a one-week time for the release, and we'll probably have a 2/3 quorum for that vote
+<a name="l-31"></a><span class="tm">17:08:25</span><span class="nk"> &lt;philips&gt;</span> https://github.com/opencontainers/tob/pull/15#discussion_r67036851
+<a name="l-32"></a><span class="tm">17:08:25</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">philips to add quorum language after the meeting</span>
+<a name="l-33"></a><span class="tm">17:08:36</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec 0.3 release</span>
+<a name="l-34"></a><span class="tm">17:08:54</span><span class="nk"> &lt;philips&gt;</span> https://github.com/opencontainers/image-spec/milestones/v1.0.0-rc1
+<a name="l-35"></a><span class="tm">17:09:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> we have a 1.0.0-rc1 milestone without much in there, and I want to get that out without waiting for 1.0
+<a name="l-36"></a><span class="tm">17:09:17</span><span class="nk"> &lt;stevvooe&gt;</span> sounds good!
+<a name="l-37"></a><span class="tm">17:09:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> the plan is to rename the milestone to 0.3.0 to get the tooling and wording cleanups released
+<a name="l-38"></a><span class="tm">17:09:44</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/RobDolinMS/tob/blob/master/proposals/tools.md
+<a name="l-39"></a><span class="tm">17:10:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> RobDolinMS has created a proposal for tooling repositories^
+<a name="l-40"></a><span class="tm">17:10:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we should comment on that (inline or on dev@)
+<a name="l-41"></a><span class="tm">17:10:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> and we can talk about it in the DockerCon meeting
+<a name="l-42"></a><span class="tm">17:10:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> any specific PRs folks want to look at?
+<a name="l-43"></a><span class="tm">17:10:44</span><span class="nk"> &lt;wking&gt;</span> (nothing)
+<a name="l-44"></a><span class="tm">17:10:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> so shall we continue reviewing PRs asynchronously
+<a name="l-45"></a><span class="tm">17:11:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah
+<a name="l-46"></a><span class="tm">17:11:17</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">no meeting next week</span>
+<a name="l-47"></a><span class="tm">17:11:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> most of the maintainers will be at the DockerCon face-to-face
+<a name="l-48"></a><span class="tm">17:11:50</span><span class="nk"> &lt;stevvooe&gt;</span> i'll be there
+<a name="l-49"></a><span class="tm">17:11:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I'll be at the face-to-face.  I don't know how many image-spec maintainers will be there, but they know it's happening
+<a name="l-50"></a><span class="tm">17:12:08</span><span class="nk"> &lt;stevvooe&gt;</span> are we okay with the splits on tar and config i've proposed?
+<a name="l-51"></a><span class="tm">17:12:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> everyone review tob#15!
+<a name="l-52"></a><span class="tm">17:12:15</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

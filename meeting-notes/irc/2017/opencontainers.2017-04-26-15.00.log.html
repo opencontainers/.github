@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">15:00:26</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-04-26</span>
+<a name="l-2"></a><span class="tm">15:00:26</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Apr 26 15:00:26 2017 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">15:00:26</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">15:00:26</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2017_04_26'
+<a name="l-5"></a><span class="tm">15:01:30</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, stevvooe, cyphar, dqminh, hqhq: Joining?
+<a name="l-6"></a><span class="tm">15:02:23</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/runtime-spec/issues/726</span>
+<a name="l-7"></a><span class="tm">15:02:34</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp wking_</span>
+<a name="l-8"></a><span class="tm">15:02:34</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp vbatts|work wking_
+<a name="l-9"></a><span class="tm">15:03:32</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec open PRs</span>
+<a name="l-10"></a><span class="tm">15:03:34</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pulls
+<a name="l-11"></a><span class="tm">15:06:09</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/780
+<a name="l-12"></a><span class="tm">15:07:17</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/779
+<a name="l-13"></a><span class="tm">15:08:01</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/778
+<a name="l-14"></a><span class="tm">15:08:40</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/777
+<a name="l-15"></a><span class="tm">15:11:39</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#action </span><span class="cmdline">provide links to kernel docs for fields in the spec.</span>
+<a name="l-16"></a><span class="tm">15:12:35</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/775/files
+<a name="l-17"></a><span class="tm">15:14:59</span><span class="nk"> &lt;mrunalp&gt;</span> tianon, These string constants are invented by us in the spec so it makes sense to keep them in the schema for validation
+<a name="l-18"></a><span class="tm">15:15:12</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/773
+<a name="l-19"></a><span class="tm">15:16:19</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/771
+<a name="l-20"></a><span class="tm">15:23:00</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/769
+<a name="l-21"></a><span class="tm">15:24:26</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">wking_:</span> the shared-subtree docs are helpful for the bind and rbind
+<a name="l-22"></a><span class="tm">15:26:41</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/768
+<a name="l-23"></a><span class="tm">15:29:49</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/767
+<a name="l-24"></a><span class="tm">15:36:59</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/opencontainers/image-spec/milestone/13
+<a name="l-25"></a><span class="tm">15:40:13</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/pull/636
+<a name="l-26"></a><span class="tm">15:42:11</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/opencontainers/image-spec/issues/658
+<a name="l-27"></a><span class="tm">15:44:24</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/pull/654
+<a name="l-28"></a><span class="tm">15:44:28</span><span class="nk"> &lt;estesp&gt;</span> I wish the map in uberconference had a moving dot to follow vbatts|work in his travels
+<a name="l-29"></a><span class="tm">15:44:46</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">estesp:</span> lol
+<a name="l-30"></a><span class="tm">15:45:03</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">estesp:</span> stalkerconference
+<a name="l-31"></a><span class="tm">15:53:54</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

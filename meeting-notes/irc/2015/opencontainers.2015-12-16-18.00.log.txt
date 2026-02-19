@@ -1,0 +1,102 @@
+18:00:26 <wking> #startmeeting 2015-12-16 discussion
+18:00:26 <collabot`> Meeting started Wed Dec 16 18:00:26 2015 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+18:00:26 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+18:00:26 <collabot`> The meeting name has been set to '2015_12_16_discussion'
+18:01:21 <wking> #chair vbatts|mobile vbatts RobDolinMS mrunalp crosbymichael
+18:01:21 <collabot`> Warning: Nick not in channel: RobDolinMS
+18:01:21 <collabot`> Warning: Nick not in channel: mrunalp
+18:01:21 <collabot`> Current chairs: RobDolinMS crosbymichael mrunalp vbatts vbatts|mobile wking
+18:02:03 <lk4d4> I'm guest :)
+18:03:24 <wking> #topic 0.2.0 pull requests
+18:03:32 <wking> #url https://github.com/opencontainers/specs/milestones/v0.2.0
+18:03:55 <wking> vishh just updated https://github.com/opencontainers/specs/pull/233
+18:04:19 <wking> b684645 -> 9173eb8
+18:04:28 <wking> mrunalp still sees some strings
+18:04:50 <wking> discussion to continue on #233
+18:05:03 <duglin> wking: are you sitting on a fireplace?
+18:05:09 <wking> yup
+18:05:16 <duglin> funny
+18:05:35 <wking> but warm :)
+18:05:47 <wking> #topic face-to-face meeting
+18:05:57 <wking> #action duglin to mail the list with ideas/times
+18:06:44 <wking> #chair mrunalp
+18:06:44 <collabot`> Current chairs: RobDolinMS crosbymichael mrunalp vbatts vbatts|mobile wking
+18:06:56 <wking> #topic focus for the next milestone
+18:07:35 <wking> mrunalp: Can we separate create and start?
+18:07:44 <wking> vishh: Death of the container process and state cleanup?
+18:08:02 <wking> vishh: What are we doing about the container ID?
+18:08:31 <RobDolinMS> Mrunal: We agree we need some sort of ID
+18:08:34 <wking> #url https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/q6TYqVZOcX8
+18:08:51 <RobDolinMS> Trevor: Is this a new issue or email thread?
+18:08:58 <RobDolinMS> Mrunal: this is related but not exactly the same
+18:09:19 <RobDolinMS> Mrunal: we can target nailing this down for 0.3
+18:09:31 <wking> #action vishh to open an issue with thoughts on container ID
+18:09:58 <RobDolinMS> Mrunal: I can open an issue on the separation of start steps
+18:10:01 <wking> RobDolinMS: it's from November 25th, so not that new
+18:10:02 <RobDolinMS> ... and another for the clean-up
+18:10:27 <RobDolinMS> (WKing: good point)
+18:10:43 <wking> #topic punt on protobuf
+18:11:08 <wking> mrunalp: maybe use per-platform directories so we can compile cross-platform parsers for now
+18:11:51 <wking> #url https://github.com/opencontainers/specs/pull/185
+18:12:06 <wking> ^ that's protobuf
+18:12:45 <mrunalp> https://github.com/opencontainers/specs/pull/135
+18:12:55 <wking> #url https://github.com/opencontainers/specs/pull/135
+18:13:04 <wking> ^ problem that protobuf was trying to solve
+18:13:13 <wking> #topic handling users
+18:13:25 <mrunalp> https://github.com/opencontainers/specs/pull/191
+18:13:28 <wking> #url https://github.com/opencontainers/specs/pull/191
+18:14:49 <wking> #topic back to cross-platform JSON parsing in Go
+18:14:58 <wking> duglin: wondering what the issue is for #135
+18:15:21 <wking> mrunalp and wking trying to explain the platform-specific Go type compilation
+18:15:47 <wking> duglin: we want platform-independent stuff, so we don't want spec-parsing config that's compilation-platform dependent
+18:16:03 <wking> wking: I think we all agree with that^
+18:16:29 <wking> mrunalp's suggestion fixes that, and protobuf would have fixed it (but protobuf landing may not happen, and is far out in any case)
+18:17:43 <wking> mrunalp: hoping all of these topics end up in 0.3.0 by late January
+18:18:03 <wking> #topic cgroup parent config (like Docker)
+18:18:24 <vbatts|mobile> Or systemd?
+18:18:47 <wking> vishh thinks parents aren't worth the trouble, just use cgroupsPath
+18:19:01 <wking> vishh: the less we have to do around cgroups, the better
+18:19:25 <wking> mrunalp: this is somehow tied up with systemd [wking: although I don't understand that point]
+18:20:41 <wking> mrunalp: should we require cgroupsPath to always start with a forward slash?
+18:21:20 <wking> vishh: or just require it to be relative to cgroups mount point, regardless of leading slash
+18:21:35 <wking> #action vishh to open a PR with his approach
+18:22:02 <wking> mrunalp: anything else for 0.3.0?
+18:22:23 <wking> #topic defining a tar format
+18:22:27 <wking> liangchenye: we might want this^
+18:22:42 <wking> mrunalp: don't we already define the tar format by defining the bundle filesystem layout?
+18:23:06 <wking> duglin: has been working with philips on this
+18:23:30 <wking> duglin: hopefully will get the proposal out within a week or so
+18:24:14 <wking> #topic 0.3.0 procedure
+18:24:33 <wking> #action mrunalp open a 0.3.0 milestone listing these topics with a soft deadline
+18:24:45 <RobDolinMS> #topic Next meeting
+18:24:53 <RobDolinMS> #agreed Cancel next two weeks
+18:24:53 <wking> with year-end, next meeting to happen on 2016-01-06
+18:25:04 <wking> #action mrunalp to mail the list about that^
+18:25:12 <RobDolinMS> #agreed next meeting on Wed, 06 Jan, 2016
+18:25:26 <RobDolinMS> #topic Validation of multiple implementations
+18:26:07 <RobDolinMS> Vishnu: We should have multiple interoperable implementations
+18:26:09 <wking> mrunalp: ocitools and OCT will help testing multiple implemenations
+18:26:26 <vbatts|mobile> Need for annotations.
+18:26:31 <RobDolinMS> (wking just typed what I was starting to type :) )
+18:26:46 <wking> vishh: wants multiple implementations (not just runC) to test generality
+18:27:02 <wking> mrunalp: wants other stakeholders to get involved (so they should review opencontainers/specs)
+18:27:39 <vbatts|mobile> And can we have a platform dependent strict for handling things like uid/gid user strict.
+18:27:45 <wking> jlb13: not sure what the BSD folks want, they seem more interested in Docker + jails
+18:28:07 <wking> jlb13: have a runC running on Solaris with zones, looking into porting libcontainer now
+18:28:28 <vbatts|mobile> Nice
+18:30:19 <duglin> can’t find my window to unmute!!!
+18:30:27 <wking> RobDolinMS: duglin will you coordinate OCI LF meeting?
+18:30:31 <lk4d4> duglin: haha :D
+18:30:40 <duglin> which meeting?
+18:31:07 <wking> RobDolinMS: your f2f meeting, and a LF company rep meeting to elect a trademark chair
+18:31:21 <wking> duglin: what dates did they propose?
+18:31:35 <wking> RobDolinMS: no dates yet, maybe by Friday or by next week
+18:31:58 <wking> duglin: will try to align, but may not want to wait for them
+18:32:18 <wking> RobDolinMS: wants this to be not a weekend
+18:33:13 <vbatts> back
+18:33:14 <wking> jlb13: Oracle isn't getting these communications, please include us ;)
+18:33:33 <wking> * Oracle may be getting them, but jlb13 isn't ;)
+18:33:54 <wking> #action RobDolinMS to link jlb13 in on who at Oracle is getting them
+18:34:29 <wking> RobDolinMS: this is all about oci-formation or some other lawyer-ish list
+18:34:59 <duglin> we need to take off the full month for the superbowl?  :-)
+18:35:14 <wking> #endmeeting

@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">14:59:06</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-05-24 discussion</span>
+<a name="l-2"></a><span class="tm">14:59:06</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed May 24 14:59:06 2017 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">14:59:06</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">14:59:06</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2017_05_24_discussion'
+<a name="l-5"></a><span class="tm">15:02:49</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp</span>
+<a name="l-6"></a><span class="tm">15:02:49</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: mrunalp vbatts|work
+<a name="l-7"></a><span class="tm">15:02:53</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-8"></a><span class="tm">15:02:53</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: mrunalp vbatts|work wking
+<a name="l-9"></a><span class="tm">15:02:56</span><span class="nk"> &lt;vbatts|work&gt;</span> ?
+<a name="l-10"></a><span class="tm">15:05:44</span><span class="nk"> &lt;stevvooe&gt;</span> unfortunately, the audio cut when you went to screen sharing
+<a name="l-11"></a><span class="tm">15:05:54</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">stevvooe:</span> :-(
+<a name="l-12"></a><span class="tm">15:06:08</span><span class="nk"> &lt;vbatts|work&gt;</span> can you reconnect
+<a name="l-13"></a><span class="tm">15:06:10</span><span class="nk"> &lt;vbatts|work&gt;</span> ?
+<a name="l-14"></a><span class="tm">15:06:12</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] I still hear Vincent, I would just relogin back into Uberconf or dial in
+<a name="l-15"></a><span class="tm">15:09:54</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/milestone/15</span>
+<a name="l-16"></a><span class="tm">15:12:08</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] I'd probably set a 1.0.1 or 1.1 milestone in GH?
+<a name="l-17"></a><span class="tm">15:12:52</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">cracra:</span> or a "1.next-maybe"
+<a name="l-18"></a><span class="tm">15:14:01</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] sure w/e works, I'll just assume we will have a 1.1 in the future
+<a name="l-19"></a><span class="tm">15:23:51</span><span class="nk"> &lt;vbatts|work&gt;</span> we'll use the v1.0.0 milestone as the marker of what will make it in. Everything else i 'v1.NEXT-maybe'
+<a name="l-20"></a><span class="tm">15:24:03</span><span class="nk"> &lt;vbatts|work&gt;</span> label
+<a name="l-21"></a><span class="tm">15:30:40</span><span class="nk"> &lt;vbatts|work&gt;</span> focused work through on open issues to whether they go into 1.0 or deferred
+<a name="l-22"></a><span class="tm">15:32:04</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] if you want to do an F2F summit, OCI has funding, we can use space at the LF or we can have someone like Docker host at HQ?
+<a name="l-23"></a><span class="tm">15:33:50</span><span class="nk"> &lt;mrunalp&gt;</span> cracra, Yeah, I think it will be useful.
+<a name="l-24"></a><span class="tm">15:34:50</span><span class="nk"> &lt;vbatts|work&gt;</span> brb
+<a name="l-25"></a><span class="tm">15:36:34</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] another option is to do it virtually but it's all up to you
+<a name="l-26"></a><span class="tm">15:36:34</span><span class="nk"> &lt;vbatts|work&gt;</span> back
+<a name="l-27"></a><span class="tm">15:42:34</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/opencontainers/runtime-spec/pull/829
+<a name="l-28"></a><span class="tm">15:45:24</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/opencontainers/runtime-spec/pull/680
+<a name="l-29"></a><span class="tm">15:48:25</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/opencontainers/runtime-spec/pull/735
+<a name="l-30"></a><span class="tm">15:49:46</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/opencontainers/runtime-spec/pull/745/files
+<a name="l-31"></a><span class="tm">15:52:08</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/opencontainers/runtime-spec/pull/795
+<a name="l-32"></a><span class="tm">15:56:38</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/opencontainers/image-spec/pull/671
+<a name="l-33"></a><span class="tm">16:02:19</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] just a heads up that the OCI Trademark Board uses the same line, so people should close up the meeting in about ~5 minutes :)
+<a name="l-34"></a><span class="tm">17:04:23</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

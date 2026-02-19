@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">18:02:15</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2015-11-11 discussion</span>
+<a name="l-2"></a><span class="tm">18:02:15</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Nov 11 18:02:15 2015 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">18:02:15</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">18:02:15</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2015_11_11_discussion'
+<a name="l-5"></a><span class="tm">18:02:54</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">ocitools - mrunalp</span>
+<a name="l-6"></a><span class="tm">18:03:37</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">cgroup values</span>
+<a name="l-7"></a><span class="tm">18:04:48</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vishnu:</span> Spec should not be limited to just go
+<a name="l-8"></a><span class="tm">18:05:19</span><span class="nk"> &lt;anuthan&gt;</span> I didn't see an agenda for today is there one?
+<a name="l-9"></a><span class="tm">18:06:02</span><span class="nk"> &lt;RobDolinMS&gt;</span> anuthan - agenda was roadmap, then open issues.
+<a name="l-10"></a><span class="tm">18:06:03</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chairs </span><span class="cmdline">RobDolinMS</span>
+<a name="l-11"></a><span class="tm">18:06:19</span><span class="nk"> &lt;RobDolinMS&gt;</span> vbatts, I think the command is #chair (w/o the "s")
+<a name="l-12"></a><span class="tm">18:06:31</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chair </span><span class="cmdline">RobDolinMS</span>
+<a name="l-13"></a><span class="tm">18:06:31</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: RobDolinMS vbatts
+<a name="l-14"></a><span class="tm">18:06:36</span><span class="nk"> &lt;vbatts&gt;</span> k
+<a name="l-15"></a><span class="tm">18:07:17</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">vbatts:</span> the problem we're trying to solve is three things:
+<a name="l-16"></a><span class="tm">18:07:24</span><span class="nk"> &lt;RobDolinMS&gt;</span> (1) people want to set values
+<a name="l-17"></a><span class="tm">18:07:30</span><span class="nk"> &lt;RobDolinMS&gt;</span> (2) people want to go with defaults
+<a name="l-18"></a><span class="tm">18:07:41</span><span class="nk"> &lt;RobDolinMS&gt;</span> (3) people want something explicit for not-set values
+<a name="l-19"></a><span class="tm">18:07:54</span><span class="nk"> &lt;RobDolinMS&gt;</span> Mrunal - If null, don't touch it
+<a name="l-20"></a><span class="tm">18:08:10</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> instead of -1 which could have a meaning for some cgroups
+<a name="l-21"></a><span class="tm">18:09:13</span><span class="nk"> &lt;vbatts&gt;</span> so really only two things to solve with what ever approach
+<a name="l-22"></a><span class="tm">18:09:30</span><span class="nk"> &lt;RobDolinMS&gt;</span> (Did someone start the meeting already?)
+<a name="l-23"></a><span class="tm">18:09:37</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Merged Roadmpa</span>
+<a name="l-24"></a><span class="tm">18:09:44</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Merged Roadmap</span>
+<a name="l-25"></a><span class="tm">18:10:17</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">VBatts:</span> Now that we've merged the roadmap, we can get working.
+<a name="l-26"></a><span class="tm">18:10:59</span><span class="nk"> &lt;vbatts&gt;</span> https://github.com/opencontainers/specs/blob/master/ROADMAP.md
+<a name="l-27"></a><span class="tm">18:11:21</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/blob/master/ROADMAP.md Roadmap</span>
+<a name="l-28"></a><span class="tm">18:11:22</span><span class="nk"> &lt;mrunalp&gt;</span> Next it will be good if we can get this merged https://github.com/opencontainers/specs/pull/231
+<a name="l-29"></a><span class="tm">18:13:38</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">VBatts:</span> Does the config have to be human-readable?
+<a name="l-30"></a><span class="tm">18:14:07</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> Tooling would write the proto file instead of the JSON?
+<a name="l-31"></a><span class="tm">18:15:11</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Michael:</span> I thought we're still sticking with the JSON for what's on disk but using protos to generate bindings
+<a name="l-32"></a><span class="tm">18:16:01</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">VBatts:</span> That's correct, but ...
+<a name="l-33"></a><span class="tm">18:16:27</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Michael:</span> Aren't there tools for JSON schema that generate language bindings?
+<a name="l-34"></a><span class="tm">18:16:38</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> that's worth looking into
+<a name="l-35"></a><span class="tm">18:18:04</span><span class="nk"> &lt;RobDolinMS&gt;</span> Jason Bouzane: Can we have tooling to export an ASCII version of the protobuf ?
+<a name="l-36"></a><span class="tm">18:19:51</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Lifecycle PR</span>
+<a name="l-37"></a><span class="tm">18:20:19</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/pull/231</span>
+<a name="l-38"></a><span class="tm">18:20:33</span><span class="nk"> &lt;RobDolinMS&gt;</span> Michael planning to review
+<a name="l-39"></a><span class="tm">18:20:43</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/specs/pull/231
+<a name="l-40"></a><span class="tm">18:20:51</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Actions PR</span>
+<a name="l-41"></a><span class="tm">18:20:56</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">coming soon</span>
+<a name="l-42"></a><span class="tm">18:21:54</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Volunteering to help with roadmap</span>
+<a name="l-43"></a><span class="tm">18:22:05</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Michael recommends submitting a PR to volunteer yourself</span>
+<a name="l-44"></a><span class="tm">18:22:58</span><span class="nk"> &lt;RobDolinMS&gt;</span> Jesse glad to help with cross-platform too; call-out where he (and colleagues) can help
+<a name="l-45"></a><span class="tm">18:23:37</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">What comes after 1.0?</span>
+<a name="l-46"></a><span class="tm">18:23:52</span><span class="nk"> &lt;vishh&gt;</span> I would like to have lifecycle sorted out as part of the next milestone.
+<a name="l-47"></a><span class="tm">18:23:56</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Possibly some of the initial hashing and checking</span>
+<a name="l-48"></a><span class="tm">18:24:54</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> Could we just do something basic with a checksum?
+<a name="l-49"></a><span class="tm">18:25:33</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">VBatts:</span> Once you get a bundle, unless you keep a tar, it may be hard to validate after extraction.
+<a name="l-50"></a><span class="tm">18:26:02</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">VBatts:</span> Anything else after that may get into net new technology.
+<a name="l-51"></a><span class="tm">18:27:41</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Jason:</span> important to be able to verify individual files on disk.
+<a name="l-52"></a><span class="tm">18:28:06</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">VBatts:</span> Maybe just provide requirements but not specifics of how to do it.
+<a name="l-53"></a><span class="tm">18:29:17</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">VBatts:</span> This piece of spec may be more requirements than specifics.
+<a name="l-54"></a><span class="tm">18:30:05</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Jason:</span> Not sure I agree; It's important to be able to verify contents with possibly different wrappers (tar, etc.)
+<a name="l-55"></a><span class="tm">18:30:32</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Jason:</span> We may want to have something in space that allows you to do those sorts of things.
+<a name="l-56"></a><span class="tm">18:31:21</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Jason:</span> It wouldn't just be contents, might want to include other items
+<a name="l-57"></a><span class="tm">18:32:50</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> If we want to pursue this, how do we start with small steps?
+<a name="l-58"></a><span class="tm">18:34:57</span><span class="nk"> &lt;wking&gt;</span> hashing protos sounds like IPFS ;)
+<a name="l-59"></a><span class="tm">18:35:52</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#action </span><span class="cmdline">Jason Create PR or start email thread on this topic</span>
+<a name="l-60"></a><span class="tm">18:37:01</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#EndMeeting</span><span class="cmdline"></span></pre>
+</body></html>

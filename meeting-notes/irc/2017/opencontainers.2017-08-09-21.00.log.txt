@@ -1,0 +1,6 @@
+21:00:03 <wking> #startmeeting 2017-08-09 discussion
+21:00:03 <collabot> Meeting started Wed Aug  9 21:00:03 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:00:03 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:00:03 <collabot> The meeting name has been set to '2017_08_09_discussion'
+21:05:06 <wking> nobody had anything they wanted to talk about
+21:05:08 <wking> #endmeeting

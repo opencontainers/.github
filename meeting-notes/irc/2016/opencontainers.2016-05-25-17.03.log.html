@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">17:03:33</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">OCI 5/25</span>
+<a name="l-2"></a><span class="tm">17:03:33</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed May 25 17:03:33 2016 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">17:03:33</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">17:03:33</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to 'oci_5_25'
+<a name="l-5"></a><span class="tm">17:03:38</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#chair </span><span class="cmdline">RobDolinMS</span>
+<a name="l-6"></a><span class="tm">17:03:38</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: RobDolinMS mrunalp
+<a name="l-7"></a><span class="tm">17:03:46</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">create start PR</span>
+<a name="l-8"></a><span class="tm">17:04:12</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> Doug, I think the create start PR needs updats based on review comments
+<a name="l-9"></a><span class="tm">17:04:23</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#action </span><span class="cmdline">duglin update create start PR based on review comments</span>
+<a name="l-10"></a><span class="tm">17:04:53</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> Is moving to latest version of go a big issue?
+<a name="l-11"></a><span class="tm">17:04:58</span><span class="nk"> &lt;philips&gt;</span> joining now
+<a name="l-12"></a><span class="tm">17:05:01</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">CrosbyMichael:</span> It should be fine
+<a name="l-13"></a><span class="tm">17:06:32</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> Anything else on create start ?
+<a name="l-14"></a><span class="tm">17:06:48</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Current status of spec(s)</span>
+<a name="l-15"></a><span class="tm">17:08:25</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">RobDolinMS is continuing to gather feedback from Windows Containers folks</span>
+<a name="l-16"></a><span class="tm">17:08:42</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Brandon:</span> We should continue to focus and triage
+<a name="l-17"></a><span class="tm">17:08:58</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Brandon:</span> This is not the last release of OCI ever
+<a name="l-18"></a><span class="tm">17:09:01</span><span class="nk"> &lt;brandon&gt;</span> <span class="hi">philips:</span> *
+<a name="l-19"></a><span class="tm">17:10:00</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">CrosbyMichael:</span> We could do a 1.0-RC instead of a 0.6
+<a name="l-20"></a><span class="tm">17:10:33</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Philips:</span> Could we dump the create start stop and make that a 1.1 feature?
+<a name="l-21"></a><span class="tm">17:10:58</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">MrunalP:</span> CrosbyMichael has a PR and it just needs more reviewers
+<a name="l-22"></a><span class="tm">17:12:08</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Looking at a 1.0 of both the runtime-spec and runc in the DockerCon timeframe</span>
+<a name="l-23"></a><span class="tm">17:12:24</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">303/Denver:</span> What matters is that it is useful and complete
+<a name="l-24"></a><span class="tm">17:12:28</span><span class="nk"> &lt;jlb13&gt;</span> oh that was me :)
+<a name="l-25"></a><span class="tm">17:12:43</span><span class="nk"> &lt;jlb13&gt;</span> Jesse Butler, sorry... i have isssues with this site.
+<a name="l-26"></a><span class="tm">17:13:20</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">CrosbyMichael:</span> We have create start stop figured-out it just needs to be reviewed
+<a name="l-27"></a><span class="tm">17:13:45</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Philips:</span> If people are willing to do the work, that seems fine
+<a name="l-28"></a><span class="tm">17:14:40</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Duglin:</span> I'm OK with having the spec PR match the runc PR
+<a name="l-29"></a><span class="tm">17:14:56</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">CrosbyMichael:</span> If not done by Friday, it's either in or out
+<a name="l-30"></a><span class="tm">17:15:03</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">MrunalP:</span> that makes sense
+<a name="l-31"></a><span class="tm">17:15:30</span><span class="nk"> &lt;JakeWarner&gt;</span> <span class="hi">mrunalp:</span>  Sounds good to me
+<a name="l-32"></a><span class="tm">17:16:07</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#agreed </span><span class="cmdline">Friday is the deadline for getting the runc PR and the spec PR in</span>
+<a name="l-33"></a><span class="tm">17:16:35</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Philips:</span> Similarly, I'm trying to get the OCI Image format toward 1.0 for June
+<a name="l-34"></a><span class="tm">17:17:42</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">RobDolinMS:</span> Are you getting folks looking at the image format spec?
+<a name="l-35"></a><span class="tm">17:18:11</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Philips:</span> Stephen Day (Docker) and Brendan Burns (Google) have been active
+<a name="l-36"></a><span class="tm">17:18:20</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Philips:</span> Would welcome help
+<a name="l-37"></a><span class="tm">17:18:21</span><span class="nk"> &lt;philips&gt;</span> https://github.com/opencontainers/image-spec/milestones
+<a name="l-38"></a><span class="tm">17:18:43</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Review of spec making sure MUST and SHOULD are included and make sense</span>
+<a name="l-39"></a><span class="tm">17:18:49</span><span class="nk"> &lt;philips&gt;</span> planning to get v0.2.0 out this week: https://github.com/opencontainers/image-spec/milestones/v0.2.0
+<a name="l-40"></a><span class="tm">17:18:56</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">MrunalP:</span> Do we want to review now?
+<a name="l-41"></a><span class="tm">17:19:17</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">CrosbyMichael:</span> Let's do async
+<a name="l-42"></a><span class="tm">17:20:06</span><span class="nk"> &lt;philips&gt;</span> https://github.com/opencontainers/image-spec/milestones/v1.0.0
+<a name="l-43"></a><span class="tm">17:20:20</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Runtime-spec 1.0-RC targeted for afternoon of Wed, 6/1</span>
+<a name="l-44"></a><span class="tm">17:20:27</span><span class="nk"> &lt;philips&gt;</span> oh and Vbatts from Red Hat has been super super helpful as well on review and getting stuff forward on the Image Spec
+<a name="l-45"></a><span class="tm">17:21:00</span><span class="nk"> &lt;RobDolinMS&gt;</span> Philips talking to registry implementers
+<a name="l-46"></a><span class="tm">17:22:29</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Image-spec v0.2 targeted for end-of-week (Fri, 5/27)</span>
+<a name="l-47"></a><span class="tm">17:23:12</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#action </span><span class="cmdline">Philips to Image-Spec v0.2 release as VBatts is OOF this week</span>
+<a name="l-48"></a><span class="tm">17:23:55</span><span class="nk"> &lt;philips&gt;</span> https://github.com/opencontainers/image-spec/milestones
+<a name="l-49"></a><span class="tm">17:24:00</span><span class="nk"> &lt;philips&gt;</span> june 7th v1.0.0-rc
+<a name="l-50"></a><span class="tm">17:24:16</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Image-spec v1.0-RC targeted for week of 6/6 - 6/10 (ETA Tue, 6/7)</span>
+<a name="l-51"></a><span class="tm">17:26:48</span><span class="nk"> &lt;crosbymichael&gt;</span> <span class="hi">duglin:</span> so you and I need to make sure create/start are good to go
+<a name="l-52"></a><span class="tm">17:26:55</span><span class="nk"> &lt;crosbymichael&gt;</span> just ping me if you need anything
+<a name="l-53"></a><span class="tm">17:27:10</span><span class="nk"> &lt;duglin&gt;</span> yep was going to revamp the spec PR and then ping you - hopefully in a few hours
+<a name="l-54"></a><span class="tm">17:31:19</span><span class="nk"> &lt;crosbymichael&gt;</span> i'm updating the milestones on the runtime stuff
+<a name="l-55"></a><span class="tm">17:32:30</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, cool, I'll also take a look
+<a name="l-56"></a><span class="tm">17:32:57</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#EndMeeting</span><span class="cmdline"></span></pre>
+</body></html>

@@ -1,0 +1,139 @@
+22:03:46 <mrunalp> #startmeeting OCI 2/1
+22:03:46 <collabot> Meeting started Wed Feb  1 22:03:46 2017 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:03:46 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:03:46 <collabot> The meeting name has been set to 'oci_2_1'
+22:03:54 <mrunalp> #topic CLI API
+22:04:06 <mrunalp> We can proceed with 513 and fix runc later
+22:04:17 <mrunalp> #chair vbatts
+22:04:17 <collabot> Current chairs: mrunalp vbatts
+22:04:48 <wking> mrunalp: should I remove the console portions of #513?  Or do we intend to update that as we get more clarity on the desired console API?
+22:05:37 <mrunalp> wking, It should reflect what the final intended solution is.
+22:06:17 <wking> do we know what that is with #663 in the air?
+22:08:35 <mrunalp> vbatts: RobDolinMS PRs would need to be rebased as git validation should be fixed
+22:08:56 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/672
+22:09:19 <RobDolinMS> Thanks wking for getting the git validation issue fixed
+22:13:47 <wking> mrunalp: I'm here now, can you chair me?
+22:13:52 <mrunalp> #chair wking
+22:13:52 <collabot> Current chairs: mrunalp vbatts wking
+22:14:59 <RobDolinMS> Go-Digest maintainers encouraged to vote: https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/f_iszYlOmpk
+22:15:14 <wking> #topic go-digest rc0 release
+22:15:17 <wking> https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/f_iszYlOmpk
+22:16:51 <wking> #topic runtime-spec 1.0 milestone
+22:17:13 <wking> vbatts: some of these still need rebasing.  It would be nice to have that shown on the PR list
+22:17:21 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/668
+22:17:44 <wking> #topic ambient capabilities
+22:17:51 <wking> #link https://github.com/opencontainers/runtime-spec/pull/668
+22:18:02 <wking> crosbymichael: I looked that over a while ago, but not recently
+22:18:09 <wking> mrunalp: do we want a separate setting?
+22:18:21 <wking> mrunalp: then it's up to the creator to get things right
+22:18:26 <wking> crosbymichael: I'd rather it be separate
+22:18:42 <wking> mrunalp: should it be a boolean, or do we want admin capabilities listed explicitly
+22:18:56 <wking> mrunalp: we have four sets of capabilities
+22:19:09 <wking> mrunalp: there are some rules about relationships between those sets
+22:19:25 <wking> mrunalp: do we want to expose that explicitly, or do we just want a boolean for "ambient"?
+22:19:37 <wking> crosbymichael: I thought you either use one or the other
+22:19:45 <wking> mrunalp: some combinations may not be possible
+22:20:09 <wking> mrunalp: I think the boolean should cover most use cases
+22:20:20 <wking> crosbymichael: we might have to check with justincormack
+22:20:27 <wking> crosbymichael: since caps is a whitelist
+22:21:29 <wking> #topic mount underspecified
+22:21:52 <wking> #link https://github.com/opencontainers/runtime-spec/issues/470
+22:22:00 <wking> jlbutler: I think this is pretty much covered now
+22:22:17 <wking> RobDolinMS: I want John Howard to give his two cents on this, but it may be done
+22:22:56 <wking> jlbutler: there's still a question about whether ntfs is the only supported value
+22:23:13 <wking> ^ yes, or if Windows implementations are required to support ntfs or not
+22:23:25 <wking> #link https://github.com/opencontainers/runtime-spec/pull/673
+22:23:37 <wking> jlbutler: I've been trying to clean up some of these ambiguities^
+22:24:06 <wking> #link https://github.com/opencontainers/runtime-spec/issues/303
+22:24:35 <wking> jlbutler: we also need wider feedback here^.  Do all platform folks think their platform's wording is clear and sufficient
+22:24:53 <wking> #topic are man page references normative?
+22:25:04 <wking> jlbutler: in discussion in https://github.com/opencontainers/runtime-spec/pull/673
+22:25:20 <wking> the process.capabilities spec currently links the Linux man page
+22:25:26 <wking> is that "
+22:25:38 <wking> jlbutler: is that "for example", or "runtimes MUST support those values"?
+22:26:08 <wking> jlbutler: if we're going for MUST, that's a lot of man page links
+22:26:18 <wking> jlbutler: and Oracle/Solaris has a lot of link churn
+22:26:59 <wking> vbatts: philips and I have gone over this before, and there are times when it makes sense to quote the pieces you need
+22:27:26 <wking> vbatts: if you have a full name a subsection name, you can still find the right docs without stable URLs
+22:27:30 <wking> although ick^ ;)
+22:27:50 <wking> vbatts: I'm not excited about relying on external sources
+22:28:18 <wking> vbatts: but if we inline the sections we rely on, it would bloat the spec
+22:28:35 <wking> jlbutler: we might also have platforms without public APIs (e.g. their API is behind a paywall)
+22:28:56 <wking> jlbutler: the question isn't whether the runtime MUST support the values
+22:29:04 <wking> jlbutler: the point is that the values vary between platforms
+22:31:04 <wking> I think you do need "the runtime MUST/SHOULD/MAY support this value"
+22:31:12 <wking> jlbutler: I thought the runtime should ignore unknown values
+22:31:27 <wking> do we actually have that rule^?  I think it should choke and die
+22:33:24 <wking> [I missed some stuff here]
+22:33:25 <wking> jlbutler: how far down that rabbit hole do we want to go
+22:33:42 <wking> jlbutler: we could define some values for a particular spec version.  Do we bump the spec after kernel updates?
+22:34:14 <wking> jlbutler: for the most part, the values are similar between Solaris and Linux.  I'm less clear on documenting valid values for Windows
+22:34:39 <wking> jlbutler: if we're going to get really specific, things could get pretty ugly
+22:35:27 <wking> stephenrwalli: are there conditions for when you're in one path or the other on this question?
+22:35:58 <wking> stephenrwalli: how do you know when you need to specify supported values vs. leaving it implementation-defined?
+22:36:28 <wking> vbatts: it seems like a case-by-case basis.  Sometimes you need to crash-and-burn instead of ignoring unknown values
+22:37:13 <wking> stephenrwalli: sometimes the values are different enough that you can't give a single value set for all platforms
+22:37:32 <wking> I don't think you need a single set (e.g. for mount types, we have different sets for each platform)
+22:38:02 <wking> vbatts: it's hard to get generalizations right.  But nobody likes getting down into nitpicking at the "which kernel version" level
+22:38:44 <wking> vbatts: otherwise we might as well say "as of the Linux 4.0 kernel", but even that doesn't work with distro patching, config options, etc.
+22:39:31 <wking> jlbutler: what do we think about a general statement that the implementation has to ensure the config/platform combo is valid (e.g. die if you're on a kernel too old for the given config)
+22:39:56 <wking> jlbutler: then we can add clarifying language, but valid values would be platform/runtime dependent
+22:40:19 <wking> jlbutler: so generalized, but with teeth
+22:40:51 <wking> jlbutler: does that sound like a blanket statement "if you're running on this platform, the runtime MUST support..." might work?
+22:41:18 <wking> vbatts: as long as some enterprising individual could write a linter to convert that statement into tests
+22:41:34 <wking> stevvooe: a similar situation is StopSignal on the image side
+22:41:49 <wking> stevvooe: if we over-validate we could block otherwise-functional configs
+22:42:12 <wking> stevvooe: what's actionable about getting these errors?  Do you rebuild the image?  Rebuild the runtime config?  Can the user do anything?
+22:42:25 <wking> stevvooe: it will be a lot easier than encoding these platform differences
+22:42:42 <wking> jlbutler: I totally agree.  A goal is to stay abstract enough that we don't overspecify
+22:43:06 <wking> jlbutler: the runtime is responsible for making sure it can run (and maybe for passing meaningful failures back to the caller?)
+22:43:27 <wking> jlbutler: I'd like to see "CAPFOO is not real" rather than choking
+22:43:40 <wking> jlbutler: but we don't need a whitelist in the spec
+22:43:54 <wking> vbatts: we don't want to have to document the Linux kernel
+22:45:34 <wking> My only concern is that the abstract wording needs to be clear enough that runtime-tools can write compliance tests and know if a runtime is still compliant if it fails on a given CAP* (or whatever)
+22:46:03 <wking> jlbutler: so "this is a valid value for this platform and your runtime died", are you still compliant?
+22:46:11 <wking> ^ I think not ;)
+22:46:43 <wking> stevvooe: I don't think that makes it noncompliant
+22:46:56 <wking> stevvooe: we don't want to have to document the Linux/Solaris/BSD kernels
+22:47:19 <wking> jlbutler: I'd much rather say "for the field foo, all the values your platform supports are good"
+22:47:24 <wking> jlbutler: what's the alternative?
+22:47:44 <wking> stevvooe: SHOULD is ok, or the runtime can refuse requests early if it knows more about the platform
+22:48:39 <wking> jlbutler: getting more specific, process.capabilites is OPTIONAL.  If it's set, without a statement on valid values, the runtime could say "I don't support CAP_AUDIT_READ", is it still valid?
+22:48:57 <wking> mrunalp: it can depend on which version of the library you're built on.  Should it still apply?
+22:49:04 <wking> jlbutler: so it's still valid?
+22:49:23 <wking> stevvooe: so should the runtime error out or silently ignore the value?
+22:49:50 <wking> stevvooe: the runtime should error out at the edge, not in a validation layer
+22:49:57 <wking> stevvooe: I don't want to see silent ignores
+22:50:04 <wking> mrunalp: maybe this is about validation tooling?
+22:50:46 <wking> vbatts: on "error or ignore?", I think it should error out at the moment where it has to make that decision
+22:51:29 <wking> vbatts: maybe capabilities aren't the best example.  Linux can give you "invalid argument" for caps.  But some things can look like they work but not actually work
+22:52:12 <wking> vbatts: sometimes you can figure out supported caps early.  Sometimes you might want to wait for the runtime to fail in the attempt to set a value (and not pre-validate)
+22:52:33 <wking> jlbutler: filesystem type might be a better example.
+22:53:01 <wking> jlbutler: what if a runtime only supports a handful of filesystem, and somebody sets zfs, but the runtime doesn't support it for whatever reason
+22:53:12 <wking> jlbutler: is that runtime still compliant?
+22:53:37 <wking> vbatts: I'm game to help with wording if jlbutler wants to work something up
+22:54:09 <wking> vbatts: I just want error instead of ignoring, and late errors being allowed (instead of requiring early validation)
+22:54:35 <wking> #topic image-spec index / manifest-list
+22:54:46 <wking> #link https://github.com/opencontainers/image-spec/pull/533
+22:54:52 <wking> vbatts: please review this^
+22:55:07 <wking> #link https://github.com/opencontainers/image-spec/pull/546
+22:55:17 <wking> vbatts: I've filed the rename in a separate PR^
+22:55:33 <wking> stevvooe: I think the only issue for #533 is the elements/descriptors/manifests discussion
+22:55:39 <wking> stevvooe: I'm trying to be conservative
+22:56:06 <wking> vbatts: if we leave the name 'manifests' and don't have a separate field (so non-manifests would be in 'manifests')
+22:56:29 <wking> vbatts: is the assumption that consumers which account mediaTypes they don't support should silently ignore those entries?
+22:56:35 <wking> stevvooe: yeah, although it's not explicit
+22:57:02 <wking> stevvooe: Docker's logic is: which types to I support?  Which platforms am I on?  Find that one
+22:57:24 <stephenrwalli> I need to wander off … cheers, all.
+22:57:27 <wking> stevvooe: I think the AppStream isn't a manifest, but I'm not going to get too hung up on the semantics (as long as we have a way to differentiate entries)
+22:57:49 <wking> vbatts: the only sticky part with one descriptor array is the implied semantics of the 'manifests' name
+22:58:31 <wking> vbatts: but if we drop the secondary descriptor array and make the generic-ness more explicit (ignoring types you don't support)
+22:58:41 <wking> stevvooe: and we can write out the logic
+22:58:56 <wking> vbatts: I'm not wild about 'manifests', but I understand the backwards-compat concern
+22:59:19 <wking> stevvooe: I'd really like this to be a smooth transition without "hey, we've encoutered an OCI... and don't know what to do"
+22:59:39 <wking> stevvooe: the field name would be nice as 'descriptors', but 'manifests' is reasonable
+23:00:08 <wking> stevvooe: and it could be a continuity manifest, or tar-split headers, or whatever
+23:00:27 <wking> vbatts: I'll take a stab at that this week.  And let me know on the separate rename PR
+23:00:59 <wking> vbatts: we won't add a separate field.  We'll just clarify the 'manifests' content and SHOULD support for manifest-like media types
+23:01:28 <wking> vbatts: the only other piece is elimitating refs/, but we can discuss that in the PRs
+23:01:32 <wking> #endmeeting

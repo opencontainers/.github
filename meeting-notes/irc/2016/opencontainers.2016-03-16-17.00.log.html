@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">17:00:19</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-03-16 discussion</span>
+<a name="l-2"></a><span class="tm">17:00:19</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Mar 16 17:00:19 2016 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">17:00:19</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">17:00:19</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2016_03_16_discussion'
+<a name="l-5"></a><span class="tm">17:00:37</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, philips, vishh, dqminh Joining
+<a name="l-6"></a><span class="tm">17:01:22</span><span class="nk"> &lt;vbatts|work&gt;</span> first topic
+<a name="l-7"></a><span class="tm">17:01:32</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">v0.5.0 milestone</span>
+<a name="l-8"></a><span class="tm">17:01:37</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/milestones/v0.5.0</span>
+<a name="l-9"></a><span class="tm">17:02:29</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/pull/293</span>
+<a name="l-10"></a><span class="tm">17:13:21</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">duglin - rebase and revisit #293</span>
+<a name="l-11"></a><span class="tm">17:14:48</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">create and run</span>
+<a name="l-12"></a><span class="tm">17:14:56</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/issues/299</span>
+<a name="l-13"></a><span class="tm">17:16:20</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">vishh and mrunalp to review duglin's runc PR</span>
+<a name="l-14"></a><span class="tm">17:16:43</span><span class="nk"> &lt;duglin&gt;</span> https://github.com/opencontainers/runc/pull/506
+<a name="l-15"></a><span class="tm">17:16:57</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runc/pull/506</span>
+<a name="l-16"></a><span class="tm">17:17:01</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">by-1.0.0 items</span>
+<a name="l-17"></a><span class="tm">17:17:12</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/milestones/by-1.0.0</span>
+<a name="l-18"></a><span class="tm">17:20:00</span><span class="nk"> &lt;dqminh&gt;</span> sry i forgot about the time change, will not be able to join this time :(
+<a name="l-19"></a><span class="tm">17:20:56</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">dqminh:</span> right on
+<a name="l-20"></a><span class="tm">17:21:36</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/specs/issues/115
+<a name="l-21"></a><span class="tm">17:22:02</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">issues and PRs</span>
+<a name="l-22"></a><span class="tm">17:22:12</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/issues/115</span>
+<a name="l-23"></a><span class="tm">17:24:45</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/pull/340</span>
+<a name="l-24"></a><span class="tm">17:25:08</span><span class="nk"> &lt;duglin&gt;</span> I need to drop for a bit
+<a name="l-25"></a><span class="tm">17:27:39</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">vbatts - https://github.com/opencontainers/specs/issues/344</span>
+<a name="l-26"></a><span class="tm">17:29:54</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/pull/342</span>
+<a name="l-27"></a><span class="tm">17:30:37</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/pull/343</span>
+<a name="l-28"></a><span class="tm">17:30:48</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">crosbymichael - will update #343</span>
+<a name="l-29"></a><span class="tm">17:35:29</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/pull/275</span>
+<a name="l-30"></a><span class="tm">17:46:13</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/issues/219</span>
+<a name="l-31"></a><span class="tm">17:49:35</span><span class="nk"> &lt;philips&gt;</span> <span class="hi">mrunalp:</span> sorry, giving a talk
+<a name="l-32"></a><span class="tm">17:50:00</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">philips:</span> DANG
+<a name="l-33"></a><span class="tm">17:50:02</span><span class="nk"> &lt;vbatts|work&gt;</span> ;-)
+<a name="l-34"></a><span class="tm">17:50:22</span><span class="nk"> &lt;philips&gt;</span> <span class="hi">vbatts|work:</span> in atlanta, lots of your colleagues, looking at joe b. right now
+<a name="l-35"></a><span class="tm">17:50:22</span><span class="nk"> &lt;mrunalp&gt;</span> philips, no worries :)
+<a name="l-36"></a><span class="tm">17:50:30</span><span class="nk"> &lt;philips&gt;</span> bye bye
+<a name="l-37"></a><span class="tm">18:09:50</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts|work, endmeeting?
+<a name="l-38"></a><span class="tm">18:10:14</span><span class="nk"> &lt;vbatts|work&gt;</span> ohman
+<a name="l-39"></a><span class="tm">18:10:17</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

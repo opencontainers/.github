@@ -1,0 +1,178 @@
+21:00:59 <vbatts> #startmeeting 2016-07-27 discussion
+21:00:59 <collabot> Meeting started Wed Jul 27 21:00:59 2016 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:00:59 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:00:59 <collabot> The meeting name has been set to '2016_07_27_discussion'
+21:01:09 <wking> vbatts: chair me?
+21:01:23 <vbatts> ah yeah
+21:01:27 <vbatts> #chair wking
+21:01:27 <collabot> Current chairs: vbatts wking
+21:01:39 <wking> cyphar: asks for an email with a link to the IRC log about a console problem, but he's still not clear on the details
+21:01:50 <wking> #topic console handling in runtime implementations
+21:02:08 <cyphar> correction: it's an lxc issue that I was discussing and aksed how they did it
+21:02:08 <wking> mrunalp: the last time I checked they were doing something different from runC
+21:02:17 <wking> thanks cyphar
+21:02:30 <cyphar> and apparently they had issues with opening the console inside the container
+21:02:43 <cyphar> but I don't have the irc log right now, so not sure at the moment
+21:02:55 <wking> mrunalp: is crosbymichael around?
+21:03:04 <wking> mrunalp: maybe we should start with image-spec?
+21:03:11 <wking> #topic image-spec 0.4.0
+21:03:20 <wking> philips: I think we're good here?  What still has to happen?
+21:03:32 <wking> vbatts: stevvooe has updated the whiteout PR
+21:03:42 <mrunalp> wking, I said that they were doing it similar to libcontainer ;)
+21:03:50 <wking> ah, thanks :p
+21:03:55 <mrunalp> pty pair is opened outside
+21:04:04 <wking> vbatts: there are some AUFS nitpicks, but otherwise it looks good to me
+21:04:06 <stevvooe> https://github.com/opencontainers/image-spec/pull/171
+21:04:15 <philips> https://github.com/opencontainers/image-spec/issues?utf8=%E2%9C%93&q=milestone%3Av0.4.0
+21:04:33 <wking> cyphar: I'm confused by "generate ... but accept both" wording
+21:05:00 <wking> vbatts: it could be more concicisly atomized, but there are two whiteout styles
+21:05:21 <wking> vbatts: to my knowledge, only AUFS handles the opaque file format
+21:05:39 <wking> stevvooe: the point is that we want to accept opaque files, but we want to favor the whiteout version
+21:05:42 <wking> cyphar: makes sense
+21:05:56 <wking> vbatts: if there are wording issues, make suggestions in the PR
+21:06:41 <wking> vbatts: other news in image-spec land: good to see more tooling around image-layout and conversions
+21:07:14 <wking> vbatts: stevvooe, you were going to reach out to some Docker folks?
+21:07:42 <wking> vbatts: you'd mentioned a --format flag for save/load; I'm not sure about our next steps on compatiblity with Docker import/export
+21:07:56 <wking> stevvooe: any help would be appreciated, but suggest changes to docker save/load
+21:08:05 <wking> stevvooe: it sounds like rkt also has an implementation
+21:08:22 <wking> https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/Am7byGvLCUQ
+21:08:39 <wking> stevvooe: I was planning on road-mapping it for 10.13, but feel free to submit PRs
+21:08:51 <wking> vbatts: I'm not aware of any work in progress on that
+21:09:15 <wking> https://github.com/cyphar/oboci
+21:09:30 <wking> cyphar: I want to point ^ at a directory and get some layers, but couldn't find anything convenient
+21:09:33 <cyphar> https://github.com/opencontainers/image-spec/pull/159
+21:10:02 <wking> vbatts: There were some footnotes in your email, but maybe it was missing a link?
+21:10:27 <wking> cyphar: any thoughts on image-spec#159?
+21:13:10 <wking> vbatts: no particular opinion yet, but I need more time for review
+21:13:28 <wking> philips: and we're talking about it because it needs more review?
+21:13:38 <wking> stevvooe: my concern is that it's too naive
+21:13:42 <wking> stevvooe: (the API)
+21:13:56 <wking> stevvooe: we started close to that with docker/distribution, but that's now more complex
+21:14:37 <wking> stevvooe: distribution and camlistore have good APIs
+21:14:49 <wking> stevvooe: but if we agree that the interfaces aren't final, this is probably fine
+21:15:02 <wking> philips: so maybe add a caveat about the interfaces not being stable
+21:15:14 <wking> #action wking to update image-spec#159 with an unstable caveat
+21:15:44 <wking> vbatts: stepping back.  cyphar, how is oboci related to image-spec#159?
+21:16:12 <wking> cyphar: dependant is probably too strong, but containers/images has an API oriented at skopeo, so it's not concerned with creating new images
+21:16:37 <wking> cyphar: it's useful for translating between formats, but there's not a convenient "create a new layer" library
+21:16:38 <vbatts> #link https://github.com/containers/image
+21:16:45 <philips> left a note https://github.com/opencontainers/image-spec/pull/159#discussion_r72525379
+21:17:02 <wking> cyphar: I'm not wild about implementing all of that in oboci.  We all benefit from shared tooling
+21:17:15 <wking> cyphar: who maintains the library is a separate issue, but I think we want it
+21:17:31 <wking> stevvooe: you're saying we need a libcontainer like runC's in image-spec?
+21:17:46 <wking> cyphar: that may be too far, but we need a library somewhere
+21:18:21 <wking> philips: the tricky thing there is that the library (or whatever) needs to handle lots of formats, and we don't want Docker v1, etc. in an opencontainers tool
+21:18:51 <wking> stevvooe: do we have that requirement for testing?
+21:19:03 <wking> philips: for Docker v2.2 and image-spec, but not for all the other things
+21:19:30 <wking> philips: I think we want an omni library inside of rkt, but I don't think we'd import and OCI-only library
+21:19:54 <wking> cyphar: I'm not saying pull containers/image into OCI; I'm saying we're missing something for creation
+21:20:13 <wking> stevvooe: if the goal is to prevent fragmentation, why is containers/image not part of the OCI?
+21:20:44 <wking> vbatts: defining a Go-type interface is useful (for reporting media types and returning an OCI stream or something)
+21:20:58 <wking> philips: I think defining an interface would be good, and I get the image-creation issue
+21:21:10 <wking> philips: we can go to the TOB and suggest a Go interface for creation
+21:21:17 <wking> vbatts: does it need that level of input?
+21:21:36 <wking> philips: we need to clear up this sort of thing and ocitool.  Having a TOB meeting to clean all that up would be good
+21:21:48 <wking> vbatts: I don't disagree, but, yeah...
+21:22:04 <wking> philips: we can also just seed it in oci-image-tool
+21:22:21 <wking> vbatts: I was thinking of adding this to the validation tool with a public Go interface
+21:22:44 <wking> how is this different from Descriptors?
+21:22:59 <wking> stevvooe: this is a framework for handling differnt media types
+21:24:00 <wking> stevvooe: I think the way forward is to iterate on oci-image-tool's internal library
+21:24:17 <wking> stevvooe: and eventually we can pull off the "unstable" caveat and pull it out into its own project
+21:24:27 <wking> philips: sounds good
+21:24:37 <wking> ^ switch the last two author
+21:24:44 <cyphar> ;)
+21:24:53 <stevvooe> s/stevvooe/philips/ and s/philips/stevvooe -> same result
+21:24:55 <wking> vbatts: that's it for image-spec
+21:25:26 <wking> vbatts: we could clarify 1.0-specific things in the milestones to get a burn list or whatever
+21:25:34 <vbatts> https://github.com/opencontainers/image-spec/milestone/3
+21:25:42 <wking> vbatts: do we need more trackers so the 1.0 milestone reflects our plans?
+21:26:56 <wking> philips: I look at this as a backlog for our next release, which may become a 0.5.0
+21:27:02 <wking> philips: anyone have burning issues?
+21:27:28 <wking> stevvooe: are there post-1.0 items to move back?  Like a plan for signing/naming?
+21:27:48 <wking> philips: I think where we're at with naming is that it's tied with being able to transport something
+21:28:13 <wking> philips: signing is a bit more nebulous.  Where does the signature go?  Ideally it's an external object, but then how do you find it?
+21:28:23 <wking> cyphar: how does skopeo handle naming/signing
+21:28:35 <wking> vbatts: I'll have to defer to Milslav on that now
+21:28:54 <wking> cyphar: There's a detached GnuPG signature, but I'm not sure how it's transported
+21:29:05 <wking> philips: where to people put detached metadata like that?
+21:29:30 <wking> cyphar: and if you detach it, now you have to determine what is signed
+21:29:50 <wking> cyphar: if you have an external "here's my signature", you can't put the sig hash in the object itself
+21:30:09 <wking> https://github.com/opencontainers/image-spec/issues/176
+21:30:24 <wking> ^ signed name-assertion CAS objects
+21:30:48 <wking> stevvooe: ELF sections have well-known names that reference various parts of the data
+21:30:54 <wking> philips: as refs?
+21:31:00 <wking> stevvooe: I'm not sure, but something like that
+21:31:21 <wking> stevvooe: the main thing is that I want some idea of what naming will look like in an image-layout
+21:31:35 <wking> stevvooe: folks expect docker save/load to include naming and verification
+21:32:20 <wking> stevvooe: TUF / rpm / aci have pre-existing approaches
+21:32:30 <wking> vbatts: rpm is more convoluted than that
+21:32:47 <wking> vbatts: rpm is effectively a binary key/value store with a signature inside one of those key/value pairs
+21:33:02 <wking> vbatts: so signing the rpm (or sets of rpms) adjusts the rpms itself
+21:33:16 <wking> stevvooe: I didn't know that they embedded signatures; has it always been like that?
+21:33:39 <wking> philips: rpm archives sign top-level metadata (like TUF) and there are signatures in the rpm itself
+21:33:44 <wking> vbatts: and it's been that way for a while
+21:33:55 <wking> philips: in TUF it's completely separate from the image
+21:34:10 <wking> philips: at the end of the day, TUF looks like yum
+21:34:22 <wking> stevvooe: there might be a pointer back?
+21:34:35 <wking> philips: the image says "my public sigs may be found at {location}"
+21:34:48 <wking> stevvooe: I dunno, but it needs to be thought through
+21:35:02 <wking> philips: I think we're still missing models for what we're doing
+21:35:13 <wking> philips: we still haven't solved the transportable, out-of-band verification
+21:35:38 <wking> philips: so for triage, I think we should leave this to post 1.0
+21:35:53 <wking> cyphar: does anyone know where crosbymichael is?
+21:36:25 <wking> philips: next steps: vbatts or I can send a mail about getting to the end of 0.4 and calling for 1.0 issues
+21:37:09 <wking> philips: last call for image-spec?
+21:37:21 <wking> #topic console handling and the command-line API
+21:37:31 <wking> mrunalp: cyphar can you give an update?
+21:38:27 <wking> cyphar: after the container has been created, you open the pseudoterminal pair in the container
+21:38:36 <wking> cyphar: where should the master file descriptor go?
+21:38:52 <wking> cyphar: you can have --socket UNIX_SOCKET and use cmsg to send the master back out
+21:39:12 <wking> cyphar: the other solution is to store it in the state JSON, but then someone has to hold it open until the caller opens it
+21:39:45 <wking> cyphar: with the socket approach, the higher level of the socket can get the master, and then the container can close it's copy of the master
+21:40:20 <wking> cyphar: there's no current way for us to handle duping /dev/null over descriptors, but we don't support that at the moment
+21:40:30 <wking> cyphar: do we want to support /dev/null duping?
+21:40:47 <wking> cyphar: if we open /dev/ptmx inside the container, do we require the spec to have certain mounts?
+21:40:57 <wking> cyphar: you'll have to have a /dev/ptmx mount
+21:41:15 <wking> cyphar: or if opening the console fails, do we error out?
+21:42:04 <wking> I think we already require those dev bits: https://github.com/opencontainers/runtime-spec/blob/v1.0.0-rc1/config-linux.md#default-file-systems https://github.com/opencontainers/runtime-spec/blob/v1.0.0-rc1/config-linux.md#default-devices
+21:42:40 <wking> cyphar: this will all be done inside the container, but with --console this doesn't happen in the container unless you bind mount the path somewhere inside the container
+21:44:02 <wking> mrunalp: my concern is can we land this in runC?  Is this delaying 1.0?
+21:44:11 <wking> mrunalp: can we land --console for now?
+21:44:18 <wking> mrunalp: crosbymichael, thoughts?
+21:44:22 <wking> crosbymichael: not really
+21:44:31 <wking> mrunalp: can we land #513 without mentioning this flag
+21:44:37 <wking> crosbymichael: you need a working implementation
+21:46:16 <wking> Currently #513 doesn't talk about --console or --socket or whatever
+21:46:45 <wking> cyphar: you could also handle the socket with a JSON payload [wking: or something, I didn't quite catch this]
+21:46:52 <wking> mrunalp: we need to land something before 1.0
+21:47:05 <wking> cyphar: right now it's pretty vague
+21:47:17 <wking> cyphar: I'm not sure what process.terminal means
+21:48:35 <wking> mrunalp: I can help with the new approach.  cyphar, let me know
+21:49:06 <wking> cyphar: if we land runtime-spec#513, I think we still need adjustments around some MUST wording
+21:49:37 <wking> mikebrow: the current MUST for standard streams inheriting makes --console illegal
+21:49:58 <wking> mikebrow: I'd like that language to be at least supportive of future changes
+21:50:18 <wking> crosbymichael: the current spec is so set in stone, or whatever you want to call it, that it doesn't make sense without TTY stuff
+21:50:46 <wking> crosbymichael: quit rushing PRs in when they don't cover everything
+21:51:07 <wking> cyphar: we're not punting on terminal, the current wording is blocking terminal
+21:52:25 <cyphar> https://github.com/opencontainers/runtime-spec/pull/513/files#diff-0c1e5a5baa5649945697a530e09acbf5R35
+21:53:46 <wking> cyphar: I don't think the current process.terminal is ambiguous
+21:54:04 <wking> mrunalp: from last week, false means don't do anything special
+21:54:25 <wking> mrunalp: true means the container's standard streams will be attached to a terminal
+21:54:54 <wking> crosbymichael: There's a lot that has to happen beside attaching the slave, you also need to bind /dev/console, etc.
+21:56:01 <wking> mrunalp: I can upgrade the open process.terminal with this information
+21:56:20 <wking> https://github.com/opencontainers/runtime-spec/pull/518
+21:56:49 <wking> cyphar: LXC had some problems with this, where you could exec into a container and start writing commands to the initial process
+21:57:05 <wking> cyphar: you have to allocate a new TTY on Linux
+21:57:31 <wking> crosbymichael: if we want a Unix socket so we can open a container inside the mount namespace
+21:58:15 <wking> crosbymichael: There's also netlink and pipes in runC
+21:59:22 <wking> cyphar: this fits into the ongoing nsenter reroll I'm currently working on
+21:59:33 <cyphar> https://github.com/opencontainers/runc/pull/950 << refactoring of nsenter
+21:59:41 <wking> crosbymichael: Maybe land the nsenter refactoring first, and then things like this would be easy
+21:59:56 <philips> I have to drop. Bye everyone!
+22:00:27 <wking> mrunalp: As long as we're blocked the order doesn't really matter.  But I'll update #518 and then we can update #513
+22:00:42 <wking> crosbymichael: And cyphar and I will work on getting the runC implementation in
+22:01:05 <wking> mrunalp: anything else?
+22:01:10 <wking> #end_meeting
+22:01:14 <wking> #end-meeting
+22:01:26 <wking> #endmeeting

@@ -1,0 +1,158 @@
+17:01:55 <vbatts> #startmeeting 2016-07-01 discussion
+17:01:55 <collabot`> Meeting started Wed Jun  1 17:01:55 2016 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:01:55 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:01:55 <collabot`> The meeting name has been set to '2016_07_01_discussion'
+17:02:16 <wking> vbatts: chair me?
+17:02:36 <vbatts> #chair wking
+17:02:36 <collabot`> Current chairs: vbatts wking
+17:02:38 <wking> thanks
+17:03:04 <wking> #topic 1.0 issues
+17:03:15 <wking> #topic runtime 1.0 issues
+17:03:26 <wking> mrunalp: is crosbymichael on?
+17:03:37 <wking> mrunalp: maybe image spec first
+17:03:44 <wking> #topic image 1.0 issues
+17:03:56 <wking> philips: plan is to cut 0.2 stuff today
+17:04:08 <philips> https://github.com/opencontainers/image-spec/milestones/v1.0.0-rc
+17:04:18 <wking> actually, vbatts cut 0.2 already
+17:04:28 <philips> https://github.com/opencontainers/image-spec/issues/11
+17:04:45 <wking> philips: we probably want to punt this^ until after 1.0
+17:05:00 <wking> remaining 0.2 issues: https://github.com/opencontainers/image-spec/milestones/v0.2.0
+17:05:16 <vbatts> https://github.com/opencontainers/image-spec/releases/tag/v0.2.0
+17:05:18 <vbatts> :-)
+17:05:20 <wking> philips: doing 1.0 before naming is sorted is still valuable
+17:05:49 <wking> #topic runtime 1.0 issues
+17:05:58 <wking> mrunalp: create/start landed last Thursday :)
+17:06:08 <mrunalp> https://github.com/opencontainers/runtime-spec/milestones/1.0.0
+17:06:22 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/449
+17:06:23 <wking> we're looking over these PRs now^
+17:08:01 <wking> mrunalp: any comments on #449?
+17:08:05 <philips> vbatts: moved the two remaining issues from v0.2.0 to v1.0.0-rc https://github.com/opencontainers/image-spec/milestones/v1.0.0-rc
+17:08:12 <wking> nothing that I haven't already said on the PR ;)
+17:08:23 <wking> dqminh_: #449 looks ok
+17:08:42 <wking> crosbymichael: I think PullApprove is making it look like it needs a rebase
+17:08:56 <wking> mrunalp: Is this a PullApprove issue or a GitHub issue
+17:09:07 <wking> crosbymichael: the merge button still goes up.  I'm not sure what the issue is
+17:09:23 <wking> crosbymichael: did we change a setting?
+17:09:29 <wking> mrunalp: I didn't, can we check?
+17:09:50 <wking> crosbymichael: ah, master is a protected branch, and there's a checkbox that says PR branches have to be up-to-date before merging
+17:10:03 <wking> vbatts: It's still going to check for conflicts though, right?
+17:10:05 <wking> crosbymichael: yeah
+17:10:11 <wking> crosbymichael: I don't think we need it
+17:10:16 <wking> vbatts: I don't think we need it either
+17:10:19 <wking> mrunalp: I agree
+17:10:31 <wking> crosbymichael: I unchecked the up-to-date requirement
+17:10:47 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/412
+17:11:19 <wking> I haven't had new ideas on this
+17:11:31 <wking> mrunalp: Maybe we can go back to the original, sparser namespace docs
+17:11:38 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/397
+17:11:46 <wking> #action wking to roll back #412 namespace description
+17:12:08 <RobDolinMS> #topic add support for cgroup namespace (#397)
+17:12:26 <RobDolinMS> #link https://github.com/opencontainers/runtime-spec/pull/397 add support for cgroup namespace
+17:13:13 <RobDolinMS> trevor: We need some way to know if your kernel is going to be compabible
+17:13:27 <RobDolinMS> Mruanl: The runtime can detect if a particular namespace is supported
+17:13:59 <RobDolinMS> ???: I agree, seems like having the tool validate is plenty
+17:14:02 <wking> tianon: I agree that having the tool validate should be plenty
+17:14:16 <RobDolinMS> ??? = tianon
+17:14:42 <mrunalp> https://github.com/opencontainers/runtime-spec/issues/299
+17:14:43 <wking> RobDolinMS, do you want to take over for notes, or should I keep going?
+17:15:04 <RobDolinMS> #topic Separate container sandbox lifecycle from that of the processes inside it #299
+17:15:18 <wking> mrunalp: what are we doig about #299 after create/start.  Is there anything else?
+17:15:32 <RobDolinMS> vbatts or wking - could one of you #chair me so I can update topic too?
+17:15:35 <wking> vishh: the second part of #299 was post-stop hooks, and we still don't know what we're doing there
+17:15:38 <wking> #chair RobDolinMS
+17:15:38 <collabot`> Current chairs: RobDolinMS vbatts wking
+17:15:58 <RobDolinMS> #link https://github.com/opencontainers/runtime-spec/issues/299 Separate container sandbox lifecycle from that of the processes inside it #299
+17:16:13 <wking> vishh: maybe we can punt on post-stop for 1.0
+17:16:32 <wking> vishh: for now, folks who need that sort of thing will need a deeper understanding
+17:16:44 <RobDolinMS> vishh: user may need to reverse-engineer to get post-stop hooks to work
+17:16:55 <RobDolinMS> mrunal: I agree we should punt from 1.0
+17:17:07 <mrunalp> https://github.com/opencontainers/runtime-spec/issues/20
+17:17:17 <wking> RobDolinMS: I'm just going to let you take notes ;)
+17:17:20 <RobDolinMS> #agreed Move #299 out of 1.0
+17:17:43 <RobDolinMS> wking - let's trade-off.  I'll tag-in for now :)
+17:17:59 <RobDolinMS> wking: runc now has a run command that does create and start together
+17:18:28 <RobDolinMS> wking: We talked about having the more unified command in #384 but it got pulled
+17:18:36 <RobDolinMS> mrunal: Michael, what are your thoughts?
+17:18:44 <wking> #link https://github.com/opencontainers/runtime-spec/issues/473
+17:18:49 <RobDolinMS> Michael: It's a convenience command, it may not need to be in the spec
+17:18:50 <wking> ^ me suggesting we drop hooks
+17:19:23 <RobDolinMS> wking: One of the other arguments for pre-start hooks was mrunal's pre-pivot mount scenario
+17:19:36 <RobDolinMS> wking: would like to better understand use case there
+17:19:56 <RobDolinMS> mrunal: question is what do we do for 1.0
+17:21:03 <RobDolinMS> wking: spec gets much simpler if we just get rid of hooks for v1.0
+17:21:15 <wking> #action wking to file a hook-dropping PR
+17:21:42 <RobDolinMS> vishh: Would it be OK to use post-stop hooks in runc?
+17:21:52 <RobDolinMS> Michael: how would you persist the namespaces?
+17:23:11 <RobDolinMS> vishh: It's more about usability that not actually being able to do it
+17:23:35 <RobDolinMS> Mrunal: Are we going to continue supporting hooks in runc or are we going to get rid of them entirely?
+17:24:06 <duglin> crosbymichael: how do I use ‘runc create’ and ‘runc start’ and then be attached to the container? I can’t seem to figure out the right combo of options
+17:24:39 <RobDolinMS> Michael: If we're removing it, remove and everyone can orchestrate through create, start, delete
+17:25:29 <RobDolinMS> Julz: If they're still in config.json, it's odd for one runtime to support and another not to support
+17:26:17 <RobDolinMS> Julz: Maybe have in a seperate hooks.json file
+17:26:24 <RobDolinMS> Mrunal: Annotations are another way to support
+17:26:41 <RobDolinMS> wking: There is not a spec for the orchestration layer
+17:27:23 <RobDolinMS> wking: there is some lack of clarity of what should be put into an image
+17:27:31 <RobDolinMS> Julz: Most people use a hook for networking
+17:27:52 <RobDolinMS> wking: Do we have a networking spec?
+17:27:59 <RobDolinMS> Julz: There are already several
+17:29:07 <RobDolinMS> wking: so there will be a config file for networking
+17:29:18 <RobDolinMS> Julz: The networking should be de-coupled
+17:30:34 <RobDolinMS> Mrunal: OK, so what is the decision?
+17:30:59 <RobDolinMS> Michael: Either have it and support it, or don't.  It's not good to be in a middle ground.
+17:32:07 <alagalah> Sorry Question: So Pre-Post Hooks are being taken out of the spec, but the functionality will be there ?
+17:32:18 <alagalah> I'm interested in this for user space networking.
+17:32:37 <RobDolinMS> Julz: I would prefer for it not to be in config.json
+17:32:43 <RobDolinMS> Julz: Fine as a flag for runc
+17:34:16 <RobDolinMS> Vish: If you're going to have some hooks, is it better to support of have people work through namespaces?
+17:34:39 <RobDolinMS> Michael: As far as the spec is concerned, run doesn't exist so everyone should be using the create-start-delete flow
+17:35:34 <RobDolinMS> Brandon: We need to have implementers notes on this stuff
+17:35:42 <RobDolinMS> Vish: We could solve this with tooling too
+17:35:57 <RobDolinMS> Vish: It's not that we're preventing people from doing this, we're just not making this obvious
+17:38:13 <wking> +1 to punt for now
+17:38:24 <RobDolinMS> Vish: I hope adding features to the spec wouldn't break existing users.
+17:38:38 <RobDolinMS> Julz: For now, it's undefined behavior right now.
+17:39:44 <RobDolinMS> Vish: I prefer us supporting post-stop as a first class thing
+17:40:04 <RobDolinMS> wking: You could have sub-containers as a possible work-around
+17:40:15 <RobDolinMS> wking: At least on Linux
+17:41:18 <RobDolinMS> Vish: If OCI Tools can gurantee a post-stop hook can run, that's fine
+17:42:52 <RobDolinMS> Vish: Does anyone have a proposal for how to handle this
+17:44:59 <RobDolinMS> Julz: What about exec'ing another container?
+17:47:01 <duglin> for 1.0 I think we really need these usecases written up in the docs - e.g. exec
+17:47:16 <duglin> so people know how to do them with v1.0
+17:47:19 <RobDolinMS> Vish: We might want to add language into the spec in the future and that should not be a blocker.
+17:48:32 <wking> #link https://github.com/opencontainers/runtime-spec/pull/391
+17:48:34 <RobDolinMS> dug: these seem like pretty common use cases.  We should describe how to do this with 1.0 of the spec
+17:48:40 <RobDolinMS> dug: It should be there for 1.0
+17:48:42 <wking> previous cookbook discussion in #391
+17:49:30 <RobDolinMS> duglin: spec should include the high-level notion of how to do something like exec.
+17:49:59 <RobDolinMS> duglin: could include an example of how to do this with runc
+17:50:40 <RobDolinMS> duglin: will help with documentation, but may have questions
+17:51:15 <RobDolinMS> Mrunal: what do other maintainers think?
+17:51:24 <RobDolinMS> Vish: Having clear language would be helpful
+17:52:25 <RobDolinMS> wking: where should I re-submit #391?
+17:52:45 <RobDolinMS> Vish: Would be good to have 2-3 recepies that could be compared
+17:53:44 <wking> #action wking to reroll runtime-spec#391 to include multiple examples and add it to a runtime-spec subdir
+17:54:18 <RobDolinMS> Michael: I'm not sure about location, but have no objection
+17:56:02 <RobDolinMS> Mrunal: What about a use cases subdirectory with one file per use case?
+17:56:16 <RobDolinMS> RobDolinMS: Examples / use cases should be in runtime-spec
+17:56:37 <RobDolinMS> Mrunal: should we include this for 1.0?
+17:56:48 <RobDolinMS> Mrunal: We shouldn't rush 1.0
+17:57:03 <RobDolinMS> Michael: It shouldn't block
+17:57:29 <RobDolinMS> Duglin: I agree that examples shouldn't block the release, but we don't have a guarantee that what we claim you can do with the spec, you can actually do
+17:57:45 <RobDolinMS> Duglin ... and that the workflow makes sense
+17:58:24 <RobDolinMS> Duglin: This is sort of like regression testing
+17:59:02 <RobDolinMS> #topic OCITools
+17:59:12 <wking> #link https://github.com/opencontainers/ocitools/issues/83
+18:00:49 <RobDolinMS> RobDolinMS: Do we want tooling to be up-to-date with spec or have tooling follow/offset from spec?
+18:00:56 <duglin> I need to drop for another call
+18:01:36 <RobDolinMS> Brandon: releasing the spec without tooling doesn't make a ton of sense.
+18:02:08 <RobDolinMS> wking: what about Solaris?
+18:02:33 <RobDolinMS> wking: it's a bigger change to the spec if you have to PR the test suite
+18:03:38 <wking> #action more discussion in ocitools#83
+18:03:56 <RobDolinMS> #link https://github.com/opencontainers/ocitools/issues/83
+18:04:42 <RobDolinMS> #topic When to cut next runtime-spec release
+18:05:27 <RobDolinMS> Michael: Most of the stuff outstanding is relatively small
+18:06:56 <RobDolinMS> RobDolinMS: either v0.6 or v1.0-RC0;  RC0 indicating there may be further RC's
+18:07:40 <RobDolinMS> #topic v1.1 and v2.0
+18:08:04 <RobDolinMS> #info Michael: We can create milestones and start moving some issues to those
+18:12:55 <vbatts> #endmeeting

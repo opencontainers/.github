@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:00:06</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2018-10-10</span>
+<a name="l-2"></a><span class="tm">21:00:06</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Oct 10 21:00:06 2018 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:00:06</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:00:06</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2018_10_10'
+<a name="l-5"></a><span class="tm">21:05:31</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">umoci for image-tools</span>
+<a name="l-6"></a><span class="tm">21:09:36</span><span class="nk"> &lt;vbatts&gt;</span> concern that it would be it's own project, rather than just a non-opinionated validation tool
+<a name="l-7"></a><span class="tm">21:10:35</span><span class="nk"> &lt;vbatts&gt;</span> OCI as a standards only org, not a code maintaining org. (now that CNCF is so pervasive)
+<a name="l-8"></a><span class="tm">21:11:56</span><span class="nk"> &lt;vbatts&gt;</span> if it can be merged and non-opinionated, great. Otherwise it may be best to keep as its own project
+<a name="l-9"></a><span class="tm">21:13:49</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec backlog cleanup</span>
+<a name="l-10"></a><span class="tm">21:14:44</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, Joined late, can we add runc 1.0 to agenda if it isn't? :)
+<a name="l-11"></a><span class="tm">21:16:34</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">schema.org (vasochat)</span>
+<a name="l-12"></a><span class="tm">21:17:07</span><span class="nk"> &lt;vbatts&gt;</span> container discoverability, most notably for academia and science use-cases
+<a name="l-13"></a><span class="tm">21:19:40</span><span class="nk"> &lt;vbatts&gt;</span> https://label-schema.org/rc1/
+<a name="l-14"></a><span class="tm">21:19:51</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://label-schema.org/rc1/</span>
+<a name="l-15"></a><span class="tm">21:20:00</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://schema.org/</span>
+<a name="l-16"></a><span class="tm">21:21:03</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/owtaylor/flagstate</span>
+<a name="l-17"></a><span class="tm">21:23:36</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/GoogleContainerTools/container-diff</span>
+<a name="l-18"></a><span class="tm">21:27:13</span><span class="nk"> &lt;vbatts&gt;</span> a first step would even be a self describing container
+<a name="l-19"></a><span class="tm">21:27:45</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#links </span><span class="cmdline">https://openschemas.github.io/</span>
+<a name="l-20"></a><span class="tm">21:28:33</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">crosby:</span> are you asking for spec level changes or industry discussion and support?
+<a name="l-21"></a><span class="tm">21:28:46</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">vanessa:</span> support and interest!
+<a name="l-22"></a><span class="tm">21:36:22</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/751</span>
+<a name="l-23"></a><span class="tm">21:37:09</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">vbatts:</span> how best to have a fruitful and iterative discussion (sandbox/playground) before schema.org adopts or it is seen as an OCI best practice
+<a name="l-24"></a><span class="tm">21:40:08</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/schemaorg/schemaorg/issues/2059</span>
+<a name="l-25"></a><span class="tm">21:45:37</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">vanessa:</span> metadata about the build. tags, commit, contents of the REAMDE, all kinds of stuff would be very useful.
+<a name="l-26"></a><span class="tm">22:01:21</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">mrunalp:</span> i don't think that'll happen today!
+<a name="l-27"></a><span class="tm">22:01:52</span><span class="nk"> &lt;vbatts&gt;</span> on this topic, I think we all agree that this is an important and useful use-case
+<a name="l-28"></a><span class="tm">22:03:57</span><span class="nk"> &lt;mikebrow&gt;</span> agreed, important useful and might help out the search issues when we address search in v2 for the distribution spec
+<a name="l-29"></a><span class="tm">22:05:56</span><span class="nk"> &lt;vbatts&gt;</span> mikebrow++
+<a name="l-30"></a><span class="tm">22:07:40</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#action </span><span class="cmdline">vasochat send an email to the list about what an Image's schema.org might look like</span>
+<a name="l-31"></a><span class="tm">22:10:01</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

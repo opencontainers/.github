@@ -1,0 +1,43 @@
+21:01:08 <wking> #startmeeting 2017-07-26 discussion
+21:01:08 <collabot> Meeting started Wed Jul 26 21:01:08 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:01:08 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:01:08 <collabot> The meeting name has been set to '2017_07_26_discussion'
+21:02:33 <wking> david-lyle is in UberConference with me, but that's it at the moment
+21:02:48 <wking> I'll cancel the meeting if we don't get a maintainer in the next 3 minutes
+21:04:28 <stevvooe> does he have questions?
+21:04:34 <stevvooe> wking: ^
+21:04:54 <david-lyle> stevvooe, no questions
+21:04:58 <stevvooe> if he does, I can pop on
+21:04:59 <wking> nope, everyone's muted
+21:05:18 <wking> mikebrow and walli are also there and muted
+21:06:18 <mikebrow> :-)
+21:06:47 <wking> walli: I have concerns about the test suite structure in runtime-tools
+21:06:55 <stevvooe> mikebrow: you got any thing?
+21:06:56 <wking> walli: I'd like to know the best way to engage with that
+21:06:59 <stevvooe> ok
+21:07:04 <wking> #topic runtime-tools structure
+21:07:13 <stevvooe> i'll be on in a few then
+21:07:22 <wking> walli: some of this is based on 6-month-old issues that are light on discussion
+21:07:35 <wking> mikebrow: can you give an example of your issues
+21:07:43 <wking> walli: it's hard to tie the test back to the runtime spec
+21:08:06 <wking> #link https://github.com/opencontainers/runtime-tools/pull/354
+21:08:49 <wking> walli: there seems to be an implicit assumption that we'll be testing runC (written in Go)
+21:09:12 <wking> walli: Also, RobDolinMS asked for a README covering the theory of certification
+21:09:34 <wking> mikebrow: I don't think runtime-tools would be against fixes if you're volunteering
+21:09:56 <wking> walli: I am volunteering, I'm not sure if I should start with issues or on dev@
+21:10:08 <wking> mikebrow: I think it makes more sense to start with issues for smaller things
+21:11:23 <wking> I think that the plan is to use Go to scaffold the test harness, but that the runtimes would be invoked from the command line
+21:12:06 <wking> #link https://github.com/opencontainers/runtime-tools/pull/321
+21:12:12 <wking> ^ still in flight command line API
+21:12:38 <wking> walli: so I'll go ahead and file issues for things I think are still missing
+21:13:43 <wking> #topic Git branching
+21:13:56 <wking> mikebrow: I was here to discuss this, but we may want to wait for more maintainers
+21:14:15 <wking> stevvooe: I think it's complex vs. simple.  We have a lot of maintainers, but not much time for the release process
+21:14:39 <wking> stevvooe: And "do we want a lot of extant versions out there?"
+21:15:01 <wking> stevvooe: for runtime-spec, that might be fine.  But for image-spec, having a lot of versions may hurt users and fragment the industry
+21:15:17 <wking> mikebrow: so basically single branch for now?
+21:15:28 <wking> mikebrow: until we hit a major/breaking change?
+21:16:06 <wking> RobDolinMS: I think we can go that way, and we can backport important patches and create a new major branch when we're planning for the next major release
+21:16:30 <wking> stevvooe: you can also see this in action in docker/distribution
+21:17:18 <stevvooe> #link https://github.com/docker/distribution/releases
+21:18:46 <wking> #endmeeting

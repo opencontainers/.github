@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:03:16</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-05-10 runtime-spec 1.0 preparation</span>
+<a name="l-2"></a><span class="tm">21:03:16</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed May 10 21:03:16 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:03:16</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:03:16</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2017_05_10_runtime_spec_1_0_preparation'
+<a name="l-5"></a><span class="tm">21:03:21</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp</span>
+<a name="l-6"></a><span class="tm">21:03:21</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp wking
+<a name="l-7"></a><span class="tm">21:03:54</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">spec.md: add MUST NOT and SHALL NOT for judging compliance</span>
+<a name="l-8"></a><span class="tm">21:04:40</span><span class="nk"> &lt;wking&gt;</span> https://tools.ietf.org/html/rfc2616#section-1.2
+<a name="l-9"></a><span class="tm">21:05:16</span><span class="nk"> &lt;wking&gt;</span> ^ That doesn't have the NOT forms, but it does talk about "level" which aren't formally defined in RFC 2119
+<a name="l-10"></a><span class="tm">21:05:35</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/797</span>
+<a name="l-11"></a><span class="tm">21:05:45</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Makefile: Add .install.* to .PHONY</span>
+<a name="l-12"></a><span class="tm">21:05:50</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/791</span>
+<a name="l-13"></a><span class="tm">21:07:54</span><span class="nk"> &lt;wking&gt;</span> If folks don't want to list .PHONY entries for all phony targets, we probably want to drop all the unnecessary .PHONY entries
+<a name="l-14"></a><span class="tm">21:07:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> +1
+<a name="l-15"></a><span class="tm">21:08:12</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config: Document 'rbind' and 'bind' mount options extensions</span>
+<a name="l-16"></a><span class="tm">21:08:18</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/771</span>
+<a name="l-17"></a><span class="tm">21:09:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> do we want all of these?
+<a name="l-18"></a><span class="tm">21:10:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> does this exactly match runC
+<a name="l-19"></a><span class="tm">21:10:57</span><span class="nk"> &lt;wking&gt;</span> no, see the last comment
+<a name="l-20"></a><span class="tm">21:11:27</span><span class="nk"> &lt;RobDolinMS&gt;</span> What dial-in is being used for the ConCall?
+<a name="l-21"></a><span class="tm">21:12:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> https://bluejeans.com/1771332256/
+<a name="l-22"></a><span class="tm">21:12:36</span><span class="nk"> &lt;wking&gt;</span> https://github.com/opencontainers/runtime-spec/pull/771#issuecomment-300559556
+<a name="l-23"></a><span class="tm">21:12:51</span><span class="nk"> &lt;wking&gt;</span> The current spec punts to mount(8), which includes entries like 'silent' which are not covered in runC
+<a name="l-24"></a><span class="tm">21:13:14</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config-linux: RFC 2119 tightening for namespaces</span>
+<a name="l-25"></a><span class="tm">21:13:21</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/767</span>
+<a name="l-26"></a><span class="tm">21:14:17</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/runtime-spec/pull/747</span>
+<a name="l-27"></a><span class="tm">21:14:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> this is redundant with the filenames defining platform support
+<a name="l-28"></a><span class="tm">21:15:12</span><span class="nk"> &lt;wking&gt;</span> But the single-file spec forms don't expose the source filenames.  Do we have a plan for that?
+<a name="l-29"></a><span class="tm">21:15:21</span><span class="nk"> &lt;RobDolinMS&gt;</span> I'm trying to dial-in but BlueJeans does not seem to be working :(
+<a name="l-30"></a><span class="tm">21:16:10</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-linux: Condition /proc/self/fd symlinks on source existence</span>
+<a name="l-31"></a><span class="tm">21:16:17</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/736</span>
+<a name="l-32"></a><span class="tm">21:16:38</span><span class="nk"> &lt;mrunalp&gt;</span> RobDolinMS, Try calling in?
+<a name="l-33"></a><span class="tm">21:16:57</span><span class="nk"> &lt;mrunalp&gt;</span> +1.408.740.7256
+<a name="l-34"></a><span class="tm">21:17:22</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config: Clarify mounts[].source relative path anchor</span>
+<a name="l-35"></a><span class="tm">21:17:27</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/735</span>
+<a name="l-36"></a><span class="tm">21:18:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> do relative paths make sense here?
+<a name="l-37"></a><span class="tm">21:18:36</span><span class="nk"> &lt;wking&gt;</span> yeah, for example you may have ./home you want mounted under /root
+<a name="l-38"></a><span class="tm">21:18:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> do we support that in runC?
+<a name="l-39"></a><span class="tm">21:19:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I dunno.  It's extremely hard to figure out what it's relative to (the bundle or the cwd)
+<a name="l-40"></a><span class="tm">21:19:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'd have to check if we support it, but I doubt anyone ever uses it
+<a name="l-41"></a><span class="tm">21:19:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> there are some examples where it looks like a relative path (e.g. "proc") that are just dummy values
+<a name="l-42"></a><span class="tm">21:20:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> we'd need a static list of dummy paths if we were validating absolute paths
+<a name="l-43"></a><span class="tm">21:20:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I think we always run it through absolute path
+<a name="l-44"></a><span class="tm">21:20:59</span><span class="nk"> &lt;wking&gt;</span> How do you identify dummies?
+<a name="l-45"></a><span class="tm">21:22:08</span><span class="nk"> &lt;tianon&gt;</span> https://github.com/opencontainers/runc/blob/653207bc29a6d2d62b5d4f55b596467cb715a128/libcontainer/specconv/spec_linux.go#L253-L257
+<a name="l-46"></a><span class="tm">21:22:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> and the cwd may or may not be the bundle path
+<a name="l-47"></a><span class="tm">21:23:32</span><span class="nk"> &lt;wking&gt;</span> does runC have different code for root.path?
+<a name="l-48"></a><span class="tm">21:24:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> mount namespaces have nothing to do with files on disk
+<a name="l-49"></a><span class="tm">21:24:54</span><span class="nk"> &lt;wking&gt;</span> but paths are resolved in a particular mount namespace
+<a name="l-50"></a><span class="tm">21:26:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> "runtime root" would be a lot better
+<a name="l-51"></a><span class="tm">21:29:59</span><span class="nk"> &lt;wking&gt;</span> https://github.com/opencontainers/runtime-spec/blame/v1.0.0-rc5/config-linux.md#L38
+<a name="l-52"></a><span class="tm">21:30:48</span><span class="nk"> &lt;wking&gt;</span> still current: https://github.com/opencontainers/runtime-spec/blame/844f392f3924ce172e1559859864eefc2f06ae85/config-linux.md#L38
+<a name="l-53"></a><span class="tm">21:32:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> in that context it seems fine, since it's talking about namespaces
+<a name="l-54"></a><span class="tm">21:33:34</span><span class="nk"> &lt;wking&gt;</span> say you have "/home/you" in source, "rootfs" in root.path.  Do you bind mount /home/you or rootfs/home/you?
+<a name="l-55"></a><span class="tm">21:34:25</span><span class="nk"> &lt;wking&gt;</span> If my wording is not clarifying that, can someone else take a stab at breaking that tie?
+<a name="l-56"></a><span class="tm">21:34:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> crosbymichael?
+<a name="l-57"></a><span class="tm">21:35:29</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/runtime-spec/pull/734</span>
+<a name="l-58"></a><span class="tm">21:35:39</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime: Container-scope-wide uniqueness for container IDs</span>
+<a name="l-59"></a><span class="tm">21:35:44</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/734</span>
+<a name="l-60"></a><span class="tm">21:36:48</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link</span><span class="cmdline"></span>
+<a name="l-61"></a><span class="tm">21:36:51</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/blob/844f392f3924ce172e1559859864eefc2f06ae85/runtime.md#scope-of-a-container</span>
+<a name="l-62"></a><span class="tm">21:37:04</span><span class="nk"> &lt;wking&gt;</span> ^"Scope of a Container" (in master)
+<a name="l-63"></a><span class="tm">21:38:07</span><span class="nk"> &lt;wking&gt;</span> basically this is "the ID has to be unique across your shared state"
+<a name="l-64"></a><span class="tm">21:38:28</span><span class="nk"> &lt;wking&gt;</span> We don't want ID-uniqueness constraints that are stronger than your state-sharing constraints
+<a name="l-65"></a><span class="tm">21:38:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> should we rename this to "Scope of a runtime"?
+<a name="l-66"></a><span class="tm">21:39:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I know the contents of this PR are not what we want, and the original is correct and straightforward
+<a name="l-67"></a><span class="tm">21:39:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> if you have two instances of a runtime with different state directories, the IDs may or may not overlap
+<a name="l-68"></a><span class="tm">21:40:20</span><span class="nk"> &lt;wking&gt;</span> exactly.  That's what I'm trying to allow because I see no way to forbid it
+<a name="l-69"></a><span class="tm">21:41:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> let me take this one
+<a name="l-70"></a><span class="tm">21:43:14</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime: Drop "not supported by the base OS" loophole</span>
+<a name="l-71"></a><span class="tm">21:43:19</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/733</span>
+<a name="l-72"></a><span class="tm">21:44:45</span><span class="nk"> &lt;wking&gt;</span> I don't see the point in drilling a big, generic hole
+<a name="l-73"></a><span class="tm">21:44:59</span><span class="nk"> &lt;wking&gt;</span> Just poke holes where you need them (and runtimes can always error out with "I can't do that")
+<a name="l-74"></a><span class="tm">21:45:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> It's more an issue for compliance testing where you have a stable base
+<a name="l-75"></a><span class="tm">21:45:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> compliance testing should be on a new/stable enough kernel
+<a name="l-76"></a><span class="tm">21:46:01</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime: Remove "features the runtime chooses to support</span>
+<a name="l-77"></a><span class="tm">21:46:06</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/732</span>
+<a name="l-78"></a><span class="tm">21:57:53</span><span class="nk"> &lt;wking&gt;</span> [lots of talk ;)]
+<a name="l-79"></a><span class="tm">21:58:21</span><span class="nk"> &lt;wking&gt;</span> I'll keep the removal of the old step 3, remove the trailing paragraph, and crosbymichael will follow up with a leading paragraph about these kinds of jumps
+<a name="l-80"></a><span class="tm">21:58:47</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime: Remove status redefinitions from operations</span>
+<a name="l-81"></a><span class="tm">21:58:53</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/702</span>
+<a name="l-82"></a><span class="tm">22:00:45</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config: Make process optional</span>
+<a name="l-83"></a><span class="tm">22:00:51</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/701</span>
+<a name="l-84"></a><span class="tm">22:01:44</span><span class="nk"> &lt;wking&gt;</span> For example, if you're running a shell container to hold namespaces open for a more meaty container
+<a name="l-85"></a><span class="tm">22:02:00</span><span class="nk"> &lt;wking&gt;</span> It sounded like "I'm never going to call 'start'" was a workflow we were interested in supporting
+<a name="l-86"></a><span class="tm">22:02:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> It's up to you
+<a name="l-87"></a><span class="tm">22:02:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I think the Garden folks are doing this?
+<a name="l-88"></a><span class="tm">22:02:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> they just don't add the process information
+<a name="l-89"></a><span class="tm">22:02:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we just have to update the pointer to the process struct again.  tianon?
+<a name="l-90"></a><span class="tm">22:02:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> I'm tired
+<a name="l-91"></a><span class="tm">22:03:15</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime: Explicitly make process.* timing implementation-defined</span>
+<a name="l-92"></a><span class="tm">22:03:20</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/700</span>
+<a name="l-93"></a><span class="tm">22:07:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> in runC we set it in create?
+<a name="l-94"></a><span class="tm">22:07:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we try to do everything we can in create (e.g. dropping caps)
+<a name="l-95"></a><span class="tm">22:07:58</span><span class="nk"> &lt;wking&gt;</span> I'm fine requiring all of that to happen at create
+<a name="l-96"></a><span class="tm">22:08:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't want the spec saying anything about that, because I want to fix any security issues without worrying about compliance
+<a name="l-97"></a><span class="tm">22:10:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> why isn't 94 enough?
+<a name="l-98"></a><span class="tm">22:10:51</span><span class="nk"> &lt;wking&gt;</span> I feel like they add clarity, but if they're adding confusion I can drop them
+<a name="l-99"></a><span class="tm">22:10:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I'm fine either way
+<a name="l-100"></a><span class="tm">22:11:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'm fine either way
+<a name="l-101"></a><span class="tm">22:11:08</span><span class="nk"> &lt;wking&gt;</span> I'll rebase it
+<a name="l-102"></a><span class="tm">22:11:24</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config: Move valid-value rules to their own section</span>
+<a name="l-103"></a><span class="tm">22:11:38</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/681</span>
+<a name="l-104"></a><span class="tm">22:14:21</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config: Do not allow runtimes to ignore properties defined by the spec</span>
+<a name="l-105"></a><span class="tm">22:14:27</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/680</span>
+<a name="l-106"></a><span class="tm">22:17:37</span><span class="nk"> &lt;wking&gt;</span> If folks want to file a replacement PR with a different sentence, that's fine with me
+<a name="l-107"></a><span class="tm">22:17:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I think it can be worded better
+<a name="l-108"></a><span class="tm">22:19:33</span><span class="nk"> &lt;wking&gt;</span> I'm happy to field suggestion comments or replacement PRs
+<a name="l-109"></a><span class="tm">22:19:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> lets revisit this once we have suggestions
+<a name="l-110"></a><span class="tm">22:20:18</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Update to Windows network options</span>
+<a name="l-111"></a><span class="tm">22:20:25</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/801</span>
+<a name="l-112"></a><span class="tm">22:20:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> don't we need Markdown updates too?
+<a name="l-113"></a><span class="tm">22:20:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah, I'm adding a reply
+<a name="l-114"></a><span class="tm">22:23:06</span><span class="nk"> &lt;crosbymichael&gt;</span> 795
+<a name="l-115"></a><span class="tm">22:23:32</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config-linux: Specify relationships for new namespaces</span>
+<a name="l-116"></a><span class="tm">22:37:00</span><span class="nk"> &lt;wking&gt;</span> [lots of talk ;)]
+<a name="l-117"></a><span class="tm">22:37:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> can we punt on this for now?
+<a name="l-118"></a><span class="tm">22:38:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> crosbymichael are you free on 2pm Friday?
+<a name="l-119"></a><span class="tm">22:38:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah
+<a name="l-120"></a><span class="tm">22:38:44</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

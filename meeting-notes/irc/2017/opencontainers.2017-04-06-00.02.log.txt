@@ -1,0 +1,17 @@
+00:02:25 <mrunalp> #startmeeting OCI_4_5_2017
+00:02:25 <collabot`> Meeting started Thu Apr  6 00:02:25 2017 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+00:02:25 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+00:02:25 <collabot`> The meeting name has been set to 'oci_4_5_2017'
+00:02:29 <mrunalp> stevvooe, alright :)
+00:02:57 <mrunalp> #topic https://github.com/opencontainers/runtime-spec/issues/726
+00:03:16 <mrunalp> https://github.com/opencontainers/runtime-tools/pull/349
+00:05:18 <mrunalp> stevvooe, discussions around annotations
+00:05:23 <mrunalp> #topic image spec
+00:05:37 <mrunalp> stevvooe, need to discuss processing algorithms
+00:06:18 <mrunalp> #topic https://github.com/opencontainers/image-spec/issues/588
+00:07:30 <stevvooe> https://github.com/opencontainers/image-spec/pull/634
+00:09:24 <stevvooe> https://github.com/opencontainers/image-spec/pull/632
+00:09:39 <stevvooe> https://github.com/opencontainers/image-spec/pull/631
+00:19:55 <david-lyle> https://github.com/opencontainers/runc/issues/1273
+00:22:42 <crosbymichael> thanks for the heads up
+00:23:15 <mrunalp> #endmeeting

@@ -1,0 +1,145 @@
+17:00:47 <vbatts> #startmeeting 2016-05-04 discussion
+17:00:47 <collabot`> Meeting started Wed May  4 17:00:47 2016 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:00:47 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:00:47 <collabot`> The meeting name has been set to '2016_05_04_discussion'
+17:03:02 <vbatts> wking: was that you?
+17:03:11 <wking> vbatts: #chair me?
+17:03:16 <vbatts> #chair wking
+17:03:16 <collabot`> Current chairs: vbatts wking
+17:03:28 <wking> #topic reviewing open PRs
+17:03:40 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/411
+17:04:03 <wking> mrunalp: what's left to do here?
+17:04:45 <wking> Abhijeeth: nothing that I know of
+17:04:57 <wking> crosbymichael: are we ok with hyphenated keys instead of camelCase?
+17:05:15 <wking> Abhijeeth: we want to keep the names the same, because they've been that way for a very long time
+17:05:48 <wking> anuthan_work: is Abhijeeth
+17:06:48 <wking> vbatts: it's good to have both spec consistency and consistency with the OS.  For Linux, most keys are runtime-specific, and don't map directly to the runtime (which gives you a bit of indirection to protect from kernel churn)
+17:08:01 <wking> jlb13: We'll take whatever the advice is.  For Solaris users, it's easier not to change.  But it doesn't take a rocket scientist to map between hyphens and camelCase
+17:08:24 <wking> we were assuming it was platform specific and that nobody would care, but we're ok switching
+17:08:59 <wking> vbatts: also, feel free to decode in the comments
+17:09:11 <wking> jlb13: probably not worth it, since it's not a big leap.
+17:09:50 <wking> jlb13: we're not super passionate about this (lots of internal bikeshedding, we started with camelCase, we'll just take it back inside and blame it on the OCI)
+17:10:03 <vbatts> https://github.com/opencontainers/runtime-spec/milestones
+17:10:13 <wking> mrunalp: do we want to cut 0.6?
+17:10:20 <philips> gah no one can hear me
+17:10:32 <philips> I do want to discuss solaris + networking for a sec
+17:10:33 <wking> vbatts: no date or issues on the current 0.6 milestone
+17:11:05 <wking> vbatts: there's also a 1.0-rc that's parked as well
+17:12:01 <wking> philips: going back to Solaris, is networking tied to the container lifecycle (it's not for Linux)
+17:12:12 <wking> And adding subnet configurations and such is a first for this spec
+17:12:35 <wking> anuthan_work: it is, because we put it up at setup time and tear it down when the container dies
+17:12:45 <wking> philips: is the lifecycle tied to a particular process?
+17:13:08 <wking> anuthan_work: no.  There's a daemon which takes care of the container and maintains it's state
+17:13:31 <wking> philips: so essentially an init process that owns the lifecycle.  Do you talk to that process to, say, launch a second process inside the container?
+17:13:53 <wking> anuthan_work: we have a separate mechanism (through the kernel) to add processes
+17:14:25 <wking> philips: probably worth adding a note to say that the network needs to be setup for the first process in a container, so it's clear to non-Solaris folks that that's a requirement
+17:14:48 <wking> philips: the lifecycle of the networking + process, or a link to the upstream docs, or something
+17:14:51 <wking> anuthan_work: we can do that
+17:15:04 <wking> mrunalp: anything else for Solaris
+17:15:05 <wking> ?
+17:15:23 <wking> mrunalp: I tagged #411 for 0.6.0
+17:15:32 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/417
+17:16:11 <wking> mrunalp: in the past we suggested explicitness instead of specifying defauls
+17:16:21 <wking> mrunalp: is that still the case?  If so, we can close this
+17:16:38 <wking> crosbymichael: in the spec it says uid is required anyway
+17:16:52 <wking> philips: yeah, it should be required
+17:17:13 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/415
+17:18:02 <wking> I have to step out for one sec ;)
+17:18:25 <duglin> lgtm
+17:19:06 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/405
+17:19:56 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/397
+17:19:56 <wking> I'm back
+17:20:03 <wking> mrunalp: what about the cgroups namespace PR
+17:20:17 <wking> philips: probably worth waiting for the first stable release
+17:20:24 <wking> * kernel release
+17:20:42 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/412/files
+17:22:57 <mikebrow_> lolz
+17:23:14 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/384
+17:23:21 <wking> #action wking to reroll #412 with more clarification
+17:24:17 <wking> duglin: I tabled that after last week's confusing discussion
+17:25:17 <wking> vishh: my understanding after last week was that we needed external changes first before pushing stuff into the repo
+17:27:11 <wking> vishh: I thought last week there was talk about pushing changes into ocitools?
+17:27:46 <wking> julz_: avoiding hooks is still a good thing to do
+17:28:08 <wking> julz_: it doesn't need to pull in bind mounts
+17:28:18 <wking> vishh: I don't want to drag in post-stop hooks here
+17:28:20 <wking> julz_: agreed
+17:28:39 <wking> vishh: it depends on whether we want to capture a majority of use cases or be a thin kernel wrapper
+17:29:00 <wking> vishh: we want portable post-stop hooks
+17:29:33 <wking> vishh: to make progress, it seems like we want to split create/start
+17:29:51 <wking> julz_: some things are ugly to achieve via the current hooks
+17:30:14 <wking> crosbymichael: you can make your namespaces ahead of time
+17:30:35 <wking> julz_: yes for the network (which may pull in user namespaces).
+17:31:08 <wking> mrunalp: there's currently no network config in the spec anyway
+17:31:55 <wking> julz_: yeah, and I think that's good.  I'd just rather invert control and allow the caller to control the current-hook functionality directly (instead of calling by proxy through the runtime)
+17:32:39 <wking> julz_: we should admit that this is a spec for orchestrators, and it's easier for an orchestrator to drive tools directly (vs. through hooks)
+17:33:14 <wking> julz_: and there's no reason to drop the current 'run' (or whatever) that bundles all of this together and keeps hooks
+17:33:28 <wking> duglin: and that's what the PR has now
+17:33:58 <wking> mrunalp: I'm ok with doing that
+17:34:34 <wking> vishh: turning it around, any objections?
+17:34:58 <wking> philips: no objections yet.  I have questions about the implementation, but I guess that's in runC
+17:35:19 <wking> crosbymichael: lets not land the spec until we know it's possible
+17:35:47 <wking> mrunalp: so we all agree that we want to land this in a runC branch
+17:36:10 <wking> vishh: I'd like a list of use cases
+17:36:26 <wking> I'd posted some in my 3-proposal comparison^
+17:36:38 <wking> mrunalp: by 1.0?
+17:36:48 <wking> duglin: yes please
+17:37:32 <wking> philips: can we get a high-level description of what's going on in the runC PR?
+17:37:49 <wking> philips: who does what, when?
+17:38:11 <wking> #action duglin to write a high level explanation
+17:39:36 <wking> duglin: although the current runC PR doesn't have start-time PID creation
+17:40:29 <wking> duglin: this is getting into the 'exec' conversation
+17:40:42 <wking> vishh: 'exec' is one word with many use cases, but for post-stop it's very clear
+17:41:04 <wking> duglin: I understand that splitting stop/delete lets you put in post-stop hooks
+17:41:23 <wking> duglin: but the sub-container approach to pinning namespaces is similar to 'exec'
+17:41:43 <wking> vishh: I think sub-containers are fragile and expose too many low-level details
+17:42:00 <wking> vishh: so I think we want to continue exploring post-stop hooks and/or a stop/delete split
+17:42:23 <wking> julz_: it would be sad to invent a second way of doing things just because we moved 'exec' from the spec
+17:42:38 <wking> julz_: if sub-containers are fragile, that's a big problem in its own right
+17:43:03 <wking> julz_: I think it was right to pull it out of the spec, because using config.json to do exec-like things is good
+17:43:13 <wking> julz_: but pulling it out and ignoring those use cases is not good
+17:43:46 <wking> julz_: there's no agreement on what's in the sandbox or what's getting joined.  But we should make it easy to join the sandbox parts you want
+17:44:05 <wking> vishh: I think you're conflating runC with other implementations (e.g. a long-running init process)
+17:44:24 <wking> vishh: if you look at it from a semantic level, the 'exec' use case is very different from hooks
+17:44:58 <wking> julz_: thinking about it that way is another reason to hesitate about hooks.  Solaris folks have a daemon, can they do bind-mount-like preservation?
+17:45:11 <wking> vishh: we don't have much non-Linux information, maybe focus on that?
+17:45:19 <wking> julz_: yeah, and we know sub-containers work there
+17:45:36 <wking> vishh: maybe a generic utility that talks over a socket to your process, and you don't need a single binary
+17:45:55 <wking> vishh: pushing everything up into higher levels defeats the purpose of the spec
+17:46:12 <wking> julz_: I don't think I'm saying that.  I'm saying we should have an expressive spec that makes sub-containers easy
+17:46:33 <wking> julz_: once you have that, you can pin namespaces with sub-containers, so why add a separate namespace-binding requirement?
+17:46:54 <wking> vishh: I'd rather think about portable post-stop hooks, and then move on to consider exec
+17:47:10 <wking> julz_: I agree with the distraction, and they're kind of orthogonal
+17:47:18 <wking> mrunalp: we can make them optional
+17:47:49 <wking> wking: are you still a compliant runtime if you don't support post-stop hooks
+17:48:00 <wking> mrunalp: I mean optional in the config
+17:48:27 <wking> julz_: the fundamental problem I've had with post-stop hooks is that it's hard to opt out
+17:49:02 <wking> mrunalp: maybe you'd only require an explicit 'destroy' if the config had post-stop hooks
+17:49:55 <wking> vishh: but if the foundational layer can split stop and delete, you can just immediately invoke delete after stop
+17:51:40 <wking> duglin: the PR for the spec side of this splits create/start (with a merged 'run').  And you have a single 'delete' if that's what you want
+17:51:55 <wking> julz_: but it still requires you to call 'delete'
+17:52:09 <wking> julz_: now namespaces just clean up themselves (with kernel reaping)
+17:52:19 <wking> duglin: you could do that with a flag...
+17:52:39 <wking> julz_: that was what mrunalp was saying.  You'd have to set it up at create-time, and that's fine
+17:53:00 <wking> julz_: but in order to pin a namespace, you need to know what namespaces you want to pin
+17:53:13 <wking> julz_: that's the same "what namespaces?" issue we have with 'exec'
+17:53:46 <wking> julz_: I certainly think experimenting is fine, but having two spec ways to do one thing seems like a shame
+17:54:08 <wking> duglin: so if I go back to the spec PR and add a "PID 1 kills everything" flag, which opts you out of the stop/delete split
+17:54:32 <wking> duglin: I'd rather get agreement on the spec PR first, because I don't want to write code that gets thrown out for doing the wrong thing
+17:54:56 <wking> mrunalp: sounds good to me
+17:55:03 <wking> vishh: forward progress is good
+17:55:21 <wking> #action duglin to reroll create/start to make for-delete namespace pinning optional
+17:55:34 <wking> #topic DockerCon face-to-face?
+17:55:44 <wking> duglin: some things are easier to resolve face to face
+17:56:01 <wking> mrunalp: I'll be there
+17:56:16 <wking> vishh: I hadn't planned to go, but I can make a meeting
+17:56:21 <wking> crosbymichael: I'll be there
+17:56:43 <wking> mrunalp: a couple hours is probably fine
+17:57:00 <wking> philips: I was going to poll for an image meeting in June
+17:57:13 <wking> philips: images have more international folks, and some aren't on this call
+17:57:26 <wking> #action duglin to look for a half-day room
+17:57:48 <wking> #topic splitting create/start
+17:58:00 <wking> are these in 1.0? 0.6?
+17:58:09 <wking> philips: it sounds like there is too much in the air
+17:58:10 <philips> byes!
+17:58:12 <wking> mrunalp: ok, punt for now
+17:58:18 <wking> #endmeeting

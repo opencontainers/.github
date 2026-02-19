@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">17:01:23</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">OCI weekly meeting 5/18</span>
+<a name="l-2"></a><span class="tm">17:01:23</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed May 18 17:01:23 2016 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">17:01:23</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">17:01:23</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to 'oci_weekly_meeting_5_18'
+<a name="l-5"></a><span class="tm">17:02:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> chair me?  Although I'm not sure I'll be fully focused the whole meeting
+<a name="l-6"></a><span class="tm">17:02:30</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-7"></a><span class="tm">17:02:30</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: mrunalp wking
+<a name="l-8"></a><span class="tm">17:02:40</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">create/start split</span>
+<a name="l-9"></a><span class="tm">17:02:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we want to bring the spec and runC PR together
+<a name="l-10"></a><span class="tm">17:03:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I think duglin is in China this week, but I'm sure we can do that
+<a name="l-11"></a><span class="tm">17:03:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't think there are any issues as long as everyone's testing it.  It works fine in my tests
+<a name="l-12"></a><span class="tm">17:03:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I've done some testing, but will do some more
+<a name="l-13"></a><span class="tm">17:04:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> this is the only thing blocking 0.6, but RobDolinMS said he also has some stuff in the pipe for 0.6.  Should we delay 0.6 another week?
+<a name="l-14"></a><span class="tm">17:05:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I'm not sure how expensive it is to cut a release, but I expect some Windows input by Monday
+<a name="l-15"></a><span class="tm">17:05:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> it will take a few more days to update and review the create/start stuff anyway
+<a name="l-16"></a><span class="tm">17:05:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we can also cut 0.6 and wait on Windows for 1.0
+<a name="l-17"></a><span class="tm">17:05:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> either works.  We can make a call once create/start lands
+<a name="l-18"></a><span class="tm">17:06:07</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/ocitools/issues/66</span>
+<a name="l-19"></a><span class="tm">17:06:08</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">We will expect some additional PRs re: Windows Containers early next week</span>
+<a name="l-20"></a><span class="tm">17:06:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> ocitools#66 has a table of runtime-spec vs. test-suite coverage map
+<a name="l-21"></a><span class="tm">17:07:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> before we do a 1.0 we should review the spec and double check MUST, SHOULD, etc.
+<a name="l-22"></a><span class="tm">17:07:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we don't want to have an accidental MUST that negatively impacts a particular use-case
+<a name="l-23"></a><span class="tm">17:07:50</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#action </span><span class="cmdline">Maintainers should take a look at the aforementioned PR and check if MUST/REQUIRED, SHOULD/RECOMMENDED, and MAY/OPTIONAL are accurate</span>
+<a name="l-24"></a><span class="tm">17:08:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we could get a small group together after 0.6 and look at requirements line by line
+<a name="l-25"></a><span class="tm">17:08:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> that makes sense.  Maybe we can set that up after next week's call
+<a name="l-26"></a><span class="tm">17:08:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> sounds good
+<a name="l-27"></a><span class="tm">17:08:48</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Mrunal suggests meeting next week and doing this</span>
+<a name="l-28"></a><span class="tm">17:09:28</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/436
+<a name="l-29"></a><span class="tm">17:09:37</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">remove solaris from full config</span>
+<a name="l-30"></a><span class="tm">17:09:44</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#url </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/436</span>
+<a name="l-31"></a><span class="tm">17:10:21</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">no mount nesting on Windows</span>
+<a name="l-32"></a><span class="tm">17:10:25</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#url </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/433</span>
+<a name="l-33"></a><span class="tm">17:10:41</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/433</span>
+<a name="l-34"></a><span class="tm">17:10:43</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/432
+<a name="l-35"></a><span class="tm">17:10:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> #433 is good with a squash
+<a name="l-36"></a><span class="tm">17:11:08</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">fstab-options are Linux-specific</span>
+<a name="l-37"></a><span class="tm">17:11:13</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/432</span>
+<a name="l-38"></a><span class="tm">17:11:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> in runC we have some additions on top of the fstab format, and I think that should be allowed
+<a name="l-39"></a><span class="tm">17:11:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> The Windows folks haven't implemented this yet, so they don't want to get boxed in before they've had time to look at this in detail
+<a name="l-40"></a><span class="tm">17:12:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we need extensions on Linux anyway
+<a name="l-41"></a><span class="tm">17:13:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> #432 just opts-out Windows for now, so I can clean this PR up and we can land it
+<a name="l-42"></a><span class="tm">17:13:24</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#action </span><span class="cmdline">RobDolinMS to update PR #432</span>
+<a name="l-43"></a><span class="tm">17:13:25</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/427
+<a name="l-44"></a><span class="tm">17:13:31</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">optional hooks</span>
+<a name="l-45"></a><span class="tm">17:13:36</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/427</span>
+<a name="l-46"></a><span class="tm">17:14:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I agree with crosbymichael that we don't want this to be Go-specific
+<a name="l-47"></a><span class="tm">17:14:47</span><span class="nk"> &lt;wking&gt;</span> I'm just carrying over our existing Go-links
+<a name="l-48"></a><span class="tm">17:14:55</span><span class="nk"> &lt;wking&gt;</span> What should I link to instead?
+<a name="l-49"></a><span class="tm">17:14:59</span><span class="nk"> &lt;julz_&gt;</span> <span class="hi">wking:</span> everyexecever.tumblr.com
+<a name="l-50"></a><span class="tm">17:15:03</span><span class="nk"> &lt;wking&gt;</span> Some options in https://github.com/opencontainers/runtime-spec/pull/427#discussion_r62376119
+<a name="l-51"></a><span class="tm">17:15:06</span><span class="nk"> &lt;wking&gt;</span> hah ;)
+<a name="l-52"></a><span class="tm">17:15:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we may not need a link, but you can link to execve
+<a name="l-53"></a><span class="tm">17:17:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> even though it may not be cross-platform, execve(3p) is probably practical enough
+<a name="l-54"></a><span class="tm">17:18:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> what if we follow #432 and say "in a platform-appropriate way", and then link execve(3p) for POSIX systems
+<a name="l-55"></a><span class="tm">17:19:02</span><span class="nk"> &lt;wking&gt;</span> sounds good to me^
+<a name="l-56"></a><span class="tm">17:19:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I think that makes sense
+<a name="l-57"></a><span class="tm">17:19:21</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">wking will reroll #427 with that wording</span>
+<a name="l-58"></a><span class="tm">17:19:32</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/423
+<a name="l-59"></a><span class="tm">17:20:59</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">dropping the "bundle" word</span>
+<a name="l-60"></a><span class="tm">17:21:05</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/423</span>
+<a name="l-61"></a><span class="tm">17:22:34</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/issues/389</span>
+<a name="l-62"></a><span class="tm">17:24:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> this probably needs more feedback and discussion, punt for now?
+<a name="l-63"></a><span class="tm">17:24:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> just because the rootfs can be absolute doesn't mean we have to remove the "bundle" term
+<a name="l-64"></a><span class="tm">17:24:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> it's still the number-one use case
+<a name="l-65"></a><span class="tm">17:25:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> yeah, it seems like a relative root path is the usual use case
+<a name="l-66"></a><span class="tm">17:25:23</span><span class="nk"> &lt;JakeWarner|Work&gt;</span> But everyone agrees that #389 can be absolute
+<a name="l-67"></a><span class="tm">17:25:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> do we plan to split the config?
+<a name="l-68"></a><span class="tm">17:26:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> if we do plan to do that, there is some sense in keeping "bundle"
+<a name="l-69"></a><span class="tm">17:26:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">JakeWarner|Work:</span> I'm also concerned about splitting the config, and the unknowns of removing "bundle"
+<a name="l-70"></a><span class="tm">17:26:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we had split, and then decided it didn't make sense, and merged them back together
+<a name="l-71"></a><span class="tm">17:26:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> but we might change our minds again and re-split later
+<a name="l-72"></a><span class="tm">17:27:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> I think it's reasonably clear that a relative roots is relative to the config path
+<a name="l-73"></a><span class="tm">17:28:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I agree that having relative paths be relative to the config path makes sense
+<a name="l-74"></a><span class="tm">17:29:11</span><span class="nk"> &lt;wking&gt;</span> ^ I was saying that we want to be clear in the spec whether relative paths are relative to the config path or the runtime cwd
+<a name="l-75"></a><span class="tm">17:29:17</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">everyone discuss the PR ;)</span>
+<a name="l-76"></a><span class="tm">17:29:28</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/418
+<a name="l-77"></a><span class="tm">17:29:42</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">allow 'start' to not validate the config.json</span>
+<a name="l-78"></a><span class="tm">17:29:48</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/418</span>
+<a name="l-79"></a><span class="tm">17:30:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> this sounds ok to me
+<a name="l-80"></a><span class="tm">17:30:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> sounds fine
+<a name="l-81"></a><span class="tm">17:31:17</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/412
+<a name="l-82"></a><span class="tm">17:31:23</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">explicit container namespaces for uid</span>
+<a name="l-83"></a><span class="tm">17:32:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we can continue discussing in the PR
+<a name="l-84"></a><span class="tm">17:32:27</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/403
+<a name="l-85"></a><span class="tm">17:32:49</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">capitalize MUST</span>
+<a name="l-86"></a><span class="tm">17:32:54</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/403</span>
+<a name="l-87"></a><span class="tm">17:33:06</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/397/files
+<a name="l-88"></a><span class="tm">17:33:10</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">RobDolinMS to reroll #403 to get wording updates</span>
+<a name="l-89"></a><span class="tm">17:33:22</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">cgroup namespaces</span>
+<a name="l-90"></a><span class="tm">17:33:28</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/397</span>
+<a name="l-91"></a><span class="tm">17:33:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> this just needs a wording update
+<a name="l-92"></a><span class="tm">17:33:52</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">VM configuration updates</span>
+<a name="l-93"></a><span class="tm">17:33:59</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/405</span>
+<a name="l-94"></a><span class="tm">17:34:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> discuss or punt?
+<a name="l-95"></a><span class="tm">17:35:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Anush:</span> James updates the path stuff here.  Do we need to do anything else?
+<a name="l-96"></a><span class="tm">17:35:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> so it seems like it just need more review
+<a name="l-97"></a><span class="tm">17:35:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Anush:</span> I don't see any outstanding requests.  Either more review, or LGTM and merge
+<a name="l-98"></a><span class="tm">17:36:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I think moving the setting out of the top level would be good.  Otherwise it looks good
+<a name="l-99"></a><span class="tm">17:37:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> the top-level concept of a process is compatible across all systems
+<a name="l-100"></a><span class="tm">17:38:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> in the context of the OCI, kernel parameters are not portable, so they should be in a sub-section
+<a name="l-101"></a><span class="tm">17:41:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the logic is "if any platform cannot use your setting, namespace it, unless that would seem weird for asthetic reasons we're punting on defining"
+<a name="l-102"></a><span class="tm">17:41:39</span><span class="nk"> &lt;anush_&gt;</span> wking - can you add an action for the 405 so that we can get to the bottom of it
+<a name="l-103"></a><span class="tm">17:41:41</span><span class="nk"> &lt;wking&gt;</span> works for my^
+<a name="l-104"></a><span class="tm">17:41:59</span><span class="nk"> &lt;anush_&gt;</span> Thx
+<a name="l-105"></a><span class="tm">17:42:18</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">anush_ to namespace VM-specific settings in #405</span>
+<a name="l-106"></a><span class="tm">17:42:40</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">maintainers to review, LGTM, and/or merge #405 after the reroll</span>
+<a name="l-107"></a><span class="tm">17:42:51</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">repo organization</span>
+<a name="l-108"></a><span class="tm">17:43:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> What goes into what repository?  We have ocitools, runtime-spec, image-spec, some image-testing tools?
+<a name="l-109"></a><span class="tm">17:43:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> philips wants to keep the image-related tooling in the image repo (or out of ocitools at any rate)
+<a name="l-110"></a><span class="tm">17:43:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I'm open to merging ocitools back into the spec if it makes sense
+<a name="l-111"></a><span class="tm">17:44:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> we should probably punt until we have philips
+<a name="l-112"></a><span class="tm">17:44:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> yeah, and it's not a big deal either way
+<a name="l-113"></a><span class="tm">17:44:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> if we keep using ocitools, should the TOB bless it?
+<a name="l-114"></a><span class="tm">17:44:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> was ocitools-blessing discussed in a TOB meeting?
+<a name="l-115"></a><span class="tm">17:44:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> it's already official because it has an ocitools/ repo
+<a name="l-116"></a><span class="tm">17:45:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I don't think ocitools has specifically been blessed, but nobody is raising concerns
+<a name="l-117"></a><span class="tm">17:45:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> the repo predates the TOB
+<a name="l-118"></a><span class="tm">17:46:00</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/tob/issues/2</span>
+<a name="l-119"></a><span class="tm">17:46:27</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/tob/issues/11</span>
+<a name="l-120"></a><span class="tm">17:47:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> maybe we should raise it to the TOB?
+<a name="l-121"></a><span class="tm">17:47:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> maybe punt until next week, once philips and vbatts_ are present
+<a name="l-122"></a><span class="tm">17:48:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> so we can give the TOB something to vote on, instead of having the TOB sort it out amongst themselves
+<a name="l-123"></a><span class="tm">17:48:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> punting a week sounds good
+<a name="l-124"></a><span class="tm">17:48:27</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

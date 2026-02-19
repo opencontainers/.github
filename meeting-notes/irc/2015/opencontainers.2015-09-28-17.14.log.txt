@@ -1,0 +1,17 @@
+17:14:27 <vbatts> #startmeeting testing
+17:14:27 <collabot> Meeting started Mon Sep 28 17:14:27 2015 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:14:27 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:14:27 <collabot> The meeting name has been set to 'testing'
+17:15:00 <vbatts> #topic tianon talks about POSIX
+17:15:06 <vbatts> #help
+17:15:09 <tianon> it's like, a standard, man
+17:15:19 <vbatts> collabot: help
+17:15:19 <collabot> vbatts: (help [<plugin>] [<command>]) -- This command gives a useful description of what <command> does. <plugin> is only necessary if the command is in more than one plugin.
+17:15:27 <vbatts> collabot: ?
+17:15:27 <collabot> vbatts: Error: "?" is not a valid command.
+17:15:31 <vbatts> collabot: --help
+17:15:31 <collabot> vbatts: (help [<plugin>] [<command>]) -- This command gives a useful description of what <command> does. <plugin> is only necessary if the command is in more than one plugin.
+17:15:39 <vbatts> collabot: commands
+17:15:39 <collabot> vbatts: Error: "commands" is not a valid command.
+17:15:42 <vbatts> yes
+17:15:46 <vbatts> #endmeeting

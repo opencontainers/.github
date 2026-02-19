@@ -1,0 +1,124 @@
+17:01:23 <mrunalp> #startmeeting OCI weekly meeting 5/18
+17:01:23 <collabot`> Meeting started Wed May 18 17:01:23 2016 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:01:23 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:01:23 <collabot`> The meeting name has been set to 'oci_weekly_meeting_5_18'
+17:02:15 <wking> mrunalp: chair me?  Although I'm not sure I'll be fully focused the whole meeting
+17:02:30 <mrunalp> #chair wking
+17:02:30 <collabot`> Current chairs: mrunalp wking
+17:02:40 <wking> #topic create/start split
+17:02:57 <wking> mrunalp: we want to bring the spec and runC PR together
+17:03:09 <wking> julz_: I think duglin is in China this week, but I'm sure we can do that
+17:03:31 <wking> crosbymichael: I don't think there are any issues as long as everyone's testing it.  It works fine in my tests
+17:03:38 <wking> mrunalp: I've done some testing, but will do some more
+17:04:07 <wking> mrunalp: this is the only thing blocking 0.6, but RobDolinMS said he also has some stuff in the pipe for 0.6.  Should we delay 0.6 another week?
+17:05:16 <wking> RobDolinMS: I'm not sure how expensive it is to cut a release, but I expect some Windows input by Monday
+17:05:31 <wking> mrunalp: it will take a few more days to update and review the create/start stuff anyway
+17:05:43 <wking> crosbymichael: we can also cut 0.6 and wait on Windows for 1.0
+17:05:53 <wking> mrunalp: either works.  We can make a call once create/start lands
+17:06:07 <mrunalp> #topic https://github.com/opencontainers/ocitools/issues/66
+17:06:08 <RobDolinMS> #info We will expect some additional PRs re: Windows Containers early next week
+17:06:48 <wking> mrunalp: ocitools#66 has a table of runtime-spec vs. test-suite coverage map
+17:07:06 <wking> crosbymichael: before we do a 1.0 we should review the spec and double check MUST, SHOULD, etc.
+17:07:35 <wking> crosbymichael: we don't want to have an accidental MUST that negatively impacts a particular use-case
+17:07:50 <RobDolinMS> #action Maintainers should take a look at the aforementioned PR and check if MUST/REQUIRED, SHOULD/RECOMMENDED, and MAY/OPTIONAL are accurate
+17:08:18 <wking> crosbymichael: we could get a small group together after 0.6 and look at requirements line by line
+17:08:33 <wking> mrunalp: that makes sense.  Maybe we can set that up after next week's call
+17:08:36 <wking> crosbymichael: sounds good
+17:08:48 <RobDolinMS> #info Mrunal suggests meeting next week and doing this
+17:09:28 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/436
+17:09:37 <wking> #topic remove solaris from full config
+17:09:44 <wking> #url https://github.com/opencontainers/runtime-spec/pull/436
+17:10:21 <wking> #topic no mount nesting on Windows
+17:10:25 <wking> #url https://github.com/opencontainers/runtime-spec/pull/433
+17:10:41 <wking> #link https://github.com/opencontainers/runtime-spec/pull/433
+17:10:43 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/432
+17:10:51 <wking> mrunalp: #433 is good with a squash
+17:11:08 <wking> #topic fstab-options are Linux-specific
+17:11:13 <wking> #link https://github.com/opencontainers/runtime-spec/pull/432
+17:11:30 <wking> mrunalp: in runC we have some additions on top of the fstab format, and I think that should be allowed
+17:11:58 <wking> RobDolinMS: The Windows folks haven't implemented this yet, so they don't want to get boxed in before they've had time to look at this in detail
+17:12:53 <wking> mrunalp: we need extensions on Linux anyway
+17:13:18 <wking> RobDolinMS: #432 just opts-out Windows for now, so I can clean this PR up and we can land it
+17:13:24 <RobDolinMS> #action RobDolinMS to update PR #432
+17:13:25 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/427
+17:13:31 <wking> #topic optional hooks
+17:13:36 <wking> #link https://github.com/opencontainers/runtime-spec/pull/427
+17:14:39 <wking> mrunalp: I agree with crosbymichael that we don't want this to be Go-specific
+17:14:47 <wking> I'm just carrying over our existing Go-links
+17:14:55 <wking> What should I link to instead?
+17:14:59 <julz_> wking: everyexecever.tumblr.com
+17:15:03 <wking> Some options in https://github.com/opencontainers/runtime-spec/pull/427#discussion_r62376119
+17:15:06 <wking> hah ;)
+17:15:24 <wking> crosbymichael: we may not need a link, but you can link to execve
+17:17:22 <wking> mrunalp: even though it may not be cross-platform, execve(3p) is probably practical enough
+17:18:38 <wking> RobDolinMS: what if we follow #432 and say "in a platform-appropriate way", and then link execve(3p) for POSIX systems
+17:19:02 <wking> sounds good to me^
+17:19:07 <wking> mrunalp: I think that makes sense
+17:19:21 <wking> #action wking will reroll #427 with that wording
+17:19:32 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/423
+17:20:59 <wking> #topic dropping the "bundle" word
+17:21:05 <wking> #link https://github.com/opencontainers/runtime-spec/pull/423
+17:22:34 <wking> #link https://github.com/opencontainers/runtime-spec/issues/389
+17:24:13 <wking> mrunalp: this probably needs more feedback and discussion, punt for now?
+17:24:41 <wking> crosbymichael: just because the rootfs can be absolute doesn't mean we have to remove the "bundle" term
+17:24:46 <wking> crosbymichael: it's still the number-one use case
+17:25:01 <wking> mrunalp: yeah, it seems like a relative root path is the usual use case
+17:25:23 <JakeWarner|Work> But everyone agrees that #389 can be absolute
+17:25:48 <wking> tianon: do we plan to split the config?
+17:26:00 <wking> tianon: if we do plan to do that, there is some sense in keeping "bundle"
+17:26:18 <wking> JakeWarner|Work: I'm also concerned about splitting the config, and the unknowns of removing "bundle"
+17:26:33 <wking> mrunalp: we had split, and then decided it didn't make sense, and merged them back together
+17:26:43 <wking> tianon: but we might change our minds again and re-split later
+17:27:38 <wking> tianon: I think it's reasonably clear that a relative roots is relative to the config path
+17:28:44 <wking> mrunalp: I agree that having relative paths be relative to the config path makes sense
+17:29:11 <wking> ^ I was saying that we want to be clear in the spec whether relative paths are relative to the config path or the runtime cwd
+17:29:17 <wking> #action everyone discuss the PR ;)
+17:29:28 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/418
+17:29:42 <wking> #topic allow 'start' to not validate the config.json
+17:29:48 <wking> #link https://github.com/opencontainers/runtime-spec/pull/418
+17:30:34 <wking> mrunalp: this sounds ok to me
+17:30:42 <wking> crosbymichael: sounds fine
+17:31:17 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/412
+17:31:23 <wking> #topic explicit container namespaces for uid
+17:32:23 <wking> mrunalp: we can continue discussing in the PR
+17:32:27 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/403
+17:32:49 <wking> #topic capitalize MUST
+17:32:54 <wking> #link https://github.com/opencontainers/runtime-spec/pull/403
+17:33:06 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/397/files
+17:33:10 <wking> #action RobDolinMS to reroll #403 to get wording updates
+17:33:22 <wking> #topic cgroup namespaces
+17:33:28 <wking> #link https://github.com/opencontainers/runtime-spec/pull/397
+17:33:33 <wking> mrunalp: this just needs a wording update
+17:33:52 <wking> #topic VM configuration updates
+17:33:59 <wking> #link https://github.com/opencontainers/runtime-spec/pull/405
+17:34:07 <wking> mrunalp: discuss or punt?
+17:35:06 <wking> Anush: James updates the path stuff here.  Do we need to do anything else?
+17:35:14 <wking> mrunalp: so it seems like it just need more review
+17:35:43 <wking> Anush: I don't see any outstanding requests.  Either more review, or LGTM and merge
+17:36:07 <wking> crosbymichael: I think moving the setting out of the top level would be good.  Otherwise it looks good
+17:37:37 <wking> crosbymichael: the top-level concept of a process is compatible across all systems
+17:38:32 <wking> crosbymichael: in the context of the OCI, kernel parameters are not portable, so they should be in a sub-section
+17:41:31 <wking> mrunalp: the logic is "if any platform cannot use your setting, namespace it, unless that would seem weird for asthetic reasons we're punting on defining"
+17:41:39 <anush_> wking - can you add an action for the 405 so that we can get to the bottom of it
+17:41:41 <wking> works for my^
+17:41:59 <anush_> Thx
+17:42:18 <wking> #action anush_ to namespace VM-specific settings in #405
+17:42:40 <wking> #action maintainers to review, LGTM, and/or merge #405 after the reroll
+17:42:51 <wking> #topic repo organization
+17:43:11 <wking> RobDolinMS: What goes into what repository?  We have ocitools, runtime-spec, image-spec, some image-testing tools?
+17:43:34 <wking> mrunalp: philips wants to keep the image-related tooling in the image repo (or out of ocitools at any rate)
+17:43:46 <wking> mrunalp: I'm open to merging ocitools back into the spec if it makes sense
+17:44:00 <wking> RobDolinMS: we should probably punt until we have philips
+17:44:10 <wking> mrunalp: yeah, and it's not a big deal either way
+17:44:22 <wking> RobDolinMS: if we keep using ocitools, should the TOB bless it?
+17:44:36 <wking> mrunalp: was ocitools-blessing discussed in a TOB meeting?
+17:44:49 <wking> crosbymichael: it's already official because it has an ocitools/ repo
+17:45:05 <wking> RobDolinMS: I don't think ocitools has specifically been blessed, but nobody is raising concerns
+17:45:16 <wking> crosbymichael: the repo predates the TOB
+17:46:00 <wking> #link https://github.com/opencontainers/tob/issues/2
+17:46:27 <wking> #link https://github.com/opencontainers/tob/issues/11
+17:47:34 <wking> mrunalp: maybe we should raise it to the TOB?
+17:47:48 <wking> RobDolinMS: maybe punt until next week, once philips and vbatts_ are present
+17:48:09 <wking> RobDolinMS: so we can give the TOB something to vote on, instead of having the TOB sort it out amongst themselves
+17:48:15 <wking> mrunalp: punting a week sounds good
+17:48:27 <wking> #endmeeting

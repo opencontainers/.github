@@ -1,0 +1,142 @@
+22:00:09 <vbatts> #startmeeting 2017-02-08 discussion
+22:00:09 <collabot> Meeting started Wed Feb  8 22:00:09 2017 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:00:09 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:00:09 <collabot> The meeting name has been set to '2017_02_08_discussion'
+22:00:35 <tianon> that filled up fast :D
+22:00:43 <cracra> [caniszczyk, Open Container Initiative] vbatts: https://www.youtube.com/watch?v=zh9h4KZpnJU
+22:01:25 <mrunalp> crosbymichael, cyphar, hqhq, vishh: Joining?
+22:01:29 <mrunalp> wking ^
+22:01:35 <wking> vbatts, mrunalp: I can't take notes yet, but I should be listening in shortly
+22:01:41 <tianon> cracra: nooo, that's evil
+22:02:57 <vbatts> wking: thanks
+22:02:58 <cracra> [caniszczyk, Open Container Initiative] https://github.com/opencontainers/tob/issues/27
+22:03:11 <vbatts> #chair wking mrunalp
+22:03:11 <collabot> Current chairs: mrunalp vbatts wking
+22:03:25 <mrunalp> #topic New repo for go-selinux
+22:05:00 <mrunalp> cracra to help with the process
+22:05:14 <mrunalp> vbatts, PR open for renaming a manifest
+22:07:22 <mrunalp> #topic CLI API
+22:07:29 <mrunalp> should we block on other platforms?
+22:07:40 <mrunalp> how to handle console-socket on Windows?
+22:09:01 <vbatts> #link https://github.com/opencontainers/runtime-spec/pull/513/files
+22:09:07 <wking> I'd guess the current console-socket stuff is not portable to Windows, and they'd need a different approach
+22:09:27 <mrunalp> Yes
+22:09:33 <wking> I'm not aware of any compliance-testing work on Windows, so I'm not sure how much time we want to sink into it
+22:10:27 <wking> mrunalp: RobDolinMS, can you get back to us soonish on how this would work on Windows?
+22:10:42 <wking> vbatts: or on whether it's already clearly-enough scoped to POSIX systems
+22:11:27 <wking> I'm also happy to drop in a "the following only applies to Linux/Solaris", just tell me where to put it
+22:11:41 <wking> jlbutler: I expect this to work on Solaris, but have trouble on Windows
+22:11:59 <wking> jlbutler: But I'm wondering if this should be more abstracted (with platform-specific sections in the config?)
+22:12:10 <wking> jlbutler: there's a boundary between a spec and a design document
+22:12:34 <wking> jlbutler: this PR has been going around forever, and I brought this up at a face-to-face (8 months ago?)
+22:12:49 <wking> mikebrow_: that's valid, and there are "for examples" in other Linux stuff
+22:13:12 <wking> jlbutler: I think it's doable because there are mostly POSIX systems and Windows, so that's not too many
+22:13:28 <wking> jlbutler: so Solaris is covered, no problem
+22:14:13 <wking> In the interest of moving forward, I think we should just rule out Windows wherever we need to, land #513, and address Windows in a follow-up PR
+22:15:09 <wking> stevvooe: what is the goal of defining a CLI?
+22:15:20 <wking> mrunalp: it's for compliance testing
+22:15:36 <wking> mikebrow_: and you can have more runtime interfaces than just this
+22:15:49 <wking> mrunalp: this is the simplest way to get generic compliance testing
+22:16:04 <wking> stevvooe: if you overspecify, you might limit possible interfaces
+22:16:36 <wking> you can add additional interfaces
+22:16:50 <wking> mikebrow_: this allows you to replace runC with runB (or whatever)
+22:17:06 <wking> mrunalp: yeah, and this allows consumers to avoid chasing runC (unless they want to)
+22:17:14 <wking> mrunalp: I don't see a lot of further evolution on the runtime side
+22:17:41 <wking> stevvooe: let's take Git as an example.  They separate the UX (pull, merge, ...) from the low-level plumbing
+22:18:00 <wking> stevvooe: with runC, you'd be binding the UX to a spec.  But what we want is consistent behavior
+22:18:14 <wking> stevvooe: you might have different binaries with different UXes
+22:20:15 <wking> crosbymichael: why not spec a harness
+22:20:38 <wking> That's what this is.  It could be Go, or whatever, but the CLI seems like the lowest common denom harness
+22:20:51 <wking> crosbymichael: a harness is different
+22:20:57 <wking> What does a harness look like
+22:21:03 <wking> stevvooe: Git's plumbing
+22:22:04 <wking> I am all in favor of making this plumbing like, just let me know what to simplify
+22:23:09 <wking> RobDolinMS: I'm reaching out to John Starks, ..., and Taylor Brown to look this over
+22:23:30 <wking> RobDolinMS: Who else should folks contact with questions?
+22:23:40 <wking> mrunalp: just leave a comment in the PR so everyone can be involved
+22:23:52 <wking> mikebrow_: folks can call me too if they want
+22:24:15 <wking> mikebrow_: we already have a section saying that this API is one of potentially several APIs
+22:24:30 <wking> #link https://github.com/opencontainers/runtime-spec/pull/513/files#diff-0c1e5a5baa5649945697a530e09acbf5R4
+22:24:48 <vbatts|mobile> connecting from a different client
+22:25:01 <wking> RobDolinMS: If I undestand right, runtimes must support this harness for compliance testing
+22:25:07 <vbatts> #chair vbatts|mobile
+22:25:07 <collabot> Current chairs: mrunalp vbatts vbatts|mobile wking
+22:25:22 <wking> mikebrow_: yeah.  You can have other APIs, but you need the CLI for compliance testing
+22:26:14 <wking> stevvooe: What if instead of "this is the runC UX", how about "here are the commands you will run in a test harness" with "and here are the results we expect"
+22:26:28 <wking> stevvooe: then it's more clearly bound to the test harness
+22:26:35 <wking> mrunalp: isn't this already that?
+22:27:12 <wking> RobDolinMS: if this is the minimum compliance-testing API, does it belong in runtime-tools?
+22:27:41 <wking> mikebrow_: that's come up a few times over the past year ;)
+22:28:09 <wking> RobDolinMS: Are we specifying the set of test cases instead of a command line interfaces?
+22:28:20 <wking> https://github.com/opencontainers/runtime-spec/pull/513/files#diff-958e7270f96f5407d7d980f500805b1bR12
+22:30:07 <wking> stevvooe: why not just write the test cases?
+22:30:20 <wking> mrunalp: in cri-o, we can support multiple runtimes because they use the same CLI API
+22:30:59 <wking> jlbutler: one of the impetuses for the CLI spec is that containerd couldn't talk to runV
+22:31:12 <wking> jlbutler: if runC is a defacto standard, what is the point of having a spec?
+22:31:47 <wking> jlbutler: the runtime has an interface, with actions and verbs, etc.  But without a consistent API (e.g. start with 'jump'), it's hard to swap runtimes
+22:32:19 <wking> jlbutler: the current spec has a lot of detail, which may not be neccessary.  And the CLI spec may not need to be in runtime-spec.  But this work may still be neccessary
+22:33:03 <wking> jlbutler: I'm fine with specifying a harness instead of an interface (e.g "what if you have a GUI or web harness?")
+22:33:21 <wking> jlbutler: I'm concerned that the current #513 is overly restrictive, and folks will skip it instead of implementing it
+22:34:04 <stevvooe> "When using a container to drop privileges, note that providing a privileged terminal's file descriptor may allow the container to [execute privileged operations via `TIOCSTI`][TIOCSTI-security] or other [TTY ioctls][tty_ioctl.4]."
+22:34:26 <wking> I'm fine striking things that folks think are too specific, just tell me what we can drop
+22:35:30 <wking> I'm fine dropping that^^ line (which I'd added on @cyphar's request)
+22:35:36 <wking> https://github.com/opencontainers/runtime-spec/pull/513/files#r100181851
+22:36:02 <wking> stevvooe: we want the minimum spec here, it should be up to the spec writer to do that
+22:36:15 <wking> I'm just trying to make reviewers happy ;).  Tell me what to do :p
+22:36:38 <wking> RobDolinMS: It's clear that a lot of good effort has gone into this
+22:36:46 <wking> np
+22:37:21 <wking> mikebrow_: so does this stay in runtime-spec?
+22:37:52 <wking> I don't care where it lives
+22:38:04 <wking> crosbymichael: we already specify actions.  So I think a CLI spec is overly burdensome
+22:38:28 <wking> crosbymichael: yeah, we need an agreed interface between runtimes, but I don't think you can specify a CLI and be successful
+22:38:56 <wking> so you just want outside runtime-spec?
+22:40:36 <wking> https://github.com/opencontainers/runtime-spec/pull/513/files#diff-958e7270f96f5407d7d980f500805b1bR8
+22:40:52 <wking> crosbymichael: who is in charge of compliance?
+22:41:30 <wking> RobDolinMS: A subset of the trademark group.  Me, jlbutler, Walli, cracra, sometimes Alex or Janessa from CoreOS
+22:42:11 <wking> RobDolinMS: There's a very rought draft on .. [URL]
+22:42:36 <wking> jlbutler: you don't need the API for compliance testing.  I don't see why we couldn't test compliance around the existing lifecycle operations
+22:42:55 <wking> crosbymichael: you can have a different harness for each runtime
+22:43:19 <wking> crosbymichael: then we don't qualify OCI compliance
+22:43:26 <wking> Who writes the harness?
+22:43:30 <wking> crosbymichael: the runtime authors
+22:44:14 <wking> Then that's what I'm aiming for here.  Just tell me what to change
+22:44:19 <wking> crosbymichael: move it out of runtime-spec
+22:46:22 <wking> You could write a runtime that is runtime-spec compliant, but without an API spec, there's no way to test your runtime
+22:46:33 <wking> crosbymichael: so the runtime author writes a harness
+22:46:45 <wking> crosbymichael: you submit your harness and runtime and get badged
+22:48:04 <wking> ^ that means that either runtime-tools needs support for a new API or the badged runtime needs to support this command line API
+22:48:31 <wking> If this gets pulled out of runtime-spec, I think it should get its own repo because it should turn over more slowly than runtime-tools
+22:49:30 <wking> RobDolinMS: Do we need anything from here in the spec itself?
+22:49:39 <wking> RobDolimMS: This is not very big
+22:49:58 <wking> RobDolinMS: Theres a concern about overspecification (particularly around sockets)
+22:50:06 <wking> mikebrow_: yeah, and sockets were recently added
+22:50:31 <wking> RobDolinMS: So for next actions: Windows folks to look into this.  Everyone to review for over-specifications
+22:51:07 <wking> RobDolinMS: And then we'll figure out how to split this up between runtime-spec, runtime-tools, and a harness
+22:52:11 <wking> mikebrow_: if this is moving to a harness spec in tools, then this is sort of moot (we can cut v1 without it)
+22:52:22 <wking> RobDolinMS: Do we need this besides for testing?
+22:52:38 <wking> mrunalp: as jlbutler pointed out earlier, containerd expects a particular CLI
+22:53:06 <wking> jlbutler: the runtime spec lists operations, and describes what the operations do (already in master)
+22:53:35 <wking> jlbutler: this goes beyond to define a way to call those.  I think that's useful, but don't want to see it in the spec
+22:53:56 <wking> mikebrow_: If it makes more sense to argue this out in a harness repo, we'll do it over there
+22:54:30 <wking> https://github.com/opencontainers/runtime-spec/pull/513#r72866653
+22:54:56 <wking> ^ mrunalp asking to keep this in runtime-spec (which is why we didn't split it into its own repo in July)
+22:56:13 <wking> Everyone agrees to move it out of runtime-spec
+22:56:17 <wking> Where is it going?
+22:56:19 <wking> crosbymichael: runtime-tools
+22:56:30 <wking> crosbymichael: any compliance testers who need help, let me know
+22:56:55 <wking> mrunalp: runtime-tools needs help
+22:57:03 <wking> crosbymichael: I'll start helping in runtime-tools
+22:57:13 <wking> mrunalp: many of the PRs are stuck on one LGTM
+22:58:03 <wking> mrunalp, can you give me some advice for wedging this into runtime-tools?
+22:58:07 <wking> mrunalp: will do
+22:58:18 <wking> mrunalp: anything else?
+22:58:45 <wking> #topic Open source leadership summit
+22:58:49 <wking> RobDolinMS: Will a good amount of us be there?
+22:58:52 <wking> [lots of nos]
+22:59:07 <wking> RobDolinMS: Should I ping cracra and ask for more invites?
+22:59:18 <wking> vbatts: I'm sure there will be another face to face soon
+23:00:09 <wking> RobDolinMS: A week after is Container World.  vbatts, you're on a panel?
+23:00:23 <wking> vbatts: I'll be in late Wed, and then heading out on Thursday afternoon
+23:00:37 <wking> vbatts: so I'll be there, but there's not much time for OCI stuff
+23:00:52 <wking> vbatts: There's an open thread on dev@ if folks want to chime in
+23:01:16 <wking> #endmeeting

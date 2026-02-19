@@ -1,0 +1,22 @@
+22:21:02 <vbatts> #startmeeting 2018-11-07
+22:21:02 <collabot`> Meeting started Wed Nov  7 22:21:02 2018 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:21:02 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:21:02 <collabot`> The meeting name has been set to '2018_11_07'
+22:21:03 <cyphar> my bouncer is down
+22:21:21 <vbatts> #topic intros
+22:21:28 <vbatts> #topic distribution conformance
+22:21:36 <vbatts> #link https://github.com/opencontainers/distribution-spec/issues/24
+22:21:47 <vbatts> #topic umoci as an OCI project
+22:21:52 <vbatts> #link https://github.com/openSUSE/umoci/
+22:23:00 <vbatts> #link https://github.com/opencontainers/image-tools
+22:25:59 * vbatts opinion
+22:26:32 <vbatts> image-tools must do "validate", everything else is nice to have
+22:28:38 <vbatts> i know there has been effort by folks on image-tools, but it is not a successful tool for validation/conformance nor even unpacking or generation
+22:29:15 <vbatts> vbatts: I prefer to see it merged, as that preserves the history and accomplisments of all those involved
+22:29:45 <vbatts> #action cyphar to send out a thread about this
+22:34:13 <vbatts> #topic getting a runc v1
+22:34:31 <vbatts> #action cyphar push runc-v1 forward
+22:35:06 <vbatts> cyphar: there were regressions, and a number of PRs now by akihiro, and getting that fixed and/or resolved
+22:37:24 <vbatts> cyphar: folks are using 0.6.0 instead of RC releases, to avoid a pre-release...
+22:38:35 <cyphar> we should just do a 1.0 release with an mvp and move on -- the release rules for OCI don't really apply to runc in any strong sense
+22:39:09 <vbatts> #endmeeting

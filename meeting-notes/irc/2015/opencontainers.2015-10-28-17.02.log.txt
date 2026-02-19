@@ -1,0 +1,91 @@
+17:02:43 <vbatts> #startmeeting weekly discussion
+17:02:43 <collabot> Meeting started Wed Oct 28 17:02:43 2015 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:02:43 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:02:43 <collabot> The meeting name has been set to 'weekly_discussion'
+17:02:50 <vbatts> #chair RobDolinMS wking
+17:02:50 <collabot> Current chairs: RobDolinMS vbatts wking
+17:03:00 <RobDolinMS> Thanks vbatts
+17:03:06 <crosbymichael> is there no sound without a mod?
+17:03:17 <vbatts> crosbymichael: correct
+17:03:21 <crosbymichael> ok
+17:03:28 <vbatts> we can use https://bluejeans.com/5531707434
+17:03:34 <duglin> I have a 800 number we can use if you want
+17:03:42 <vbatts> that's mine, at least for this week.
+17:03:57 <RobDolinMS> I'm in https://bluejeans.com/1771332256/; should we switch?
+17:04:08 <vbatts> RobDolinMS: yes
+17:04:11 <vbatts> for today
+17:04:14 <RobDolinMS> #topic Challenge with audio
+17:04:32 <RobDolinMS> #info switching to https://bluejeans.com/5531707434 for audio channel
+17:04:45 <crosbymichael> got it
+17:04:53 <duglin> so on the phone I just hear music
+17:05:00 <vbatts> duglin: hmmm
+17:05:13 <duglin> oh, never mind here we go
+17:05:20 <vbatts> Phone Dial-In
+17:05:21 <vbatts> + 800 451 8679
+17:05:23 <vbatts> Meeting Id
+17:05:25 <vbatts> 5531707434
+17:05:27 <vbatts> k
+17:06:04 <RobDolinMS> Yes.
+17:06:26 <RobDolinMS> We seem to have successfully switched audio.
+17:06:43 <duglin> +q
+17:06:48 <RobDolinMS> #topic Confirming agenda
+17:07:19 <RobDolinMS> #topic Separation
+17:07:31 <RobDolinMS> #info This topic came-up during hack day last week
+17:07:44 <RobDolinMS> We spent time waling through fields last week
+17:08:02 <RobDolinMS> ... and implications of if not present
+17:08:34 <RobDolinMS> (Aside: If you're attending the weekly OCI Dev ConCall please type something (i.e. hello) to be recorded for attendance)
+17:09:33 <RobDolinMS> vbatts suggestion some fields only used by a runtime (i.e. hooks)
+17:10:59 <RobDolinMS> Who is the 919 phone number talking?
+17:11:29 <wking> discussion about writing a copy of the config to the /run/opencontainers/containers/{id} directory
+17:11:43 <RobDolinMS> 919: Very few things are immutable
+17:12:05 <RobDolinMS> 919: many fields appearing in both config.json and runtime.json
+17:12:50 <wking> if there is a config.json, use it.  If there isn't a config.json use fall back to default.json, so folks can use default.json as an immutable copy
+17:13:25 <RobDolinMS> 919: Is it accurate assumption that files are read-only?
+17:13:48 <anuthan> are you guys using the same bluejeans linkfor the meeting?
+17:14:11 <wking> anuthan: this week we're at https://bluejeans.com/5531707434
+17:14:13 <RobDolinMS> @anuthan, we had audio issues so switched to: https://bluejeans.com/5531707434 for audio channel
+17:14:13 <collabot> RobDolinMS: Error: "anuthan," is not a valid command.
+17:14:35 <anuthan> Thank you
+17:15:46 <RobDolinMS> vbatts: If there is a default.json, some fields should be ignored
+17:17:54 <wking> personally I have no problem with a single config file (no config.json / runtime.json split, and no config.json / default.json fallback)
+17:18:46 <wking> and I would have the runtime ignore all environment variables, so there were no environment variables that impacted the launched container
+17:20:12 <RobDolinMS> 919: Someone hands you a bundle, you explode it out, you should be able to immediately verify hash
+17:20:25 <RobDolinMS> 919: For how long after should you be able to verify hash?
+17:20:31 <wking> 919: you probably don't need those hash/sigs to still apply after local modification
+17:21:06 <RobDolinMS> crosbymichael: As soon as you've taken action(s) will be hard to verify hash.
+17:21:11 <wking> +1 to not jumping through hoops to get some sort of immutable config
+17:23:43 <RobDolinMS> 919: rather than thinking mutable vs. immutable,
+17:24:03 <RobDolinMS> 919: Things you don't port to another host go into runtime
+17:24:14 <wking> ^ that's what we're doing now with runtime.json and config.json, but there's a Solaris thread asking to get those runtime.json things distributed with the bundle
+17:25:44 <duglin> I can buy into the split if we do it on portable vs non-portable.  Then we never have to worry about overriding values between two config file - there’s no overlap.
+17:26:03 <vbatts> i've got to duck out now.
+17:26:13 <vbatts> RobDolinMS: good luck on policing the topics!
+17:26:30 <RobDolinMS> vbatts: thanks :)
+17:27:57 <RobDolinMS> crosbymichael: The base bundle should be a portable artifact that can be put on any server and run
+17:28:59 <RobDolinMS> 919: We have a few proposals
+17:29:34 <RobDolinMS> #info duglin volunteers to write-up idea of switch from mutable/immutable to portable/non-portable
+17:29:41 <wking> #action wking to write up single config approach
+17:30:49 <RobDolinMS> #topic Separation of create / start phase
+17:31:00 <RobDolinMS> #info suggestion to table this
+17:31:24 <RobDolinMS> crosbymichael: This may be more technical than spec and may be platform specific
+17:32:10 <wking> if you have a distinct create operation, you can drop the pre-start hooks, which makes a simpler spec
+17:32:15 <RobDolinMS> #info duglin asks if spec will allow for create as separate operation from start
+17:32:29 <RobDolinMS> #info crosbymichael suggests we should look at use cases
+17:33:30 <RobDolinMS> #info Suggested next step is for someone to draft proposal for this
+17:33:42 <RobDolinMS> #action julz to write-up proposal
+17:34:28 <RobDolinMS> #topic More hackdays
+17:34:48 <RobDolinMS> #info duglin would like more; or at least another
+17:35:24 <RobDolinMS> #info RobDolinMS would like another as well
+17:36:02 <RobDolinMS> #action RobDolinMS to kick-off thread about doing another hackday
+17:36:04 <julz> (sounds good)
+17:36:42 <duglin> LOL is that a dog or a baby?
+17:36:54 <RobDolinMS> #topic Required vs. Optiona fields
+17:37:06 <RobDolinMS> wking: What's a good way to have that discussion?
+17:37:49 <anuthan> Solaris will be willing to participate
+17:37:49 <RobDolinMS> RobDolinMS: Suggest ensuring platforms are well represented in discussion
+17:39:24 <RobDolinMS> #info we should think on this and table to next week
+17:39:52 <RobDolinMS> #topic Roadmap
+17:40:11 <RobDolinMS> #info crosbymichael thinks he has pretty good participation so far
+17:40:26 <RobDolinMS> (see GitHub discussion on the PR)
+17:40:39 <duglin> woo hoo!
+17:40:47 <RobDolinMS> #endmeeting

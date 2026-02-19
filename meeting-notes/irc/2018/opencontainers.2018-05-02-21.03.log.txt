@@ -1,0 +1,7 @@
+21:03:58 <wking> #startmeeting 2018-05-02 discussion
+21:03:58 <collabot`> Meeting started Wed May  2 21:03:58 2018 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:03:58 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:03:58 <collabot`> The meeting name has been set to '2018_05_02_discussion'
+21:04:37 <wking> we're probably not going to meet today with a number of folks out: https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/kcZZrMoqEn8
+21:04:52 <wking> but we'll give it a few minutes in case anyone other than mrunalp and me shows up ;)
+21:06:23 <wking> #endmeeting

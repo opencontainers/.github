@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">17:02:14</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2018-12-18 distribution spec walkthrough</span>
+<a name="l-2"></a><span class="tm">17:02:14</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Tue Dec 18 17:02:14 2018 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">17:02:14</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">17:02:14</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2018_12_18_distribution_spec_walkthrough'
+<a name="l-5"></a><span class="tm">17:02:43</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">intro and intention</span>
+<a name="l-6"></a><span class="tm">17:02:55</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/distribution-spec/issues/24</span>
+<a name="l-7"></a><span class="tm">17:03:25</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/kinvolk/ocicert/</span>
+<a name="l-8"></a><span class="tm">17:09:22 </span><span class="nka">* vbatts|work</span> <span class="ac">should've thought about screen sharing ...</span>
+<a name="l-9"></a><span class="tm">17:13:27</span><span class="nk"> &lt;jzelinskie&gt;</span> https://github.com/docker/distribution/tree/master/registry/handlers
+<a name="l-10"></a><span class="tm">17:13:30</span><span class="nk"> &lt;jzelinskie&gt;</span> https://github.com/docker/distribution/blob/master/registry/handlers/api_test.go
+<a name="l-11"></a><span class="tm">17:14:56 </span><span class="nka">* sangy</span> <span class="ac">sighs, probably his mic doesn't work</span>
+<a name="l-12"></a><span class="tm">17:15:26</span><span class="nk"> &lt;jzelinskie&gt;</span> https://github.com/docker/distribution/blob/master/registry/api/v2/descriptors.go
+<a name="l-13"></a><span class="tm">17:15:57</span><span class="nk"> &lt;sangy&gt;</span> wanted to ask (I'm new around here) would something similar to DCT be backported into the distribution spec? (full disclosure, I'm part of the TUF team)
+<a name="l-14"></a><span class="tm">17:20:42</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">sangy:</span> link to DCT, please?
+<a name="l-15"></a><span class="tm">17:20:57</span><span class="nk"> &lt;sangy&gt;</span> https://docs.docker.com/engine/security/trust/content_trust/
+<a name="l-16"></a><span class="tm">17:21:28</span><span class="nk"> &lt;estesp&gt;</span> Docker Content Trust (CNCF Notary/Trust); but since Notary works to sign any content blob, what would be the "backport" into the spec?
+<a name="l-17"></a><span class="tm">17:21:49</span><span class="nk"> &lt;estesp&gt;</span> <span class="hi">meant:</span> "(CNCF Notary/TUF)"
+<a name="l-18"></a><span class="tm">17:23:10</span><span class="nk"> &lt;sangy&gt;</span> <span class="hi">estesp:</span> I may be missing information, but pretty much tying up the concept of a tag to a namespace/id that can be secured with Notary/TUF
+<a name="l-19"></a><span class="tm">17:25:53</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">dongsu:</span> did you try screen share again?
+<a name="l-20"></a><span class="tm">17:27:55</span><span class="nk"> &lt;dongsu&gt;</span> <span class="hi">vbatts|work:</span> yes, but it didn't work
+<a name="l-21"></a><span class="tm">17:28:11</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">dongsu:</span> ok. did you see my screen?
+<a name="l-22"></a><span class="tm">17:28:23</span><span class="nk"> &lt;dongsu&gt;</span> <span class="hi">vbatts|work:</span> yes I could see your screen
+<a name="l-23"></a><span class="tm">17:28:32</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">dongsu:</span> ok
+<a name="l-24"></a><span class="tm">17:28:45</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">dongsu:</span> how do i authenticate to do the push test?
+<a name="l-25"></a><span class="tm">17:29:14</span><span class="nk"> &lt;dongsu&gt;</span> <span class="hi">vbatts|work:</span> I haven't managed to do it
+<a name="l-26"></a><span class="tm">17:29:20</span><span class="nk"> &lt;vbatts|work&gt;</span> ah
+<a name="l-27"></a><span class="tm">17:29:22</span><span class="nk"> &lt;vbatts|work&gt;</span> :-)
+<a name="l-28"></a><span class="tm">17:30:10</span><span class="nk"> &lt;jzelinskie&gt;</span> DCT doesn't need to be included in the distribution spec
+<a name="l-29"></a><span class="tm">17:30:14</span><span class="nk"> &lt;jzelinskie&gt;</span> it's overlaid on top of it
+<a name="l-30"></a><span class="tm">17:31:24</span><span class="nk"> &lt;sangy&gt;</span> fair enough, thanks for clearing it up :)
+<a name="l-31"></a><span class="tm">17:31:27</span><span class="nk"> &lt;estesp&gt;</span> that was my perspective/understanding; notary has it's own server and validates a specific hash has a certain signature
+<a name="l-32"></a><span class="tm">17:32:15</span><span class="nk"> &lt;estesp&gt;</span> beyond that, I'm not sure what integration would even make sense as notary is currently unlinked to anything specific to containers at all (since you can use TUF/Notary to sign any kind of blob)
+<a name="l-33"></a><span class="tm">17:32:51</span><span class="nk"> &lt;vbatts|work&gt;</span> make ro-test
+<a name="l-34"></a><span class="tm">17:32:55</span><span class="nk"> &lt;vbatts|work&gt;</span> make rw-test
+<a name="l-35"></a><span class="tm">17:33:16</span><span class="nk"> &lt;sangy&gt;</span> I'd have to read more on the distribution spec exactly because of that. I don't know if it covers a GUN-identifier sort of specification, from which we can anchor namespaces into Notary/TUF
+<a name="l-36"></a><span class="tm">17:33:25</span><span class="nk"> &lt;sangy&gt;</span> <span class="hi">estesp:</span> ^
+<a name="l-37"></a><span class="tm">17:35:10</span><span class="nk"> &lt;vbatts|work&gt;</span> credential-helpers for testing with
+<a name="l-38"></a><span class="tm">17:35:35</span><span class="nk"> &lt;sangy&gt;</span> <span class="hi">repasted:</span> https://github.com/docker/docker-credential-helpers
+<a name="l-39"></a><span class="tm">17:35:40</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/docker/docker-credential-helpers</span>
+<a name="l-40"></a><span class="tm">17:35:46</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">sangy:</span> ty :-)
+<a name="l-41"></a><span class="tm">17:35:52</span><span class="nk"> &lt;estesp&gt;</span> Calavera (from Netlify) has a nice blog post on using them
+<a name="l-42"></a><span class="tm">17:36:15</span><span class="nk"> &lt;sangy&gt;</span> <span class="hi">vbatts|work:</span> np! :)
+<a name="l-43"></a><span class="tm">17:36:27</span><span class="nk"> &lt;estesp&gt;</span> https://medium.com/@calavera/stop-saving-credential-tokens-in-text-files-65e840a237bb
+<a name="l-44"></a><span class="tm">17:36:39</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/calavera/docker-credential-helpers</span>
+<a name="l-45"></a><span class="tm">17:36:45</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://medium.com/@calavera/stop-saving-credential-tokens-in-text-files-65e840a237bb</span>
+<a name="l-46"></a><span class="tm">17:42:05</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">look to cargo-cult from a basis of github.com/docker/distribution/blob/master/registry/api/v2/descriptors.go github.com/docker/distribution/blob/master/registry/handlers/api_test.go</span>
+<a name="l-47"></a><span class="tm">17:43:13</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">basic helper to use an opaque blob for authentication token to test 'rw-test' with</span>
+<a name="l-48"></a><span class="tm">17:44:58</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">merge the ocicert repo into the distribution-spec/ repo</span>
+<a name="l-49"></a><span class="tm">17:57:53</span><span class="nk"> &lt;mikebrow&gt;</span> cloud-native.slack.com
+<a name="l-50"></a><span class="tm">17:58:04</span><span class="nk"> &lt;mikebrow&gt;</span> open-containers channel created
+<a name="l-51"></a><span class="tm">18:02:43</span><span class="nk"> &lt;mikebrow&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

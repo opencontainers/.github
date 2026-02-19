@@ -1,0 +1,89 @@
+22:01:00 <mrunalp> #startmeeting OCI_3_8
+22:01:00 <collabot`> Meeting started Wed Mar  8 22:01:00 2017 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:01:00 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:01:00 <collabot`> The meeting name has been set to 'oci_3_8'
+22:01:12 <mrunalp> #chairs vbatts wking
+22:02:33 <mrunalp> #topic runtime 1.0
+22:03:33 <mrunalp> vishh, Can you LGTM the runtime spec latest rc?
+22:04:41 <mrunalp> crosbymichael, 2 weeks should be good
+22:04:46 <mrunalp> final window for comments
+22:04:56 <mrunalp> vbatts, cool with that
+22:06:47 <mrunalp> vbatts, Lot of polishing
+22:07:10 <mrunalp> vbatts, cyphar not around but would want to discuss image to runtime conversion
+22:07:55 <mrunalp> vbatts, predictable runtime specs could be produced from the same image bundles
+22:08:19 <mrunalp> stevvooe, current doc is good. We can make it non-normative.
+22:08:41 <mrunalp> stevvooe, It is in danger of being over-specified
+22:08:59 <mrunalp> stevvooe, mostly how to map the fields
+22:09:18 <mrunalp> stevvooe, what can we do to automate the conversion and verify it
+22:10:09 <mrunalp> crosbymichael, we can't overspecify things like on this system apply selinux or apparmor
+22:10:29 <stevvooe> https://github.com/opencontainers/image-spec/pull/492
+22:11:32 <mrunalp> vbatts, there is no guarantee that the runtime config will be the same
+22:12:48 <mrunalp> crosbymichael, Most of it is process information that is stored anyways
+22:12:49 <erikh> disregard that
+22:12:51 <erikh> :)
+22:13:22 <erikh> (for some reason my mic isn't workingO)
+22:13:33 <mrunalp> stevvooe, volumes is another are that is unclear
+22:13:42 <mrunalp> vbatts, Should be leave it for the next milestone
+22:13:45 <mrunalp> stevvooe, agree
+22:14:07 <wking> I think without some wording around the config conversion (in both directions) image configs aren't particularly useful
+22:15:08 <mrunalp> stevvooe, If we make it too narrow it will be hard to target different platforms
+22:15:21 <wking> you can have different conversion targets for different platforms (so image-config <-> whatever).  But image-config <-> runtime config should be well-defined
+22:16:05 <mrunalp> stevvooe, That's outside the scope of the spec
+22:16:31 <mrunalp> crosbymichael, It's not up to us. Users can decide what they want.
+22:17:30 <erikh> I could do a bot thing
+22:17:42 <mrunalp> vbatts, bots could be more helpful
+22:18:08 <mrunalp> crosbymichael, docker bots does a lot of stuff like labeling, auto-assign, etc.
+22:18:08 <erikh> lol
+22:18:15 <duglin> need a bot to assign everything to vbatts
+22:18:39 <vbatts> https://github.com/icecrime/poule
+22:18:46 <vbatts> duglin: no
+22:18:49 <vbatts> duglin: stahp
+22:19:02 <erikh> yes I am on the call :) and I could help arnaud with any modifications necessary
+22:19:11 <erikh> just gimme some requirements
+22:19:26 <duglin> I gave you mine
+22:19:26 <mrunalp> crosbymichael, poule has good integrations and will be  a good starting point rather than from scratch
+22:19:31 <erikh> duglin: lol!
+22:19:31 <vbatts> https://github.com/opencontainers/image-spec/issues/598
+22:20:10 <mrunalp> vbatts, It will be good to use on various OCI projects
+22:20:42 <jlbutler> as long as it has random swearing as a feature, i'll be happy
+22:20:59 <crosbymichael> erikh: rate limiter
+22:21:27 <erikh> ?
+22:21:35 <crosbymichael> so that if people comment to much on an issue and derailing it, it limits them
+22:21:38 <stevvooe> https://github.com/opencontainers/image-spec/issues/588
+22:21:58 <erikh> can you mute people now?
+22:22:03 <erikh> (you couldn't before)
+22:22:04 <vbatts> jlbutler: i'll add the old bsd fortune
+22:22:04 <crosbymichael> no
+22:22:05 <mrunalp> stevvooe, cyphar had some issues with tress being processed
+22:22:07 <erikh> oh lol
+22:22:50 <crosbymichael> also reminder features when things are inactive for a while would be nice
+22:24:21 <erikh> maybe a responder to "discuss this item" or some similar speech which would label it to be discussed/addressed at the next meeting?
+22:24:31 <crosbymichael> that would be cool
+22:24:38 <crosbymichael> it could build the meeting agenda for us
+22:24:44 <erikh> yep
+22:24:54 <mrunalp> +1
+22:27:24 <vbatts> https://github.com/opencontainers/runtime-spec/pull/395
+22:28:19 <vbatts> https://github.com/opencontainers/runtime-spec/pull/405
+22:29:06 <stevvooe> one area we could save time on: close PRs that have had no prior discussion or issue
+22:30:55 <vbatts> #help
+22:31:26 <vbatts> #action send email to vm folks to join a call (intel, hypersh, vmware?)
+22:31:45 <stevvooe> https://github.com/opencontainers/image-spec/pull/591 is an example: serious issue but we have an insufficient PR to capture the main problem
+22:35:48 <vbatts> https://github.com/opencontainers/runtime-spec/pull/508
+22:35:51 <vbatts> https://github.com/opencontainers/runtime-spec/pull/628
+22:36:02 <vbatts> https://github.com/opencontainers/runtime-spec/pull/630
+22:37:25 <wking> I'm for an event API ;)
+22:38:08 <crosbymichael> we know
+22:38:10 <crosbymichael> ;)
+22:38:32 <wking> You can't add it back a higher level
+22:39:21 <crosbymichael> who is "you"?  because I certainly can and have already implemented it
+22:40:02 <wking> on top of a generic OCI runrime?
+22:40:16 <wking> can youlink your code
+22:42:07 <erikh> incapable
+22:44:40 <wking> one Markdown file would be fine
+22:47:40 <erikh> fwiw I found this: https://github.com/opencontainers/runtime-spec/issues/615 which is still open. Just wanted to make you all aware of it
+22:48:51 <tianon> thanks erikh :)
+22:49:11 <stevvooe> https://github.com/opencontainers/image-spec/pull/591
+22:51:17 <vbatts> "app/org.gnome.gedit/x86_64/stable"
+22:51:24 <erikh> 7:31 PST
+22:52:50 <vbatts> https://github.com/opencontainers/image-spec/pull/407
+23:03:10 <vbatts> #endmeeting

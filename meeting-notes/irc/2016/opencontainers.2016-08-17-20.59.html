@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2016-08-17 discussion</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2016-08-17 discussion</h1>
+<span class="details">
+Meeting started by vbatts|work at 20:59:28 UTC
+(<a href="opencontainers.2016-08-17-20.59.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">console handling</b> <span class="details">(<a href='opencontainers.2016-08-17-20.59.log.html#l-14'>wking</a>, 21:02:43)</span>
+<ol type="a">
+  <li><a
+    href="https://gist.github.com/cyphar/8c6b9db84fc1f2cc2d037ef07942ca83">https://gist.github.com/cyphar/8c6b9db84fc1f2cc2d037ef07942ca83</a>
+    <span class="details">(<a
+    href='opencontainers.2016-08-17-20.59.log.html#l-15'>wking</a>,
+    21:02:46)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/483">https://github.com/opencontainers/runtime-spec/pull/483</a>
+    <span class="details">(<a
+    href='opencontainers.2016-08-17-20.59.log.html#l-16'>mrunalp</a>,
+    21:03:00)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">removing hooks</b> <span class="details">(<a href='opencontainers.2016-08-17-20.59.log.html#l-18'>wking</a>, 21:03:10)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runc/issues/814">https://github.com/opencontainers/runc/issues/814</a>
+    issue for the previous topic (console handling in runC) <span
+    class="details">(<a
+    href='opencontainers.2016-08-17-20.59.log.html#l-19'>wking</a>,
+    21:04:39)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/483">https://github.com/opencontainers/runtime-spec/pull/483</a>
+    <span class="details">(<a
+    href='opencontainers.2016-08-17-20.59.log.html#l-20'>wking</a>,
+    21:04:52)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/265">https://github.com/opencontainers/runtime-spec/pull/265</a>
+    <span class="details">(<a
+    href='opencontainers.2016-08-17-20.59.log.html#l-35'>wking</a>,
+    21:12:48)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/527">https://github.com/opencontainers/runtime-spec/pull/527</a>
+    <span class="details">(<a
+    href='opencontainers.2016-08-17-20.59.log.html#l-66'>mrunalp</a>,
+    21:28:58)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">language around compliance profiles</b> <span class="details">(<a href='opencontainers.2016-08-17-20.59.log.html#l-67'>wking</a>, 21:29:28)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/527">https://github.com/opencontainers/runtime-spec/pull/527</a>
+    <span class="details">(<a
+    href='opencontainers.2016-08-17-20.59.log.html#l-68'>wking</a>,
+    21:29:35)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">runC release</b> <span class="details">(<a href='opencontainers.2016-08-17-20.59.log.html#l-72'>wking</a>, 21:30:47)</span>
+<ol type="a">
+  <li><a
+    href="https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/NuvF5AX8910">https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/NuvF5AX8910</a>
+    <span class="details">(<a
+    href='opencontainers.2016-08-17-20.59.log.html#l-73'>wking</a>,
+    21:30:58)</span></li>
+  <li><a
+    href="https://github.com/docker/docker/issues/25779">https://github.com/docker/docker/issues/25779</a>
+    <span class="details">(<a
+    href='opencontainers.2016-08-17-20.59.log.html#l-83'>stevvooe</a>,
+    21:32:51)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">OCI support in Docker</b> <span class="details">(<a href='opencontainers.2016-08-17-20.59.log.html#l-84'>wking</a>, 21:32:51)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/159">https://github.com/opencontainers/image-spec/pull/159</a>
+    <span class="details">(<a
+    href='opencontainers.2016-08-17-20.59.log.html#l-98'>wking</a>,
+    21:38:45)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">image-spec 0.4.0</b> <span class="details">(<a href='opencontainers.2016-08-17-20.59.log.html#l-105'>wking</a>, 21:41:12)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/195">https://github.com/opencontainers/image-spec/pull/195</a>
+    <span class="details">(<a
+    href='opencontainers.2016-08-17-20.59.log.html#l-106'>wking</a>,
+    21:41:39)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/195#issuecomment-240144353">https://github.com/opencontainers/image-spec/pull/195#issuecomment-240144353</a>
+    <span class="details">(<a
+    href='opencontainers.2016-08-17-20.59.log.html#l-108'>wking</a>,
+    21:41:58)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">meeting next week</b> <span class="details">(<a href='opencontainers.2016-08-17-20.59.log.html#l-123'>wking</a>, 21:48:35)</span>
+<br></li>
+<li><b class="TOPIC">are we consolidating tooling?</b> <span class="details">(<a href='opencontainers.2016-08-17-20.59.log.html#l-135'>wking</a>, 21:50:28)</span>
+<ol type="a">
+  <li><a
+    href="https://groups.google.com/a/opencontainers.org/d/msg/dev/joX0TGKFhys/noHBAYrzCwAJ">https://groups.google.com/a/opencontainers.org/d/msg/dev/joX0TGKFhys/noHBAYrzCwAJ</a>
+    <span class="details">(<a
+    href='opencontainers.2016-08-17-20.59.log.html#l-136'>wking</a>,
+    21:50:47)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/ocitools/issues/83">https://github.com/opencontainers/ocitools/issues/83</a>
+    <span class="details">(<a
+    href='opencontainers.2016-08-17-20.59.log.html#l-141'>wking</a>,
+    21:51:57)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/tob/issues/11">https://github.com/opencontainers/tob/issues/11</a>
+    <span class="details">(<a
+    href='opencontainers.2016-08-17-20.59.log.html#l-149'>wking</a>,
+    21:53:39)</span></li>
+  <li><a
+    href="https://github.com/RobDolinMS/tob/commit/4fa747360729bc9c588ce78b2382fa3f59bc14f5">https://github.com/RobDolinMS/tob/commit/4fa747360729bc9c588ce78b2382fa3f59bc14f5</a>
+    <span class="details">(<a
+    href='opencontainers.2016-08-17-20.59.log.html#l-157'>RobDolinMS</a>,
+    21:58:48)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/tob/issues/16">https://github.com/opencontainers/tob/issues/16</a>
+    <span class="details">(<a
+    href='opencontainers.2016-08-17-20.59.log.html#l-161'>wking</a>,
+    22:01:31)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 22:03:34 UTC
+(<a href="opencontainers.2016-08-17-20.59.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>(none)</li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (129)</li>
+  <li>mikebrow (6)</li>
+  <li>stevvooe (6)</li>
+  <li>vbatts|work (5)</li>
+  <li>mrunalp (5)</li>
+  <li>RobDolinMS (5)</li>
+  <li>collabot (5)</li>
+  <li>stephenrwalli (1)</li>
+  <li>tianon (1)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:01:48</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">OCI 8/3</span>
+<a name="l-2"></a><span class="tm">21:01:48</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Aug  3 21:01:48 2016 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:01:48</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:01:48</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to 'oci_8_3'
+<a name="l-5"></a><span class="tm">21:01:53</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#chairs </span><span class="cmdline">wking</span>
+<a name="l-6"></a><span class="tm">21:02:21</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Updates for runtime terminal/console handling</span>
+<a name="l-7"></a><span class="tm">21:02:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I haven't had a change to do much this week
+<a name="l-8"></a><span class="tm">21:02:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I've been playing around with a C version, and that's all fine
+<a name="l-9"></a><span class="tm">21:03:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> the complicated part for runC is that we need a libcontainer interface that makes sense and then make runC use it
+<a name="l-10"></a><span class="tm">21:03:28</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/518
+<a name="l-11"></a><span class="tm">21:03:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> the general idea makes sense, it will just take some time to get the library interface worked out
+<a name="l-12"></a><span class="tm">21:04:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> the /dev/console thing is important because a lot of programs open a console via /dev/console
+<a name="l-13"></a><span class="tm">21:04:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> tmux and screen and such
+<a name="l-14"></a><span class="tm">21:05:36</span><span class="nk"> &lt;wking&gt;</span> I'm not sure why tmux cares about /dev/console...
+<a name="l-15"></a><span class="tm">21:06:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> tmux cares because the standard streams only works if the terminal session survives
+<a name="l-16"></a><span class="tm">21:06:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> if you want to make sure that it always work, then you have to use /dev/console
+<a name="l-17"></a><span class="tm">21:07:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> the controlling TTY is more about your standard streams.  It is different from /dev/console
+<a name="l-18"></a><span class="tm">21:07:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> anything else on that?
+<a name="l-19"></a><span class="tm">21:07:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> any other runtime topics?
+<a name="l-20"></a><span class="tm">21:08:18</span><span class="nk"> &lt;wking&gt;</span> What do we want to do with hooks?
+<a name="l-21"></a><span class="tm">21:08:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> at the DockerCon face-to-face we decided to drop them.  Any objections?
+<a name="l-22"></a><span class="tm">21:08:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I don't want to drop them, but I lost that argument at DockerCon
+<a name="l-23"></a><span class="tm">21:09:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow_:</span> Are we still waiting for console for the command-line API?
+<a name="l-24"></a><span class="tm">21:09:22</span><span class="nk"> &lt;wking&gt;</span> I think we're still waiting
+<a name="l-25"></a><span class="tm">21:09:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we can also merge #513 with a TODO
+<a name="l-26"></a><span class="tm">21:10:23</span><span class="nk"> &lt;wking&gt;</span> What about separate repository vs. runtime-spec for #513?
+<a name="l-27"></a><span class="tm">21:11:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> without an API, how do you compliance test?
+<a name="l-28"></a><span class="tm">21:12:15</span><span class="nk"> &lt;wking&gt;</span> I agree that you need both an API and the current runtime-spec, I just don't think that means it needs to be part of the same repository
+<a name="l-29"></a><span class="tm">21:12:52</span><span class="nk"> &lt;wking&gt;</span> With a single repository, there was concern about implementations that are compliant with some portions of runtime-spec but not the whole spec
+<a name="l-30"></a><span class="tm">21:13:06</span><span class="nk"> &lt;wking&gt;</span> (I think partial compliance is fine, but there was concern about it)
+<a name="l-31"></a><span class="tm">21:13:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow_:</span> #513 isn't the current runC API
+<a name="l-32"></a><span class="tm">21:13:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> other than the console stuff, what's contentious?  Are you saying spec out the whole runC API?
+<a name="l-33"></a><span class="tm">21:14:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow_:</span> currently there are a number of runtimes that are interoperable at the bundle/config level, and not at the API level
+<a name="l-34"></a><span class="tm">21:14:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the goal of #513 is to solve that issue
+<a name="l-35"></a><span class="tm">21:15:12</span><span class="nk"> &lt;wking&gt;</span> What do I link for the compliance certification folks?
+<a name="l-36"></a><span class="tm">21:15:49</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">mrunalp ask about a certification homepage at the next compliance meeting (in a week or two)</span>
+<a name="l-37"></a><span class="tm">21:16:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow_:</span> to confirm, this stays in runtime-spec but as a separate doc?
+<a name="l-38"></a><span class="tm">21:16:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow_:</span> is it a child spec?
+<a name="l-39"></a><span class="tm">21:16:53</span><span class="nk"> &lt;wking&gt;</span> I don't think defining sub-specs is useful
+<a name="l-40"></a><span class="tm">21:17:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I think we should leave partial complaince to the certification working group
+<a name="l-41"></a><span class="tm">21:17:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">steven.walli:</span> You'll need very explicit language in the spec about subsections for compliance
+<a name="l-42"></a><span class="tm">21:18:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">steven.walli:</span> I'm hearing that you might be conditionally compliant, but it's not in the standard
+<a name="l-43"></a><span class="tm">21:18:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow_:</span> the MUST language isn't "well maybe"
+<a name="l-44"></a><span class="tm">21:19:42</span><span class="nk"> &lt;wking&gt;</span> It's hard to be all or nothing with Windows/Linux/Solaris all in one spec
+<a name="l-45"></a><span class="tm">21:20:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stephen.walli:</span> It's a lot easier with conformance wording in the spec, and have the compliance folks just enforce those rules
+<a name="l-46"></a><span class="tm">21:20:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">sephen.walli:</span> If there are options, that should be very explicit in the spec
+<a name="l-47"></a><span class="tm">21:22:41</span><span class="nk"> &lt;wking&gt;</span> So I think we want wording to mark out spec subsections (e.g. Linux-only stuff).
+<a name="l-48"></a><span class="tm">21:23:11</span><span class="nk"> &lt;wking&gt;</span> We've been struggling with wording for that in #513.  Do we want to handle that in a separate PR, or should it be part of #513?
+<a name="l-49"></a><span class="tm">21:23:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> there will also be certifiable sub-sections within a give platform
+<a name="l-50"></a><span class="tm">21:23:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow_:</span> so I think we need per-sentence opt-outs for every MUST
+<a name="l-51"></a><span class="tm">21:23:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> we could have opt-outs for each platform-specific section
+<a name="l-52"></a><span class="tm">21:24:27</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">mrunalp to start working on spec subsection wording</span>
+<a name="l-53"></a><span class="tm">21:24:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow_:</span> you might be able to use bracketed footnotes to preserve readability
+<a name="l-54"></a><span class="tm">21:25:19</span><span class="nk"> &lt;wking&gt;</span> I'll wait on #513 until mrunalp has floated a pattern for subspec'ing
+<a name="l-55"></a><span class="tm">21:25:56</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec Go meta linting</span>
+<a name="l-56"></a><span class="tm">21:26:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> great tool, but it's pushing strange restrictions on code doing directory permissions
+<a name="l-57"></a><span class="tm">21:26:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> please help if you are familiar with the tool
+<a name="l-58"></a><span class="tm">21:27:08</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">whiteout description</span>
+<a name="l-59"></a><span class="tm">21:27:14</span><span class="nk"> &lt;wking&gt;</span> https://github.com/opencontainers/image-spec/issues/179
+<a name="l-60"></a><span class="tm">21:28:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> ordering not mattering in the tar archives
+<a name="l-61"></a><span class="tm">21:28:24</span><span class="nk"> &lt;wking&gt;</span> https://github.com/opencontainers/image-spec/pull/171
+<a name="l-62"></a><span class="tm">21:28:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> the ordering is not intuitive, and we're still trying to figure out how to handle it
+<a name="l-63"></a><span class="tm">21:28:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> we're glad to hear comments
+<a name="l-64"></a><span class="tm">21:29:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> what does this have to do with tar files?  I thought this was AUFS + opaque files
+<a name="l-65"></a><span class="tm">21:29:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> it is AUFS, but if you're reading the tar to process it, you're supposed to apply whiteouts before the other stuff, regardless of where the whiteouts are in the tar file
+<a name="l-66"></a><span class="tm">21:29:49</span><span class="nk"> &lt;vbatts&gt;</span> https://github.com/opencontainers/image-spec/pull/171#discussion_r73021516
+<a name="l-67"></a><span class="tm">21:30:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> so applying a diff, you'll have to take two passes, one for whiteouts, and the second for everything else
+<a name="l-68"></a><span class="tm">21:31:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> we can probably implement a fairly straightforward algorithm for this
+<a name="l-69"></a><span class="tm">21:31:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> with a list of visited dentries, where if you hit a whiteout you remove the target and re-apply
+<a name="l-70"></a><span class="tm">21:32:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I think the spec is technically correct, but we need an implementer note (e.g. scan twice, or use some fancy algorithm)
+<a name="l-71"></a><span class="tm">21:32:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'd rather not have to be fancy or use two passes
+<a name="l-72"></a><span class="tm">21:33:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> if someone put a whiteout at the end of the tar, you're still back to two passes
+<a name="l-73"></a><span class="tm">21:33:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> are there prior implementations?  It doesn't seem right
+<a name="l-74"></a><span class="tm">21:33:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> so we're blocked on you getting confidence?
+<a name="l-75"></a><span class="tm">21:34:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> does it seem ok to others that the order doesn't matter?  Feedback welcome on the thread
+<a name="l-76"></a><span class="tm">21:34:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> looking for prior art, I'll ask the rkt image extraction folks
+<a name="l-77"></a><span class="tm">21:35:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> and then look for the Docker implementation?
+<a name="l-78"></a><span class="tm">21:35:54</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec 1.0.0</span>
+<a name="l-79"></a><span class="tm">21:36:11</span><span class="nk"> &lt;wking&gt;</span> https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/3xiHKjDSvCc
+<a name="l-80"></a><span class="tm">21:36:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> looking for more feedback here
+<a name="l-81"></a><span class="tm">21:36:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I know there are a number of implementations in progress, but I'll reply on the thread
+<a name="l-82"></a><span class="tm">21:36:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> any other topics for image-spec?
+<a name="l-83"></a><span class="tm">21:36:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> where is the runtime-spec vs. it's 1.0?
+<a name="l-84"></a><span class="tm">21:37:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we're waiting for the CLI (#513)
+<a name="l-85"></a><span class="tm">21:37:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> is there a target for that?
+<a name="l-86"></a><span class="tm">21:37:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> consoles are still up in the air.  Hopefully fast after we figure that out
+<a name="l-87"></a><span class="tm">21:37:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> has anyone else tried to use the release process yet?
+<a name="l-88"></a><span class="tm">21:38:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> runC has been on 1.0.0-rc1 for a while.  We should either restart the count, or do something else...
+<a name="l-89"></a><span class="tm">21:38:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we can cut an -rc2
+<a name="l-90"></a><span class="tm">21:38:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I don't think crosbymichael is on the line?
+<a name="l-91"></a><span class="tm">21:39:04</span><span class="nk"> &lt;crosbymichael&gt;</span> i am
+<a name="l-92"></a><span class="tm">21:39:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we can discuss this offline
+<a name="l-93"></a><span class="tm">21:39:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> was I muted the whole time?
+<a name="l-94"></a><span class="tm">21:39:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> yes
+<a name="l-95"></a><span class="tm">21:39:34</span><span class="nk"> &lt;dqminh&gt;</span> x)
+<a name="l-96"></a><span class="tm">21:39:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't think it's too different from -rc1.  We just need to underline what's the same
+<a name="l-97"></a><span class="tm">21:40:45</span><span class="nk"> &lt;wking&gt;</span> you can mute/unmute with ** if you've dialed in
+<a name="l-98"></a><span class="tm">21:40:55</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span>
+<a name="l-99"></a><span class="tm">21:41:01</span><span class="nk"> &lt;cyphar&gt;</span> <span class="hi">wking:</span> don't you mean "underlying" is still the same
+<a name="l-100"></a><span class="tm">21:41:14</span><span class="nk"> &lt;cyphar&gt;</span> his point was that there isn't a difference on the interface
+<a name="l-101"></a><span class="tm">21:41:21</span><span class="nk"> &lt;cyphar&gt;</span> even though we've done a lot of internal work
+<a name="l-102"></a><span class="tm">21:41:27</span><span class="nk"> &lt;mrunalp&gt;</span> yep
+<a name="l-103"></a><span class="tm">21:41:29</span><span class="nk"> &lt;wking&gt;</span> ah, ok
+<a name="l-104"></a><span class="tm">21:41:56</span><span class="nk"> &lt;wking&gt;</span> good thing I can never remember how to end the meeting ;)
+<a name="l-105"></a><span class="tm">21:42:03</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span>
+<a name="l-106"></a><span class="tm">21:42:17</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

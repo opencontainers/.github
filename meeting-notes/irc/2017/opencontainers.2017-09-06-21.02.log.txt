@@ -1,0 +1,73 @@
+21:02:06 <wking> #startmeeting 2017-09-06 discussion
+21:02:06 <collabot> Meeting started Wed Sep  6 21:02:06 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:02:06 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:02:06 <collabot> The meeting name has been set to '2017_09_06_discussion'
+21:02:10 <wking> #chair mrunalp
+21:02:10 <collabot> Current chairs: mrunalp wking
+21:02:48 <wking> #topic runC 1.0
+21:03:05 <wking> mrunalp: should we tag an issue or something?
+21:03:35 <wking> crosbymichael: We're pretty stable now.  We just need to check for other API changes (e.g. CLI changes), but I can't think of any
+21:03:51 <stevvooe> mrunalp: i won't be on call -- the only thing that i have is the go-digest vote
+21:04:02 <wking> mrunalp: I agree on the CLI stuff.  I think there might be some fixes we need to get in
+21:04:30 <wking> mrunalp: [some things I missed] and the intelRdt tag
+21:04:38 <wking> crosbymichael: I'm fine with taking those fixes or not
+21:04:50 <wking> crosbymichael: I'm not sure if the intelRdt pull has been updated
+21:05:04 <wking> mrunalp: so maybe tag those issues, and then if we get them dealt with, tag 1.0 next week
+21:05:16 <wking> crosbymichael: we currently have seven other issues in the milestone
+21:05:36 <wking> crosbymichael: we can freeze the milestone after we get those in
+21:05:58 <wking> #link https://github.com/opencontainers/runc/milestone/4
+21:06:14 <wking> crosbymichael: it looks like the intelRdt pull has been updated
+21:06:47 <wking> #link https://github.com/opencontainers/runc/pull/1082
+21:06:52 <wking> crosbymichael: should that go behind a build tag?
+21:06:58 <wking> mrunalp: that would be safe for now
+21:07:17 <wking> crosbymichael: is this already in the spec?
+21:07:40 <wking> there's no vtmpfs in runtime-spec
+21:08:00 <wking> * vtpms
+21:08:24 <wking> crosbymichael: I'm not sure who's setting this, if it's not accessable via the spec
+21:08:41 <wking> mrunalp: so maybe move it off 1.0?
+21:08:45 <wking> crosbymichael: yeah, maybe to 1.1
+21:08:57 <wking> crosbymichael: I'll review the intelRdt stuff today
+21:09:09 <wking> #link https://github.com/opencontainers/runc/pull/1279
+21:09:18 <wking> mrunalp: anything else?
+21:09:20 <wking> crosbymichael: not from me
+21:09:30 <wking> #topic runtime-spec 1.0.1
+21:10:53 <wking> #link https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/GRSrbKv8zP0
+21:11:21 <wking> I don't have a preference, but think we should have a plan
+21:11:35 <wking> mrunalp: maybe check every four weeks, and cut a patch release if there is anything interesting
+21:11:38 <wking> tianon: seems ok
+21:11:53 <wking> crosbymichael: it depends on what changes there were, because we need some time for stabilizing
+21:12:26 <wking> I think 1.1 and 2.0 are a completely different discussion.  I'm only interested in the 1.0.x plan
+21:12:44 <wking> crosbymichael: so monthly or every few weeks we do a release with patch changes
+21:12:55 <wking> mrunalp: given that, should we cut 1.0.1 before the end of the week
+21:13:10 <wking> crosbymichael: yeah.  We want to be sure we don't break anyone in the process
+21:13:20 <wking> i.e. make sure it's a patch release ;)
+21:13:31 <wking> crosbymichael: I was hoping vbatts|work was around to handle the vote
+21:13:40 <wking> mrunalp: we can ping him
+21:13:45 <wking> #topic 1.1 PRs
+21:13:53 <wking> mrunalp: when do we start reviewing these?
+21:14:06 <wking> crosbymichael: do we have a milestone?
+21:14:23 <wking> #link https://github.com/opencontainers/runtime-spec/milestone/9
+21:14:33 <wking> mrunalp: I think the only major thing over there is the VM stuff
+21:14:41 <wking> #link https://github.com/opencontainers/runtime-spec/pull/405
+21:14:50 <wking> mrunalp: I guess we could review it, but I'm not sure about merging it
+21:15:01 <wking> #link https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/9zZKpptGLSw
+21:15:35 <stevvooe> #link https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/Ohs8l5NaP_U
+21:15:47 <wking> my impression of the maintainer preference was to have an open master and then cherry-pick onto ad-hoc branches for further patch releases
+21:15:58 <wking> crosbymichael: is there anything folks want a runtime-spec 1.1 for
+21:16:09 <wking> presumably everything in that milestone ;)
+21:18:28 <wking> crosbymichael: I don't think we need a 1.0.1 milestone unless someone asks for something.  Just to stay away from being feature based
+21:18:42 <wking> mrunalp: and we still need certification and tools to catch up with 1.0
+21:19:02 <wking> crosbymichael: unless folks have specific things that need to go into a 1.1, I think we can just focus on patch-level fixes and clarifications
+21:19:02 <vbatts|travel> Just realized this meeting is going on
+21:19:30 <vbatts|travel> I won't be able to dial in, but wanted to mention open source summit next week
+21:19:35 <wking> ram: I'm covering for RobDolinMS who is out for this week and maybe next week
+21:19:51 <wking> ram: Are there any milestones in the next few weeks I should be aware of?
+21:20:02 <wking> mrunalp: we're planning on cutting 1.0.1 inside a week
+21:20:06 <vbatts|travel> wking: mrunalp ^^
+21:20:15 <wking> vbatts|travel, I'll pass it on
+21:20:51 <vbatts|travel> Thx
+21:20:53 <wking> mrunalp: is there already an OSS mail?  Should we send one?
+21:21:16 <wking> crosbymichael: didn't cracra send a mail for a small meetup or dinner?  I'm not going to be there, but stevvooe is and maybe Derek
+21:21:32 <wking> mrunalp: any other topics
+21:21:42 <vbatts|travel> Cool
+21:21:47 <wking> #endmeeting

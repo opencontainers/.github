@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:01:57</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">OCI_9_28</span>
+<a name="l-2"></a><span class="tm">21:01:57</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Sep 28 21:01:57 2016 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:01:57</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:01:57</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to 'oci_9_28'
+<a name="l-5"></a><span class="tm">21:02:03</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-6"></a><span class="tm">21:02:03</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp wking
+<a name="l-7"></a><span class="tm">21:02:53</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic</span><span class="topicline">: https://github.com/opencontainers/runtime-spec/pull/567</span>
+<a name="l-8"></a><span class="tm">21:03:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah, it's fine if we're heading down that route
+<a name="l-9"></a><span class="tm">21:03:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> another idea I had in mind was...
+<a name="l-10"></a><span class="tm">21:03:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we could maintain two versions of the Go code, with a platform-specific version and a namespaced version
+<a name="l-11"></a><span class="tm">21:04:07</span><span class="nk"> &lt;RobDolinMS&gt;</span> My 1pm is running long :(  I'll join when it is done.
+<a name="l-12"></a><span class="tm">21:05:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> it gives you more idiomatic Go code
+<a name="l-13"></a><span class="tm">21:05:20</span><span class="nk"> &lt;wking&gt;</span> Not writing 'Linux' in a few places doesn't seem like sufficient savings to me
+<a name="l-14"></a><span class="tm">21:05:43</span><span class="nk"> &lt;philips&gt;</span> sorry, got held up in another meeting
+<a name="l-15"></a><span class="tm">21:06:02</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">console handling</span>
+<a name="l-16"></a><span class="tm">21:06:29</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runc/pull/1018</span>
+<a name="l-17"></a><span class="tm">21:07:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> maybe we can update the API PR with what's currently in runC#1018?
+<a name="l-18"></a><span class="tm">21:07:32</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/513
+<a name="l-19"></a><span class="tm">21:07:45</span><span class="nk"> &lt;wking&gt;</span> I was waiting on runtime-spec#518 before updating runtime-spec#513, but I can look at documenting the API for runC#1018
+<a name="l-20"></a><span class="tm">21:07:58</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/518
+<a name="l-21"></a><span class="tm">21:08:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> any other runtime topics?
+<a name="l-22"></a><span class="tm">21:08:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> philips, image topics?
+<a name="l-23"></a><span class="tm">21:08:30</span><span class="nk"> &lt;philips&gt;</span> https://github.com/opencontainers/image-spec/milestone/8
+<a name="l-24"></a><span class="tm">21:08:34</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec 1.0.0-rc1</span>
+<a name="l-25"></a><span class="tm">21:08:41</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/milestone/8</span>
+<a name="l-26"></a><span class="tm">21:08:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> only issue is in vbatts|work's hands.  He was going to get to it later this week
+<a name="l-27"></a><span class="tm">21:09:07</span><span class="nk"> &lt;philips&gt;</span> https://github.com/opencontainers/image-spec/milestone/8?closed=1
+<a name="l-28"></a><span class="tm">21:09:33</span><span class="nk"> &lt;wking&gt;</span> there are no other blockers.  I'm hoping to vote for rc1 around Friday
+<a name="l-29"></a><span class="tm">21:10:22</span><span class="nk"> &lt;wking&gt;</span> I'm not sure what goes in image-spec vs. image-tools
+<a name="l-30"></a><span class="tm">21:11:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> we want to be able to run validation tests on the spec itself
+<a name="l-31"></a><span class="tm">21:11:34</span><span class="nk"> &lt;wking&gt;</span> Is there stuff that's not in JSON Schema that you want run on the spec?
+<a name="l-32"></a><span class="tm">21:11:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> my guess is that JSON Schema will cover us, but it gets tricky once you start covering multiple versions
+<a name="l-33"></a><span class="tm">21:12:33</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/337</span>
+<a name="l-34"></a><span class="tm">21:13:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I'll send an email to the list to pull out any other rc1 blockers
+<a name="l-35"></a><span class="tm">21:13:19</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

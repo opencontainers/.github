@@ -1,0 +1,31 @@
+21:03:23 <stevvooe> #startmeeting 2017-06-14 discussion
+21:03:23 <collabot> Meeting started Wed Jun 14 21:03:23 2017 UTC.  The chair is stevvooe. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:03:23 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:03:23 <collabot> The meeting name has been set to '2017_06_14_discussion'
+21:03:40 <wking> stevvooe: chair me?
+21:04:00 <stevvooe> how do i do that?
+21:04:07 <wking> #chair wking
+21:04:21 <stevvooe> #chair wking
+21:04:21 <collabot> Current chairs: stevvooe wking
+21:05:33 <wking> #topic image-spec issues
+21:05:45 <stevvooe> #link https://github.com/opencontainers/image-spec/pull/696
+21:05:55 <wking> #link https://github.com/opencontainers/image-spec/pull/694
+21:06:01 <wking> #link https://github.com/opencontainers/image-spec/pull/695
+21:06:13 <wking> stevvooe: these need review by other maintainers^
+21:06:35 <stevvooe> #link
+21:06:37 <stevvooe> #link https://github.com/opencontainers/image-spec/pull/693
+21:06:58 <wking> #action RobDolinMS to ping jstarks about image-spec review for #694, #695, and #696
+21:07:25 <wking> stevvooe: that's all there is to discuss.  Any questions or other image-spec topics?
+21:08:08 <wking> #topic runtime-spec issues
+21:08:16 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/850/files
+21:08:35 <wking> mrunalp: do we want this or not?
+21:09:17 <wking> stevvooe: if there is a platform field in the runtime spec, I'd like to match it to the image spec
+21:10:12 <wking> with this change platform would just be a string matching our compliance tracks (no more GOOS reference)
+21:10:23 <wking> crosbymichael: we don't use it in runC at all, and we'd added it as metadata
+21:10:35 <wking> crosbymichael: so my initial suggestion was to look into removing it
+21:10:49 <wking> mrunalp: for the runtime, you're assuming that it's taken care of by the time you call the runtime
+21:11:04 <wking> crosbymichael: yeah, which is why I don't understand johnhoward's position
+21:15:12 <wking> #action crosbymichael to ask hqhq to completely remove 'platform' from the config JSON
+21:15:27 <wking> crosbymichael: anything else?
+21:15:47 <wking> crosbymichael: I don't see anything else that sticks out in the 1.0 milestone
+21:16:06 <wking> #endmeeting

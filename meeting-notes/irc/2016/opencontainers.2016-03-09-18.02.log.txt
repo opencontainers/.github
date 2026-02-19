@@ -1,0 +1,105 @@
+18:02:46 <vbatts> #startmeeting 2016-03-09 discussion
+18:02:46 <collabot`> Meeting started Wed Mar  9 18:02:46 2016 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+18:02:46 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+18:02:46 <collabot`> The meeting name has been set to '2016_03_09_discussion'
+18:02:50 <vbatts> yes
+18:02:53 <julz_> mrunalp: thanks yeah Im in
+18:02:59 <vbatts> #chairs wking
+18:03:02 <vbatts> #chair wking
+18:03:02 <collabot`> Current chairs: vbatts wking
+18:03:15 <vbatts> #topic seccomp and rlimits
+18:03:47 <wking> julz_: previous concerns about moving these under processes involved limits that weren't process specific
+18:04:14 <wking> julz_: but that seems to not be the case, so these are pretty similar to capabilities (which are already under process)
+18:04:22 <wking> crosbymichael: what do we do about defaults?
+18:04:47 <wking> mrunalp: check in config.json if a setting isn't in process.json
+18:05:02 <wking> julz_: lets do the same thing we do with process.capabilities
+18:05:53 <wking> julz_: you can just copy when setting up process.json, there's no need for requiring the runtime to look in two places
+18:06:08 <wking> mrunalp: doesn't care which way that goes (runtime lookup or user copy)
+18:06:25 <wking> julz_: doesn't care either, but wants consistent handling for rlimits and capabilities
+18:07:00 <wking> vishh: wants to move cgroups over too, so you can exec a process with different limits
+18:07:18 <wking> crosbymichael: that's a lot more complicated, because cgroups are fundamental to a container
+18:07:39 <wking> vishh: "container" is overloaded, we want to enable users to use sub-cgroups
+18:08:13 <wking> mrunalp: have a copy in both?  Then it's up to the runtime and user
+18:08:56 <wking> mrunalp: duplication is so you only have to specify overrides in process.json
+18:11:08 <wking> crosbymichael: doesn't want to pick and choose about moving stuff into process, because when do you stop
+18:11:28 <wking> crosbymichael: there are so many use cases for 'exec', maybe we should not specify it?
+18:11:36 <wking> crosbymichael: then runtimes can support whatever they want
+18:12:14 <wking> vishh: exec is part of the everyday use of containers, so dropping it would remove a big piece
+18:13:02 <wking> vishh: once people start using this, it will become obvious that exec needs to be controlled
+18:13:41 <wking> vishh: maybe we should try floating a PR before we kill exec?
+18:14:06 <wking> crosbymichael: can we just say "exec launches a process in an existing container using the existing settings"
+18:14:17 <wking> crosbymichael: runtimes can always support more settings if they want
+18:14:40 <wking> julz_: even if we don't specify exec, we still need to have the fields in the right place for exec to make sense
+18:14:58 <wking> crosbymichael: you don't need spec changes, just have the runtime do what it wants
+18:15:48 <wking> julz_: for example, moving capabilities to the process setting makes it straightforward for a runtime to exec a process with well-defined capabilities (regardless of whether 'exec' is in the spec)
+18:15:58 <wking> crosbymichael: but cgroups are complicated
+18:16:28 <wking> julz_: I didn't mean to get into moving cgroups, I just don't think that defining 'exec' is an important consideration
+18:16:35 <wking> vishh: what's the problem with devices?
+18:17:02 <wking> crosbymichael: I guess the process could mknod what it wants if it's not there
+18:17:38 <wking> mrunalp: maybe we want a proof-of-concept first, because we don't want to add it to the spec and then have noone implement it
+18:18:11 <wking> vishh: we've been doing 'exec' for a while, and we don't see any issues.  So lets start with a spec change
+18:18:37 <wking> crosbymichael: namespaces are also process-specific, do we move those?
+18:18:58 <wking> vishh: namespaces are part of containers, since they give an isolation barrier
+18:19:22 <wking> vishh: cgroups are just about resource limitation, so they're less important
+18:19:43 <wking> crosbymichael: maybe remove process and just have everything in root
+18:20:09 <wking> vishh: wasn't the main reason for adding a process to separate sandbox creation and process creation
+18:20:27 <duglin> I’d like to see a complete proposal/PR/design-doc that lays out which property is for the container and which is for the process - so we can see them all at once instead of piecemeal
+18:20:32 <wking> crosbymichael: and 'create' was supposed to create cgroups at create time, not at 'start' time
+18:20:52 <duglin> this can be done irrespective of whether its for exec or the main process
+18:21:38 <wking> crosbymichael: "freeze" is also tied in here.  We want freezing to freeze the whole container, but if you have an exec that didn't enter the freezer cgroup that won't work
+18:21:56 <wking> vishh: but that's something the users did explicitly.  And a sub-cgroup would still be frozen
+18:22:09 <wking> mrunalp: do cgroup namespaces make this easier?
+18:22:26 <wking> vishh: probably not.  They're just for isolating different cgroup sets
+18:22:50 <wking> mrunalp: can we move the fields we agree on, and continue other fields on the mailing list or an issue
+18:23:13 <wking> vishh: sure, but how do we come to a conclusion.  We should lay out the pros and cons and give a day to make a decision.
+18:23:30 <wking> mrunalp: crosbymichael has raised some concerns.  Maybe float some proposals and revisit next week
+18:23:47 <wking> vishh: ok, but we want to get to the bottom of "sandbox" vs. "process" sooner rather than later
+18:24:07 <wking> mrunalp: we're probably not going to decide today
+18:25:04 <wking> duglin: can we get a proposal that lays out all the properties?
+18:25:14 <wking> mrunalp: we should move the ones we do agree on (e.g. rlimits)
+18:25:44 <wking> vishh: wants to wait, because that will keep our feet on the fire
+18:26:29 <wking> julz_: also wants to get to the bottom of "sandbox" vs. "process".  start/exec vs. something more podlike
+18:26:49 <wking> julz_: it would be great if we can make start/exec work
+18:27:07 <wking> #action vishh to open an issue or start a thread about sandbox vs. process
+18:27:32 <wking> #topic labels and annotations
+18:27:48 <wking> #url https://github.com/opencontainers/specs/pull/331
+18:28:00 <wking> mrunalp: vishh, can you post examples?
+18:28:18 <wking> vishh: I clarified that in the PR.  labels are for identifying for runtime grouping, annoations are opaque
+18:28:30 <wking> vishh: the second confusion was "why do we need it in state?"
+18:28:42 <wking> vishh: do we even need state?
+18:29:46 <wking> mrunalp: state should have stuff that isn't in the config
+18:29:59 <wking> mrunalp: you can get to the config.json from the bundle path stored in the state JSON
+18:30:19 <wking> vbatts, RobDolinMS: I have to step out, can one of you pick up the minutes?
+18:33:48 <vbatts> #chair RobDolinMS
+18:33:48 <collabot`> Current chairs: RobDolinMS vbatts wking
+18:34:06 <vbatts> wking: i'll try, and hope that RobDolinMS steps up too
+18:34:08 <vbatts> :-)
+18:35:32 <vbatts> vishh: effectively needing a unique bundle for every invocation, and the state labels/annotations would be usable from the config.json
+18:37:11 <vbatts> mrunalp: what about modifying a label of a running container?
+18:38:02 <vbatts> crosbymichael: the label/annotation field will not be enforced
+18:39:58 <vbatts> vishh: this primitive must be rock-solid, so that higher levels can utilitize it, but higher levels must not be _required_ for annotations
+18:40:18 <vbatts> crosbymichael: having the two fields (labels and annotations) is confusing
+18:40:40 <vbatts> vishh: labels is for listing and grouping, annotations is for metadata
+18:42:15 <vbatts> duglin: perhaps the terminology "grouping" could be more specific or clear for the runtime, not just in the orchestration sense
+18:44:39 <vbatts> "where does this stop?" enabling simple UI vs adding every next filter request
+18:48:10 <vbatts> #action vishh to update PR for only annotations
+18:48:34 <vbatts> #topic json schema
+18:48:38 <vbatts> #link https://github.com/opencontainers/specs/pull/313
+18:51:28 <duglin> I think the topic the @julz_ and @crosbymichael mentioned (boundary of runc vs something higher, like containerd) is a good topic we should clear up.  If in the end runc is really about running a SINGLE container then “runc list” probably doesn’t make sense and I think having a well-defined boundary for runc is very imporant. If for nothing else to get everyone on the same page
+18:51:58 <julz_> regarding listing and state and efficiency of doing listing because there's no daemon, a lot of this is because we have the runtime owning state of all containers, which seems like a shame (it means you can't use an in-memory db or something); we had an idea floating a while ago to pass the state.json to commands that need it, and have commands that update
+18:51:58 <julz_> it explicitly take a path to save it to - that way we get the runtime out of the business of listing, filtering and management of multiple containers which is something that really belongs to higher level tools
+18:52:13 <julz_> (oh, what dug said :))
+18:52:43 <vbatts> https://gist.github.com/vbatts/5ac2723c9598875ffb0e#file-config-json-L22
+18:53:43 <vbatts> https://github.com/vbatts/specs/blob/json-schema/schema/schema.json#L113
+18:54:43 <duglin> @crosbymichael I assume that if there were to be some kind of filter on a “list” command you’d prefer to see it in containerD and not runc, right?  If it were available at all.
+18:54:43 <collabot`> duglin: Error: "crosbymichael" is not a valid command.
+18:54:52 <duglin> @crosbymichael I assume that if there were to be some kind of filter on a “list” command you’d prefer to see it in containerD and not runc, right?  If it were available at all.
+18:55:19 <vbatts> https://github.com/opencontainers/specs/pull/313/files#diff-03fdd7c9cbfa0f152151695060d85cb6R73
+18:56:15 <duglin> if so, I can see an argument for then not having a label/annotation split and containerD woudl need to be the one to distinguish between the two, not runc
+19:00:22 <mrunalp> specs-go
+19:02:00 <mrunalp> #endmeeting
+19:02:03 <mrunalp> vbatts, ^
+19:02:05 <vbatts> #action vbatts rename the ./src/specs/ to ./specs-go/
+19:02:11 <vbatts> #endmeething
+19:02:16 <mrunalp> thing :D
+19:02:17 <vbatts> #endmeeting

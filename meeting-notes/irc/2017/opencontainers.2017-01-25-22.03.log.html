@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">22:03:04</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-01-25 discussion</span>
+<a name="l-2"></a><span class="tm">22:03:04</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Jan 25 22:03:04 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">22:03:04</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">22:03:04</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2017_01_25_discussion'
+<a name="l-5"></a><span class="tm">22:03:09</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">vbatts</span>
+<a name="l-6"></a><span class="tm">22:03:09</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: vbatts wking
+<a name="l-7"></a><span class="tm">22:08:11</span><span class="nk"> &lt;RobDolinMS&gt;</span> I'm present on the call and waiting for the UberConference video buffering
+<a name="l-8"></a><span class="tm">22:08:27</span><span class="nk"> &lt;RobDolinMS&gt;</span> I'm in a shared space so I've muted my audio
+<a name="l-9"></a><span class="tm">22:09:03</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">timeline for upcoming milestones?</span>
+<a name="l-10"></a><span class="tm">22:09:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> specifically an rc4 for image-spec (which currently has no timeline)
+<a name="l-11"></a><span class="tm">22:09:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the manifest index is a big change.  Should that be rc4 or rc5?
+<a name="l-12"></a><span class="tm">22:10:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'm still working that over in a local branch
+<a name="l-13"></a><span class="tm">22:10:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> that conversation could last until another RC.  It depends on the rc4 timeline
+<a name="l-14"></a><span class="tm">22:11:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think the index is the only rc4 blocker.  If we punt it to rc5, we can cut rc4 now
+<a name="l-15"></a><span class="tm">22:11:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> But I think we need to figure out indexing before we cut 1.0
+<a name="l-16"></a><span class="tm">22:11:53</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/438</span>
+<a name="l-17"></a><span class="tm">22:12:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> for example, can we relax the 'manifests' field name?
+<a name="l-18"></a><span class="tm">22:12:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> what other things will we point at?
+<a name="l-19"></a><span class="tm">22:12:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> in image-layout, it could be anything
+<a name="l-20"></a><span class="tm">22:12:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> so you want to define tagged CAS roots
+<a name="l-21"></a><span class="tm">22:13:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> you can push blobs to the registry, but to walk the Merkle DAG you need to start somewherer
+<a name="l-22"></a><span class="tm">22:13:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the index is saying "here's the roots"
+<a name="l-23"></a><span class="tm">22:13:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> we already have that with image-layout
+<a name="l-24"></a><span class="tm">22:14:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> with the AppStream project, there's XML with this sort of thing
+<a name="l-25"></a><span class="tm">22:15:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> an annotation might give information like an AppStream revision
+<a name="l-26"></a><span class="tm">22:15:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> the media type would be their XML media type
+<a name="l-27"></a><span class="tm">22:15:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> the CAS blob would be their XML file
+<a name="l-28"></a><span class="tm">22:16:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> so it's more generic than manifests
+<a name="l-29"></a><span class="tm">22:16:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> it's sort of like channels
+<a name="l-30"></a><span class="tm">22:16:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> some folks handle this with tags/annotations too
+<a name="l-31"></a><span class="tm">22:17:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I realize platform/OS makes sense in some contexts, but it may not make sense in all contexts
+<a name="l-32"></a><span class="tm">22:18:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> first, the platform stuff is not required (Docker will default to the first one)
+<a name="l-33"></a><span class="tm">22:18:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the platform stuff is annotation-like
+<a name="l-34"></a><span class="tm">22:18:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but these other things are like channels/extensions, and aren't manifests
+<a name="l-35"></a><span class="tm">22:18:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> so keep 'manifests' and add 'channels' with more descriptors?
+<a name="l-36"></a><span class="tm">22:19:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> then how narrow is the roll of the channels/extentions type?
+<a name="l-37"></a><span class="tm">22:19:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think we should relax the platform requirement anyway
+<a name="l-38"></a><span class="tm">22:20:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> so basically, the goal of a manifest list is to be a useful top-level root object
+<a name="l-39"></a><span class="tm">22:20:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> how flexible do we want to make that entry point?  And do we want to allow multiple entry points?
+<a name="l-40"></a><span class="tm">22:21:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> in my experience, changing the entry point is a huge pain
+<a name="l-41"></a><span class="tm">22:21:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> even renaming the manifest list to 'index' and allowing more fields might be reasonable here
+<a name="l-42"></a><span class="tm">22:21:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> it almost becomes a package list
+<a name="l-43"></a><span class="tm">22:21:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> would any image have multiple manifest lists?
+<a name="l-44"></a><span class="tm">22:22:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I guess if it had a v6 tag...
+<a name="l-45"></a><span class="tm">22:23:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> so to preserve manifest lists as the entry point, it would be safest to just loosen some requirements (platform, manifest values, ...)
+<a name="l-46"></a><span class="tm">22:23:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> then nothing serious has changed (except maybe 'manifests' -&gt; 'descriptors')
+<a name="l-47"></a><span class="tm">22:24:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> images that have an existing manifest list don't need to change it (besides maybe the field name)
+<a name="l-48"></a><span class="tm">22:24:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I think we want that as an optional index.json
+<a name="l-49"></a><span class="tm">22:24:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think we want to have 'manifests' but keep it optional and then add a new 'channels' or some such
+<a name="l-50"></a><span class="tm">22:25:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm also open to renaming "manifest list" to "index"
+<a name="l-51"></a><span class="tm">22:25:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> so you can get your index (or manifest list or whatever) JSON from wherever, and then dump it into the same processor
+<a name="l-52"></a><span class="tm">22:26:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we can also kick this around offline
+<a name="l-53"></a><span class="tm">22:26:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> so this seems resolvable in the short term
+<a name="l-54"></a><span class="tm">22:27:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> so cut v4 now and punt this to v5?
+<a name="l-55"></a><span class="tm">22:28:00</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/issues/247
+<a name="l-56"></a><span class="tm">22:29:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> vbatts, have you tried using absolute references for this^?
+<a name="l-57"></a><span class="tm">22:29:22</span><span class="nk"> &lt;RobDolinMS&gt;</span> &lt;img src="img/media-types.png" /&gt;
+<a name="l-58"></a><span class="tm">22:29:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I haven't tried tat
+<a name="l-59"></a><span class="tm">22:29:47</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Maybe:</span> &lt;img src="http://opencontainers.github.io/image-spec/img/media-types.png" /&gt;
+<a name="l-60"></a><span class="tm">22:31:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> when you build the doc it works fine.  I just hadn't bundled the image directory into the released content
+<a name="l-61"></a><span class="tm">22:31:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> you could also base-64 encode the files and inline them (to get stand-alone HTML)
+<a name="l-62"></a><span class="tm">22:31:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> but I couldn't find a straightforward way to do that
+<a name="l-63"></a><span class="tm">22:32:41</span><span class="nk"> &lt;RobDolinMS&gt;</span> https://github.com/opencontainers/image-spec/releases/tag/v1.0.0-rc3
+<a name="l-64"></a><span class="tm">22:35:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> can you just push the extra images?
+<a name="l-65"></a><span class="tm">22:35:08</span><span class="nk"> &lt;RobDolinMS&gt;</span> Per chat on OCI Dev ConCall, a partial (and sufficient) solution would be for a /img/ directory to be included with the release.  When the HTML spec is published, the /img/ directory should be published in the same location and the images will render.
+<a name="l-66"></a><span class="tm">22:35:18</span><span class="nk"> &lt;wking&gt;</span> can we just push a tar or zip of the whole thing?
+<a name="l-67"></a><span class="tm">22:35:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> some people won't bother looking inside a tar/zip
+<a name="l-68"></a><span class="tm">22:35:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> when we publish the spec externally this won't be a problem
+<a name="l-69"></a><span class="tm">22:36:52</span><span class="nk"> &lt;wking&gt;</span> you might also be able to set 'base' pointing at GitHub
+<a name="l-70"></a><span class="tm">22:38:15</span><span class="nk"> &lt;wking&gt;</span> I'll file a PR for #389, since #480 seems dead
+<a name="l-71"></a><span class="tm">22:38:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> there's a lot of stuff since rc3, so we should just cut rc4 now (without the index stuff)
+<a name="l-72"></a><span class="tm">22:38:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> sounds good
+<a name="l-73"></a><span class="tm">22:39:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> what about removing vendoring?
+<a name="l-74"></a><span class="tm">22:39:12</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/528</span>
+<a name="l-75"></a><span class="tm">22:39:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I think this is going to be a problem for the wider Go community and the vendor/ magic
+<a name="l-76"></a><span class="tm">22:39:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> the compiler favors the longer import name
+<a name="l-77"></a><span class="tm">22:40:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> so if Go finds github.com/.../vendor/.../vendor/... the most-deeply-vendored package wins out
+<a name="l-78"></a><span class="tm">22:40:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> and there's not a good way to alias around it
+<a name="l-79"></a><span class="tm">22:41:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> can't we solve this by moving the vendor directory?
+<a name="l-80"></a><span class="tm">22:41:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> yeah, we can rename 'vendor' to 'deps' (or whatever)
+<a name="l-81"></a><span class="tm">22:42:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> You can also move it under cmd/
+<a name="l-82"></a><span class="tm">22:42:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> yeah, we can have a cmd/vendor
+<a name="l-83"></a><span class="tm">22:42:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> mostly this is used by tests.  Maybe we could move it into schema?
+<a name="l-84"></a><span class="tm">22:43:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> no need to vendor go-digest (it should be stable)
+<a name="l-85"></a><span class="tm">22:43:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> errors should also be stable.  The rest of this is for tests...  Also JSON Schema validation...
+<a name="l-86"></a><span class="tm">22:44:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'd thought this was repo-level.  I'm not sure how difficult this problem is
+<a name="l-87"></a><span class="tm">22:44:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> does anyone else have image-spec topics?
+<a name="l-88"></a><span class="tm">22:44:56</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/pull/388
+<a name="l-89"></a><span class="tm">22:45:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I didn't like this the last time I looked at it.  stevvooe, what changed?
+<a name="l-90"></a><span class="tm">22:46:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> this won't be as much of a pain for containerd
+<a name="l-91"></a><span class="tm">22:46:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> having gzip in the layers forever will limit us
+<a name="l-92"></a><span class="tm">22:46:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> my first issue was a problem for sharing images, but I found a way to make that matter less
+<a name="l-93"></a><span class="tm">22:47:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> the tar archives started with the assumption that compression was just for the transfer
+<a name="l-94"></a><span class="tm">22:47:47</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/docker/containerd/pull/427
+<a name="l-95"></a><span class="tm">22:49:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> we'll try to get everything in for rc4 by tomorrow
+<a name="l-96"></a><span class="tm">22:50:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> will the runtime also want an rc4?  It's convenient that the specs are fairly synchronizd
+<a name="l-97"></a><span class="tm">22:50:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'm not sure
+<a name="l-98"></a><span class="tm">22:51:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> anything else?
+<a name="l-99"></a><span class="tm">22:52:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> stephenrwalli has offered to demo things at next week's meeting
+<a name="l-100"></a><span class="tm">22:52:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'd appreciate that
+<a name="l-101"></a><span class="tm">22:52:47</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

@@ -1,0 +1,269 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2016-01-20 discussion</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2016-01-20 discussion</h1>
+<span class="details">
+Meeting started by wking at 18:02:23 UTC
+(<a href="opencontainers.2016-01-20-18.02.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">versioning OCI repos</b> <span class="details">(<a href='opencontainers.2016-01-20-18.02.log.html#l-7'>wking</a>, 18:03:14)</span>
+<ol type="a">
+  <li><span class="INFO">Spec is primary version and other repos should
+    match spec</span> <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-14'>RobDolinMS</a>,
+    18:06:59)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">mrunalp to
+    setup these branches in opencontainers/ocitools</span> <span
+    class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-15'>wking</a>,
+    18:07:07)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">JSON Schema for validation</b> <span class="details">(<a href='opencontainers.2016-01-20-18.02.log.html#l-19'>wking</a>, 18:08:13)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/specs/pull/313">https://github.com/opencontainers/specs/pull/313</a>
+    <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-20'>wking</a>,
+    18:08:27)</span></li>
+  <li><span class="INFO">: Present: on BlueJeans call: Mrunal Patel,
+    Abhijeeth Nuthan, Brandon Philips, Dug, Guest, Jesse Butler, julz,
+    Mike Brown...</span> <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-25'>RobDolinMS</a>,
+    18:12:37)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">single, unified config file</b> <span class="details">(<a href='opencontainers.2016-01-20-18.02.log.html#l-26'>wking</a>, 18:12:57)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/specs/pull/284">https://github.com/opencontainers/specs/pull/284</a>
+    <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-27'>wking</a>,
+    18:13:01)</span></li>
+  <li><span class="INFO">: Present on BlueJeans call: ... Tianon, Trevor
+    King, Vincent Boen Batts, Vishnu Kannan</span> <span
+    class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-28'>RobDolinMS</a>,
+    18:13:05)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">wking to
+    reroll #284 on the current master</span> <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-30'>wking</a>,
+    18:13:31)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">splitting mknod from device cgroups</b> <span class="details">(<a href='opencontainers.2016-01-20-18.02.log.html#l-31'>wking</a>, 18:13:44)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/specs/pull/298">https://github.com/opencontainers/specs/pull/298</a>
+    <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-32'>wking</a>,
+    18:13:53)</span></li>
+  <li><span class="INFO">: Now present on call: Jason Bouzane</span>
+    <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-35'>RobDolinMS</a>,
+    18:16:15)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/specs/pull/298/files#diff-b753d6f046da0a2956b5218efd779b7fR119">https://github.com/opencontainers/specs/pull/298/files#diff-b753d6f046da0a2956b5218efd779b7fR119</a>
+    <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-38'>wking</a>,
+    18:17:33)</span></li>
+  <li><span class="INFO">: Now present on BlueJeans call:
+    crosbymichael</span> <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-45'>RobDolinMS</a>,
+    18:20:39)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">prctl vs DisableNewPrivileges</b> <span class="details">(<a href='opencontainers.2016-01-20-18.02.log.html#l-60'>wking</a>, 18:26:40)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/specs/milestones/v0.3.0">https://github.com/opencontainers/specs/milestones/v0.3.0</a>
+    <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-61'>vbatts</a>,
+    18:26:41)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/specs/pull/290">https://github.com/opencontainers/specs/pull/290</a>
+    <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-62'>wking</a>,
+    18:26:44)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">mrunalp to
+    reroll with the consistent name</span> <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-65'>wking</a>,
+    18:28:39)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/specs/pull/225">https://github.com/opencontainers/specs/pull/225</a>
+    <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-66'>mrunalp</a>,
+    18:29:06)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">expanded ops definitions</b> <span class="details">(<a href='opencontainers.2016-01-20-18.02.log.html#l-67'>wking</a>, 18:29:11)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/specs/pull/225">https://github.com/opencontainers/specs/pull/225</a>
+    <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-68'>wking</a>,
+    18:29:19)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">Maintainers
+    should review</span> <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-72'>RobDolinMS</a>,
+    18:32:40)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">separate source and schema</b> <span class="details">(<a href='opencontainers.2016-01-20-18.02.log.html#l-75'>wking</a>, 18:34:29)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/specs/pull/276">https://github.com/opencontainers/specs/pull/276</a>
+    <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-76'>wking</a>,
+    18:34:36)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runc/pull/465">https://github.com/opencontainers/runc/pull/465</a>
+    <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-85'>duglin</a>,
+    18:40:27)</span></li>
+  <li><span class="INFO">Targeting Wed, Feb 3rd for v0.3.0</span> <span
+    class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-86'>RobDolinMS</a>,
+    18:40:27)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">Split of Create and Start</b> <span class="details">(<a href='opencontainers.2016-01-20-18.02.log.html#l-87'>RobDolinMS</a>, 18:40:36)</span>
+<ol type="a">
+  <li><a href=""></a>  <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-88'>wking</a>,
+    18:40:44)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runc/pull/465">https://github.com/opencontainers/runc/pull/465</a>
+    <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-89'>wking</a>,
+    18:40:46)</span></li>
+  <li><a
+    href="https://github.com/wking/ccon#host">https://github.com/wking/ccon#host</a>
+    <span class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-107'>wking</a>,
+    18:49:57)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">crosbymichael
+    to continue the discussion in
+    https://github.com/opencontainers/runc/pull/465</span> <span
+    class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-115'>wking</a>,
+    18:55:55)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">julz to
+    continue the discussion in
+    https://github.com/opencontainers/runc/pull/465</span> <span
+    class="details">(<a
+    href='opencontainers.2016-01-20-18.02.log.html#l-116'>wking</a>,
+    18:56:01)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 18:56:07 UTC
+(<a href="opencontainers.2016-01-20-18.02.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>mrunalp to setup these branches in opencontainers/ocitools</li>
+  <li>wking to reroll #284 on the current master</li>
+  <li>mrunalp to reroll with the consistent name</li>
+  <li>Maintainers should review</li>
+  <li>crosbymichael to continue the discussion in https://github.com/opencontainers/runc/pull/465</li>
+  <li>julz to continue the discussion in https://github.com/opencontainers/runc/pull/465</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> mrunalp <ol>
+    <li>mrunalp to setup these branches in opencontainers/ocitools</li>
+    <li>mrunalp to reroll with the consistent name</li>
+  </ol></li>
+  <li> wking <ol>
+    <li>wking to reroll #284 on the current master</li>
+  </ol></li>
+  <li><b>UNASSIGNED</b><ol>
+    <li>Maintainers should review</li>
+    <li>crosbymichael to continue the discussion in https://github.com/opencontainers/runc/pull/465</li>
+    <li>julz to continue the discussion in https://github.com/opencontainers/runc/pull/465</li>
+  </ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (77)</li>
+  <li>RobDolinMS (25)</li>
+  <li>duglin (7)</li>
+  <li>collabot` (5)</li>
+  <li>vbatts (1)</li>
+  <li>mrunalp (1)</li>
+  <li>lk4d4 (1)</li>
+  <li>vbatts|work (0)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

@@ -1,0 +1,34 @@
+17:02:30 <wking> #startmeeting 2016-06-29 discussion
+17:02:30 <collabot`> Meeting started Wed Jun 29 17:02:30 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:02:30 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:02:30 <collabot`> The meeting name has been set to '2016_06_29_discussion'
+17:03:06 <RobDolinMS> wking - AFAIK, yes.
+17:03:16 <wking> #chair RobDolinMS vbatts
+17:03:16 <collabot`> Current chairs: RobDolinMS vbatts wking
+17:03:51 <wking> with mrunalp away, who's going to chair the audio?
+17:05:19 <philips> No one can hear each other, right?
+17:05:31 <philips> vbatts: is at RH summit
+17:05:49 <wking> philips: I can't hear anyone
+17:06:47 <RobDolinMS> I just emailed caniszczyk with philips on CC
+17:08:08 <philips> and.... it told me the conference is full and rejected me
+17:08:32 <wking> Maybe we should skip audio and just meet on IRC ;)
+17:09:27 <julz_> Sgtm
+17:10:10 <RobDolinMS> tianon - are you on IRC?
+17:10:30 <mikebrow> yeah uberconference is full
+17:11:22 <RobDolinMS> stevvooe - are you on IRC?
+17:11:27 <stevvooe> i am
+17:11:40 <jlb13> philips i just dropped off, maybe you can get in now
+17:11:46 <jlb13> i'll just watch irc
+17:11:55 <RobDolinMS> anuthan_work - are you on IRC
+17:12:11 <jlb13> he's around, wfh home right now. i'll make sure he's here
+17:12:22 <stevvooe> i have no audio...
+17:12:37 <philips> still full, I think we should cancel. We are wasting a lot of expensive time.
+17:12:45 <stevvooe> seconded
+17:12:50 <jlb13> +1
+17:12:51 <philips> I will email the list
+17:12:51 <RobDolinMS> I'm OK with that.
+17:12:54 <mikebrow> +1
+17:12:56 <stevvooe> i'll use this time to take care of action items...
+17:12:57 <vishh> +1
+17:13:07 <mikebrow> see you guys next week
+17:13:10 <wking> #endmeeting

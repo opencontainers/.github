@@ -1,0 +1,160 @@
+21:01:02 <wking> #startmeeting 2016-10-12 discussion
+21:01:02 <collabot> Meeting started Wed Oct 12 21:01:02 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:01:02 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:01:02 <collabot> The meeting name has been set to '2016_10_12_discussion'
+21:01:10 <stevvooe> vbatts|work: in the context of OCI, i don't see how this conversation is relevant
+21:01:12 <wking> #chair mrunalp vbatts|work
+21:01:12 <collabot> Current chairs: mrunalp vbatts|work wking
+21:01:32 * cyphar can't be on the call, since I'm just about to head out.
+21:01:59 <stevvooe> vbatts|work: you tagged a 1.0-rc1, so I just don't see what we can get by continuing to rexamine long-standing design decisions
+21:02:32 <wking> #topic support for VMs
+21:02:49 <wking> #link https://github.com/opencontainers/runtime-spec/pull/405
+21:03:49 <wking> vbatts|work: update after Europe face-to-face: https://github.com/opencontainers/runtime-spec/pull/405#issuecomment-251420271
+21:04:23 <wking> vbatts|work: do we have a quorum on the call?
+21:04:40 <wking> philips: it turns out our phone numbers in the READMEs are wrong.  I'll file fixes
+21:05:49 <wking> mrunalp: so is #405 now targetting 1.0?
+21:06:01 <wking> vbatts|work: I'm having bad call quality, will reconnect shortly
+21:07:47 <wking> vbatts|work: the runtime spec is effectively what is being run, not necessarily the state.
+21:07:57 <wking> vbatts|work: Runtime-specific details like paths to namespaces
+21:08:21 <wking> vbatts|work: The top-level VM-config object could live side by side with a Linux object (or a Solaris object, or a Windows object)
+21:08:41 <wking> vbatts|work: Now that we have a clear split between runtime and image, there didn't seem to be as many objections to landing this in runtime-spec
+21:09:02 <wking> vbatts|work: There was concern about how path-to-kernel works in Windows and hypervisor-specific settings
+21:09:13 <wking> vbatts|work: That feedback was cool, but not very helpful
+21:09:45 <wking> vbatts|work: the folks that are interested in VM configuration may not want to wait for Windows involvement, since historically they have been somewhat last-minute
+21:10:05 <wking> vbatts|work: if anyone else has hesitations on the VM additions, please weigh  in on #405
+21:10:31 <wking> vbatts|work: the goal is to get something generic enough that it can be reused by Microsoft in the future
+21:10:58 <wking> mrunalp: can the VM settings and Linux settings coexist?
+21:11:13 <wking> vbatts|work: the discussion didn't go that far.
+21:11:47 <wking> vbatts|work: you could say, by virtue of it being in a VM, maybe you could say a namespace had been unshared so you might not have to use kernel features to do further namespacing
+21:12:15 <wking> vbatts|work: those would be good notes to document in a VM PR
+21:12:21 <wking> mrunalp: I'll add a comment
+21:12:42 <wking> vbatts|work: memory quotas and CPU shares could be set at the hypervisor level
+21:14:16 <wking> This sounds like it's moving towards generic settings vs. the current settings that are (for Linux) very tightly bound to cgroups
+21:14:22 <wking> vbatts|work: I don't think we should go that far right now
+21:14:53 <wking> vbatts|work: We can clarify how this should be handled without adding a new, generic resource-control layer
+21:15:52 <wking> I'm not sure we can allow folks to skip cgroups setups (etc.) if we don't get a generic resource-control layer, but I agree that I'm not excited about defining that generic layer
+21:15:56 <wking> mrunalp: is this part of 1.0?
+21:16:30 <wking> vbatts|work: without this it will be hard for Intel to hit a 1.0 that doesn't have unspecified behavior
+21:17:15 <wking> vbatts|work: but I don't see blockers other than the resource-control wording
+21:17:45 <wking> mrunalp: any other runtime topics?
+21:18:00 <wking> vbatts|work: what's going on with the runtime backlog?
+21:18:16 <wking> mrunalp: we're thinking the console stuff will land by the end of the month, but they're big changes
+21:18:36 <wking> #link https://github.com/opencontainers/runtime-spec/pull/513
+21:18:41 <wking> #link https://github.com/opencontainers/runtime-spec/pull/518
+21:19:50 <wking> vbatts|work: anything else from runtime-spec or runtime-tools?
+21:20:19 <wking> #topic image-spec overview
+21:20:27 <wking> vbatts|work: we cut 1.0.0-rc.1 last week
+21:20:41 <wking> vbatts|work: there's been a bit more activity in image-spec with a number of open PRs
+21:20:58 <wking> vbatts|work: I'm personally behind on image changes since last Thursday
+21:21:15 <wking> vbatts|work: but we're hoping to plow through that soon
+21:21:32 <wking> philips: I think we should do an rc2.  There have been a few minor fixes in the last week and half
+21:21:42 <wking> philips: I don't think any of the open PRs are super-critical
+21:22:08 <wking> vbatts|work: The only major thing is figuring out how to manage the image-spec / image-tools split
+21:22:37 <wking> vbatts|work: Like the runtime-spec, basic structs should be in image-spec, and a lot of (but not all of) the validation should be in image-tools
+21:23:01 <wking> vbatts|work: image-spec should never import from image-tools; it should keep the JSON Schema and enough for basic validation locally
+21:23:25 <wking> #link https://github.com/opencontainers/image-spec/pull/337
+21:23:33 <wking> stevvooe (I think): How do we decide what validation is in image-spec and what is not?
+21:23:54 <wking> vbatts|work: I think it's just the JSON Schema and enough tooling to validate the spec's JSON examples
+21:24:13 <wking> stevvooe: Are we going to continue with JSON Schema, because I don't see a lot of benefit in practice and it's complicated
+21:24:49 <wking> stevvooe: I don't see what JSON Schema gives us
+21:26:36 <wking> stevvooe: I've had a number of problems with our existing JSON Schema
+21:26:44 <wking> Can you file issues for those^?
+21:27:26 <wking> vbatts|work: if you have an unkown field, it doesn't fail
+21:27:34 <wking> That's^ an explicit design decision
+21:27:43 <wking> vbatts|work: but it might be an accident
+21:28:25 <wking> vbatts|work: The Go libraries are pretty good, but JSON Schema on the whole sucks
+21:28:46 <wking> vbatts|work: I'm fine with getting rid of it so long as we have some unit testing on that level
+21:29:05 <wking> stevvooe: mis-typing can be solved with a strict mode (or a pedantic mode?) during unit tests
+21:29:49 <wking> vbatts|work: I'm not against what you're saying stevvooe, but I'm not sure there's a better option
+21:32:28 <wking> I think replacing JSON Schema with a pure-Go approach is possible, but would be a lot wordier.  I guess we'll see if there's a PR implementing the switch
+21:32:38 <wking> philips: Getting back to the repo split...
+21:32:59 <wking> stevvooe: I think shallow validation belongs in the spec repo, and anything that relies on CAS blobs belongs in the tools repo
+21:33:35 <wking> stevvooe: for instance, validating an image-layout would be in tools, but validating a single JSON object would be in specs
+21:34:09 <wking> stevvooe: validating a tarball would be in tools
+21:34:14 <wking> philips: just JSON objects?
+21:34:18 <wking> stevvooe: yeah, I guess
+21:34:28 <wking> stevvooe: It's not exactly the right distinction
+21:34:43 <wking> vbatts|work: so what needs to be done?
+21:35:04 <wking> vbatts|work: what about #337?
+21:35:44 <wking> stevvooe: there are several packages: schema, image, and specs-go
+21:36:22 <wking> stevvooe: maybe I propose a package structure and we can submit PRs to the right places?
+21:36:32 <wking> vbatts|work: you want to open a tracker issue?
+21:36:48 <wking> #action stevvooe to propose a package structure around the image repo split
+21:36:59 <wking> philips: that sounds good
+21:37:15 <wking> philips: maybe a refactor of schema and specs-go and then drop cmd
+21:37:32 <wking> stevvooe: we somewhat need to do this at the same time so we don't lose functionality
+21:37:45 <wking> stevvooe: how did logger get in validate?
+21:38:21 <wking> stevvooe: maybe we can pick up #337?
+21:38:41 <wking> vbatts|work: if you see a layout, describe that.  And we'll compare with what's landed in image-tools
+21:38:49 <wking> philips: anything else?
+21:39:16 <wking> vbatts|work: I'm mulling on compression instability and DiffIDs, but it hasn't crystalized yet
+21:39:23 <wking> stevvooe: what are your concerns?
+21:39:41 <wking> vbatts|work: I don't like relying on a particular gzip compression
+21:39:55 <wking> vbatts|work: you should be able to say "this is the object, regardless of how it's compressed"
+21:40:14 <wking> stevvooe: I don't think we've ever made the guarantee of an object regardless of compression
+21:40:23 <wking> stevvooe: from the start they've been opaque blobs
+21:40:48 <wking> stevvooe: integrating with CAS systems, we've been trying to round-trip unpack/repack
+21:41:01 <wking> stevvooe: and you can do some stuff with round-tripping.
+21:41:19 <wking> stevvooe: but if you teach your CAS engine about compression, it's a step down the slippery slope
+21:41:41 <wking> stevvooe: finding a line of "how much introspection should the CAS engine have" is difficult
+21:42:10 <wking> stevvooe: if you say "I can compress this 20 times and get 20 different blobs", you have to store 20 blobs and a bunch of lookup tuples
+21:42:22 <wking> or maybe one blob and a bunch of lookup tuples^
+21:42:38 <wking> stevvooe: what you want is one-way artifact creation, and then you don't need to worry about hash stability
+21:42:42 <wking> +1 to that^
+21:42:59 <wking> vbatts|work: I don't have a good way to describe why I'm not comfortable with it
+21:43:20 <wking> vbatts|work: it seems like it's based on incompletly-defined assumptions
+21:43:45 <wking> vbatts|work: even if we require a particular RFC for gzip compression the bytes are still implementation-specific
+21:43:55 <wking> stevvooe: but you can say the same thing about tar and JSON
+21:44:19 <wking> stevvooe: canonical JSON is kind of a myth.  You can have a number of JSON serializations for the same semantic JSON content
+21:44:33 <wking> stevvooe: this is the problem with bi-directional tasks.  gzip is just one source of variation
+21:44:46 <wking> stevvooe: I have the same round-trip concerns, but...
+21:45:24 <wking> #topic annotations for image config
+21:45:36 <wking> #link https://github.com/opencontainers/image-spec/pull/371
+21:45:41 <wking> #link https://github.com/opencontainers/image-spec/pull/372
+21:46:06 <wking> vbatts|work: there are labels in the Docker code, but nobody has specified them anywhere
+21:46:23 <wking> vbatts|work: stevvooe, do you know why they aren't specified?  Should we file a PR against Docker?
+21:46:53 <wking> stevvooe: where do we allow annotations now?
+21:47:11 <wking> vbatts|work: several places in runtime-spec.  In image-spec, currently just for manifests and manifest lists
+21:47:22 <wking> stevvooe: they make a lot more sense at the config level...
+21:48:01 <wking> stevvooe: I think they are defined inside the config (in Docker)
+21:48:12 <vbatts|work> https://github.com/docker/docker/blob/master/image/spec/v1.2.md
+21:49:41 <stevvooe> https://github.com/docker/docker/blob/master/api/types/container/config.go
+21:49:43 <wking> stevvooe: there are labels in the config.  I'm not sure why they aren't in the spec.  Probably just an omission
+21:50:02 <wking> stevvooe: I don't know if we actually serialize any of these fields
+21:50:17 <wking> stevvooe: from a high-level perspective, you don't want to put labels in an image
+21:50:31 <wking> stevvooe: they could be runtime labels which don't make sense to distribute
+21:50:40 <wking> vbatts|work: the labels are there, they aren't just runtime labels
+21:51:05 <wking> stevvooe: I'm not a huge fan of putting labels down at this level.  It's another source of hash instability
+21:51:24 <wking> stevvooe: especially if they're inherited from the running container, since you might mix runtime and image concepts
+21:51:31 <wking> vbatts|work: I think folks are using these on images
+21:51:40 <wking> stevvooe: how do I label an image?
+21:52:02 <wking> stevvooe: I don't think this is very well thought-out
+21:52:24 <wking> vbatts|work: the conversation that lead to this was folks wanted to see the same stuff in the OCI that they were using in Docker
+21:52:35 <wking> stevvooe: when you put a label on an image it becomes a new image
+21:52:47 <wking> vbatts|work: that's fine
+21:53:01 <wking> vbatts|work: you don't have to add labels after the fact
+21:53:12 <wking> vbatts|work: you can add labels when you build it and then sign what you get
+21:53:23 <wking> stevvooe: I don't want to look at it from a Dockerfile perspective
+21:53:46 <wking> stevvooe: if you look at a Dockerfile as what happens between image changes...  Are Dockerfiles the only way to set these?
+21:53:59 <wking> vbatts|work: you may be able to set these through 'docker commit'...
+21:54:05 <wking> stevvooe: I don't see anything for that
+21:54:21 <wking> stevvooe: you shouldn't be able to label a container and have that label become part of the image
+21:54:44 <wking> stevvooe: so run a container, label it, and 'docker commit'.  Hopefully those labels don't show up in the image
+21:54:56 <wking> vbatts|work: you'd want to do it at commit time
+21:54:58 <wking> stevvooe: yeah
+21:55:10 <wking> vbatts|work: well...
+21:55:48 <wking> stevvooe: imagine you're using the container labels to do access control.  You don't want those labels to give surprise access-control to a new container launched from the image
+21:56:06 <wking> vbatts|work: that might just be a poor workflow, and we still want to support the config-label field
+21:56:33 <wking> vbatts|work: links to projects, docs, Git commits.  All that is safe and being distributed in config labels now
+21:56:47 <wking> stevvooe: what about annotations vs. labels?
+21:56:54 <wking> vbatts|work: that's just naming
+21:57:14 <wking> vbatts|work: there was "metadata" originally in Docker, but OCI has settled on "annotations"
+21:58:20 <wking> runtime-spec and image-spec don't really care what goes into the current annotation fields (it's a mostly-opaque string->string mapping)
+21:58:41 <wking> vbatts|work: "Labels" would be backwards-compatible, but "annotations" fits exiting OCI naming
+21:59:05 <wking> stevvooe: I'm really concerned that there's not a clear path to put labels on an image
+21:59:26 <wking> stevvooe: there's the danger of picking up runtime labels.  And we have to figure out if these are inherited by child images
+21:59:52 <wking> inhertance is a build-time issue that image-spec doesn't have to care about
+22:00:01 <wking> vbatts|work: if you add new labels, you want a new checksum
+22:00:13 <wking> stevvooe: I'll take a peek and try and understand what Docker's doing
+22:00:26 <wking> vbatts|work: everyone review backlog items!
+22:00:56 <wking> #endmeeting

@@ -1,0 +1,261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2017-05-10 runtime-spec 1.0 preparation</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2017-05-10 runtime-spec 1.0 preparation</h1>
+<span class="details">
+Meeting started by wking at 21:03:16 UTC
+(<a href="opencontainers.2017-05-10-21.03.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">spec.md: add MUST NOT and SHALL NOT for judging compliance</b> <span class="details">(<a href='opencontainers.2017-05-10-21.03.log.html#l-7'>wking</a>, 21:03:54)</span>
+<ol type="a">
+  <li><a
+    href="https://tools.ietf.org/html/rfc2616#section-1.2">https://tools.ietf.org/html/rfc2616#section-1.2</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-8'>wking</a>,
+    21:04:40)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/797">https://github.com/opencontainers/runtime-spec/pull/797</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-10'>wking</a>,
+    21:05:35)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">Makefile: Add .install.* to .PHONY</b> <span class="details">(<a href='opencontainers.2017-05-10-21.03.log.html#l-11'>wking</a>, 21:05:45)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/791">https://github.com/opencontainers/runtime-spec/pull/791</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-12'>wking</a>,
+    21:05:50)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">config: Document 'rbind' and 'bind' mount options extensions</b> <span class="details">(<a href='opencontainers.2017-05-10-21.03.log.html#l-15'>wking</a>, 21:08:12)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/771">https://github.com/opencontainers/runtime-spec/pull/771</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-16'>wking</a>,
+    21:08:18)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/771#issuecomment-300559556">https://github.com/opencontainers/runtime-spec/pull/771#issuecomment-300559556</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-22'>wking</a>,
+    21:12:36)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">config-linux: RFC 2119 tightening for namespaces</b> <span class="details">(<a href='opencontainers.2017-05-10-21.03.log.html#l-24'>wking</a>, 21:13:14)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/767">https://github.com/opencontainers/runtime-spec/pull/767</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-25'>wking</a>,
+    21:13:21)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">https://github.com/opencontainers/runtime-spec/pull/747</b> <span class="details">(<a href='opencontainers.2017-05-10-21.03.log.html#l-26'>wking</a>, 21:14:17)</span>
+<br></li>
+<li><b class="TOPIC">runtime-linux: Condition /proc/self/fd symlinks on source existence</b> <span class="details">(<a href='opencontainers.2017-05-10-21.03.log.html#l-30'>wking</a>, 21:16:10)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/736">https://github.com/opencontainers/runtime-spec/pull/736</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-31'>wking</a>,
+    21:16:17)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">config: Clarify mounts[].source relative path anchor</b> <span class="details">(<a href='opencontainers.2017-05-10-21.03.log.html#l-34'>wking</a>, 21:17:22)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/735">https://github.com/opencontainers/runtime-spec/pull/735</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-35'>wking</a>,
+    21:17:27)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runc/blob/653207bc29a6d2d62b5d4f55b596467cb715a128/libcontainer/specconv/spec_linux.go#L253-L257">https://github.com/opencontainers/runc/blob/653207bc29a6d2d62b5d4f55b596467cb715a128/libcontainer/specconv/spec_linux.go#L253-L257</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-45'>tianon</a>,
+    21:22:08)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/blame/v1.0.0-rc5/config-linux.md#L38">https://github.com/opencontainers/runtime-spec/blame/v1.0.0-rc5/config-linux.md#L38</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-51'>wking</a>,
+    21:29:59)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">https://github.com/opencontainers/runtime-spec/pull/734</b> <span class="details">(<a href='opencontainers.2017-05-10-21.03.log.html#l-57'>wking</a>, 21:35:29)</span>
+<br></li>
+<li><b class="TOPIC">runtime: Container-scope-wide uniqueness for container IDs</b> <span class="details">(<a href='opencontainers.2017-05-10-21.03.log.html#l-58'>wking</a>, 21:35:39)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/734">https://github.com/opencontainers/runtime-spec/pull/734</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-59'>wking</a>,
+    21:35:44)</span></li>
+  <li><a href=""></a>  <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-60'>wking</a>,
+    21:36:48)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/blob/844f392f3924ce172e1559859864eefc2f06ae85/runtime.md#scope-of-a-container">https://github.com/opencontainers/runtime-spec/blob/844f392f3924ce172e1559859864eefc2f06ae85/runtime.md#scope-of-a-container</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-61'>wking</a>,
+    21:36:51)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">runtime: Drop "not supported by the base OS" loophole</b> <span class="details">(<a href='opencontainers.2017-05-10-21.03.log.html#l-70'>wking</a>, 21:43:14)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/733">https://github.com/opencontainers/runtime-spec/pull/733</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-71'>wking</a>,
+    21:43:19)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">runtime: Remove "features the runtime chooses to support</b> <span class="details">(<a href='opencontainers.2017-05-10-21.03.log.html#l-76'>wking</a>, 21:46:01)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/732">https://github.com/opencontainers/runtime-spec/pull/732</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-77'>wking</a>,
+    21:46:06)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">runtime: Remove status redefinitions from operations</b> <span class="details">(<a href='opencontainers.2017-05-10-21.03.log.html#l-80'>wking</a>, 21:58:47)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/702">https://github.com/opencontainers/runtime-spec/pull/702</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-81'>wking</a>,
+    21:58:53)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">config: Make process optional</b> <span class="details">(<a href='opencontainers.2017-05-10-21.03.log.html#l-82'>wking</a>, 22:00:45)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/701">https://github.com/opencontainers/runtime-spec/pull/701</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-83'>wking</a>,
+    22:00:51)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">runtime: Explicitly make process.* timing implementation-defined</b> <span class="details">(<a href='opencontainers.2017-05-10-21.03.log.html#l-91'>wking</a>, 22:03:15)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/700">https://github.com/opencontainers/runtime-spec/pull/700</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-92'>wking</a>,
+    22:03:20)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">config: Move valid-value rules to their own section</b> <span class="details">(<a href='opencontainers.2017-05-10-21.03.log.html#l-102'>wking</a>, 22:11:24)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/681">https://github.com/opencontainers/runtime-spec/pull/681</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-103'>wking</a>,
+    22:11:38)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">config: Do not allow runtimes to ignore properties defined by the spec</b> <span class="details">(<a href='opencontainers.2017-05-10-21.03.log.html#l-104'>wking</a>, 22:14:21)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/680">https://github.com/opencontainers/runtime-spec/pull/680</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-105'>wking</a>,
+    22:14:27)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">Update to Windows network options</b> <span class="details">(<a href='opencontainers.2017-05-10-21.03.log.html#l-110'>wking</a>, 22:20:18)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/801">https://github.com/opencontainers/runtime-spec/pull/801</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-10-21.03.log.html#l-111'>wking</a>,
+    22:20:25)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">config-linux: Specify relationships for new namespaces</b> <span class="details">(<a href='opencontainers.2017-05-10-21.03.log.html#l-115'>wking</a>, 22:23:32)</span>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 22:38:44 UTC
+(<a href="opencontainers.2017-05-10-21.03.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>(none)</li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (110)</li>
+  <li>collabot (4)</li>
+  <li>mrunalp (2)</li>
+  <li>RobDolinMS (2)</li>
+  <li>crosbymichael (1)</li>
+  <li>tianon (1)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

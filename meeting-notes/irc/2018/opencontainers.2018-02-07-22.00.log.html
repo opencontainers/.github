@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">22:00:24</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2018-02-07 discussion</span>
+<a name="l-2"></a><span class="tm">22:00:24</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Feb  7 22:00:24 2018 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">22:00:24</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">22:00:24</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2018_02_07_discussion'
+<a name="l-5"></a><span class="tm">22:00:29</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp</span>
+<a name="l-6"></a><span class="tm">22:00:29</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: mrunalp wking
+<a name="l-7"></a><span class="tm">22:02:19</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runc/issues/1709</span>
+<a name="l-8"></a><span class="tm">22:02:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we can continue to discuss runc 1.0 asynchronously
+<a name="l-9"></a><span class="tm">22:02:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> I think we need another rc before the release
+<a name="l-10"></a><span class="tm">22:03:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> yeah, that makes sense.  Especially with the delay since the last rc
+<a name="l-11"></a><span class="tm">22:03:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> and announce that this rc is likely to be the last rc before 1.0
+<a name="l-12"></a><span class="tm">22:03:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> yup
+<a name="l-13"></a><span class="tm">22:03:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> that's all I had
+<a name="l-14"></a><span class="tm">22:04:51</span><span class="nk"> &lt;wking&gt;</span> cracra (earlier): I'll likely reroll https://github.com/opencontainers/tob/pull/35 in the next week or so to address some of the open comments
+<a name="l-15"></a><span class="tm">22:06:32</span><span class="nk"> &lt;stevvooe&gt;</span> Is there a new meeting invite with the conference number?
+<a name="l-16"></a><span class="tm">22:06:47</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] tel:415-968-0849
+<a name="l-17"></a><span class="tm">22:07:31 </span><span class="nka">* stevvooe</span> <span class="ac">says thanks</span>
+<a name="l-18"></a><span class="tm">22:08:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> there are a number of comments on the open distribution spec proposal.  Last I looked it was pretty much synced up with my expectations
+<a name="l-19"></a><span class="tm">22:08:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> there have been a lot of comments on https://github.com/opencontainers/tob/pull/35, but I haven't gone through that yet
+<a name="l-20"></a><span class="tm">22:09:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the specification is open to extention, but we want to bring things in without working on it, and can evolve the scope afterwards
+<a name="l-21"></a><span class="tm">22:09:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we already had a public discussion on this specification
+<a name="l-22"></a><span class="tm">22:09:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> and a lot of us were already involved in this discussion
+<a name="l-23"></a><span class="tm">22:10:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> my goal is not to do a formal vote until the new TOB is established, and that will take another week or so
+<a name="l-24"></a><span class="tm">22:10:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> I don't think there were big issues with the initial proposal.
+<a name="l-25"></a><span class="tm">22:11:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> the discussion has been about how specific to be with the scope
+<a name="l-26"></a><span class="tm">22:11:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there are some PRs against the spec in distribution, and we can merge those pre-transfer, but we want those additions to land at some point (they're bandwidth limited)
+<a name="l-27"></a><span class="tm">22:12:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I haven't reviewed any PRs against the distribution repo except the OCI manifest one
+<a name="l-28"></a><span class="tm">22:12:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the OCI manifest one doesn't touch the spec.  I think the biggest change we'll want in the spec is decoupling the media types
+<a name="l-29"></a><span class="tm">22:13:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the two PRs referenced from the current proposal were blocked by implementation issues, but those issues have been resolved by subsequent implementation changes
+<a name="l-30"></a><span class="tm">22:14:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">dmcg:</span> some of the endpoints may be registry-specific.  We need different handling for manifests and blobs
+<a name="l-31"></a><span class="tm">22:14:43</span><span class="nk"> &lt;wking&gt;</span> (something about linking, which I missed)
+<a name="l-32"></a><span class="tm">22:15:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> things like mounting a blob that you don't have access too
+<a name="l-33"></a><span class="tm">22:15:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I don't think these details need to be worked out in the proposal.  The proposal just needs to allow for them later
+<a name="l-34"></a><span class="tm">22:15:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> the scope table may be useful for guiding future extentions.  But I'm in favor of making it narrow for a lateral move
+<a name="l-35"></a><span class="tm">22:16:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we don't allow underscores in names, partly due to the backend.  We might use characters to denote particular extentions
+<a name="l-36"></a><span class="tm">22:16:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we don't allow underscores at the beginning of the name components
+<a name="l-37"></a><span class="tm">22:16:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there's a concept of an afixing verb.  Like tags and manifests.  That would be an area for extention
+<a name="l-38"></a><span class="tm">22:17:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we can do this in a safe way that we weren't as comfortable with early on
+<a name="l-39"></a><span class="tm">22:17:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but I want to keep the scope of the proposal fairly narrow and let the maintainers work without introducing a bunch of new stuff
+<a name="l-40"></a><span class="tm">22:17:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I'm stepping out now, and handing note-taking off to you
+<a name="l-41"></a><span class="tm">22:17:54</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">wking:</span> okay
+<a name="l-42"></a><span class="tm">22:17:58</span><span class="nk"> &lt;mrunalp&gt;</span> thanks!
+<a name="l-43"></a><span class="tm">22:18:27</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">vbatts|work:</span> Any other topics?
+<a name="l-44"></a><span class="tm">22:19:10</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">stevvooe:</span> image tools project release process
+<a name="l-45"></a><span class="tm">22:20:35</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">dmcg:</span> What is the scope of the project?
+<a name="l-46"></a><span class="tm">22:20:54</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">stevvooe:</span> It is challenging as goals of the PR are not clear
+<a name="l-47"></a><span class="tm">22:21:01</span><span class="nk"> &lt;mrunalp&gt;</span> PRs
+<a name="l-48"></a><span class="tm">22:21:57</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">stevvooe:</span> validation of bundle and output
+<a name="l-49"></a><span class="tm">22:23:01</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">vbatts|work:</span> bundle conversion, bundle creating, assemble layers
+<a name="l-50"></a><span class="tm">22:23:09</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">vbatts|work:</span> tools around basic image functions
+<a name="l-51"></a><span class="tm">22:23:26</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">vbatts|work:</span> with one oci-image-tool
+<a name="l-52"></a><span class="tm">22:23:51</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">cracra:</span> Use for certification to validate a bundle
+<a name="l-53"></a><span class="tm">22:23:55</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">stevvooe:</span> We just clarify these goals
+<a name="l-54"></a><span class="tm">22:24:05</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">stevvooe:</span> It seems premature to jump from 0.4 to 1.0
+<a name="l-55"></a><span class="tm">22:24:15</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">stevvooe:</span> 0.5 would be more acceptable
+<a name="l-56"></a><span class="tm">22:24:47</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">stevvooe:</span> used dockers archive package in containerd as image tools project wasn't ready
+<a name="l-57"></a><span class="tm">22:26:35</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">stevvooe:</span> Question on a PR wasn't answered and was self-merged and used to satisfy some requirements for release.
+<a name="l-58"></a><span class="tm">22:26:55</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">cracra:</span> 1.0 should require more discussion
+<a name="l-59"></a><span class="tm">22:27:19</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">dmcg:</span> Is there roadmap/acceptance criteria for 1.0
+<a name="l-60"></a><span class="tm">22:27:27</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">stevvooe:</span> There is one but w/o much feedback
+<a name="l-61"></a><span class="tm">22:27:52</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">stevvooe:</span> Should clarify whether it is a CLI or a go pkg
+<a name="l-62"></a><span class="tm">22:28:25</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">stevvooe:</span> Having a better workflow defined would help
+<a name="l-63"></a><span class="tm">22:30:55</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">cracra:</span> Any other topics?
+<a name="l-64"></a><span class="tm">22:31:03</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">vbatts|work:</span> Anyone from Intel, Hyper or Kata?
+<a name="l-65"></a><span class="tm">22:31:25</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">vbatts|work:</span> VMs for OCI should be on this year
+<a name="l-66"></a><span class="tm">22:32:22</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">vbatts|work:</span> What would be needed to support most generic VMs
+<a name="l-67"></a><span class="tm">22:32:37</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">david-lyle:</span> Encouraging hyper to comment on the issue.
+<a name="l-68"></a><span class="tm">22:32:45</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">david-lyle:</span> will track that down
+<a name="l-69"></a><span class="tm">22:34:57</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">vbatts|work:</span> Could start fresh PR referencing that original PR
+<a name="l-70"></a><span class="tm">22:36:10</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">stevvooe:</span> What are the missing pieces?
+<a name="l-71"></a><span class="tm">22:36:21</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">david-lyle:</span> being able to specify kernel for the VM
+<a name="l-72"></a><span class="tm">22:36:28</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">stevvooe:</span> PR that specifies the kernel path?
+<a name="l-73"></a><span class="tm">22:36:33</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">david-lyle:</span> yes
+<a name="l-74"></a><span class="tm">22:36:49</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">vbatts|work:</span> Some configs optional when running in a VM
+<a name="l-75"></a><span class="tm">22:37:38</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">mrunalp:</span> Example of namespace specified to be host
+<a name="l-76"></a><span class="tm">22:37:54</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">david-lyle:</span> will talk with sameo to figure out where we are
+<a name="l-77"></a><span class="tm">22:38:38</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/405/files</span>
+<a name="l-78"></a><span class="tm">22:39:31</span><span class="nk"> &lt;sameo&gt;</span> <span class="hi">stevvooe:</span> being able to specify kernel+guest image per container. As described on PR #405
+<a name="l-79"></a><span class="tm">22:40:41</span><span class="nk"> &lt;sameo&gt;</span> stevvooe, mrunalp: I can give a kata update to the next OCI meeting to discuss this, if needed.
+<a name="l-80"></a><span class="tm">22:40:58</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">sameo:</span> cool, sounds good!
+<a name="l-81"></a><span class="tm">22:41:57</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

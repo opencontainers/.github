@@ -1,0 +1,130 @@
+17:01:45 <mrunalp> #startmeeting OCI 3/30
+17:01:45 <collabot`> Meeting started Wed Mar 30 17:01:45 2016 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:01:45 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:01:45 <collabot`> The meeting name has been set to 'oci_3_30'
+17:01:57 <duglin> RobDolinMS: priorities!!
+17:01:57 <philips> I am at Linux Collab summit so #conferencewifi
+17:02:04 <mrunalp> no worries :)
+17:03:01 <duglin> wking: do you have a url to the start/create split email?
+17:03:18 <mrunalp> #topic https://github.com/opencontainers/specs/issues/357
+17:03:23 <wking> duglin: I'll look it up
+17:04:18 <RobDolinMS> On the question of renaming the spec, I don't have a strong preference as to the exact name, but good to rename "spec" to foo-spec
+17:04:35 <mrunalp> #action Brandon to email LF to go ahead with the rename
+17:04:55 <mrunalp> #topic Create/start split
+17:05:02 <wking> #link https://groups.google.com/a/opencontainers.org/forum/#!msg/dev/qWHoKs8Fsrk/k55FQrBzBgAJ
+17:07:35 <wking> duglin: what if the initial PID 1 dies, can you run another start?
+17:07:46 <wking> mrunalp: no, you'd be starting another container with another container ID
+17:08:15 <wking> julz_: one think that's nice about proposal 3 is that it the PID / container relationship is clear
+17:08:48 <wking> duglin: does having a separate stop make sense?  Or separate stop/delete?  It sounds like the container process dies, and everything gets stopped and deleted
+17:09:12 <wking> julz_: if you want to keep the namespaces around, you could (via bind mounts or whatever), but there wouldn't be an explicit stop/delete
+17:10:17 <wking> the process namespace is going away when it's PID 1 dies, regardless of anything we do in OCI
+17:10:45 <wking> mrunalp: if you start a new container reusing the mount namespace, there may be leftover files, etc., from the previous container
+17:11:18 <wking> julz_: if you're just creating a container to preserve the namespaces, you don't have to ever start it, just leave the idling init and launch sub-containers
+17:11:31 <wking> mrunalp: that's supported now via namespace paths
+17:11:49 <wking> julz_: yes, and that's what we all want for exec implementations.
+17:12:46 <wking> duglin: if we go back to a single stop/delete, do we need a hook?  Or push all cleanup to after the namespaces are gone
+17:12:59 <wking> julz_: we already run post-stop hooks after the container process is dead
+17:13:23 <wking> crosbymichael: this seems super complex
+17:13:26 <vbatts|work> here
+17:13:51 <JakeWarner|Work> (is anyone able to participate in these meetings?)
+17:14:02 <mrunalp> yep
+17:14:13 <mrunalp> uberconference.com/ssaul
+17:14:48 <wking> julz_: this is less complicated than proposal 2 (from the list), because we don't need any bind mounting of namespaces, etc
+17:14:56 <vishh> Flexibility is running hooks is the main use case..
+17:15:04 <vishh> *in running
+17:15:32 <wking> julz_: and if you want a combined start you can skip the named socket (https://groups.google.com/a/opencontainers.org/d/msg/dev/qWHoKs8Fsrk/ug4PNraWBwAJ)
+17:15:44 <wking> crosbymichael: proposal 3 talks about a Unix socket...
+17:16:06 <wking> julz_: that's so a later 'start' call can tell the init process (launched from 'create') what user-code it should execute
+17:16:50 <wking> duglin: this is basically what we're doing now (with a pipe between the runtime and container process)
+17:17:16 <wking> julz_: yeah, we already have this dance going on, and if you know at 'create' time what you want to run, in which case this devolves to the current behaviour
+17:17:35 <wking> mrunalp: and after 'start' is called, we follow the current lifecycle?
+17:17:37 <wking> julz_: yes
+17:17:52 <wking> vishh (I think): what about preserving the current namespaces?
+17:18:12 <wking> julz_: with this proposal we don't have to distinguish between the container"
+17:18:21 <wking> * "the sandbox" and "the container process"
+17:18:45 <wking> julz_: which means any namespace, including the process namespace, are consistently alive or dead
+17:19:14 <wking> vishh: but in reality you setup the sandbox, and then invoke the user process, and after that process dies you want to do stuff with the sandbox
+17:20:08 <wking> duglin: vishh, what does "sandbox" mean to you?  Does it include process namespaces?
+17:20:19 <wking> vishh: no, it doesn't include the process namespace
+17:21:07 <wking> julz_: if you want to preserve other namespaces, create a container to hold the namespaces open, and then use sub-containers inside that persistent wrapping container
+17:21:24 <wking> vishh: we want simple concepts that multiple users can bend to their wishes
+17:22:11 <wking> julz_: I think proposal 3 is that simple concept, because the lifecycle of the sandbox (whatever you want it to be) are all tied to a single container process
+17:22:51 <wking> julz_: it's more complicated if you start special-casing sandboxes.  Sometimes it's fine without a process namespace in the sandbox, and sometimes you need the process namespace to be part of the sandbox
+17:23:11 <wking> mrunalp: the problem I see with putting this into runC is that it only works in a particular way, but runC works fine right now
+17:23:32 <wking> mrunalp: this would force runC to implement the lifecycle of namespaces in a particular way
+17:23:59 <wking> julz_: right now runC doesn't support a distinction between "sandbox" and "container process", and I'm not sure we want it to
+17:24:30 <wking> julz_: with proposal 3, runC looks almost identical to it's current state.  The only cost is idling the init process
+17:24:56 <wking> julz_: but that seems like a small cost, especially compared to bind-mounting namespaces and the associated cleanup handling
+17:25:19 <wking> mrunalp: we want a separate "sandbox" concept that's not tied to a container ID, then you can start a container in that sandbox
+17:25:34 <wking> mrunalp: that way you can separate the lifecycle of the container and the lifecycle of the sandbox
+17:26:07 <wking> julz_: that's my problem, I *don't* think we want to separate the sandbox from the container process, because we can't agree on what "the sandbox" means (e.g. if it includes the process namespace)
+17:26:39 <wking> julz_: But propsal 3 seems to cover all of our use cases, and proposal 2 does not
+17:27:11 <wking> vishh: so the main issue is the complication in runC?
+17:27:21 <wking> mrunalp: yes, but there are also some unclear corner cases
+17:27:44 <wking> julz_: we know the edge cases, because this is the same as what we do now, just with an idling pause in the init process
+17:28:22 <wking> mrunalp: vishh might disagree with you on that, because he cares about the bind mounts
+17:28:45 <wking> vishh: the split between create and start is awesome, but I want a split between the death of the container process and the sandbox cleanup
+17:29:07 <wking> julz_: you can do that with sub-containers or bind mounts; either will keep the namespaces alive
+17:29:53 <wking> vishh: create would create all the namespaces, bind mount them, and keep PID 1 running.  I haven't seen a case for preserving process namespaces, but I do want to preserve the mount namespaces
+17:30:24 <wking> julz_: you could setup bind mounts after 'create' finishes, before running 'start' if you wanted
+17:31:19 <wking> julz_: crosbymichael is already concerned about complexity, so we don't need to build in help for bind-mounting namespaces
+17:31:34 <wking> julz_: but you could build that into the spec if you wanted to
+17:32:15 <wking> duglin: vishh, so you want two separate steps for 'stop' and 'delete', preserving all namespaces except for the process namespace until 'delete'
+17:32:34 <wking> julz_: and you can still do that with sub-containers and not kill the wrapping container.  No need for bind mounts
+17:32:44 <wking> julz_: killing the wrapping container's PID 1 is like 'delete'
+17:33:18 <wking> vishh: you can do all of this in many ways.  This seems too invasive/low-level for going into the spec
+17:34:06 <wking> julz_: we've talked about punting 'exec' to a higher level, and it's not hard to build 'exec' on top of this
+17:34:27 <wking> vishh: I'm not disagreeing.  This is a step in the right direction.
+17:34:48 <wking> vishh: we should also consider more separation between the sandbox and the process at a later stage
+17:35:11 <wking> duglin: vishh, would you be ok with proposal 3 with a split stop/delete?
+17:35:32 <wking> vishh: I'm ok.  I'd rather not expose cgroups and namespaces, but if you have to leak them out, I'm ok with that for now
+17:35:43 <wking> duglin: I'm also worried about requiring consumers to bind-mount thing
+17:35:58 <wking> julz_ keeps pointing out that user's don't need to bind-mount anything, and should use sub-containers ;)
+17:37:39 <duglin> we have something else besides Linux?  :-)
+17:37:54 <wking> julz_: with option 3 we can express all of these use-cases.  You can always wright higher-level wrappers.  With option 2, there are some workflows you can't express, and that's harder to work around
+17:38:04 <wking> vishh: how to express this on other operating systems?
+17:38:19 <vbatts|work> duglin: heh
+17:38:55 <wking> julz_: it's hard to predict what's hard/easy on other OSes.  I suspect creating everything except the user process seems easier with VMs
+17:39:40 <wking> vishh: I just want to avoid making life overly difficult for other OSes
+17:40:06 <wking> julz_: maybe make the create/start split optional, so OSes where that's a problem can expose only a unified create/start command
+17:40:22 <wking> vishh: I'd rather keep the spec more consistent across OSes
+17:40:23 <wking> julz_: agreed
+17:40:48 <wking> vishh: I want an explicit create/delete for the sandbox and explicit start/stop for the container process.  I don't care about the process namespace
+17:41:13 <wking> vishh: you'd still have to bind-mount to separate stop from delete, but I'm not sure how this translates to other OSes
+17:41:25 <JakeWarner|Work> What's the definition of sandbox that we're going with here?
+17:41:45 <wking> julz_: so there's a create/start split and a stop/delete split.  I think we both agree that create/start is a good split with all the namespaces.
+17:41:55 <duglin> mainly all NSs - whether it includes PID varies
+17:42:02 <duglin> JakeWarner|Work: ^^
+17:42:14 <wking> julz_: it may also be useful to split stop/delete and preserve namespaces after the container process dies, and you can do that with bind-mounts, but that seems orthogonal
+17:42:26 <JakeWarner|Work> Got it.
+17:42:29 <JakeWarner|Work> Thanks
+17:42:49 <wking> philips: isn't the goal to have some pre-start and post-stop things for a pod?  It could be an init-system, or bind-mounts.  Why be specific for the spec?
+17:43:30 <wking> julz_: I agree.  These implementation differences don't matter, but the bind-mount approach has a user-visible difference (no process namespace or container PID)
+17:44:16 <wking> vishh: the spec is currently 1:1 with runC, so we don't consider spec changes until we see if something is implementable in runC
+17:44:25 <wking> vishh: the question is "do we want to implement this in runC"
+17:44:59 <wking> philips: if I was implementing this myself, I would use an init system to spawn processes.  There are options that don't require bind mounts or application processes running as PID 1
+17:45:13 <wking> julz_: I suspect we should define this in a way that you can implement things like that
+17:46:01 <wking> vishh: for hooks, you can have multiple ways of running the hooks, but it should be tied to the container lifecycle clearly enough to make the changes you need
+17:46:42 <wking> mrunalp: there is an argument about breaking down runC into smaller steps, so you don't have to build everything in.  But there are also arguments for building things in.
+17:47:06 <philips> thanks for taking notes wking
+17:47:11 <wking> np
+17:47:24 <wking> duglin: but if you make it easy to have a runC create join an existing namespace, you can do that without exposing all the lower-level details
+17:47:31 <wking> mrunalp: so what do we do next?
+17:47:39 <wking> crosbymichael: I dunno
+17:47:49 <wking> mrunalp: maybe a concrete proposal that covers everything?
+17:48:00 <wking> vishh: we should PR a spec change and argue there
+17:48:14 <duglin> +1 to a concrete spec change PR so we can see the exact proposal
+17:48:24 <wking> vishh: this has stalled because there wasn't an implementation in runC, but now we have a runC implementation.
+17:48:44 <wking> vishh: a concrete spec change would give us something more concrete to argue about
+17:48:51 <JakeWarner|Work> +1 to spec as well
+17:49:01 <anush> +1 to spec
+17:49:25 <wking> #link https://github.com/opencontainers/specs/issues/299
+17:49:25 <tianon> I'm always +1 to a concrete PR-form proposal
+17:49:39 <wking> ^ existing create/start proposal (proposal 2 in my summary email)
+17:49:56 <philips> sorry, need to run off folks!
+17:50:24 <mrunalp> #action julz/duglin to create a new PR
+17:50:29 <wking> duglin: I'll be off for the next two weeks, but I can work on a PR with julz_
+17:50:41 <wking> mrunalp: other topics?
+17:50:41 <duglin> s/off/traveling/    not vacation :-)
+17:50:47 <wking> duglin: ah well ;)
+17:50:59 <mrunalp> #endmeeting

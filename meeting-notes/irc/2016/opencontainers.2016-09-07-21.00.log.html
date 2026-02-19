@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:00:24</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-09-07 discussion</span>
+<a name="l-2"></a><span class="tm">21:00:24</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Sep  7 21:00:24 2016 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:00:24</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:00:24</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2016_09_07_discussion'
+<a name="l-5"></a><span class="tm">21:00:50</span><span class="nk"> &lt;cyphar&gt;</span> <span class="hi">mrunalp:</span> hi :D
+<a name="l-6"></a><span class="tm">21:01:01</span><span class="nk"> &lt;mrunalp&gt;</span> cyphar, I was just looking at 1018 :)
+<a name="l-7"></a><span class="tm">21:01:10</span><span class="nk"> &lt;mrunalp&gt;</span> cyphar, Is it getting stuck in c code for recvmsg?
+<a name="l-8"></a><span class="tm">21:01:19</span><span class="nk"> &lt;cyphar&gt;</span> yeah, it is
+<a name="l-9"></a><span class="tm">21:01:39</span><span class="nk"> &lt;mrunalp&gt;</span> okay, cool.
+<a name="l-10"></a><span class="tm">21:01:52</span><span class="nk"> &lt;cyphar&gt;</span> I spent far too long debugging the strace issue only to find out that it affects master as well
+<a name="l-11"></a><span class="tm">21:02:01</span><span class="nk"> &lt;cyphar&gt;</span> and that it affects a bunch of other versions
+<a name="l-12"></a><span class="tm">21:03:49</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp</span>
+<a name="l-13"></a><span class="tm">21:03:49</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp vbatts|work
+<a name="l-14"></a><span class="tm">21:05:13</span><span class="nk"> &lt;mrunalp&gt;</span> cyphar, What other data do we send with the master fd
+<a name="l-15"></a><span class="tm">21:06:37</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/554
+<a name="l-16"></a><span class="tm">21:06:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> chair me?
+<a name="l-17"></a><span class="tm">21:07:19</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/runtime-spec/pull/554</span>
+<a name="l-18"></a><span class="tm">21:07:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> My preference would be to put in a placeholder for -rc2, and then fill it in for the rc3
+<a name="l-19"></a><span class="tm">21:07:37</span><span class="nk"> &lt;stevvooe&gt;</span> so, the meeting room ain't working
+<a name="l-20"></a><span class="tm">21:07:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> To make it clear that the spec will treat Windows containers as first-class platforms
+<a name="l-21"></a><span class="tm">21:07:59</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-22"></a><span class="tm">21:07:59</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp vbatts|work wking
+<a name="l-23"></a><span class="tm">21:08:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> why is this critical for 1.0?
+<a name="l-24"></a><span class="tm">21:08:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> It's important for the OCI that the 1.0 spec is about Windows
+<a name="l-25"></a><span class="tm">21:08:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> ... as well
+<a name="l-26"></a><span class="tm">21:08:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> What's the Windows timeline?  Do we block 1.0?
+<a name="l-27"></a><span class="tm">21:09:09</span><span class="nk"> &lt;vbatts|work&gt;</span> why has uberconf given me this avatar?
+<a name="l-28"></a><span class="tm">21:09:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> The question I asked in the mailing list, was do we want a stub or a big, monolithic PR?
+<a name="l-29"></a><span class="tm">21:09:21</span><span class="nk"> &lt;stephenrwalli&gt;</span> How big is the Big monolithic PR, and when does it arrive?
+<a name="l-30"></a><span class="tm">21:09:26</span><span class="nk"> &lt;vbatts|work&gt;</span> oh i think it's because i mis-spelled my name
+<a name="l-31"></a><span class="tm">21:09:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> IF folks want a monolithic PR, I can ask for that
+<a name="l-32"></a><span class="tm">21:09:32</span><span class="nk"> &lt;stevvooe&gt;</span> uberconf is pretty broken
+<a name="l-33"></a><span class="tm">21:09:51</span><span class="nk"> &lt;stevvooe&gt;</span> i'd not prefer a monolithic PR
+<a name="l-34"></a><span class="tm">21:09:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> It's important that Microsoft is engaged with the OCI
+<a name="l-35"></a><span class="tm">21:10:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I think we all agree with the goals.  But if we start now, we're 6-8 weeks off from a 1.0
+<a name="l-36"></a><span class="tm">21:10:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> if Windows has any debate, we're probably pushing back 1.0 significantly
+<a name="l-37"></a><span class="tm">21:11:19</span><span class="nk"> &lt;stevvooe&gt;</span> so, are we going to resolve the issues with the conference system or just continue with the meeting?
+<a name="l-38"></a><span class="tm">21:11:40</span><span class="nk"> &lt;wking&gt;</span> We can push Windows support into 1.1 and land it as a minor bump
+<a name="l-39"></a><span class="tm">21:11:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I don't expect it to be a long pull for Windows support
+<a name="l-40"></a><span class="tm">21:12:27</span><span class="nk"> &lt;cyphar&gt;</span> <span class="hi">stevvooe:</span> use the call-in number
+<a name="l-41"></a><span class="tm">21:12:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stephenrwalli:</span> I don't remember how Solaris worked.  Was that long or easy?
+<a name="l-42"></a><span class="tm">21:13:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> it was pretty straightforward
+<a name="l-43"></a><span class="tm">21:13:05</span><span class="nk"> &lt;cyphar&gt;</span> <span class="hi">stevvooe:</span> use the real phone #
+<a name="l-44"></a><span class="tm">21:13:07</span><span class="nk"> &lt;cyphar&gt;</span> 415-968-0849
+<a name="l-45"></a><span class="tm">21:13:09</span><span class="nk"> &lt;RobDolinMS&gt;</span> If someone is having trouble getting into the call: 415-968-0849
+<a name="l-46"></a><span class="tm">21:13:45</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/411</span>
+<a name="l-47"></a><span class="tm">21:13:49</span><span class="nk"> &lt;wking&gt;</span> ^ Solaris PR
+<a name="l-48"></a><span class="tm">21:14:31</span><span class="nk"> &lt;wking&gt;</span> In flight for ~ a week?
+<a name="l-49"></a><span class="tm">21:14:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stephenrwalli:</span> so then maybe PR for Windows can be fast enough, but it should start going
+<a name="l-50"></a><span class="tm">21:14:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> understood
+<a name="l-51"></a><span class="tm">21:15:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> mrunalp, what else is on the docket?  The API stuff is wrapping up?
+<a name="l-52"></a><span class="tm">21:15:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> yeah, and this Windows stuff is the only other major bit
+<a name="l-53"></a><span class="tm">21:15:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> Do you want the placeholder now?
+<a name="l-54"></a><span class="tm">21:15:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I don't mind either way
+<a name="l-55"></a><span class="tm">21:16:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> other runtime-spec topics?
+<a name="l-56"></a><span class="tm">21:16:25</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec 1.0.0-rc2</span>
+<a name="l-57"></a><span class="tm">21:16:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> there's a day left on the vote
+<a name="l-58"></a><span class="tm">21:16:55</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/5qj2hATVxew</span>
+<a name="l-59"></a><span class="tm">21:17:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> runtime maintainers on this call, vote for/against the proposal
+<a name="l-60"></a><span class="tm">21:18:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I might push a PR to pull in the ChangeLog and handle the version bumps
+<a name="l-61"></a><span class="tm">21:19:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> RobDolinMS, it looks like #554 is missing a signed-off-by or some such
+<a name="l-62"></a><span class="tm">21:20:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> so we're cutting -rc2 with the Windows stuff half done?
+<a name="l-63"></a><span class="tm">21:20:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> legal-ese is great, but I don't think #554 is a material change...
+<a name="l-64"></a><span class="tm">21:21:05</span><span class="nk"> &lt;philips&gt;</span> https://github.com/opencontainers/image-spec/milestone/7
+<a name="l-65"></a><span class="tm">21:21:08</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec v0.5.0 milestone</span>
+<a name="l-66"></a><span class="tm">21:21:15</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/milestone/7</span>
+<a name="l-67"></a><span class="tm">21:21:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> is there anything else folks want in 0.5.0 besides those three bits?
+<a name="l-68"></a><span class="tm">21:22:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> Pulling in #231 got a file rename that is complicated
+<a name="l-69"></a><span class="tm">21:22:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I've removed the rename, so you can rebase on that to drop it
+<a name="l-70"></a><span class="tm">21:22:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I'll do that shortly
+<a name="l-71"></a><span class="tm">21:22:50</span><span class="nk"> &lt;philips&gt;</span> https://github.com/opencontainers/image-spec/milestone/3
+<a name="l-72"></a><span class="tm">21:23:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> the v1.0.0 milestone has the extension PR, which is getting close
+<a name="l-73"></a><span class="tm">21:23:19</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/164</span>
+<a name="l-74"></a><span class="tm">21:23:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> the other active discussion is on foreign
+<a name="l-75"></a><span class="tm">21:24:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we can relax the language a bit per stephenrwalli's suggestion
+<a name="l-76"></a><span class="tm">21:24:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but we need to get it merged sooner than later
+<a name="l-77"></a><span class="tm">21:24:39</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/233</span>
+<a name="l-78"></a><span class="tm">21:24:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I'm fine with stephenrwalli's language and stevvooe's language
+<a name="l-79"></a><span class="tm">21:24:56</span><span class="nk"> &lt;philips&gt;</span> https://github.com/opencontainers/image-spec/pull/233#issuecomment-245415558
+<a name="l-80"></a><span class="tm">21:25:33</span><span class="nk"> &lt;wking&gt;</span> I like not having a MUST if we're not defining "distribute"
+<a name="l-81"></a><span class="tm">21:25:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> "distribute" is clearly defined legally
+<a name="l-82"></a><span class="tm">21:26:51</span><span class="nk"> &lt;wking&gt;</span> I suspect "distribute" cannot be baked down into a technical implementation
+<a name="l-83"></a><span class="tm">21:27:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I think it's fine.  My main issue was that I wanted it to be clear that it's a legal/licensing requirement
+<a name="l-84"></a><span class="tm">21:27:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> once you mention that it's legal/licensing, I don't thing that the rest matters so much
+<a name="l-85"></a><span class="tm">21:28:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'll work with stephenrwalli to get something in the specific/vague sweet spot
+<a name="l-86"></a><span class="tm">21:28:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we can't enforce the lack of distribution without crypto, so I don't want to get into that level of technical discussion
+<a name="l-87"></a><span class="tm">21:28:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I just moved that into the v1.0.0 milestone
+<a name="l-88"></a><span class="tm">21:28:59</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/pull/224
+<a name="l-89"></a><span class="tm">21:28:59</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Dropping rootfs.type</span>
+<a name="l-90"></a><span class="tm">21:29:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I've tried to identify the rules and the risk of not including it
+<a name="l-91"></a><span class="tm">21:29:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think the risk is sufficient that it's better to leave it alone
+<a name="l-92"></a><span class="tm">21:30:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'd rather not deal with the microcomplexities that aren't neccessary for stable interop
+<a name="l-93"></a><span class="tm">21:30:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I don't see removing it as solving a particular problem
+<a name="l-94"></a><span class="tm">21:30:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I view it as a stupid magic number, and that's fine
+<a name="l-95"></a><span class="tm">21:32:05</span><span class="nk"> &lt;wking&gt;</span> I've said a few times that if we don't want to remove it, we need to actually define the field
+<a name="l-96"></a><span class="tm">21:32:23</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">wking to replace #224 with another PR to actually define rootfs.type</span>
+<a name="l-97"></a><span class="tm">21:32:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I'll also add that to v1.0.0
+<a name="l-98"></a><span class="tm">21:33:29</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec v1.0 milestone</span>
+<a name="l-99"></a><span class="tm">21:33:36</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/126</span>
+<a name="l-100"></a><span class="tm">21:33:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> we have a number of implementations now (skopeo, rkt, Docker has a proposal)
+<a name="l-101"></a><span class="tm">21:33:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> anything else for v1.0
+<a name="l-102"></a><span class="tm">21:33:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> nope
+<a name="l-103"></a><span class="tm">21:34:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> after we cut 0.5.0, I'd like to get a v1.0.0-rc1 next, but we can do 0.6.0 if we can't sort these other issues
+<a name="l-104"></a><span class="tm">21:34:26</span><span class="nk"> &lt;duglin&gt;</span> OCI F2F@CNDay/KubeCon:  https://docs.google.com/document/d/1wtJeXhiVOL7qdDK_zouZPjskTIrsOLmD-9Ij478y7_Y/edit
+<a name="l-105"></a><span class="tm">21:34:40</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Tool repositories</span>
+<a name="l-106"></a><span class="tm">21:34:50</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/tob/pull/18</span>
+<a name="l-107"></a><span class="tm">21:34:58</span><span class="nk"> &lt;philips&gt;</span> https://github.com/opencontainers/tob/pull/18
+<a name="l-108"></a><span class="tm">21:35:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> we want to get that sorted
+<a name="l-109"></a><span class="tm">21:35:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> should be a week-long vote, so maybe  landed in 10 days
+<a name="l-110"></a><span class="tm">21:35:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I don't expect much deliberation, but we'll see
+<a name="l-111"></a><span class="tm">21:36:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> Should this start with spec maintainers, or pull in frequent contributoris
+<a name="l-112"></a><span class="tm">21:36:32</span><span class="nk"> &lt;wking&gt;</span> * contributors
+<a name="l-113"></a><span class="tm">21:37:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I hate being super process-y, but ocitools wasn't an official project, so I'd rather re-induct Liang
+<a name="l-114"></a><span class="tm">21:38:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I'm sure everyone will say yes
+<a name="l-115"></a><span class="tm">21:38:27</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">RobDolinMS to update the list of initial tool maintainers to match the spec maintainers</span>
+<a name="l-116"></a><span class="tm">21:38:40</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">philips to put the tool-repo proposal up for a vote</span>
+<a name="l-117"></a><span class="tm">21:38:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> other topics?
+<a name="l-118"></a><span class="tm">21:38:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I've rebased #255 to remove the rename
+<a name="l-119"></a><span class="tm">21:39:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> everyone has 22 minutes after this call to review PRs
+<a name="l-120"></a><span class="tm">21:39:12</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

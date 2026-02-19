@@ -1,0 +1,79 @@
+18:02:59 <wking> #startmeeting 2015-11-04 meeting
+18:02:59 <collabot> Meeting started Wed Nov  4 18:02:59 2015 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+18:02:59 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+18:02:59 <collabot> The meeting name has been set to '2015_11_04_meeting'
+18:03:15 <wking> #chair mrunalp, crosbymichael
+18:03:15 <collabot> Current chairs: crosbymichael mrunalp wking
+18:03:23 <wking> #topic Roadmap procedure
+18:03:58 <wking> crosbymichael we'll merge the roadmap and have follow up PRs adjusting associated people and per-topic discussion locations
+18:04:13 <wking> #topic Container actions
+18:04:57 <wking> mrunalp wants to merge an action PR and then improve it in follow-up PRs
+18:05:17 <wking> ^ is the PR we're talking about: https://github.com/opencontainers/specs/pull/231 ?
+18:05:29 <wking> vishh: is concerned about merging a fluxy spec
+18:05:46 <wking> mrunalp: has added a note to that effect, but wants open more targetted PRs
+18:06:02 <wking> vishh: doesn't want folks to start implementing it too early
+18:06:24 <wking> we can also PR against in-flight branches
+18:06:53 <wking> crosbymichael: we need to get momentum back up, and that's part of what the roadmap should help with
+18:07:24 <wking> #topic How to specify "don't touch my cgroups"
+18:08:28 <wking> crosbymichael: runC gets a current cgroup and nests itself inside.  You can specify cgroup options in a parent cgroup and it will honor them (e.g. 1 GB mem in a parent overrules 2 GB set by runC)
+18:08:43 <wking> mrunalp: but what about not specifying a container cgroup at all (just use the hosts)
+18:09:04 <wking> related issue: https://github.com/opencontainers/specs/pull/237
+18:09:18 <wking> related sub-thread: https://groups.google.com/a/opencontainers.org/forum/#!msg/dev/qWHoKs8Fsrk/c9mv6qXtDAAJ
+18:09:58 <wking> mrunalp: how to do this with unprivileged callers?  I had to disable cgroups completely to get that working
+18:10:23 <wking> mrunalp: maybe this just needs more thought, no action items now
+18:10:25 <RobDolinMS> #topic How can we accelerate progress
+18:10:34 <wking> #chair RobDolinMS
+18:10:34 <collabot> Current chairs: RobDolinMS crosbymichael mrunalp wking
+18:10:42 <wking> #topic How can we accelerate progress
+18:10:54 <RobDolinMS> (Thanks wking :)  )
+18:10:56 <wking> vishh: poor scoping is limiting momentum
+18:11:22 <wking> vishh: are we trying to satisfy the end-user case?
+18:11:36 <wking> crosbymichael: charter almost finalized last week (just one thing still fluxy)
+18:11:44 <wking> crosbymichael: new charter has better scoping
+18:12:05 <wking> RobDolinMS: final signatures maybe around Thanksgiving
+18:12:15 <wking> crosbymichael: last thing maybe IP policy?
+18:12:25 <wking> RobDolinMS: IP policy is resolved in the latest draft
+18:12:45 <RobDolinMS> #topic OCI Tools
+18:13:06 <wking> https://github.com/mrunalp/ocitools
+18:13:11 <RobDolinMS> #info Mrunal has a tool that he wants to share and wondering where to put it
+18:13:26 <wking> mrunalp: asks for folks to kick the tires and decide if we want it in opencontainers/specs or not
+18:13:48 <wking> mrunalp: it's a runtime-validation tool (does the runtime respect opencontainers/specs)
+18:14:10 <vishh> +1 for a separate repo, may be under opencontainers
+18:14:16 <wking> crosbymichael: keep it separate until it stabilizes
+18:14:23 <wking> +1 to vish, separate repo in opencontainers
+18:14:54 <wking> for now, mrunalp will keep working on it locally.  Will revisit in a month
+18:15:04 <wking> But contribution to mrunalp/ocitools is welcome
+18:15:12 <RobDolinMS> #info Mrunal will post to the list
+18:15:37 <RobDolinMS> #topic Roadmap PR
+18:15:50 <RobDolinMS> #info we just need one more LGTM and then it's a go to merge
+18:16:05 <wking> #info the first topic in this meeting also relevant here
+18:16:26 <RobDolinMS> #topic Splitting Create() and Start() into unique actions
+18:16:26 <wking> #action splitting create from start
+18:16:40 <RobDolinMS> #info Doug Davis sent email about this on Thu, 10/29
+18:17:05 <wking> ^ email at https://groups.google.com/a/opencontainers.org/d/msg/dev/qWHoKs8Fsrk/GmdaZ2TtDAAJ
+18:17:30 <wking> duglin: that creates everything but the PID namespace, and leaves that to the 'start' step
+18:17:47 <wking> mrunalp: we try to keep the spec lifecycle generic (not get into OS details)
+18:18:00 <RobDolinMS> #info Mrunal suggests making sure the PR generic and not get into OS-specific details
+18:18:03 <wking> mrunalp: maybe drill down for per-OS cases, or maybe not
+18:18:16 <wking> me: that makes interop between runtimes difficult
+18:18:24 <wking> ^ if we leave details unspecified
+18:18:45 <wking> duglin: echos that via audio ;)
+18:19:19 <duglin> https://groups.google.com/a/opencontainers.org/forum/#!search/duglin|sort:date/dev/qWHoKs8Fsrk/GmdaZ2TtDAAJ
+18:19:21 <wking> Guest: hooks are unclear when there aren't low-level details about containers
+18:19:50 <estesp> Guest? that was lk4d4 :)
+18:19:55 <RobDolinMS> Mrunal: suggests having a POC to start
+18:20:06 <tianon> estesp: he's joined the bluejeans as "Guest" haha
+18:20:08 <wking> mrunalp: maybe we do need more discussion about this and talking about implementations
+18:20:16 <estesp> honored guest, then :)
+18:20:23 <wking> and once we see what works, we can propose a separation with more details (if it makes sense)
+18:22:02 <wking> #action Scheduling two weeks from now
+18:22:08 <wking> #topic Scheduling two weeks from now
+18:22:20 <wking> RobDolinMS: what about Docker-con EU
+18:22:22 <vishh> I'm here as well.
+18:22:39 <wking> #action mrunalp to mail the list and see if anyone needs a time adjustment
+18:22:42 <duglin> slackers!  :-)  Phil and I will be thre
+18:22:43 <duglin> ere
+18:22:45 <duglin> there
+18:22:46 <RobDolinMS> Many folks on this call are NOT attending DockerCon EU
+18:23:26 <wking> crosbymichael, mrunalp: would be nice to get to 1.0 by the end of the year
+18:23:35 <wking> #endmeeting

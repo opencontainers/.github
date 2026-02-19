@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">18:02:23</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-01-20 discussion</span>
+<a name="l-2"></a><span class="tm">18:02:23</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Jan 20 18:02:23 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">18:02:23</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">18:02:23</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2016_01_20_discussion'
+<a name="l-5"></a><span class="tm">18:02:38</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">vbatts|work</span>
+<a name="l-6"></a><span class="tm">18:02:38</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: vbatts|work wking
+<a name="l-7"></a><span class="tm">18:03:14</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">versioning OCI repos</span>
+<a name="l-8"></a><span class="tm">18:04:37</span><span class="nk"> &lt;wking&gt;</span> mrunalp runC master is the major implementation, so maybe ocitools will track runC master
+<a name="l-9"></a><span class="tm">18:04:53</span><span class="nk"> &lt;duglin&gt;</span> it would be good if we used the same version (major.minor) across all 3 - each might have different .rev numbers tho
+<a name="l-10"></a><span class="tm">18:05:10</span><span class="nk"> &lt;duglin&gt;</span> so x.y.* should all work together
+<a name="l-11"></a><span class="tm">18:05:11</span><span class="nk"> &lt;wking&gt;</span> mrunalp after version 0.3.0 we might aim for spec-release compliance
+<a name="l-12"></a><span class="tm">18:06:04</span><span class="nk"> &lt;wking&gt;</span> mrunalp maybe have a branch that tracks runC's master, and another branch that tracks OCI releases
+<a name="l-13"></a><span class="tm">18:06:21</span><span class="nk"> &lt;wking&gt;</span> It sounds like everyone is on board with this branched approach
+<a name="l-14"></a><span class="tm">18:06:59</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Spec is primary version and other repos should match spec</span>
+<a name="l-15"></a><span class="tm">18:07:07</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">mrunalp to setup these branches in opencontainers/ocitools</span>
+<a name="l-16"></a><span class="tm">18:07:17</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">RobDolinMS</span>
+<a name="l-17"></a><span class="tm">18:07:17</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: RobDolinMS vbatts|work wking
+<a name="l-18"></a><span class="tm">18:08:06</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">vbatts:</span> have been investigating JSON Schema
+<a name="l-19"></a><span class="tm">18:08:13</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">JSON Schema for validation</span>
+<a name="l-20"></a><span class="tm">18:08:27</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/pull/313</span>
+<a name="l-21"></a><span class="tm">18:08:36</span><span class="nk"> &lt;RobDolinMS&gt;</span> vbatts working on JSON Schema for a config file
+<a name="l-22"></a><span class="tm">18:08:50</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">vbatts:</span> was hoping for code generation from a JSON Schema
+<a name="l-23"></a><span class="tm">18:10:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> validation is also per-JSON types (e.g. "it's an integer"), but without the granularity we need (e.g. it's an optional uint64)
+<a name="l-24"></a><span class="tm">18:11:23</span><span class="nk"> &lt;wking&gt;</span> I also suspect cross-cutting options will be difficult (e.g. "if a.b.c is set, a.b.d mus also be set")
+<a name="l-25"></a><span class="tm">18:12:37</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info: </span><span class="cmdline">Present: on BlueJeans call: Mrunal Patel, Abhijeeth Nuthan, Brandon Philips, Dug, Guest, Jesse Butler, julz, Mike Brown...</span>
+<a name="l-26"></a><span class="tm">18:12:57</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">single, unified config file</span>
+<a name="l-27"></a><span class="tm">18:13:01</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/pull/284</span>
+<a name="l-28"></a><span class="tm">18:13:05</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info: </span><span class="cmdline">Present on BlueJeans call: ... Tianon, Trevor King, Vincent Boen Batts, Vishnu Kannan</span>
+<a name="l-29"></a><span class="tm">18:13:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> face-to-face review was prositive, go ahead with a reroll
+<a name="l-30"></a><span class="tm">18:13:31</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">wking to reroll #284 on the current master</span>
+<a name="l-31"></a><span class="tm">18:13:44</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">splitting mknod from device cgroups</span>
+<a name="l-32"></a><span class="tm">18:13:53</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/pull/298</span>
+<a name="l-33"></a><span class="tm">18:14:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> this is ready for review
+<a name="l-34"></a><span class="tm">18:15:06</span><span class="nk"> &lt;RobDolinMS&gt;</span> mrunal adding comment from thread to PR
+<a name="l-35"></a><span class="tm">18:16:15</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info: </span><span class="cmdline">Now present on call: Jason Bouzane</span>
+<a name="l-36"></a><span class="tm">18:16:29</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Trevor:</span> You don't need to list default devices directly in spec
+<a name="l-37"></a><span class="tm">18:16:45</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vincent:</span> I was referring more to the example with the array of devices
+<a name="l-38"></a><span class="tm">18:17:33</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/pull/298/files#diff-b753d6f046da0a2956b5218efd779b7fR119</span>
+<a name="l-39"></a><span class="tm">18:17:47</span><span class="nk"> &lt;wking&gt;</span> ^ requirements for runtime-default devices
+<a name="l-40"></a><span class="tm">18:18:40</span><span class="nk"> &lt;wking&gt;</span> vbatts|work is wondering on the timing for this
+<a name="l-41"></a><span class="tm">18:18:46</span><span class="nk"> &lt;wking&gt;</span> to avoid clobbering user-supplied devices
+<a name="l-42"></a><span class="tm">18:19:16</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vish:</span> If some operations are not possible, there may be challenges
+<a name="l-43"></a><span class="tm">18:20:06</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> If you want to overrride something from defaults, it may be a challenge; may be better to be explicit
+<a name="l-44"></a><span class="tm">18:20:19</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Trevor:</span> If you list anything, would you have to list them all?
+<a name="l-45"></a><span class="tm">18:20:39</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info: </span><span class="cmdline">Now present on BlueJeans call: crosbymichael</span>
+<a name="l-46"></a><span class="tm">18:21:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> why don't we make this explicit?
+<a name="l-47"></a><span class="tm">18:22:25</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Brandon:</span> These devices are fundamental to the API of Linux; we can do it, but it complicates things
+<a name="l-48"></a><span class="tm">18:22:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> these devices are so fundamental, that it's just noise in the config file if we make folks list them all
+<a name="l-49"></a><span class="tm">18:22:38</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vish:</span> It will also impact application portability
+<a name="l-50"></a><span class="tm">18:22:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> requiring listing might also affect portability
+<a name="l-51"></a><span class="tm">18:23:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> one issue is hook for mounting sysfs cgroups, and then runC clobbers /sys
+<a name="l-52"></a><span class="tm">18:24:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> that's an issue with hook ordering in the lifecycle
+<a name="l-53"></a><span class="tm">18:24:08</span><span class="nk"> &lt;duglin&gt;</span> I though we were getting rid of hooks.
+<a name="l-54"></a><span class="tm">18:24:20</span><span class="nk"> &lt;wking&gt;</span> ^ me to ;)
+<a name="l-55"></a><span class="tm">18:24:40</span><span class="nk"> &lt;wking&gt;</span> although you might still need exec pre-start hooks to insert the container-process PID into cgroups, etc.
+<a name="l-56"></a><span class="tm">18:25:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> in runC, pre-start is called before the mounts
+<a name="l-57"></a><span class="tm">18:25:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> maybe we need more clarity on timing in the spec
+<a name="l-58"></a><span class="tm">18:25:57</span><span class="nk"> &lt;wking&gt;</span> +1 from me on explicit timing ;)
+<a name="l-59"></a><span class="tm">18:26:21</span><span class="nk"> &lt;wking&gt;</span> deferred until we have clearer sandbox ideas (the create/exec split?)
+<a name="l-60"></a><span class="tm">18:26:40</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">prctl vs DisableNewPrivileges</span>
+<a name="l-61"></a><span class="tm">18:26:41</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/milestones/v0.3.0</span>
+<a name="l-62"></a><span class="tm">18:26:44</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/pull/290</span>
+<a name="l-63"></a><span class="tm">18:27:47</span><span class="nk"> &lt;duglin&gt;</span> tap tap tap
+<a name="l-64"></a><span class="tm">18:28:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> just wants a consistent name "noNewPrivs"
+<a name="l-65"></a><span class="tm">18:28:39</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">mrunalp to reroll with the consistent name</span>
+<a name="l-66"></a><span class="tm">18:29:06</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/specs/pull/225
+<a name="l-67"></a><span class="tm">18:29:11</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">expanded ops definitions</span>
+<a name="l-68"></a><span class="tm">18:29:19</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/pull/225</span>
+<a name="l-69"></a><span class="tm">18:29:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> still need to address some comments
+<a name="l-70"></a><span class="tm">18:32:18</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">duglin:</span> I'm going with the assumption that if you look at the latest version and don't see a comment, it has been addressed
+<a name="l-71"></a><span class="tm">18:32:30</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">duglin:</span> If you don't feel like your comment was addressed, please leave a new onw
+<a name="l-72"></a><span class="tm">18:32:40</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#action </span><span class="cmdline">Maintainers should review</span>
+<a name="l-73"></a><span class="tm">18:34:14</span><span class="nk"> &lt;duglin&gt;</span> who has the action to merge config.json and runtime.json ?
+<a name="l-74"></a><span class="tm">18:34:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> that's me ^
+<a name="l-75"></a><span class="tm">18:34:29</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">separate source and schema</span>
+<a name="l-76"></a><span class="tm">18:34:36</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/pull/276</span>
+<a name="l-77"></a><span class="tm">18:35:04</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">vbatts:</span> for #276 what is the hesitation?
+<a name="l-78"></a><span class="tm">18:35:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> re: unified config, I'll reroll #284 this week
+<a name="l-79"></a><span class="tm">18:35:55</span><span class="nk"> &lt;duglin&gt;</span> cool
+<a name="l-80"></a><span class="tm">18:35:58</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> Do we really need to add this to the document?
+<a name="l-81"></a><span class="tm">18:37:52</span><span class="nk"> &lt;wking&gt;</span> I think we need some way to be explicit about where a setting sits in the config (e.g. the full JSON path to a setting).  This PR is one way to get at that, but I'm fine handling the anchoring with a differnent approach
+<a name="l-82"></a><span class="tm">18:38:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> generating it for a release would be ok, although coordinating that might be difficult
+<a name="l-83"></a><span class="tm">18:38:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the only issue will be the race/lag https://github.com/opencontainers/specs/pull/276#issuecomment-171462700
+<a name="l-84"></a><span class="tm">18:39:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> in an ideal world this would be automated to stay DRY
+<a name="l-85"></a><span class="tm">18:40:27</span><span class="nk"> &lt;duglin&gt;</span> https://github.com/opencontainers/runc/pull/465
+<a name="l-86"></a><span class="tm">18:40:27</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Targeting Wed, Feb 3rd for v0.3.0</span>
+<a name="l-87"></a><span class="tm">18:40:36</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Split of Create and Start</span>
+<a name="l-88"></a><span class="tm">18:40:44</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link</span><span class="cmdline"></span>
+<a name="l-89"></a><span class="tm">18:40:46</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runc/pull/465</span>
+<a name="l-90"></a><span class="tm">18:41:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> having a sleeping dummy-process to be PID 1 and hold the PID namespace open
+<a name="l-91"></a><span class="tm">18:41:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> not sure we need a dummy-process to hold the PID namespace open, just create the PID namespace at exec-time
+<a name="l-92"></a><span class="tm">18:42:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz:</span> if you have subequent execs auto-join a PID namespace, they'll be killed when the first dies
+<a name="l-93"></a><span class="tm">18:43:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz:</span> you may not want that to happen
+<a name="l-94"></a><span class="tm">18:43:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> but if the PID namespace defines the container, you should be creating a separate container
+<a name="l-95"></a><span class="tm">18:44:08</span><span class="nk"> &lt;wking&gt;</span> julz doesn't want a mandatory PID 1, so users can go crazy there ;)
+<a name="l-96"></a><span class="tm">18:44:38</span><span class="nk"> &lt;wking&gt;</span> julz wants to run a number of processes with overlapping lifecycles, where subsequent execs survive a first process that may die early
+<a name="l-97"></a><span class="tm">18:45:30</span><span class="nk"> &lt;wking&gt;</span> julz currently that's only possible if you know where a sleep/reaper lives in your rootfs
+<a name="l-98"></a><span class="tm">18:45:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz:</span> currently folks run commands while the build is running
+<a name="l-99"></a><span class="tm">18:46:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz:</span> but we want the other commands to survive after the build exits
+<a name="l-100"></a><span class="tm">18:46:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> this sounds like a higher-level use case, where you want to run something that isn't what the user specified
+<a name="l-101"></a><span class="tm">18:47:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz:</span> we're using the containers to run something the user gave us.  The user didn't provide a container, just a rootfs
+<a name="l-102"></a><span class="tm">18:47:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> you can just bind-mount in your smart init
+<a name="l-103"></a><span class="tm">18:47:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz:</span> that's what we do now, but it seems hacky
+<a name="l-104"></a><span class="tm">18:48:28</span><span class="nk"> &lt;wking&gt;</span> I asked "why not create a new PID namespace"?
+<a name="l-105"></a><span class="tm">18:48:47</span><span class="nk"> &lt;wking&gt;</span> crosbymichael and mrunalp pointed out that debugging is hard when you're in a separate PID namespace
+<a name="l-106"></a><span class="tm">18:49:40</span><span class="nk"> &lt;wking&gt;</span> julz doesn't want to inspect the rootfs to avoid collisions
+<a name="l-107"></a><span class="tm">18:49:57</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/wking/ccon#host</span>
+<a name="l-108"></a><span class="tm">18:50:23</span><span class="nk"> &lt;wking&gt;</span> ^ ccon uses execveat to run a host-side executable in the container
+<a name="l-109"></a><span class="tm">18:51:13</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">vishh:</span> This could be solved with a sample JSON Schema
+<a name="l-110"></a><span class="tm">18:51:31</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">julz:</span> It's much easier for the runtime to do this than the user
+<a name="l-111"></a><span class="tm">18:53:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> is concerned about security
+<a name="l-112"></a><span class="tm">18:54:08</span><span class="nk"> &lt;wking&gt;</span> julz sleep() isn't going to make insecure syscalls
+<a name="l-113"></a><span class="tm">18:54:40</span><span class="nk"> &lt;lk4d4&gt;</span> it's sorta harsh to force runtimes to implement sleeps
+<a name="l-114"></a><span class="tm">18:54:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> is concerened about some container-wide security issue (maybe things not being applied until a final exec?)
+<a name="l-115"></a><span class="tm">18:55:55</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">crosbymichael to continue the discussion in https://github.com/opencontainers/runc/pull/465</span>
+<a name="l-116"></a><span class="tm">18:56:01</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">julz to continue the discussion in https://github.com/opencontainers/runc/pull/465</span>
+<a name="l-117"></a><span class="tm">18:56:07</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">22:01:23</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-12-14 discussion</span>
+<a name="l-2"></a><span class="tm">22:01:23</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Dec 14 22:01:23 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">22:01:23</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">22:01:23</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2016_12_14_discussion'
+<a name="l-5"></a><span class="tm">22:01:33</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">vbatts mrunalp</span>
+<a name="l-6"></a><span class="tm">22:01:33</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp vbatts wking
+<a name="l-7"></a><span class="tm">22:01:55</span><span class="nk"> &lt;mrunalp&gt;</span> philips, stevvooe Joining?
+<a name="l-8"></a><span class="tm">22:02:01</span><span class="nk"> &lt;stevvooe&gt;</span> yea
+<a name="l-9"></a><span class="tm">22:02:03</span><span class="nk"> &lt;stevvooe&gt;</span> one sec
+<a name="l-10"></a><span class="tm">22:02:12</span><span class="nk"> &lt;philips&gt;</span> <span class="hi">mrunalp:</span> I am on the line
+<a name="l-11"></a><span class="tm">22:02:18</span><span class="nk"> &lt;mrunalp&gt;</span> cyphar, Are you on?
+<a name="l-12"></a><span class="tm">22:04:08</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec anchor patches</span>
+<a name="l-13"></a><span class="tm">22:04:25</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/635
+<a name="l-14"></a><span class="tm">22:04:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we want this to unblock some work in runtime-tools
+<a name="l-15"></a><span class="tm">22:05:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> they need maintainer review
+<a name="l-16"></a><span class="tm">22:05:18</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/issues/634</span>
+<a name="l-17"></a><span class="tm">22:05:21</span><span class="nk"> &lt;wking&gt;</span> ^ meta issue
+<a name="l-18"></a><span class="tm">22:05:41</span><span class="nk"> &lt;vbatts&gt;</span> https://github.com/opencontainers/runtime-spec/pulls/RobDolinMS
+<a name="l-19"></a><span class="tm">22:05:58</span><span class="nk"> &lt;wking&gt;</span> Although that tracking issue is stale
+<a name="l-20"></a><span class="tm">22:06:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> no real objections...
+<a name="l-21"></a><span class="tm">22:06:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> HTML works, but whatever
+<a name="l-22"></a><span class="tm">22:06:28</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Command-line interface</span>
+<a name="l-23"></a><span class="tm">22:06:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> still waiting on runC and then wking will update runtime-spec#513
+<a name="l-24"></a><span class="tm">22:06:45</span><span class="nk"> &lt;wking&gt;</span> ^yup
+<a name="l-25"></a><span class="tm">22:07:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> cyphar or crosbymichael was going to open an issue about passing down the console socket...
+<a name="l-26"></a><span class="tm">22:07:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> that's the last major change before 1.0
+<a name="l-27"></a><span class="tm">22:07:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> any other runtime topics?
+<a name="l-28"></a><span class="tm">22:07:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> we cut runtime-spec rc3 today
+<a name="l-29"></a><span class="tm">22:08:13</span><span class="nk"> &lt;stephenrwalli&gt;</span> Congratulations!
+<a name="l-30"></a><span class="tm">22:08:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> we should start populating an rc4 and/or 1.0 milestone
+<a name="l-31"></a><span class="tm">22:08:34</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">next runtime-spec milestone</span>
+<a name="l-32"></a><span class="tm">22:08:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we can put anchors and the CLI in the next milestone
+<a name="l-33"></a><span class="tm">22:08:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> so an rc4 with those before 1.0?
+<a name="l-34"></a><span class="tm">22:09:07</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image config conversion</span>
+<a name="l-35"></a><span class="tm">22:09:13</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/image-spec/pull/492
+<a name="l-36"></a><span class="tm">22:09:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> what about it?
+<a name="l-37"></a><span class="tm">22:09:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> is cyphar around?
+<a name="l-38"></a><span class="tm">22:10:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I haven't voiced my concerns here yet, but we need to be careful about wording
+<a name="l-39"></a><span class="tm">22:10:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we need to support intermediate formats unknown to OCI
+<a name="l-40"></a><span class="tm">22:10:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> imagine I have an on-disk image -&gt; local format -&gt; runtime config format
+<a name="l-41"></a><span class="tm">22:10:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if we tightly bind them, even by saying "you shall convert the image config to a runtime spec", it will be impossible to implement this with intermediates like we're doing now
+<a name="l-42"></a><span class="tm">22:11:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there's another issue about CPU shares and memory fields
+<a name="l-43"></a><span class="tm">22:11:26</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/495</span>
+<a name="l-44"></a><span class="tm">22:11:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> these probably don't make a lot of sense in an image format
+<a name="l-45"></a><span class="tm">22:11:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> what is the significance of writing it to disk?
+<a name="l-46"></a><span class="tm">22:12:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> does it end up in the config whose hash names the image?
+<a name="l-47"></a><span class="tm">22:12:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> you're saying that if it's written to disk it effects the config digest?
+<a name="l-48"></a><span class="tm">22:12:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> yeah, and that config hash is used from the manifest
+<a name="l-49"></a><span class="tm">22:13:22</span><span class="nk"> &lt;wking&gt;</span> that sounds more like runtime-spec config -&gt; image config, and cyphar's PR is currently focused on image config -&gt; runtime-spec config
+<a name="l-50"></a><span class="tm">22:13:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> It's really not
+<a name="l-51"></a><span class="tm">22:13:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> anything else for image?
+<a name="l-52"></a><span class="tm">22:14:08</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">project workflow</span>
+<a name="l-53"></a><span class="tm">22:14:49</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/486</span>
+<a name="l-54"></a><span class="tm">22:15:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I float this establishe code from Docker, and wking posts lots of distracting feedback, but maintainers are silent
+<a name="l-55"></a><span class="tm">22:15:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> what should we do about this?
+<a name="l-56"></a><span class="tm">22:15:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I hear the frustration.  The volume of comments is stifling (and I've heard this from many people)
+<a name="l-57"></a><span class="tm">22:15:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> it feels like too much conversation that's not going anywhere
+<a name="l-58"></a><span class="tm">22:16:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> this spec has been open from the beginning, without pre-planning to gather maintainer direction
+<a name="l-59"></a><span class="tm">22:16:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> to exclude anyone at this point would be contrary to the past year
+<a name="l-60"></a><span class="tm">22:16:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I don't have any recommendations...
+<a name="l-61"></a><span class="tm">22:16:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm happy to stay open, but this is rediculous
+<a name="l-62"></a><span class="tm">22:17:24</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/487</span>
+<a name="l-63"></a><span class="tm">22:17:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> push-back on bumping Go to 1.7 for test-suite support isn't helpful
+<a name="l-64"></a><span class="tm">22:17:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I agree (and just merged the Go bump)
+<a name="l-65"></a><span class="tm">22:18:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> humans operate on context, and PRs are fairly targetted.  But the conversation pulls in too much context, which causes confusion and frustration
+<a name="l-66"></a><span class="tm">22:18:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> so what are we going to do?
+<a name="l-67"></a><span class="tm">22:19:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we've discussed this in the past, and you keep trying to go to a specific issue
+<a name="l-68"></a><span class="tm">22:19:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we need to focus on the thematic elements
+<a name="l-69"></a><span class="tm">22:21:19</span><span class="nk"> &lt;wking&gt;</span> It's hard for me to find a way to be clear with less context
+<a name="l-70"></a><span class="tm">22:22:07</span><span class="nk"> &lt;wking&gt;</span> I can communicate via PRs (and not comment on other's PRs), since that's actionable
+<a name="l-71"></a><span class="tm">22:22:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> all the references are impressive, but also a big drag on a lot of conversations
+<a name="l-72"></a><span class="tm">22:23:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> folks expect one line or no response at all, and then they get a few paragraphs with lots of footnotes
+<a name="l-73"></a><span class="tm">22:23:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> it's difficult.
+<a name="l-74"></a><span class="tm">22:24:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> merge/reject PRs are still not always helpful for quick iteration
+<a name="l-75"></a><span class="tm">22:24:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm not saying, don't comment on PRs.  I'm saying, try rate limiting
+<a name="l-76"></a><span class="tm">22:25:59</span><span class="nk"> &lt;wking&gt;</span> I think we need a good place for long-term planning (vs. small-step iterations)
+<a name="l-77"></a><span class="tm">22:26:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I agree in principle, but we need a stable base building on existing tech.  A lot of choices are already baked in
+<a name="l-78"></a><span class="tm">22:27:37</span><span class="nk"> &lt;wking&gt;</span> It's hard to figure out which changes are too big for 1.0 and which can fit in underneath
+<a name="l-79"></a><span class="tm">22:28:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> It's difficult to make a hard rule for that.  It takes maintainer wisdom
+<a name="l-80"></a><span class="tm">22:28:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> sometime we need to disagree and commit
+<a name="l-81"></a><span class="tm">22:28:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> 1.0000000000
+<a name="l-82"></a><span class="tm">22:29:02 </span><span class="nka">* vbatts</span> <span class="ac">waves hands wildly</span>
+<a name="l-83"></a><span class="tm">22:29:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> sorry to put you on the spot.  Don't stop the good stuff.  But let the conversations breathe
+<a name="l-84"></a><span class="tm">22:30:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">sarah-novotny:</span> thanks for having this conversation in the open
+<a name="l-85"></a><span class="tm">22:30:22</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">chainID PR</span>
+<a name="l-86"></a><span class="tm">22:30:37</span><span class="nk"> &lt;duglin&gt;</span> smoke bomb?
+<a name="l-87"></a><span class="tm">22:30:42</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/486</span>
+<a name="l-88"></a><span class="tm">22:30:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'm hoping to get there today
+<a name="l-89"></a><span class="tm">22:31:24</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">annotations doc</span>
+<a name="l-90"></a><span class="tm">22:31:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I have an annotations doc in the works to try and DRY up the doc
+<a name="l-91"></a><span class="tm">22:31:52</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/340</span>
+<a name="l-92"></a><span class="tm">22:31:58</span><span class="nk"> &lt;wking&gt;</span> ^ related to DRY annotations
+<a name="l-93"></a><span class="tm">22:32:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> there's also not much clarity on the meaning of some of the arch/platform fields
+<a name="l-94"></a><span class="tm">22:32:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> if we agree that manifest-lists are just descriptor lists, that might be a hinge point
+<a name="l-95"></a><span class="tm">22:32:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> we should genericize the "manifests" property name
+<a name="l-96"></a><span class="tm">22:33:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> maybe someone points one at an SQLite database
+<a name="l-97"></a><span class="tm">22:33:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> anything that references manifests would be further metadata
+<a name="l-98"></a><span class="tm">22:33:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm not quite ready to deprecate platform
+<a name="l-99"></a><span class="tm">22:33:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we might be able to map platfom 1:1 to annotations
+<a name="l-100"></a><span class="tm">22:34:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but for 1.0 I think adding annotations to descriptors would be just enough (without breaking existing consumers)
+<a name="l-101"></a><span class="tm">22:34:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> did you need anything else?
+<a name="l-102"></a><span class="tm">22:34:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> maybe some spec wording updates?
+<a name="l-103"></a><span class="tm">22:34:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> if we stay compatible with the Docker format and just change the spec wording, I understand that
+<a name="l-104"></a><span class="tm">22:35:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> so keep "manifests" but weaken the manifest assumption in the surrounding spec language
+<a name="l-105"></a><span class="tm">22:35:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I think that plan seems fine to me
+<a name="l-106"></a><span class="tm">22:35:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> do you want to resumbit the PR for this discussion?
+<a name="l-107"></a><span class="tm">22:35:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> or do we need to make other decisions first?
+<a name="l-108"></a><span class="tm">22:36:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I have another comparison PR
+<a name="l-109"></a><span class="tm">22:36:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> the only other piece would be the index.json file or embedding in oci-layout
+<a name="l-110"></a><span class="tm">22:36:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm fine with index.json
+<a name="l-111"></a><span class="tm">22:37:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we declare the media type for index.json and say "it might have these annotations" as a secondary step
+<a name="l-112"></a><span class="tm">22:37:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I don't see a need to make it more complex
+<a name="l-113"></a><span class="tm">22:37:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'll work that up and push it up later
+<a name="l-114"></a><span class="tm">22:38:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> no other topics outside of some outstanding review
+<a name="l-115"></a><span class="tm">22:38:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> me neither
+<a name="l-116"></a><span class="tm">22:38:28</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">next meeting</span>
+<a name="l-117"></a><span class="tm">22:38:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> call next week?
+<a name="l-118"></a><span class="tm">22:38:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> not me
+<a name="l-119"></a><span class="tm">22:38:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> me neither
+<a name="l-120"></a><span class="tm">22:38:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> Jan 4th for the next call?
+<a name="l-121"></a><span class="tm">22:38:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> sure
+<a name="l-122"></a><span class="tm">22:38:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> fine
+<a name="l-123"></a><span class="tm">22:38:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> not me, but it's fine if you have one then
+<a name="l-124"></a><span class="tm">22:39:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> See you next year
+<a name="l-125"></a><span class="tm">22:39:06</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

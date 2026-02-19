@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:00:16</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2018-04-04 discussion</span>
+<a name="l-2"></a><span class="tm">21:00:16</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Apr  4 21:00:16 2018 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:00:16</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:00:16</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2018_04_04_discussion'
+<a name="l-5"></a><span class="tm">21:00:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">agenda:</span> https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/B5qgXiKuQog
+<a name="l-6"></a><span class="tm">21:03:43</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">wking:</span> thanks
+<a name="l-7"></a><span class="tm">21:05:14</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">distribution-spec vote</span>
+<a name="l-8"></a><span class="tm">21:05:28</span><span class="nk"> &lt;wking&gt;</span> if it didn't pass unanimously, it was pretty close
+<a name="l-9"></a><span class="tm">21:05:59</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">certification</span>
+<a name="l-10"></a><span class="tm">21:06:12</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/certification/issues/35</span>
+<a name="l-11"></a><span class="tm">21:06:18</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/certification/issues/36</span>
+<a name="l-12"></a><span class="tm">21:06:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">albanc:</span> I'm trying to get the certification scope for the runtime spec
+<a name="l-13"></a><span class="tm">21:06:46</span><span class="nk"> &lt;wking&gt;</span> ^that's #36
+<a name="l-14"></a><span class="tm">21:07:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">albanc:</span> Do we want to certify Docker and other higher-level engines?
+<a name="l-15"></a><span class="tm">21:07:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">albanc:</span> I think for the moment we want to focus on runc and similar level runtimes
+<a name="l-16"></a><span class="tm">21:07:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">albanc:</span> and for the image-spec, what is the certification focus
+<a name="l-17"></a><span class="tm">21:07:34</span><span class="nk"> &lt;wking&gt;</span> ^that's #35
+<a name="l-18"></a><span class="tm">21:07:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">albanc:</span> is it just the image?  Also registries?  Conversion from the image-spec to a runtime bundle?
+<a name="l-19"></a><span class="tm">21:08:11</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] the initial thought was on registries but happy to discuss more
+<a name="l-20"></a><span class="tm">21:09:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I don't know if there will be much demand for "this particular Redis build is certified"
+<a name="l-21"></a><span class="tm">21:09:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I think it will be more like the W3C HTML validator, where you can feed in your image and get a pass/fail
+<a name="l-22"></a><span class="tm">21:10:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> and something like "everything from this registry is compliant"
+<a name="l-23"></a><span class="tm">21:10:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> I have some recollection of registries not supporting multi-arch
+<a name="l-24"></a><span class="tm">21:10:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> so maybe red/green/yellow, with multi-arch being a warning?
+<a name="l-25"></a><span class="tm">21:10:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> Conversion was a bit controversial originally
+<a name="l-26"></a><span class="tm">21:11:03</span><span class="nk"> &lt;estesp&gt;</span> don't say "Alexa" :)
+<a name="l-27"></a><span class="tm">21:11:42</span><span class="nk"> &lt;wking&gt;</span> how can we certify implementations without specifying implementations?
+<a name="l-28"></a><span class="tm">21:11:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> ?
+<a name="l-29"></a><span class="tm">21:12:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> you pass in something, but ... what are you passing in?
+<a name="l-30"></a><span class="tm">21:12:15</span><span class="nk"> &lt;estesp&gt;</span> <span class="hi">wking:</span> it wasn't always as clear that they didn't support multi-arch; in many cases there were parts of the v2 API that were used mainly in supporting multi-arch that registries decided wasn't that important for their use case
+<a name="l-31"></a><span class="tm">21:12:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> like in Docker you have a container, what would you drive on the Docker API to certify it for OCI runtime support?
+<a name="l-32"></a><span class="tm">21:12:53</span><span class="nk"> &lt;estesp&gt;</span> but definitely in some cases they were denying push when the manifest content-type was a "manifest-list"
+<a name="l-33"></a><span class="tm">21:13:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> for runtimes, it makes sense to certify the low-level runtimes (runc, hyper, ...)
+<a name="l-34"></a><span class="tm">21:13:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I think that makes the most sense.  But how do we word things that use runc?
+<a name="l-35"></a><span class="tm">21:13:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> are we talking about dusting off the CRI discussion?
+<a name="l-36"></a><span class="tm">21:14:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the conversion doc is also problematic.  What are we certifying?  Do we certify a CLI?  Do we certify the conversion spec, which I don't think is a good idea
+<a name="l-37"></a><span class="tm">21:14:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> for runc, it would be "if we implement a CLI we all agree on, then ..."
+<a name="l-38"></a><span class="tm">21:14:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> what if the implementation doesn't implement a random systemd flag?
+<a name="l-39"></a><span class="tm">21:14:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> then that flag shouldn't be in the CLI spec?
+<a name="l-40"></a><span class="tm">21:15:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> so which flags are in and which are out?
+<a name="l-41"></a><span class="tm">21:15:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> maintainers have to decide what makes sense
+<a name="l-42"></a><span class="tm">21:18:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> what value does this bring to the project?
+<a name="l-43"></a><span class="tm">21:18:48</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] section 1 for the OCI charter https://www.opencontainers.org/about/governance "The Open Container Initiative provides an open source technical community within which industry participants may easily contribute to building a vendor-neutral, portable and open specification and runtime that deliver on the promise of containers as a source of application portability backed by a certificati
+<a name="l-44"></a><span class="tm">21:18:58</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] that's where the certification program requirement comes from fyi
+<a name="l-45"></a><span class="tm">21:19:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> rather than rat-holing on the point of it... folks want a tool to complaince test so they can get a green light
+<a name="l-46"></a><span class="tm">21:20:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> currently folk implementing a runtime have to reverse-engineer runc because we don't have an official spec
+<a name="l-47"></a><span class="tm">21:20:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> how often is this done?  Once or twice a year?  Certification is going to take a lot of effort/time
+<a name="l-48"></a><span class="tm">21:21:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> is the benefit that runc, ccrun, kata, etc. all have the same flags and run the same tests?
+<a name="l-49"></a><span class="tm">21:21:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> from a pluggable perspective, yes
+<a name="l-50"></a><span class="tm">21:21:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but they're not pluggable, because the isolation primatives are different
+<a name="l-51"></a><span class="tm">21:21:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we can have different flags for Windows/Linux
+<a name="l-52"></a><span class="tm">21:22:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> when I floated the create, etc. JSON structure.  The reason that discussion happened was because any platform could take a JSON data structure and not have to depend on how Windows or other OS does flags
+<a name="l-53"></a><span class="tm">21:22:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I think a CLI spec would be pretty isolated to the platform
+<a name="l-54"></a><span class="tm">21:23:34</span><span class="nk"> &lt;wking&gt;</span> What's the Windows option issue?  Is it just -- vs. / conventions for options?
+<a name="l-55"></a><span class="tm">21:25:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> circling back to certification#36
+<a name="l-56"></a><span class="tm">21:25:42</span><span class="nk"> &lt;wking&gt;</span> s/36/35/
+<a name="l-57"></a><span class="tm">21:26:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> would image compliance help after the distribution-spec is in?
+<a name="l-58"></a><span class="tm">21:26:39</span><span class="nk"> &lt;wking&gt;</span> I agree that the distribution-spec would help with validating registries for serving compliant images ;)
+<a name="l-59"></a><span class="tm">21:26:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> we tried to make the layout for local images, but yeah
+<a name="l-60"></a><span class="tm">21:27:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> you have a test image, you push it to the registry, pull it from the registry, and run it
+<a name="l-61"></a><span class="tm">21:27:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but when I look at an individual image implementation or OCI implementation, looking at the runtime or image spec, it seems like we're just burning up C02
+<a name="l-62"></a><span class="tm">21:28:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">albanc:</span> does that mean that image certification should be done only with the distribution spec, not on disk?
+<a name="l-63"></a><span class="tm">21:28:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I think layouts on disk would be another line item
+<a name="l-64"></a><span class="tm">21:28:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> originally that was for 'docker save' and 'docker load', but you could have the same digests you'd have in a registry
+<a name="l-65"></a><span class="tm">21:29:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> especially for end-to-end certification, the cert group could publish a test image digest, and folks could fetch it, run it, and look for exit 0
+<a name="l-66"></a><span class="tm">21:29:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't think you want to look at runtime exit codes, those are completely separate
+<a name="l-67"></a><span class="tm">21:30:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> were layouts just a stop-gap?  How real is that use-case today?
+<a name="l-68"></a><span class="tm">21:30:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> it may be less work overall if we're not making up things
+<a name="l-69"></a><span class="tm">21:31:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> vbatts|work, you were talking about multi-arch validation?
+<a name="l-70"></a><span class="tm">21:31:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> if an implementation couldn't fetch multi-arch images... It would be ideal if we had a big compliance up/down boolean.  But in reality, it breaks down to implementing all the MUSTs and some SHOULDs so yellow
+<a name="l-71"></a><span class="tm">21:32:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> not even picking on multi-arch per-se
+<a name="l-72"></a><span class="tm">21:32:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> and we have two sides of certification, producers and consumers
+<a name="l-73"></a><span class="tm">21:32:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> yup
+<a name="l-74"></a><span class="tm">21:33:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> even building an image doesn't mean it complies with the spec.  You can get an image in a few different ways and may want to test it before pushing it to a registry
+<a name="l-75"></a><span class="tm">21:33:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> it would be good to be able to check each of those pieces at some point
+<a name="l-76"></a><span class="tm">21:34:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> so albanc, I don't think anyone's in violent disagreement.  It comes down to how, when you look at any one piece, if it's an implementation detail or a compliance issue
+<a name="l-77"></a><span class="tm">21:35:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> the other piece would be if you somehow specify that runtimes should comply with whatever capabilities, seccomp, etc., you could hand it a bundle to see whether the runtime could do that
+<a name="l-78"></a><span class="tm">21:35:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there is a way for the image if you take a hash, walk the hash for the manifest and layouts, etc.  You could abstract out the fetching and run it on layouts or registries, and that's fine
+<a name="l-79"></a><span class="tm">21:36:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think there's less use for layer extraction, where it's tar based, and there are 40 years of inconsistent tar implementations
+<a name="l-80"></a><span class="tm">21:36:34</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/342</span>
+<a name="l-81"></a><span class="tm">21:36:37</span><span class="nk"> &lt;wking&gt;</span> ^ tar spec ;)
+<a name="l-82"></a><span class="tm">21:37:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but some of these do need to be left as implementation details
+<a name="l-83"></a><span class="tm">21:37:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> would it help if we had two working groups, one for the runtime and one for images?
+<a name="l-84"></a><span class="tm">21:37:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> and say, this is what we're certifying and this is what we're not?
+<a name="l-85"></a><span class="tm">21:38:02</span><span class="nk"> &lt;wking&gt;</span> Isn't that what runtime-tools is already?
+<a name="l-86"></a><span class="tm">21:38:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> but runtime-tools and runtime-spec maintainers are running in parallel now
+<a name="l-87"></a><span class="tm">21:39:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> yeah, that makes sense to me
+<a name="l-88"></a><span class="tm">21:39:18</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] we attempted to try to do this awhile ago, it needs some love from the maintainers https://github.com/opencontainers/certification#certification
+<a name="l-89"></a><span class="tm">21:39:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> what's out from the existing certification group?  Does it come down to this level of thing?
+<a name="l-90"></a><span class="tm">21:39:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> We talked about the process, whether it would be self-cert or peer-cert, etc.
+<a name="l-91"></a><span class="tm">21:40:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">albanc:</span> is there a certification project?
+<a name="l-92"></a><span class="tm">21:40:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> it's not an OCI Project, it was under the trademark board
+<a name="l-93"></a><span class="tm">21:40:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> I think outside of mrunalp the maintainers weren't involved in that effort
+<a name="l-94"></a><span class="tm">21:40:34</span><span class="nk"> &lt;estesp&gt;</span> apologies; have to run for today
+<a name="l-95"></a><span class="tm">21:41:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> when I proposed working groups, I didn't mean a separate thing.  I just meant a quick "let's work up a document" to say what gets checked, e.g. yes runc, no CRI-O
+<a name="l-96"></a><span class="tm">21:41:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> and then vbatts|work's idea of pushing in a payload, we work that up after we know what we're going to certify and how
+<a name="l-97"></a><span class="tm">21:41:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I'm not opposed to a working group
+<a name="l-98"></a><span class="tm">21:42:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> if a working group is justed a google doc, I'm ok with that
+<a name="l-99"></a><span class="tm">21:42:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> as async as possible is best
+<a name="l-100"></a><span class="tm">21:43:01</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">cracra to open a certification-scoping Google doc</span>
+<a name="l-101"></a><span class="tm">21:43:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> and our focus will be on the low-level stuff
+<a name="l-102"></a><span class="tm">21:43:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> exactly.  The trademark can take care of the legal stuff, and this can be about what is actually certifiable
+<a name="l-103"></a><span class="tm">21:44:15</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec 1.1</span>
+<a name="l-104"></a><span class="tm">21:45:12</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/942</span>
+<a name="l-105"></a><span class="tm">21:45:21</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/949</span>
+<a name="l-106"></a><span class="tm">21:45:36</span><span class="nk"> &lt;wking&gt;</span> ^the two minor-level changes since 1.0.1
+<a name="l-107"></a><span class="tm">21:45:55</span><span class="nk"> &lt;wking&gt;</span> what happens to runc?  Will there be a 1.0 runc for the 1.0 runtime-spec?
+<a name="l-108"></a><span class="tm">21:46:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we should meet and hash out the runc release
+<a name="l-109"></a><span class="tm">21:46:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> or we can get a runc 1.0 out first and then circle back to runtime-spec 1.1
+<a name="l-110"></a><span class="tm">21:46:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> so hold on runtime-spec 1.1?
+<a name="l-111"></a><span class="tm">21:46:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah
+<a name="l-112"></a><span class="tm">21:47:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> there are also discussions about arguments going to the hypervisor
+<a name="l-113"></a><span class="tm">21:47:13</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/949#discussion_r178318374</span>
+<a name="l-114"></a><span class="tm">21:47:26</span><span class="nk"> &lt;mikebrow&gt;</span> agree.. let's ga runc rc.6? before moving to 1.1
+<a name="l-115"></a><span class="tm">21:47:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> we should open an issue about that
+<a name="l-116"></a><span class="tm">21:48:42</span><span class="nk"> &lt;mikebrow&gt;</span> tyranny to the implementation!
+<a name="l-117"></a><span class="tm">21:49:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> if everyone is looking at runc, then the only one that's wrong is runtime-tools
+<a name="l-118"></a><span class="tm">21:49:53</span><span class="nk"> &lt;wking&gt;</span> I think there are some issues with the runc API, but we probably won't settle those in the next 10 minutes
+<a name="l-119"></a><span class="tm">21:50:06</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">crosbymichael to file an issue for https://github.com/opencontainers/runtime-spec/pull/949#discussion_r178318374</span>
+<a name="l-120"></a><span class="tm">21:50:14</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">crosbymichael:</span> https://github.com/opencontainers/runtime-spec/milestone/17
+<a name="l-121"></a><span class="tm">21:50:16</span><span class="nk"> &lt;wking&gt;</span> or maybe that was a vbatts|work action item
+<a name="l-122"></a><span class="tm">21:50:55</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/milestone/9</span>
+<a name="l-123"></a><span class="tm">21:51:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> hmm, maybe v1.Y.0 is more of a label than a milestone
+<a name="l-124"></a><span class="tm">21:51:49</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">distribution-spec project</span>
+<a name="l-125"></a><span class="tm">21:52:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> crosbymichael added his LGTM, so the vote is complete
+<a name="l-126"></a><span class="tm">21:52:18</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Copenhagen</span>
+<a name="l-127"></a><span class="tm">21:52:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> albanc will be there
+<a name="l-128"></a><span class="tm">21:52:44</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">distribution-spec</span>
+<a name="l-129"></a><span class="tm">21:52:51</span><span class="nk"> &lt;wking&gt;</span> we plan on announcing this next week
+<a name="l-130"></a><span class="tm">21:53:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> when do you want me to drop the spec as it exists now?
+<a name="l-131"></a><span class="tm">21:53:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> before the 9th, when we announce it, so folks can look at it then
+<a name="l-132"></a><span class="tm">21:53:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> I've setup a GitHub group, and a maintainer set, etc.
+<a name="l-133"></a><span class="tm">21:54:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I plan on decoupling the spec from route definitions, because the spec is currently generated from Go route definitions
+<a name="l-134"></a><span class="tm">21:54:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> you don't want to carry that over?
+<a name="l-135"></a><span class="tm">21:54:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> yeah, it's fairly coupled to the implementation
+<a name="l-136"></a><span class="tm">21:54:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> and we could use that to generate some OAI
+<a name="l-137"></a><span class="tm">21:54:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> whatever's easiest
+<a name="l-138"></a><span class="tm">21:55:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> yeah, and we can do OAI later down the line; whatever works
+<a name="l-139"></a><span class="tm">21:55:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> anything else?
+<a name="l-140"></a><span class="tm">21:55:20</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

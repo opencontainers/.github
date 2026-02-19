@@ -1,0 +1,32 @@
+20:59:05 <vbatts|work> #startmeeting 2018-08-29
+20:59:05 <collabot> Meeting started Wed Aug 29 20:59:05 2018 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+20:59:05 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+20:59:05 <collabot> The meeting name has been set to '2018_08_29'
+21:05:07 <vbatts|work> #topic cra stuff
+21:05:15 <vbatts|work> alibaba announcement
+21:06:00 <vbatts|work> re-look at the certification
+21:06:06 <cracra> [caniszczyk, Open Container Initiative] https://github.com/opencontainers/certification/issues/36#issuecomment-414692343
+21:11:12 <vbatts|work> #topic runtime-spec
+21:11:14 <vbatts|work> https://github.com/opencontainers/runtime-spec/issues/964
+21:21:34 <vbatts|work> some windows PRs would be good to get in for a release
+21:21:50 <vbatts|work> #topic runc release
+21:22:15 <vbatts|work> there was something that broke lxc. That needs to be reverted and resolved before moving forward.
+21:22:52 <vbatts|work> want to wait on an RC even, before tagging a next release
+21:23:52 <tianon> (sorry folks, I gotta drop ♥)
+21:25:48 <vbatts|work> tianon: <3
+21:27:35 <vbatts|work> https://github.com/owtaylor/flagstate
+21:29:41 <vbatts|work> #topic distribution-spec
+21:31:40 <vbatts|work> /v2/_catalog is like a paginating admin function
+21:31:51 <vbatts|work> not ideal for search by clients
+21:32:43 <vbatts|work> for companion services like flagstate, it would be best to have it only do triggers from new
+21:50:38 <vbatts|work> OPTIONAL catalog api
+21:50:50 <vbatts|work> #topic distribution client lib
+21:51:29 <vbatts|work> conformance testing basically requires blessing one
+21:51:33 <vbatts|work> there are so many
+21:52:05 <vbatts|work> auth is not really a conformance thing, but may be required
+21:58:21 <vbatts|work> line 88 about client error codes?
+21:58:26 <vbatts|work> say consumer?
+21:58:37 <vbatts|work> /v2/ consumer requirements
+22:01:28 <vbatts|work> something like the ./specs-go/ of image-spec and runtime-spec
+22:01:34 <vbatts|work> #endmeething
+22:01:40 <vbatts|work> #endmeeting

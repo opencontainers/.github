@@ -1,0 +1,13 @@
+21:04:01 <wking> #startmeeting 2016-11-02 discussion
+21:04:01 <collabot`> Meeting started Wed Nov  2 21:04:01 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:04:01 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:04:01 <collabot`> The meeting name has been set to '2016_11_02_discussion'
+21:05:08 <wking> philips, tianon: https://www.uberconference.com/opencontainers is not working for me
+21:05:22 <philips> https://groups.google.com/a/opencontainers.org/d/msg/dev/ZKj8zo2-5VM/XdYPzsVXBAAJ
+21:05:36 <philips> Hey-
+21:05:36 <philips> So Crosby and I were the only two to show up after 5 minutes so we cancelled. Enjoy your 55 minutes.
+21:05:36 <philips> Good to chat Crosby :-P
+21:05:36 <philips> Brandon
+21:05:42 <tianon> <3
+21:05:42 <wking> ah, got it ;)
+21:05:45 <wking> #endmeeting

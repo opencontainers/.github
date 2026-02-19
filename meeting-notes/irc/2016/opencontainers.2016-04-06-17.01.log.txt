@@ -1,0 +1,67 @@
+17:01:42 <vbatts> #startmeeting 2016-04-06 runtime discussion
+17:01:42 <collabot`> Meeting started Wed Apr  6 17:01:42 2016 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:01:42 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:01:42 <collabot`> The meeting name has been set to '2016_04_06_runtime_discussion'
+17:03:30 <vbatts> #topic close issues / PRs
+17:03:39 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/293
+17:03:50 <vbatts> #link https://github.com/opencontainers/runtime-spec/pull/293
+17:03:56 <wking> mrunalp: we should move that to image-spec^
+17:04:16 <vbatts> well, be merged'ish
+17:04:18 <vbatts> https://github.com/opencontainers/image-spec/pull/6
+17:04:33 <wking> duglin: it doesn't make sense since image-spec is starting from Docker v2.2 manifest, so it should just be closed
+17:04:48 <vbatts> that ^ was philips
+17:04:57 <mrunalp> https://github.com/opencontainers/runtime-spec/issues/302
+17:05:35 <mrunalp> https://github.com/opencontainers/runtime-spec/issues/11
+17:06:45 <mrunalp> https://github.com/opencontainers/runtime-spec/issues/344
+17:07:29 <wking> vbatts: new topic for 0.5?
+17:07:36 <vbatts> #topic v0.5.0
+17:07:41 <vbatts> #link https://github.com/opencontainers/runtime-spec/milestones/v0.5.0
+17:07:47 <vbatts> #chairs wking
+17:07:50 <vbatts> #chair wking
+17:07:50 <collabot`> Current chairs: vbatts wking
+17:08:01 <wking> mrunalp: we probably won't resolve the sandbox issue without a PR
+17:08:08 <wking> #link https://github.com/opencontainers/runtime-spec/issues/299
+17:08:35 <wking> mrunalp: should we bump #299 to 0.6.0, or just delay 0.5.0
+17:08:43 <mrunalp> https://github.com/opencontainers/runtime-spec/issues/299
+17:08:57 <wking> philips: I bumped it to 0.6.0
+17:09:27 <wking> mrunalp: how are we synchronizing image-spec and runtime-spec?  Or are they independent?
+17:09:43 <wking> vbatts: the milestones are different, but we want 1.0 around the same time
+17:10:09 <wking> vbatts: there is going to be some overlap, because there is shared boilerplate (code of conduct, style checks, etc.)
+17:10:21 <philips> Overall there is this note on the runtime-spec & image-spec: https://github.com/opencontainers/image-spec#cooperation-with-oci-runtime-project
+17:10:21 <wking> vbatts: there will be JSON Schema overlap as well
+17:10:44 <wking> you can link from image-spec to the runtime-spec JSON Schema definitions^
+17:10:53 <JakeWarner|Work> Whoa, really excited about this image-spec
+17:11:13 <wking> philips: appc has a template repository, but copying is probably ok for now
+17:11:20 <philips> This is the template-project we use: https://github.com/coreos/template-project
+17:11:42 <wking> RobDolinMS: does it make sense to have two weekly calls?  Or keep it in one?
+17:11:56 <wking> mrunalp: the runtime stuff is winding down, so probably keep one weekly call
+17:12:16 <wking> philips: image spec has a lot of prior art, so we may only need a biweekly call
+17:12:38 <wking> RobDolinMS: so Wednesday remains a generic dev call, and we can fork if needed
+17:13:02 <wking> RobDolinMS: for 0.5.0, how urgent is cutting the release in the next day or two?
+17:13:09 <wking> vbatts: that's pretty subjective
+17:13:28 <wking> RobDolinMS: we may have a conformance clause coming, which would make it easier for conformance testing
+17:13:50 <wking> RobDolinMS: if we hold 0.5.0, I can have Stephen submit it today (it's just a paragraph or so)
+17:13:59 <wking> mrunalp: we can probably wait for that
+17:14:56 <wking> vbatts: anything besides #344 for 0.5.0?  What has changed since 0.4.0?
+17:15:27 <wking> mrunalp: hook timeouts (#346)
+17:15:51 <wking> mrunalp: read-only and masked paths (#364)
+17:16:25 <wking> #action vbatts to update the example JSON (#344)
+17:16:39 <wking> mrunalp: we may need another week or two for the create/start split
+17:17:06 <wking> mrunalp: for timing 0.6.0^
+17:17:23 <wking> julz_: duglin is traveling for a while, so it probably makes sense to defer create/start
+17:17:48 <wking> mrunalp: create/start is the only item on 0.6.0
+17:18:04 <wking> vishh: then just keep it open until create/start is ready
+17:18:29 <wking> RobDolinMS_: after create/start lands, cut 0.6.0 and make that the release cantidate
+17:18:39 <wking> RobDolinMS_: after that, release on demand instead of timing releases
+17:18:41 <wking> mrunalp: works for me
+17:18:48 <julz_> sgtm too
+17:18:50 <wking> vishh: sounds good to me
+17:18:53 <wking> and to me
+17:19:11 <wking> RobDolinMS_: hopefully we stabilize, and then cut 1.0 in early June
+17:19:13 <wking> mrunalp: yup
+17:19:30 <wking> #topic create/start split
+17:19:53 <wking> julz_: this is ready for early comments, but it's not in its final form
+17:20:14 <wking> #link https://github.com/duglin/runtime-spec/tree/SplitCreate
+17:20:39 <wking> julz_: I don't think the implementation is controversial, but either duglin or I may put something together so folks can kick the tires
+17:20:56 <wking> mrunalp: so we'll get something more solid and discuss next week
+17:21:08 <wking> #endmeeting

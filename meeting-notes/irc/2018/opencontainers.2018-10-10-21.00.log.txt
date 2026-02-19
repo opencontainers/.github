@@ -1,0 +1,31 @@
+21:00:06 <vbatts> #startmeeting 2018-10-10
+21:00:06 <collabot> Meeting started Wed Oct 10 21:00:06 2018 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:00:06 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:00:06 <collabot> The meeting name has been set to '2018_10_10'
+21:05:31 <vbatts> #topic umoci for image-tools
+21:09:36 <vbatts> concern that it would be it's own project, rather than just a non-opinionated validation tool
+21:10:35 <vbatts> OCI as a standards only org, not a code maintaining org. (now that CNCF is so pervasive)
+21:11:56 <vbatts> if it can be merged and non-opinionated, great. Otherwise it may be best to keep as its own project
+21:13:49 <vbatts> #topic runtime-spec backlog cleanup
+21:14:44 <mrunalp> vbatts, Joined late, can we add runc 1.0 to agenda if it isn't? :)
+21:16:34 <vbatts> #topic schema.org (vasochat)
+21:17:07 <vbatts> container discoverability, most notably for academia and science use-cases
+21:19:40 <vbatts> https://label-schema.org/rc1/
+21:19:51 <vbatts> #link https://label-schema.org/rc1/
+21:20:00 <vbatts> #link https://schema.org/
+21:21:03 <vbatts> #link https://github.com/owtaylor/flagstate
+21:23:36 <vbatts> #link https://github.com/GoogleContainerTools/container-diff
+21:27:13 <vbatts> a first step would even be a self describing container
+21:27:45 <vbatts> #links https://openschemas.github.io/
+21:28:33 <vbatts> crosby: are you asking for spec level changes or industry discussion and support?
+21:28:46 <vbatts> vanessa: support and interest!
+21:36:22 <vbatts> #link https://github.com/opencontainers/image-spec/issues/751
+21:37:09 <vbatts> vbatts: how best to have a fruitful and iterative discussion (sandbox/playground) before schema.org adopts or it is seen as an OCI best practice
+21:40:08 <vbatts> #link https://github.com/schemaorg/schemaorg/issues/2059
+21:45:37 <vbatts> vanessa: metadata about the build. tags, commit, contents of the REAMDE, all kinds of stuff would be very useful.
+22:01:21 <vbatts> mrunalp: i don't think that'll happen today!
+22:01:52 <vbatts> on this topic, I think we all agree that this is an important and useful use-case
+22:03:57 <mikebrow> agreed, important useful and might help out the search issues when we address search in v2 for the distribution spec
+22:05:56 <vbatts> mikebrow++
+22:07:40 <vbatts> #action vasochat send an email to the list about what an Image's schema.org might look like
+22:10:01 <vbatts> #endmeeting

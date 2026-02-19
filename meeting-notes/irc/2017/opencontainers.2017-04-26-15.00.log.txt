@@ -1,0 +1,31 @@
+15:00:26 <vbatts|work> #startmeeting 2017-04-26
+15:00:26 <collabot> Meeting started Wed Apr 26 15:00:26 2017 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+15:00:26 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+15:00:26 <collabot> The meeting name has been set to '2017_04_26'
+15:01:30 <mrunalp> crosbymichael, stevvooe, cyphar, dqminh, hqhq: Joining?
+15:02:23 <mrunalp> #topic https://github.com/opencontainers/runtime-spec/issues/726
+15:02:34 <vbatts|work> #chair mrunalp wking_
+15:02:34 <collabot> Current chairs: mrunalp vbatts|work wking_
+15:03:32 <mrunalp> #topic runtime-spec open PRs
+15:03:34 <mrunalp> https://github.com/opencontainers/runtime-spec/pulls
+15:06:09 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/780
+15:07:17 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/779
+15:08:01 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/778
+15:08:40 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/777
+15:11:39 <mrunalp> #action provide links to kernel docs for fields in the spec.
+15:12:35 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/775/files
+15:14:59 <mrunalp> tianon, These string constants are invented by us in the spec so it makes sense to keep them in the schema for validation
+15:15:12 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/773
+15:16:19 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/771
+15:23:00 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/769
+15:24:26 <vbatts|work> wking_: the shared-subtree docs are helpful for the bind and rbind
+15:26:41 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/768
+15:29:49 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/767
+15:36:59 <vbatts|work> https://github.com/opencontainers/image-spec/milestone/13
+15:40:13 <stevvooe> https://github.com/opencontainers/image-spec/pull/636
+15:42:11 <vbatts|work> https://github.com/opencontainers/image-spec/issues/658
+15:44:24 <stevvooe> https://github.com/opencontainers/image-spec/pull/654
+15:44:28 <estesp> I wish the map in uberconference had a moving dot to follow vbatts|work in his travels
+15:44:46 <vbatts|work> estesp: lol
+15:45:03 <vbatts|work> estesp: stalkerconference
+15:53:54 <vbatts|work> #endmeeting

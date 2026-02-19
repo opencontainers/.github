@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:02:06</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-09-06 discussion</span>
+<a name="l-2"></a><span class="tm">21:02:06</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Sep  6 21:02:06 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:02:06</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:02:06</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2017_09_06_discussion'
+<a name="l-5"></a><span class="tm">21:02:10</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp</span>
+<a name="l-6"></a><span class="tm">21:02:10</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp wking
+<a name="l-7"></a><span class="tm">21:02:48</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runC 1.0</span>
+<a name="l-8"></a><span class="tm">21:03:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> should we tag an issue or something?
+<a name="l-9"></a><span class="tm">21:03:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> We're pretty stable now.  We just need to check for other API changes (e.g. CLI changes), but I can't think of any
+<a name="l-10"></a><span class="tm">21:03:51</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="hi">mrunalp:</span> i won't be on call -- the only thing that i have is the go-digest vote
+<a name="l-11"></a><span class="tm">21:04:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I agree on the CLI stuff.  I think there might be some fixes we need to get in
+<a name="l-12"></a><span class="tm">21:04:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> [some things I missed] and the intelRdt tag
+<a name="l-13"></a><span class="tm">21:04:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'm fine with taking those fixes or not
+<a name="l-14"></a><span class="tm">21:04:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'm not sure if the intelRdt pull has been updated
+<a name="l-15"></a><span class="tm">21:05:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> so maybe tag those issues, and then if we get them dealt with, tag 1.0 next week
+<a name="l-16"></a><span class="tm">21:05:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we currently have seven other issues in the milestone
+<a name="l-17"></a><span class="tm">21:05:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we can freeze the milestone after we get those in
+<a name="l-18"></a><span class="tm">21:05:58</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runc/milestone/4</span>
+<a name="l-19"></a><span class="tm">21:06:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> it looks like the intelRdt pull has been updated
+<a name="l-20"></a><span class="tm">21:06:47</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runc/pull/1082</span>
+<a name="l-21"></a><span class="tm">21:06:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> should that go behind a build tag?
+<a name="l-22"></a><span class="tm">21:06:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> that would be safe for now
+<a name="l-23"></a><span class="tm">21:07:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> is this already in the spec?
+<a name="l-24"></a><span class="tm">21:07:40</span><span class="nk"> &lt;wking&gt;</span> there's no vtmpfs in runtime-spec
+<a name="l-25"></a><span class="tm">21:08:00</span><span class="nk"> &lt;wking&gt;</span> * vtpms
+<a name="l-26"></a><span class="tm">21:08:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'm not sure who's setting this, if it's not accessable via the spec
+<a name="l-27"></a><span class="tm">21:08:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> so maybe move it off 1.0?
+<a name="l-28"></a><span class="tm">21:08:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah, maybe to 1.1
+<a name="l-29"></a><span class="tm">21:08:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'll review the intelRdt stuff today
+<a name="l-30"></a><span class="tm">21:09:09</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runc/pull/1279</span>
+<a name="l-31"></a><span class="tm">21:09:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> anything else?
+<a name="l-32"></a><span class="tm">21:09:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> not from me
+<a name="l-33"></a><span class="tm">21:09:30</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec 1.0.1</span>
+<a name="l-34"></a><span class="tm">21:10:53</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/GRSrbKv8zP0</span>
+<a name="l-35"></a><span class="tm">21:11:21</span><span class="nk"> &lt;wking&gt;</span> I don't have a preference, but think we should have a plan
+<a name="l-36"></a><span class="tm">21:11:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> maybe check every four weeks, and cut a patch release if there is anything interesting
+<a name="l-37"></a><span class="tm">21:11:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> seems ok
+<a name="l-38"></a><span class="tm">21:11:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> it depends on what changes there were, because we need some time for stabilizing
+<a name="l-39"></a><span class="tm">21:12:26</span><span class="nk"> &lt;wking&gt;</span> I think 1.1 and 2.0 are a completely different discussion.  I'm only interested in the 1.0.x plan
+<a name="l-40"></a><span class="tm">21:12:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> so monthly or every few weeks we do a release with patch changes
+<a name="l-41"></a><span class="tm">21:12:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> given that, should we cut 1.0.1 before the end of the week
+<a name="l-42"></a><span class="tm">21:13:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah.  We want to be sure we don't break anyone in the process
+<a name="l-43"></a><span class="tm">21:13:20</span><span class="nk"> &lt;wking&gt;</span> i.e. make sure it's a patch release ;)
+<a name="l-44"></a><span class="tm">21:13:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I was hoping vbatts|work was around to handle the vote
+<a name="l-45"></a><span class="tm">21:13:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we can ping him
+<a name="l-46"></a><span class="tm">21:13:45</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">1.1 PRs</span>
+<a name="l-47"></a><span class="tm">21:13:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> when do we start reviewing these?
+<a name="l-48"></a><span class="tm">21:14:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> do we have a milestone?
+<a name="l-49"></a><span class="tm">21:14:23</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/milestone/9</span>
+<a name="l-50"></a><span class="tm">21:14:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I think the only major thing over there is the VM stuff
+<a name="l-51"></a><span class="tm">21:14:41</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/405</span>
+<a name="l-52"></a><span class="tm">21:14:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I guess we could review it, but I'm not sure about merging it
+<a name="l-53"></a><span class="tm">21:15:01</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/9zZKpptGLSw</span>
+<a name="l-54"></a><span class="tm">21:15:35</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/Ohs8l5NaP_U</span>
+<a name="l-55"></a><span class="tm">21:15:47</span><span class="nk"> &lt;wking&gt;</span> my impression of the maintainer preference was to have an open master and then cherry-pick onto ad-hoc branches for further patch releases
+<a name="l-56"></a><span class="tm">21:15:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> is there anything folks want a runtime-spec 1.1 for
+<a name="l-57"></a><span class="tm">21:16:09</span><span class="nk"> &lt;wking&gt;</span> presumably everything in that milestone ;)
+<a name="l-58"></a><span class="tm">21:18:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't think we need a 1.0.1 milestone unless someone asks for something.  Just to stay away from being feature based
+<a name="l-59"></a><span class="tm">21:18:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> and we still need certification and tools to catch up with 1.0
+<a name="l-60"></a><span class="tm">21:19:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> unless folks have specific things that need to go into a 1.1, I think we can just focus on patch-level fixes and clarifications
+<a name="l-61"></a><span class="tm">21:19:02</span><span class="nk"> &lt;vbatts|travel&gt;</span> Just realized this meeting is going on
+<a name="l-62"></a><span class="tm">21:19:30</span><span class="nk"> &lt;vbatts|travel&gt;</span> I won't be able to dial in, but wanted to mention open source summit next week
+<a name="l-63"></a><span class="tm">21:19:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">ram:</span> I'm covering for RobDolinMS who is out for this week and maybe next week
+<a name="l-64"></a><span class="tm">21:19:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">ram:</span> Are there any milestones in the next few weeks I should be aware of?
+<a name="l-65"></a><span class="tm">21:20:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we're planning on cutting 1.0.1 inside a week
+<a name="l-66"></a><span class="tm">21:20:06</span><span class="nk"> &lt;vbatts|travel&gt;</span> <span class="hi">wking:</span> mrunalp ^^
+<a name="l-67"></a><span class="tm">21:20:15</span><span class="nk"> &lt;wking&gt;</span> vbatts|travel, I'll pass it on
+<a name="l-68"></a><span class="tm">21:20:51</span><span class="nk"> &lt;vbatts|travel&gt;</span> Thx
+<a name="l-69"></a><span class="tm">21:20:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> is there already an OSS mail?  Should we send one?
+<a name="l-70"></a><span class="tm">21:21:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> didn't cracra send a mail for a small meetup or dinner?  I'm not going to be there, but stevvooe is and maybe Derek
+<a name="l-71"></a><span class="tm">21:21:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> any other topics
+<a name="l-72"></a><span class="tm">21:21:42</span><span class="nk"> &lt;vbatts|travel&gt;</span> Cool
+<a name="l-73"></a><span class="tm">21:21:47</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:00:39</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-03-22 discussion</span>
+<a name="l-2"></a><span class="tm">21:00:39</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Mar 22 21:00:39 2017 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:00:39</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:00:39</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2017_03_22_discussion'
+<a name="l-5"></a><span class="tm">21:01:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> chair me?  Not sure how much I'll be able to type, but you never know ;)
+<a name="l-6"></a><span class="tm">21:01:39</span><span class="nk"> &lt;vbatts&gt;</span> no
+<a name="l-7"></a><span class="tm">21:01:41</span><span class="nk"> &lt;vbatts&gt;</span> ;-)
+<a name="l-8"></a><span class="tm">21:01:48</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking mrunalp</span>
+<a name="l-9"></a><span class="tm">21:01:48</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: mrunalp vbatts wking
+<a name="l-10"></a><span class="tm">21:02:05</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">times for future meetings</span>
+<a name="l-11"></a><span class="tm">21:02:08</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, stevvooe: Joining?
+<a name="l-12"></a><span class="tm">21:02:19</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="hi">mrunalp:</span> i'll be there shortly
+<a name="l-13"></a><span class="tm">21:02:38</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec 1.0 burn-down</span>
+<a name="l-14"></a><span class="tm">21:02:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> are we waiting for Docker and cri-o before a 30-day quiet period?
+<a name="l-15"></a><span class="tm">21:03:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I don't think there's an official need for a 30-day quiet period
+<a name="l-16"></a><span class="tm">21:03:31</span><span class="nk"> &lt;wking&gt;</span> ^ I agree that there's no official need for 30 days of quiet before 1.0, but I still think it's a good idea
+<a name="l-17"></a><span class="tm">21:05:32</span><span class="nk"> &lt;wking&gt;</span> If nothing has changed since rc5, I agree that there's no point in cutting an rc6 (although I'm not sure what's landed since rc5)
+<a name="l-18"></a><span class="tm">21:05:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't think rc6 is very critical
+<a name="l-19"></a><span class="tm">21:05:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we're working on getting Docker up to date now
+<a name="l-20"></a><span class="tm">21:06:18</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/issues/726</span>
+<a name="l-21"></a><span class="tm">21:06:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> we could vote for 1.0 and have 30 days of quiet afterwards
+<a name="l-22"></a><span class="tm">21:07:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I don't think we want 30 days of quiet after 1.0.  It should be before
+<a name="l-23"></a><span class="tm">21:07:24</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">wking:</span> only 8 PRs merged since rc5
+<a name="l-24"></a><span class="tm">21:08:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we're not clear on the 30-day, Member-notification period around releases
+<a name="l-25"></a><span class="tm">21:08:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> the charter says the 30 days are after a new version
+<a name="l-26"></a><span class="tm">21:08:40</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://www.opencontainers.org/about/governance section 8.d</span>
+<a name="l-27"></a><span class="tm">21:09:24</span><span class="nk"> &lt;david-lyle&gt;</span> will 1.0 be a tag or a branch?
+<a name="l-28"></a><span class="tm">21:09:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> what happens if they reject after a release?
+<a name="l-29"></a><span class="tm">21:09:55</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/issues/726</span>
+<a name="l-30"></a><span class="tm">21:10:06</span><span class="nk"> &lt;vbatts&gt;</span> (already done)
+<a name="l-31"></a><span class="tm">21:11:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> Once we're happy, we can cut an rc6, send out notices, wait 30 days, and then tag it 1.0 if there were no problems, then 30 days for the charter's lawyer review
+<a name="l-32"></a><span class="tm">21:11:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I think Chris reached out to Mike Dolan about when the 30 days are, and would rather have them answer that
+<a name="l-33"></a><span class="tm">21:12:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I'd rather send cracra an email
+<a name="l-34"></a><span class="tm">21:12:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah, we can do that
+<a name="l-35"></a><span class="tm">21:12:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> cri-o will be done by next week
+<a name="l-36"></a><span class="tm">21:12:43</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] once you vote on v1.0 final and the vote is approved, the 30 day starts (note this doesn't mean that the release isn't final, it just gives members 30 days due to the IP policy)
+<a name="l-37"></a><span class="tm">21:12:47</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] hope that makes sense
+<a name="l-38"></a><span class="tm">21:13:43</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">cracra:</span> so what does that mean if a member does not accept it?
+<a name="l-39"></a><span class="tm">21:14:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> after the release, members have 30 days to decide to leave or not
+<a name="l-40"></a><span class="tm">21:14:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> 1.0s are the same as any release.  You can just vote "we're going to tag rc6 (or whatever) as 1.0"
+<a name="l-41"></a><span class="tm">21:15:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> what are the IP issues?
+<a name="l-42"></a><span class="tm">21:15:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> it's a patent grant largely orthogonal to releasing
+<a name="l-43"></a><span class="tm">21:15:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> it's a strange IP policy, but that's what we agreed to before starting
+<a name="l-44"></a><span class="tm">21:16:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> I've been pre-briefing folks, so I don't think anyone will be surprised by a 1.0
+<a name="l-45"></a><span class="tm">21:16:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> For example, some organization has a patent which is covered by the spec, and then that member would be granting a zero-cost license by accepting that spec version
+<a name="l-46"></a><span class="tm">21:17:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> I'd rather have the TDC focus on cutting the release, and we'll work behind the scenes to cover the patent thing
+<a name="l-47"></a><span class="tm">21:18:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> Hopefully companies with large patent portfolios will continue to stay in the OCI, and this gives implementers assurances that those patents won't be asserted against the implementations
+<a name="l-48"></a><span class="tm">21:18:49</span><span class="nk"> &lt;wking&gt;</span> ^ this makes me a lot happier :)
+<a name="l-49"></a><span class="tm">21:20:07</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#630 </span><span class="cmdline">and #720 are the only interesting changes since rc5</span>
+<a name="l-50"></a><span class="tm">21:21:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> the only thing new for 1.0 would be a 1.0.x branch, if we want to do that.
+<a name="l-51"></a><span class="tm">21:21:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I think we can defer that
+<a name="l-52"></a><span class="tm">21:21:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> hopefully it quiets down after 1.0
+<a name="l-53"></a><span class="tm">21:22:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> is a containerd update part of the milestone?
+<a name="l-54"></a><span class="tm">21:22:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> it's what Docker is currently doing
+<a name="l-55"></a><span class="tm">21:22:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we need to port over the new TTY, etc. runc changes
+<a name="l-56"></a><span class="tm">21:23:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> it would be good to get a vote out within a week or less
+<a name="l-57"></a><span class="tm">21:24:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> are we not following the milestone?
+<a name="l-58"></a><span class="tm">21:24:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> right now the milestone is just #726
+<a name="l-59"></a><span class="tm">21:24:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> rc6 has seven issues
+<a name="l-60"></a><span class="tm">21:24:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> we're not to image-spec
+<a name="l-61"></a><span class="tm">21:25:58</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/issues/588
+<a name="l-62"></a><span class="tm">21:26:02</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec</span>
+<a name="l-63"></a><span class="tm">21:26:07</span><span class="nk"> &lt;wking&gt;</span> https://github.com/opencontainers/image-spec/issues/588
+<a name="l-64"></a><span class="tm">21:26:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I've never had problems with this, and don't know what we can put in the spec to cement these issues
+<a name="l-65"></a><span class="tm">21:26:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm not sure where to take this, and look forward having cyphar on the call
+<a name="l-66"></a><span class="tm">21:27:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> The spec should define what it is, not how to implement it
+<a name="l-67"></a><span class="tm">21:27:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the request is for an implementer's note.  I think the data structures are obvious, but that could be my familiarity
+<a name="l-68"></a><span class="tm">21:27:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the data structures define the algorithms, not the other way around
+<a name="l-69"></a><span class="tm">21:28:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> there's nothing about algorithms in the current note
+<a name="l-70"></a><span class="tm">21:28:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> right.  That's what this issue is asking for.  Do we need to encode that in the spec
+<a name="l-71"></a><span class="tm">21:28:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> an encoutered media type that is unknown should be safely ignored...
+<a name="l-72"></a><span class="tm">21:29:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think the issues are "how to handle names that aren't unique?" and platform selection
+<a name="l-73"></a><span class="tm">21:29:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> there's been lots of discussion about that
+<a name="l-74"></a><span class="tm">21:29:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think the conclusions are a little hyperbolic, but the core is a concern that some things may be underspecified
+<a name="l-75"></a><span class="tm">21:29:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> the more you start dictating implementations, the more it hurts implementers
+<a name="l-76"></a><span class="tm">21:30:08</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/622</span>
+<a name="l-77"></a><span class="tm">21:30:16</span><span class="nk"> &lt;wking&gt;</span> ^ confusion about what 'features' means
+<a name="l-78"></a><span class="tm">21:31:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think we'll miss wide if we try to explain the datastructure math, and could be inconsistent with what the data structure actually is
+<a name="l-79"></a><span class="tm">21:31:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> effectively what crosbymichael said
+<a name="l-80"></a><span class="tm">21:33:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> maybe merging the spec would help, so it's harder to selectively read the spec
+<a name="l-81"></a><span class="tm">21:33:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> e.g. read one section but miss something important in another section
+<a name="l-82"></a><span class="tm">21:34:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> so I'll keep pointing at code in containerd about how to deal with this.  There aren't many ways to deal with this
+<a name="l-83"></a><span class="tm">21:35:40</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/620</span>
+<a name="l-84"></a><span class="tm">21:35:46</span><span class="nk"> &lt;vbatts&gt;</span> https://github.com/opencontainers/image-spec/issues/618
+<a name="l-85"></a><span class="tm">21:35:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> do we want to make that change in the spec too, but just in Go?
+<a name="l-86"></a><span class="tm">21:35:55</span><span class="nk"> &lt;wking&gt;</span> * but -&gt; or
+<a name="l-87"></a><span class="tm">21:35:58</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/pull/620
+<a name="l-88"></a><span class="tm">21:36:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> the split didn't make much sense to me when I read the spec
+<a name="l-89"></a><span class="tm">21:36:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> yeah, and cyphar ran into this as well
+<a name="l-90"></a><span class="tm">21:37:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> for example, if your visitor is looking at an index, but is calling a handler that doesn't care if the descriptors are ManifestDescriptors or Descriptors
+<a name="l-91"></a><span class="tm">21:38:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> currently as the spec reads it would just be ignored (when parsing JSON)
+<a name="l-92"></a><span class="tm">21:38:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> like JSON Schema?
+<a name="l-93"></a><span class="tm">21:38:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> yeah.  Do we need to do that?
+<a name="l-94"></a><span class="tm">21:39:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> if someone is using a descriptor outside the manifest, where we don't carry additional fields, having 'platform' doesn't make it invalid
+<a name="l-95"></a><span class="tm">21:39:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> so maybe no, because it's testing an assumed-broken use case
+<a name="l-96"></a><span class="tm">21:39:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> so we can merge #620, and we can adjust the spec later if we need
+<a name="l-97"></a><span class="tm">21:40:39</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">meeting times</span>
+<a name="l-98"></a><span class="tm">21:40:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> 8am Pacific and 5pm Pacific
+<a name="l-99"></a><span class="tm">21:40:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> There's a proposal to alternate even-odd
+<a name="l-100"></a><span class="tm">21:41:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> start that next week?  But next week is KubeCon
+<a name="l-101"></a><span class="tm">21:41:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> 8am is terrible?
+<a name="l-102"></a><span class="tm">21:41:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> 8am is dropping off kids and walking the dog ;)
+<a name="l-103"></a><span class="tm">21:42:02</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/719</span>
+<a name="l-104"></a><span class="tm">21:42:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> hopefully post 1.0 these calls are less critical
+<a name="l-105"></a><span class="tm">21:42:21</span><span class="nk"> &lt;tianon&gt;</span> <span class="hi">crosbymichael:</span> "same"
+<a name="l-106"></a><span class="tm">21:42:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I think they're still useful for conflict resolution
+<a name="l-107"></a><span class="tm">21:42:26</span><span class="nk"> &lt;tianon&gt;</span> xD
+<a name="l-108"></a><span class="tm">21:43:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> So starting next week?
+<a name="l-109"></a><span class="tm">21:44:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> Wed 3-29 lots of people will be in Europe, so favor Europe then
+<a name="l-110"></a><span class="tm">21:44:47</span><span class="nk"> &lt;wking&gt;</span> I'll update my PR to do that^
+<a name="l-111"></a><span class="tm">21:45:06</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">1.0 releases</span>
+<a name="l-112"></a><span class="tm">21:45:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> for the runtime, we're mostly through the final burn-down
+<a name="l-113"></a><span class="tm">21:45:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> we want to see more testing.  Docker and cri-o, although containerd, etc. would be nice
+<a name="l-114"></a><span class="tm">21:46:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> we want to see good test coverage there next week
+<a name="l-115"></a><span class="tm">21:46:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> then put up a 1.0 vote
+<a name="l-116"></a><span class="tm">21:46:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> the vote will happen like normal, with a tagged release, and then the 30-day stuff happens out of band
+<a name="l-117"></a><span class="tm">21:47:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> for the image spec, there's an rc6 milestone to burn down, and then it will go through the same 1.0 proces
+<a name="l-118"></a><span class="tm">21:47:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> so a bit behind the runtime spec, but the same 1.0 process
+<a name="l-119"></a><span class="tm">21:47:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> best case scenario is a runtime-spec 1.0 in two weeks
+<a name="l-120"></a><span class="tm">21:47:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I don't know what an ideal time would be for image-spec
+<a name="l-121"></a><span class="tm">21:48:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> closing it out before April 15th woudl be a beautiful thing
+<a name="l-122"></a><span class="tm">21:48:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> I'll take a stab at pushing an ICS to match a README
+<a name="l-123"></a><span class="tm">21:49:26</span><span class="nk"> &lt;wking&gt;</span> that's for minutes?  I can do that
+<a name="l-124"></a><span class="tm">21:49:56</span><span class="nk"> &lt;tianon&gt;</span> &lt;3
+<a name="l-125"></a><span class="tm">21:49:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> other issues?
+<a name="l-126"></a><span class="tm">21:50:05</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec issues</span>
+<a name="l-127"></a><span class="tm">21:50:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I just closed #493
+<a name="l-128"></a><span class="tm">21:50:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> let me know if you disagree
+<a name="l-129"></a><span class="tm">21:50:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the charset stuff in #599 needs help, if anyone has time.
+<a name="l-130"></a><span class="tm">21:50:37</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/issues/599
+<a name="l-131"></a><span class="tm">21:50:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> do we have a help-wanted label?
+<a name="l-132"></a><span class="tm">21:50:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> can you manage labels without write access?
+<a name="l-133"></a><span class="tm">21:50:55</span><span class="nk"> &lt;wking&gt;</span> no
+<a name="l-134"></a><span class="tm">21:51:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> help-wanted exists
+<a name="l-135"></a><span class="tm">21:51:47</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/issues/599
+<a name="l-136"></a><span class="tm">21:52:10</span><span class="nk"> &lt;tianon&gt;</span> https://twitter.com/DockerCuties/status/839614192436948992
+<a name="l-137"></a><span class="tm">21:52:54</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/issues/415
+<a name="l-138"></a><span class="tm">21:53:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we still need Microsoft validation here^
+<a name="l-139"></a><span class="tm">21:53:15</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">tianon:</span> &lt;3
+<a name="l-140"></a><span class="tm">21:53:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> is that the one with some email last week?
+<a name="l-141"></a><span class="tm">21:53:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> yeah
+<a name="l-142"></a><span class="tm">21:53:28</span><span class="nk"> &lt;vbatts&gt;</span> vbatts|cutie
+<a name="l-143"></a><span class="tm">21:53:32</span><span class="nk"> &lt;tianon&gt;</span> ++
+<a name="l-144"></a><span class="tm">21:53:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I'll forward that to some Windows folks today
+<a name="l-145"></a><span class="tm">21:53:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think we can take #400 of the 1.0 milestone
+<a name="l-146"></a><span class="tm">21:53:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> so post-1.0?
+<a name="l-147"></a><span class="tm">21:53:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think we have enough to go on
+<a name="l-148"></a><span class="tm">21:54:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> you can sign a hash, and that's enough for now
+<a name="l-149"></a><span class="tm">21:55:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> You can assign #415 to me, but make a note that I'm asking for colleague import
+<a name="l-150"></a><span class="tm">21:55:04</span><span class="nk"> &lt;wking&gt;</span> * input
+<a name="l-151"></a><span class="tm">21:55:26</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/pull/492
+<a name="l-152"></a><span class="tm">21:55:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> do we merge #492?  That's the only one I can see taking extra time
+<a name="l-153"></a><span class="tm">21:55:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think cyphar needs another pass on this
+<a name="l-154"></a><span class="tm">21:56:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> and I was going to have some of our people take another peek at it
+<a name="l-155"></a><span class="tm">21:57:03</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

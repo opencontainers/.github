@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2016-04-06 runtime discussion</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2016-04-06 runtime discussion</h1>
+<span class="details">
+Meeting started by vbatts at 17:01:42 UTC
+(<a href="opencontainers.2016-04-06-17.01.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">close issues / PRs</b> <span class="details">(<a href='opencontainers.2016-04-06-17.01.log.html#l-5'>vbatts</a>, 17:03:30)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/293">https://github.com/opencontainers/runtime-spec/pull/293</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-06-17.01.log.html#l-6'>mrunalp</a>,
+    17:03:39)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/293">https://github.com/opencontainers/runtime-spec/pull/293</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-06-17.01.log.html#l-7'>vbatts</a>,
+    17:03:50)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/6">https://github.com/opencontainers/image-spec/pull/6</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-06-17.01.log.html#l-10'>vbatts</a>,
+    17:04:18)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/302">https://github.com/opencontainers/runtime-spec/issues/302</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-06-17.01.log.html#l-13'>mrunalp</a>,
+    17:04:57)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/11">https://github.com/opencontainers/runtime-spec/issues/11</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-06-17.01.log.html#l-14'>mrunalp</a>,
+    17:05:35)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/344">https://github.com/opencontainers/runtime-spec/issues/344</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-06-17.01.log.html#l-15'>mrunalp</a>,
+    17:06:45)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">v0.5.0</b> <span class="details">(<a href='opencontainers.2016-04-06-17.01.log.html#l-17'>vbatts</a>, 17:07:36)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/milestones/v0.5.0">https://github.com/opencontainers/runtime-spec/milestones/v0.5.0</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-06-17.01.log.html#l-18'>vbatts</a>,
+    17:07:41)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/299">https://github.com/opencontainers/runtime-spec/issues/299</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-06-17.01.log.html#l-23'>wking</a>,
+    17:08:08)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/299">https://github.com/opencontainers/runtime-spec/issues/299</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-06-17.01.log.html#l-25'>mrunalp</a>,
+    17:08:43)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">vbatts to
+    update the example JSON (#344)</span> <span class="details">(<a
+    href='opencontainers.2016-04-06-17.01.log.html#l-48'>wking</a>,
+    17:16:25)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">create/start split</b> <span class="details">(<a href='opencontainers.2016-04-06-17.01.log.html#l-62'>wking</a>, 17:19:30)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/duglin/runtime-spec/tree/SplitCreate">https://github.com/duglin/runtime-spec/tree/SplitCreate</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-06-17.01.log.html#l-64'>wking</a>,
+    17:20:14)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 17:21:08 UTC
+(<a href="opencontainers.2016-04-06-17.01.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>vbatts to update the example JSON (#344)</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> vbatts <ol>
+    <li>vbatts to update the example JSON (#344)</li>
+  </ol></li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (44)</li>
+  <li>vbatts (10)</li>
+  <li>mrunalp (5)</li>
+  <li>collabot` (4)</li>
+  <li>philips (2)</li>
+  <li>JakeWarner|Work (1)</li>
+  <li>julz_ (1)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">22:04:19</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">OCI 1/11</span>
+<a name="l-2"></a><span class="tm">22:04:19</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Jan 11 22:04:19 2017 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">22:04:19</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">22:04:19</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to 'oci_1_11'
+<a name="l-5"></a><span class="tm">22:04:51</span><span class="nk"> &lt;vbatts&gt;</span> oh crap
+<a name="l-6"></a><span class="tm">22:05:05</span><span class="nk"> &lt;vbatts&gt;</span> hrm. i'm stuck in a meeting that is running long
+<a name="l-7"></a><span class="tm">22:05:14</span><span class="nk"> &lt;vbatts&gt;</span> let me try to sneak out
+<a name="l-8"></a><span class="tm">22:06:18</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, not heard from many maintainers
+<a name="l-9"></a><span class="tm">22:06:26</span><span class="nk"> &lt;mrunalp&gt;</span> many PRs stuck on go-digest
+<a name="l-10"></a><span class="tm">22:08:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> chair me?
+<a name="l-11"></a><span class="tm">22:08:18</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-12"></a><span class="tm">22:08:18</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp wking
+<a name="l-13"></a><span class="tm">22:08:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we should just have the maintainers chime in explicitly for new project proposals
+<a name="l-14"></a><span class="tm">22:08:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> anything else on this topic?
+<a name="l-15"></a><span class="tm">22:09:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I need to get the admin items through.  I have some image-spec PRs that are related
+<a name="l-16"></a><span class="tm">22:09:58</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/486</span>
+<a name="l-17"></a><span class="tm">22:10:04</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/512</span>
+<a name="l-18"></a><span class="tm">22:11:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if we want to bring things into OCI and this is the experience (bureaucracy) it's not going to happen often
+<a name="l-19"></a><span class="tm">22:11:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we need to make onboarding easier
+<a name="l-20"></a><span class="tm">22:11:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> do we want to review the PRs to see if they're signed?
+<a name="l-21"></a><span class="tm">22:11:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we'll get to that topic in a bit
+<a name="l-22"></a><span class="tm">22:12:05</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">many minor runtime-spec PRs</span>
+<a name="l-23"></a><span class="tm">22:12:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> there are a lot of small PRs, and many of them need to be rebased
+<a name="l-24"></a><span class="tm">22:12:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> there are PullApprove issues with some of RobDolinMS's PRs
+<a name="l-25"></a><span class="tm">22:12:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I'll get to those tomorrow afternoon
+<a name="l-26"></a><span class="tm">22:12:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> let us know if you need help on that.  It may be a PullApprove issue
+<a name="l-27"></a><span class="tm">22:13:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">somebody?:</span> Also check that GitHub has your Microsoft email
+<a name="l-28"></a><span class="tm">22:13:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> any particular PRs that need resolution?
+<a name="l-29"></a><span class="tm">22:14:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> do we want to traige them online?
+<a name="l-30"></a><span class="tm">22:14:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I think that's useful to do as a collective
+<a name="l-31"></a><span class="tm">22:15:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we need to split out the CLI stuff, since they're blocking on each other
+<a name="l-32"></a><span class="tm">22:15:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we should be able to get a 1.0 without handling the CLI stuff
+<a name="l-33"></a><span class="tm">22:16:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we need to freeze runtime-spec structs
+<a name="l-34"></a><span class="tm">22:16:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> my issue with that would be that there would be no way to validate 1.0 compliance
+<a name="l-35"></a><span class="tm">22:16:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't mean release 1.0 without it.  I mean, finalize the structs and JSON and then come back around to the CLI
+<a name="l-36"></a><span class="tm">22:17:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> so maybe send an email today about a feature-freeze on the spec (in a week or two), and then come back to the CLI
+<a name="l-37"></a><span class="tm">22:18:09</span><span class="nk"> &lt;wking&gt;</span> https://github.com/opencontainers/runtime-spec/pulls?page=1&amp;q=no%3Amilestone+is%3Aopen&amp;utf8=%E2%9C%93
+<a name="l-38"></a><span class="tm">22:18:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> two milestones (one for the spec, and one for the CLI)?
+<a name="l-39"></a><span class="tm">22:18:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the CLI is just the one PR now
+<a name="l-40"></a><span class="tm">22:19:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> cracra, can you give me privileges to create and assign to milestones
+<a name="l-41"></a><span class="tm">22:20:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I see the shared screen now
+<a name="l-42"></a><span class="tm">22:20:28</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/pull/512 at someone's leisure
+<a name="l-43"></a><span class="tm">22:21:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> newest to oldest, or oldest to newest?
+<a name="l-44"></a><span class="tm">22:21:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> newest to oldest
+<a name="l-45"></a><span class="tm">22:22:05</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/647</span>
+<a name="l-46"></a><span class="tm">22:22:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we can make that 1.0
+<a name="l-47"></a><span class="tm">22:23:29</span><span class="nk"> &lt;wking&gt;</span> I think we want it
+<a name="l-48"></a><span class="tm">22:23:37</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/646</span>
+<a name="l-49"></a><span class="tm">22:24:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> added to 1.0
+<a name="l-50"></a><span class="tm">22:24:47</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/635</span>
+<a name="l-51"></a><span class="tm">22:25:20</span><span class="nk"> &lt;wking&gt;</span> added to 1.0
+<a name="l-52"></a><span class="tm">22:25:37</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/630</span>
+<a name="l-53"></a><span class="tm">22:25:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I don't think this is ready
+<a name="l-54"></a><span class="tm">22:26:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> 1.1?
+<a name="l-55"></a><span class="tm">22:26:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> this one is weird
+<a name="l-56"></a><span class="tm">22:26:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> it's not cgroups at all
+<a name="l-57"></a><span class="tm">22:26:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> it's more like an rlimit
+<a name="l-58"></a><span class="tm">22:26:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> and this wouldn't be a breaking change if it landed later
+<a name="l-59"></a><span class="tm">22:27:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> added to 1.1 and pinged the OP about that
+<a name="l-60"></a><span class="tm">22:27:42</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">stevvooe:</span> done
+<a name="l-61"></a><span class="tm">22:27:50</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/628</span>
+<a name="l-62"></a><span class="tm">22:27:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> why even do this^
+<a name="l-63"></a><span class="tm">22:27:59</span><span class="nk"> &lt;dqminh&gt;</span> <span class="hi">crosbymichael:</span> because asciidoc rendered better
+<a name="l-64"></a><span class="tm">22:28:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> it makes adding anchors and things easier
+<a name="l-65"></a><span class="tm">22:29:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> learning new syntax is a big hurdle
+<a name="l-66"></a><span class="tm">22:29:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> seconding that.  Would be good to get what we need from Markdown
+<a name="l-67"></a><span class="tm">22:29:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> This is a problem in many orgs (e.g. with the W3C).  We should see what they're doing
+<a name="l-68"></a><span class="tm">22:30:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we changed something, which made it easier for a small number of people but then made it difficult for lots of people
+<a name="l-69"></a><span class="tm">22:30:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we don't want to project pain to the rest of the community
+<a name="l-70"></a><span class="tm">22:30:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> all the OCI projects should be using the same tooling
+<a name="l-71"></a><span class="tm">22:30:44</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/620</span>
+<a name="l-72"></a><span class="tm">22:30:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> mikebrow ?
+<a name="l-73"></a><span class="tm">22:31:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> this is ready to go
+<a name="l-74"></a><span class="tm">22:31:37</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/611</span>
+<a name="l-75"></a><span class="tm">22:32:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> any strong opinions?
+<a name="l-76"></a><span class="tm">22:32:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> stevvooe?
+<a name="l-77"></a><span class="tm">22:32:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> looking
+<a name="l-78"></a><span class="tm">22:33:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> This looks like it's the host-local runtime-config?
+<a name="l-79"></a><span class="tm">22:33:31</span><span class="nk"> &lt;wking&gt;</span> yes
+<a name="l-80"></a><span class="tm">22:33:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> Media types should be controlled by the image spec
+<a name="l-81"></a><span class="tm">22:34:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> it doesn't make a whole lot of sense for the runtime config to have a media type
+<a name="l-82"></a><span class="tm">22:34:43</span><span class="nk"> &lt;wking&gt;</span> this is just "should it have a media type"
+<a name="l-83"></a><span class="tm">22:35:12</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/611#issuecomment-261700992</span>
+<a name="l-84"></a><span class="tm">22:35:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the runtime config is not something you set and don't touch
+<a name="l-85"></a><span class="tm">22:36:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> let the triage keep going, and I'll think about this one
+<a name="l-86"></a><span class="tm">22:37:02</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/577</span>
+<a name="l-87"></a><span class="tm">22:37:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> this is a one-worder
+<a name="l-88"></a><span class="tm">22:37:33</span><span class="nk"> &lt;wking&gt;</span> needs a rebase
+<a name="l-89"></a><span class="tm">22:39:01</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/570</span>
+<a name="l-90"></a><span class="tm">22:39:08</span><span class="nk"> &lt;wking&gt;</span> I'll split that out into separate PRs^
+<a name="l-91"></a><span class="tm">22:39:19</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/555</span>
+<a name="l-92"></a><span class="tm">22:40:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> stevvooe, crosbymichael does legacy-Docker have a preference?
+<a name="l-93"></a><span class="tm">22:40:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> If you want host namespaces, don't set the field
+<a name="l-94"></a><span class="tm">22:40:39</span><span class="nk"> &lt;wking&gt;</span> oops, that was crosbymichael^
+<a name="l-95"></a><span class="tm">22:40:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> agreed.  If you don't need new namespaces, don't add the property
+<a name="l-96"></a><span class="tm">22:41:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if you allow nulls you bring in tri-state logic, which can be hard across languages
+<a name="l-97"></a><span class="tm">22:41:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> so close without merging?  mrunalp, can you do that?
+<a name="l-98"></a><span class="tm">22:41:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> ok
+<a name="l-99"></a><span class="tm">22:42:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> is the field optional?
+<a name="l-100"></a><span class="tm">22:42:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> don't we require a mount namespace?
+<a name="l-101"></a><span class="tm">22:42:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> no
+<a name="l-102"></a><span class="tm">22:43:16</span><span class="nk"> &lt;wking&gt;</span> It's not marked required in schema/config-linux.json either
+<a name="l-103"></a><span class="tm">22:43:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I'm shifting to another meeting.  Ping me if you need me to rebase anything else
+<a name="l-104"></a><span class="tm">22:43:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> continue?
+<a name="l-105"></a><span class="tm">22:43:58</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/552</span>
+<a name="l-106"></a><span class="tm">22:44:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> assign to vbatts?
+<a name="l-107"></a><span class="tm">22:44:51</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/548</span>
+<a name="l-108"></a><span class="tm">22:45:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> there should be no string pointers, right?  Not ever
+<a name="l-109"></a><span class="tm">22:45:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> strings can be optional, but you don't need pointers in the struct
+<a name="l-110"></a><span class="tm">22:46:05</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/blob/master/specs-go/config.go#L295
+<a name="l-111"></a><span class="tm">22:46:08</span><span class="nk"> &lt;stevvooe&gt;</span> https://dave.cheney.net/2013/01/19/what-is-the-zero-value-and-why-is-it-useful
+<a name="l-112"></a><span class="tm">22:46:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> so remove the existing string pointers?
+<a name="l-113"></a><span class="tm">22:47:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I can make a PR for that
+<a name="l-114"></a><span class="tm">22:48:34</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/545</span>
+<a name="l-115"></a><span class="tm">22:48:44</span><span class="nk"> &lt;wking&gt;</span> this may not make sense now that some -1 stuff has landed
+<a name="l-116"></a><span class="tm">22:48:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I'll ping hqhq and we'll see
+<a name="l-117"></a><span class="tm">22:49:52</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/540</span>
+<a name="l-118"></a><span class="tm">22:50:27</span><span class="nk"> &lt;wking&gt;</span> I still think this is useful.  I'm fine with modifications, but if the spec is against them (and it seems to be), I'd rather have that a generic rule that's not tied to a particular feature set
+<a name="l-119"></a><span class="tm">22:52:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the hostname MUST seems sufficient
+<a name="l-120"></a><span class="tm">22:52:24</span><span class="nk"> &lt;wking&gt;</span> it is, but then you have to annotate every possible field
+<a name="l-121"></a><span class="tm">22:53:40</span><span class="nk"> &lt;wking&gt;</span> you could have a spec that let you tweak existing resources
+<a name="l-122"></a><span class="tm">22:53:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the spec could just warn about side-effects (instead of blocking)
+<a name="l-123"></a><span class="tm">22:54:22</span><span class="nk"> &lt;wking&gt;</span> so close this PR and file a new one to lift the no-tweaking restriction?
+<a name="l-124"></a><span class="tm">22:55:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> yeah.  Remove that config-linux.md line
+<a name="l-125"></a><span class="tm">22:55:50</span><span class="nk"> &lt;wking&gt;</span> and there are other no-tweaking restrictions to lift as well.  I'll file a PR
+<a name="l-126"></a><span class="tm">22:55:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> out of time?
+<a name="l-127"></a><span class="tm">22:55:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yup
+<a name="l-128"></a><span class="tm">22:56:00</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

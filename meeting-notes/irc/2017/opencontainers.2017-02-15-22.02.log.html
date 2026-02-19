@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">22:02:09</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-02-15 discussion</span>
+<a name="l-2"></a><span class="tm">22:02:09</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Feb 15 22:02:09 2017 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">22:02:09</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">22:02:09</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2017_02_15_discussion'
+<a name="l-5"></a><span class="tm">22:02:46</span><span class="nk"> &lt;mrunalp&gt;</span> tianon, vishh, jlbutler: Joining?
+<a name="l-6"></a><span class="tm">22:03:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> chair me?
+<a name="l-7"></a><span class="tm">22:03:18</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking mrunalp</span>
+<a name="l-8"></a><span class="tm">22:03:18</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: mrunalp vbatts wking
+<a name="l-9"></a><span class="tm">22:03:33</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec triage</span>
+<a name="l-10"></a><span class="tm">22:03:40</span><span class="nk"> &lt;vbatts&gt;</span> omg vishh
+<a name="l-11"></a><span class="tm">22:04:06</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">http://github.com/opencontainers/runtime-spec/issues/657</span>
+<a name="l-12"></a><span class="tm">22:04:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> should we include this?
+<a name="l-13"></a><span class="tm">22:04:29</span><span class="nk"> &lt;tianon&gt;</span> sorry folks, won't be able to join today :x
+<a name="l-14"></a><span class="tm">22:04:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> it will make the spec more Docker-like
+<a name="l-15"></a><span class="tm">22:05:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> it reduces the size of the spec alot
+<a name="l-16"></a><span class="tm">22:05:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> is this required now?
+<a name="l-17"></a><span class="tm">22:05:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we can add it later
+<a name="l-18"></a><span class="tm">22:06:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> ok, I'll review it
+<a name="l-19"></a><span class="tm">22:06:19</span><span class="nk"> &lt;crosbymichael&gt;</span> BPF for seccomp can be added later
+<a name="l-20"></a><span class="tm">22:07:12</span><span class="nk"> &lt;jlbutler&gt;</span> mrunalp - sorry got called away cannot join today
+<a name="l-21"></a><span class="tm">22:07:23</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/616</span>
+<a name="l-22"></a><span class="tm">22:08:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> thoughts on this one?
+<a name="l-23"></a><span class="tm">22:09:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I think we're aiming for all platforms being able to read the spec for all other platforms
+<a name="l-24"></a><span class="tm">22:09:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we have a platform tag on the Go type fields
+<a name="l-25"></a><span class="tm">22:09:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I think we can just lean on that instead of redoing the schema
+<a name="l-26"></a><span class="tm">22:11:04</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/618</span>
+<a name="l-27"></a><span class="tm">22:11:19</span><span class="nk"> &lt;wking&gt;</span> it sounds like crosbymichael is asking for username to become required on Windows
+<a name="l-28"></a><span class="tm">22:11:37</span><span class="nk"> &lt;wking&gt;</span> I'm happy to write that pull request, but haven't gotten around to it yet
+<a name="l-29"></a><span class="tm">22:12:49</span><span class="nk"> &lt;wking&gt;</span> [I dropped off for a minute and missed some stuff]
+<a name="l-30"></a><span class="tm">22:13:28</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec RCs before 1.0?</span>
+<a name="l-31"></a><span class="tm">22:13:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we can get these PRs landed, push a runtime-spec RC, wait a week and see
+<a name="l-32"></a><span class="tm">22:13:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> ok
+<a name="l-33"></a><span class="tm">22:14:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'll ping justincormack_ on seccomp and see if he wants to look at it
+<a name="l-34"></a><span class="tm">22:14:27</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-tools triage</span>
+<a name="l-35"></a><span class="tm">22:14:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I haven't had time to push this to far, but will hopefully write some Go test harness stuff soon
+<a name="l-36"></a><span class="tm">22:15:37</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec releases</span>
+<a name="l-37"></a><span class="tm">22:15:39</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/546</span>
+<a name="l-38"></a><span class="tm">22:16:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> this^ came up in the change from a refs/ directory to an index.json file
+<a name="l-39"></a><span class="tm">22:16:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> this is really just a semantic rename from "manifest list" to "image index"
+<a name="l-40"></a><span class="tm">22:18:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> implementers will mostly need to adjust to the media type rename
+<a name="l-41"></a><span class="tm">22:19:07</span><span class="nk"> &lt;mrunalp&gt;</span> sorry have to drop
+<a name="l-42"></a><span class="tm">22:19:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'd like avoid dragging breaking changes over multiple RCs
+<a name="l-43"></a><span class="tm">22:19:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> if implementers want to weigh in...?
+<a name="l-44"></a><span class="tm">22:19:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> there are still a few copy-edits to make
+<a name="l-45"></a><span class="tm">22:20:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if we can get an RC out with the name change and ref removals, so folks can start implenting...  We can pick nits later
+<a name="l-46"></a><span class="tm">22:20:18</span><span class="nk"> &lt;wking&gt;</span> * implementing
+<a name="l-47"></a><span class="tm">22:20:34</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/551</span>
+<a name="l-48"></a><span class="tm">22:21:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I think the current rc5 milestone has just three issues
+<a name="l-49"></a><span class="tm">22:21:29</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/452</span>
+<a name="l-50"></a><span class="tm">22:21:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> stevvooe and wking have been having most of this conversation
+<a name="l-51"></a><span class="tm">22:22:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> all this was attempting to do was to run different validation sets over the content
+<a name="l-52"></a><span class="tm">22:22:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> with a visitor pattern, you could drag a train of visitors over the content
+<a name="l-53"></a><span class="tm">22:26:44</span><span class="nk"> &lt;wking&gt;</span> [I had to step out again and missed a few more minutes]
+<a name="l-54"></a><span class="tm">22:27:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> you might want to use image-spec to support different levels of validation
+<a name="l-55"></a><span class="tm">22:27:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'll put a comment with that on this issue and open a new thread to track that conversation
+<a name="l-56"></a><span class="tm">22:29:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> Bouzane, can you look at #551 and #546?
+<a name="l-57"></a><span class="tm">22:29:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">bouzane:</span> I'll try and look at them by the end of the day
+<a name="l-58"></a><span class="tm">22:29:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I don't have any other big topics
+<a name="l-59"></a><span class="tm">22:29:48</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/issues/482
+<a name="l-60"></a><span class="tm">22:30:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I was thinking of putting this in the config docs, but thought there might be a better place
+<a name="l-61"></a><span class="tm">22:30:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> isn't this documented in go-digest?
+<a name="l-62"></a><span class="tm">22:30:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> no, go-digest is about generic digests, not about layers
+<a name="l-63"></a><span class="tm">22:31:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> #482 explains the theory and provides context for diffIDs
+<a name="l-64"></a><span class="tm">22:31:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I can submit a PR if the consensus is "put this in config.md"
+<a name="l-65"></a><span class="tm">22:31:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but I wanted feedback on the location before doing that
+<a name="l-66"></a><span class="tm">22:32:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> this will be much longer than the current few lines
+<a name="l-67"></a><span class="tm">22:33:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> but there's already a subheader...
+<a name="l-68"></a><span class="tm">22:33:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there's also cyphar's unpacking doc, but we can move it there later if we want
+<a name="l-69"></a><span class="tm">22:33:43</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/492</span>
+<a name="l-70"></a><span class="tm">22:33:50</span><span class="nk"> &lt;wking&gt;</span> ^ cyphar's unpacking doc
+<a name="l-71"></a><span class="tm">22:34:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> any other topics?
+<a name="l-72"></a><span class="tm">22:34:30</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

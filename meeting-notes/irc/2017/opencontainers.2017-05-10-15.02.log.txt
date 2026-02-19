@@ -1,0 +1,25 @@
+15:02:12 <mrunalp> #startmeeting OCI_5_10
+15:02:12 <collabot> Meeting started Wed May 10 15:02:12 2017 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+15:02:12 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+15:02:12 <collabot> The meeting name has been set to 'oci_5_10'
+15:02:26 <mrunalp> #chairs stevvooe wking vbatts tianon
+15:03:46 <stevvooe> mrunalp: now?
+15:04:02 <tianon> nope, no stevvooe :(
+15:04:03 <mrunalp> stevvooe, No :(
+15:04:58 <mrunalp> vbatts, Joining?
+15:06:42 <mrunalp> stevvooe, We are close to rc6
+15:06:42 <stevvooe> https://github.com/opencontainers/image-spec/milestone/13
+15:06:54 <mrunalp> stevvooe, 3 big PRs merged yesterday
+15:07:04 <mrunalp> algorithm for digest and ref.name
+15:07:13 <mrunalp> stevvooe, We need atleast 599 in for rc6
+15:07:21 <mrunalp> After that we can burn the rest for 1.0
+15:07:34 <stevvooe> *burn down
+15:07:47 <mrunalp> :D
+15:08:15 <mrunalp> Rob Should we assign owners to the open issues?
+15:09:10 <stevvooe> https://github.com/opencontainers/image-spec/issues/415
+15:10:22 <mrunalp> stevvooe, A lot of these issues are covered or known as post 1.0
+15:13:40 <tianon> #endmeeting
+15:13:51 <tianon> cc mrunalp ;)
+15:14:39 <mrunalp> tianon, thanks :)
+15:16:00 <tianon> I don't think #chairs worked, so the meeting is still "in progress"
+15:16:18 <mrunalp> #endmeeting

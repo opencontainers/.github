@@ -1,0 +1,112 @@
+18:00:47 <vbatts|work> #startmeeting 2015-01-27 discussion
+18:00:47 <collabot> Meeting started Wed Jan 27 18:00:47 2016 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+18:00:47 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+18:00:47 <collabot> The meeting name has been set to '2015_01_27_discussion'
+18:00:52 <vbatts|work> #chair wking
+18:00:52 <collabot> Current chairs: vbatts|work wking
+18:01:24 <tianon> (someone have the latest video link?  the 1771332256 seems to be 404 again D: )
+18:02:17 <jlb13> should be the same as ever, tianon
+18:02:46 <jlb13> i'm in the call, can't sort out how to see the actual number. but it's saved in my phone, and is up and running
+18:02:54 <tianon> doh, now it works
+18:02:59 <jlb13> cool
+18:03:48 <duglin> echo echo
+18:04:22 <duglin> yup
+18:04:27 <RobDolinMS> Good day :)
+18:04:48 <mikebrow> fist bump
+18:05:24 <RobDolinMS> #action duglin rebase ops PR
+18:06:22 <wking> #link https://github.com/opencontainers/specs/pull/225#issuecomment-172633075
+18:07:33 <jlb13> whoa. that was more like echo(echo(echo))).
+18:08:03 <jlb13> bah. parser fail.
+18:08:29 <RobDolinMS> #info Present: anuthan, crosbymichael, duglin, jlb13, Liangchenye, Mike Brown (mikebrow), Mrunal Patel (mrunal), RobDolinMS, tianon, wking, Vishnu Kannan (vishh)
+18:08:45 <RobDolinMS> Doug: I agree with Michael, ...
+18:08:57 <RobDolinMS> Doug: Whether someone else can see is up to the environment
+18:09:33 <RobDolinMS> Crosby: The spec should at least say, if you create a container you should be able to get state.
+18:09:37 <RobDolinMS> Jesse: Agree
+18:09:53 <RobDolinMS> Jesse: leave delegated user and superuser as optional
+18:10:18 <RobDolinMS> Trevor: What if I'm running a virtual host and launch nested continers using the same runtime?
+18:10:24 <mikebrow> I don't think we should recurse
+18:10:31 <mikebrow> into the children
+18:10:38 <RobDolinMS> #info Present: Guest (vbatts)
+18:11:12 <RobDolinMS> Doug: This isn't just about querying state, it's about other operations
+18:11:53 <RobDolinMS> Jesse: I would not be opposed to different operations having different credentials
+18:12:03 <RobDolinMS> Crosby: There are many ways to do auth;
+18:12:14 <RobDolinMS> Crosby: If you create it, you can get it.
+18:12:52 <RobDolinMS> Crosby: If a runtime is smart and can act on nested containters (or some sort of pod level) that's great, but not required
+18:13:12 <RobDolinMS> Jesse: What about multi-tenancy
+18:13:57 <RobDolinMS> Trevor: Sounds like we're closer than the current PR text
+18:14:30 <wking> #topic when are pre-start hooks executed?
+18:15:02 <wking> crosbymichael: possible security concerns
+18:15:19 <wking> mrunal: we may need pre- and post-mount hooks to work around any pivot-roots
+18:15:55 <wking> crosbymichael: for more specific, "right before the process is jailed within the rootfs, run the pre-start hooks"
+18:16:22 <wking> mrunal: after the configured mounts, but before the pivot
+18:17:19 <wking> what about not having a pivot?
+18:17:51 <wking> crosbymichael: what's the point without a pivot?  You're probably on your own with unspecified behavior if you don't pivot
+18:17:52 <RobDolinMS> Crosby: as the user, you get the same functionality out
+18:18:14 <RobDolinMS> Vish: but the spec wouldn't restrict?
+18:18:19 <RobDolinMS> Mrunal: right
+18:18:34 <RobDolinMS> Mruanl: Crosby's proposal would cover most use cases
+18:18:45 <RobDolinMS> Trevor: Could someone talk about why it couldn't be further
+18:18:59 <RobDolinMS> Mrunal: You would have already established some settings
+18:19:32 <duglin> yea !  split start & create   :-)
+18:19:34 <wking> vishh: this would be easier without hooks
+18:19:39 <RobDolinMS> Vish: What if hooks were handled outside?
+18:19:55 <RobDolinMS> Mrunal: It would not cover pre-mount and post-mount
+18:20:11 <wking> also for adding the container process to cgroups
+18:20:20 <RobDolinMS> Vish: Can you write-up some examples?
+18:20:57 <RobDolinMS> Crosby: If we want hooks to only be on the house side, the hooks would have to know how to do (set?) and (nest?)
+18:21:21 <RobDolinMS> Mrunal: that's how it is in runc right now
+18:21:30 <RobDolinMS> Mrunal: it gives the most flexibility
+18:21:44 <RobDolinMS> Mrunal: Example: having hooks write before and after container mounts are done
+18:22:20 <RobDolinMS> Mrunal: After the pivot, you don't have access to the host mounts
+18:22:50 <RobDolinMS> Vish: Can we come-up with an example case that doesn't work?
+18:22:50 <wking> vishh: wants a case where mount propogation wouldn't work
+18:23:00 <wking> vishh: the less we do, the more flexible the whole design will be
+18:23:15 <RobDolinMS> #Action: Mrunal post example case that doesn't work
+18:23:41 <RobDolinMS> Vish: Hooks are awesome, we're just going to make it awesomeer
+18:24:01 <RobDolinMS> ( ^ one line summary of the meeting :) )
+18:24:17 <wking> vishh: instead of adding more hooks, just make a sandbox and let the user do whatever they want to the sandbox before launching a process in the sandbox
+18:24:40 <wking> #topic JSON Schema validation
+18:24:41 <RobDolinMS> #topic JSON Schema
+18:24:58 <wking> #link https://github.com/opencontainers/specs/pull/313
+18:25:01 <RobDolinMS> Vincent: It's getting closer
+18:26:02 <RobDolinMS> Vincent: It's pretty good; interger ranges can be specified
+18:26:31 <RobDolinMS> Vincent: I have not seen tooling on generating a sample JSON document from a schema
+18:27:02 <RobDolinMS> Vincent: Could be built into OCI validation tooling
+18:27:40 <RobDolinMS> Vincent: Could be self-versioned or could have schema that validates the released version
+18:28:00 <RobDolinMS> Mrunal: How well does it handle the optional fields?
+18:28:11 <RobDolinMS> Vincent: Pointers are a challenge
+18:28:58 <RobDolinMS> Vincent: Everything is implied optional; can add to indicate required
+18:29:36 <RobDolinMS> Vincent: The Linux field in the config file references out to a LinuxSchema.json
+18:30:05 <RobDolinMS> Vincent: May be a bit complex to have some fields required and some not based on different platforms
+18:30:21 <RobDolinMS> Mrunal: I'll take a look from a runc perspective
+18:31:05 <RobDolinMS> Trevor: There are lots of validators, if one doesn't work, we can replace
+18:31:37 <RobDolinMS> Vish: Are you using Swaggr?
+18:31:49 <duglin> aka wsdl  :-)
+18:32:06 <RobDolinMS> #link https://openapis.org/
+18:32:25 <RobDolinMS> Vincent: It's largely a forward dialect of JSON Schema
+18:32:37 <RobDolinMS> Vincent: There is additional markup to accomodate XML and YAML
+18:33:54 <RobDolinMS> Vincent: Moving to OAI / Swagger is not blocked by starting with JSON Schema
+18:34:26 <RobDolinMS> #action Vincent to continue iterating
+18:34:33 <RobDolinMS> #topic Create and Start
+18:34:48 <RobDolinMS> #info Doug has a PR and would like someone to take a look
+18:34:57 <RobDolinMS> #action vishh to take a look at PR
+18:35:07 <RobDolinMS> #topic Issues for v0.4
+18:35:25 <duglin> vishh the PR is on runc
+18:35:31 <vishh> ack
+18:35:51 <RobDolinMS> Call for "release captain"
+18:36:02 <RobDolinMS> #action Mrunal will start a thread about v0.4 issues
+18:36:18 <RobDolinMS> #EndMeeting
+18:36:43 <mikebrow> Post meeting chat discussion… https://github.com/opencontainers/runc/pull/507
+18:36:43 <mikebrow> Should the runc list command be true to the stored state on disk or should it refresh state on those containers
+18:36:43 <mikebrow> to make sure check the state at the point of reporting it  is correct. Then if refresh is the choice we pick
+18:36:45 <mikebrow> should we report or have the option of reporting the differences?
+18:37:16 <crosbymichael> mikebrow: just go by what the container.State() returns
+18:37:25 <crosbymichael> if changes are needed we will make them to that api
+18:37:27 <crosbymichael> not in runc
+18:37:44 <RobDolinMS> (Did we have MeetBot running for the minutes? )
+18:37:46 <mikebrow> makes sense
+18:38:16 <mikebrow> Thx @crosbymichael
+18:38:25 <tianon> RobDolinMS: yeah, although I don't think you were ever added as #chair
+18:38:37 <tianon> ping vbatts|work
+18:38:43 <tianon> (to end the meeting)
+18:39:03 <wking> #endmeeting

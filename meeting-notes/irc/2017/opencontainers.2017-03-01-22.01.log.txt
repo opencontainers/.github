@@ -1,0 +1,186 @@
+22:01:25 <mrunalp> #startmeeting OCI_weekly_3_1_2017
+22:01:25 <collabot`> Meeting started Wed Mar  1 22:01:25 2017 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:01:25 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:01:25 <collabot`> The meeting name has been set to 'oci_weekly_3_1_2017'
+22:01:32 <mrunalp> #chairs vbatts wking
+22:02:19 <wking> mrunalp: is cyphar here?
+22:02:43 <wking> #topic image update
+22:02:48 <wking> mrunalp: stevvooe or vbatts?
+22:03:03 <wking> crosbymichael: I'll ping stevvooe
+22:03:14 <wking> stevvooe: I'm on
+22:03:55 <wking> stevvooe: I closed down rc5, since that's been cut
+22:03:59 <wking> stevvooe: is vbatts on?
+22:04:39 <stevvooe> https://github.com/opencontainers/image-spec/milestone/13
+22:04:40 <wking> [grand-pairie]: are we all looking at something in particular?
+22:04:58 <dqminh> mrunalp: i cant join today, its late and it has been a long week at work :( i will try to continue looking at the remaining PRs in spec and runc
+22:05:06 <wking> stevvooe: #575, #580, and ... are small and just need more LGTMs
+22:05:13 <mrunalp> dqminh, No worries. Thanks!
+22:05:19 <wking> stevvooe: and I've opened a PR defining ChainID
+22:05:25 <wking> #link https://github.com/opencontainers/image-spec/pull/586
+22:06:07 <wking> stevvooe: there's also a discussion around ref.name being unique
+22:06:18 <wking> #link https://github.com/opencontainers/image-spec/issues/581
+22:06:33 <wking> stevvooe: but validating annotations would be a fair amount of scope creep
+22:07:14 <wking> crosbymichael: haven't we had annotations been opaque?  At least in the runtime-spec
+22:07:30 <wking> crosbymichael: consumers can put in whatever they want and we won't blow up by reading them
+22:08:45 <wking> stevvooe: when I run into a problem, I assume I'm doing something wrong, not that there's a problem with the spec
+22:08:52 <wking> stevvooe: but I'd rather discuss this after cyphar shows up
+22:09:22 <wking> mrunalp: I need to mute y'all for a minute
+22:09:28 <wking> mrunalp: ^ can you take notes
+22:10:02 <mrunalp> https://github.com/opencontainers/runtime-spec/milestones/1.0.0
+22:10:08 <mrunalp> #topic runtime spec 1.0
+22:12:18 <mrunalp> stephenrwalli, I want something light weight so test cases can refer to the spec
+22:13:22 <mrunalp> #action one more pass for the anchors
+22:13:35 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/532 wking needs rebase
+22:14:10 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/395
+22:14:15 <stephenrwalli> I want to be clear. The developers are in the best position to judge that the suite matches the specs. I do NOT want to burden the developers, however, with a lot of busy work so we have some perfect visible alignment. I’ve seen that time sync before now and it never ends well.
+22:16:24 <mrunalp> vishh, We want to understand the scenarios where pinning namespaces break
+22:16:43 <mrunalp> crosbymichael, It could be feature creep into the runtime
+22:17:21 <mrunalp> crosbymichael, It expands the scope
+22:17:49 <mrunalp> crosbymichael, It's not a simple task where runc can launch a container. It adds more external container mgmt.
+22:18:56 <mrunalp> vishh, Are we going to hide namespaces or let users deal with namespaces themselves
+22:19:11 <mrunalp> crosbymichael, They are exposed in the spec. One can specify which ones to join or not.
+22:19:25 <mrunalp> vishh, Agree that power users could deal with namespaces
+22:19:51 <mrunalp> vishh, bind mount pinning namespaces is pretty low level
+22:20:12 <mrunalp> crosbymichael, sharing namespaces conflicts with runc managing single container
+22:21:01 <mrunalp> vishh, Maybe document about creating own holder container
+22:21:28 <mrunalp> vishh, documenting is fine
+22:23:25 <mrunalp> mrunalp, maybe add it to the wiki
+22:24:36 <mrunalp> vishh, plan for 1.0
+22:24:45 <mrunalp> mrunalp, cut final rc and then wait 3 weeks or so
+22:24:58 <mrunalp> stevvooe, image spec isn't quite ready yet but close
+22:25:31 <mrunalp> stevvooe, hopeful for 1.0 in a month or so
+22:26:04 <mrunalp> #topic runc I/O
+22:26:04 <stevvooe> mrunalp: "next few months" <- much less non-comittal
+22:26:14 <mrunalp> stevvooe, okay :)
+22:26:36 <mrunalp> cyphar, we have 3-4 different ways to specify I/O with fds
+22:27:25 <mrunalp> crosbymichael, listen fds is needed for socket activation but conflicts with other cases
+22:28:18 <mrunalp> crosbymichael, overall I can see what the problem was I have PR that fixes it by removing chown when I/O is provided
+22:28:40 <mrunalp> cyphar, problem with removing chown is that its used today
+22:28:54 <mrunalp> crosbymichael, The caller should set it up
+22:29:28 <mrunalp> crosbymichael, code that was originally there in runc run had to be chowned manually and it got copied over
+22:30:02 <mrunalp> crosbymichael, The caller can ensure that I/O is accessible by the container
+22:30:49 <mrunalp> crosbymichael, From my example caller can set stdin/stdout to whatever you give
+22:31:30 <mrunalp> cyphar, Yeah sounds good
+22:32:06 <mrunalp> cyphar, PRs adding more features to I/O which is concerning
+22:32:23 <mrunalp> crosbymichael, Two modes 1. runc is attached 2. runc is detaches and container inherits stdio
+22:32:29 <mrunalp> There isn't a way to unify the 2
+22:33:17 <mrunalp> cyphar, For other fds we have other things (non 0,1,2)
+22:33:47 <mrunalp> cyphar, preserve-fds doesn't preserve stdio
+22:34:17 <mrunalp> cyphar, We can unify implicit stdio and listen_fds
+22:34:40 <mrunalp> crosbymichael, That's UNIX stdio forever and common way
+22:34:59 <mrunalp> cyphar, fair enough
+22:35:28 <mrunalp> crosbymichael, rootless containers looking nice
+22:35:38 <mrunalp> crosbymichael, Can we merge to avoid rebases?
+22:35:57 <mrunalp> cyphar, Two things remaining 1. cgroup mgmt
+22:36:20 <mrunalp> cyphar, 2. Tests are failing because of dumpable
+22:37:40 <wking> mrunalp, I'm back
+22:37:44 <mrunalp> crosbymichael, cgroups leave to higher layers
+22:37:47 <mrunalp> wking, okay :)
+22:38:11 <wking> cyphar: when crating a container, it's hard to check to see if you need to create a higher-level cgroup hierarchy yourself
+22:38:31 <wking> cyphar: there's essentially a permission check missing
+22:38:52 <wking> crosbymichael: I could look into the cgroups stuff, but I don't think we need a lot of complexity
+22:39:04 <wking> crosbymichael: either the higher levels setup a hierarchy for you, or we fail
+22:39:19 <wking> crosbymichael: we touch cgroups on our own for process accounting and tracking, so what more can you do
+22:39:54 <wking> cyphar: currently processes in the libcontainer API...  there is a way to fix it, but I'm cautious about it because it would require exec'ing in ...
+22:40:02 <wking> crosbymichael: can you mount your own cgroup hierarchy?
+22:40:25 <wking> cyphar: your new namespace will always be rooted where you were
+22:40:47 <wking> cyphar: and there hasn't been much motion in the kernel to allow cgroup namespacing to change ownership
+22:41:06 <wking> crosbymichael: I wonder if having a named runC cgroup would fix process tracking issues
+22:41:24 <wking> crosbymichael: we'd need loose permissions to make it workable, but then it might not be useful for accounting
+22:41:44 <wking> crosbymichael: I don't know how much of a self-contained thing we can make rootless containers for runC
+22:41:55 <wking> cyphar: apart from that, everything else works
+22:42:12 <wking> crosbymichael: I tried it out, and I had to change the root for the state, but overall it just works
+22:42:29 <wking> cyphar: the dumpable stuff is the only thing blocking it from being mergable?
+22:42:47 <wking> crosbymichael: the dumpable thing is... [something about star] you can't exec?
+22:42:50 <wking> cyphar: yeah
+22:43:07 <wking> cyphar: there's no limitation on creating a network namespace, but you can't connect that namespace to the internet
+22:43:26 <wking> cyphar: someone else can do that for you
+22:44:02 <wking> crosbymichael: I feel like a lot of this rootless stuff is dependent on a more-privileged user facilitating networking, cgroups, etc. and that's what most other systems do
+22:44:15 <wking> mrunalp: you could have small, auditable setuid helpers
+22:44:36 <wking> crosbymichael: but that doesn't help with the academic "we can't install any setuid stuff" use-case
+22:45:10 <wking> cyphar: I'm sure there will be something that allows users to create their own cgroups.  And we'll see what happens for network namespaces
+22:45:34 <wking> mrunalp: I heard somthing about [...] last year
+22:45:48 <mrunalp> unprivileged network namespace setup
+22:45:56 <wking> crosbymichael: we can still be useful for "I just need to install this package".  It's still useful without cgroups and a network namespace
+22:46:16 <wking> mrunalp: there's also a console-socket race?
+22:46:19 <wking> crosbymichael: yeah
+22:46:42 <wking> cyphar: the reason why we have two sockets is that we don't want to expose the internal synchronization socket
+22:47:01 <wking> cyphar: the solution might be blocking somewhere...  There's probably a good fix for this
+22:47:18 <wking> crosbymichael: using the sync socket to also pass the console socket?
+22:47:34 <wking> crosbymichael: you could say "don't send it down the sync socket, send it down this one"
+22:47:40 <wking> cyphar: maybe.  I'd have to look at it
+22:47:50 <wking> crosbymichael: it seems like an easy way to get the blocking to work
+22:48:00 <wking> crosbymichael: I can work up a patch if you're ok with that approach
+22:48:02 <wking> cyphar: sounds good
+22:48:19 <wking> cyphar: we also need to figure out the console socket API
+22:48:30 <wking> mrunalp: anything else?
+22:48:31 <erikh> do I have everyone on ignore accidentally or something?
+22:48:36 <wking> stevvooe: ref naming?
+22:48:49 <wking> cyphar: sure
+22:48:56 <wking> #topic unique ref names
+22:49:06 <crosbymichael> erikh: can you hear us?
+22:49:12 <crosbymichael> or can we not hear you?
+22:49:16 <wking> #link https://github.com/opencontainers/image-spec/issues/581
+22:49:27 <erikh> oh you guys are doing a hangout or osmething
+22:49:33 <erikh> sorry, late to the party. sorry to interrupt.
+22:49:38 <wking> cyphar: with index.json, ref [names] have become a second-class citizen
+22:49:42 <wking> stevvooe: that's not true
+22:49:51 <wking> cyphar: as a user trying to access something with a ref of $X
+22:50:10 <wking> cyphar: with non-unique refs, you could have multiple refs that match
+22:50:34 <wking> cyphar: if the program says "go away, give me a name that only has one ref", that's one thing, but seems like a poor choice
+22:50:56 <wking> cyphar: or you can return a set of all matching refs, and then the ref system doesn't seem like a complete solution
+22:51:08 <wking> cyphar: you'd need an out-of-spec way to select which of those matching refs you want
+22:51:17 <wking> stevvooe: your model of the problem does not exist
+22:51:34 <stevvooe> select * from descriptors where match(myplatform, platform);
+22:51:35 <wking> stevvooe: asking for a ref by name does not exist in OCI or anything around it
+22:51:51 <wking> stevvooe: you'd need a centralized naming system, or Notary, or something like that
+22:51:52 <stevvooe> select * from descriptors where match(myplatform, platform) and name = "foo";
+22:52:08 <wking> stevvooe: I don't see why it has to be unique.
+22:52:25 <wking> stevvooe: there's no given value for it being unique
+22:52:43 <wking> stevvooe: the data structure does not provide uniqueness, it provides annotations
+22:52:59 <wking> stevvooe: the idea that this will create incompatibilities is absolutely rediculous
+22:53:06 <wking> stevvooe: create a UX to help users make the choice
+22:53:13 <wking> stevvooe: why is this a spec problem?
+22:53:34 <wking> cyphar: I understand your arguments, and that queries are a better way to handle the current situation
+22:53:48 <wking> cyphar: the incompatibilies are not that you couldn't pass an image between implementations
+22:54:04 <wking> cyphar: the incompat is, if you have an image, and you want to plug it into Docker, cri-o, etc.
+22:54:26 <wking> cyphar: while all of these implementations will provide a way for parsing the refs, the UX will be different in each case
+22:54:49 <wking> cyphar: I'm not saying we need a global aggreement.  But as it stands, there is no way to refer to a single ref in the image
+22:55:05 <wking> cyphar: this is the first problem users will have when they try to use an image
+22:55:13 <wking> stevvooe: is Docker doing it differently from everyone else?
+22:55:23 <wking> stevvooe: the current implemenation is by a skopeo maintainer
+22:56:14 <wking> stevvooe: going back to schema1, the tag was part of the content addressable blob
+22:56:39 <wking> stevvooe: a normalized data structure would have  these pointers in an area where you could enforce uniqueness
+22:57:13 <wking> stevvooe: once you move your UX away from the datastructure, you get more complexity
+22:57:47 <wking> stevvooe: if we made the name unique, we make this one case simpler, but lots of other cases more complex
+22:58:11 <wking> cyphar: I must be missing something
+22:58:37 <wking> cyphar: if you have an index.json, and a single tag referencing one index, and that index references multiple manifests, that's one way to get a platform-independent images
+22:58:40 <wking> stevvooe: sure
+22:58:51 <wking> cyphar: so what do you gain by allowing repeated tags?
+22:59:06 <wking> stevvooe: once you have an index referencing indexes, you open up lots of edge cases
+22:59:20 <wking> stevvooe: if indexes could only reference manifests, the tree depth was limited
+22:59:42 <wking> stevvooe: you need to be able to traverse that tree, assemble all reference descriptors, and then list the gathered set
+22:59:52 <wking> stevvooe: it's convenient to flatten that tree
+23:00:02 <wking> stevvooe: with a tuple set like this for two platforms
+23:00:12 <stevvooe> (mediatype, digest, "osx", "foo")
+23:00:12 <stevvooe> (mediatype, digest, "windows, "foo")
+23:00:27 <wking> stevvooe: with two entries with the tag "foo"
+23:00:51 <stevvooe> (mediatype, digest, null, "foo") ->
+23:00:51 <stevvooe> (mediatype, digest, "windows, null)
+23:00:51 <stevvooe> (mediatype, digest, "osx", null)
+23:01:02 <wking> stevvooe: to tools, these should be identical
+23:01:11 <wking> stevvooe: there's no point in limiting these
+23:01:45 <wking> stevvooe: the spec does not need to tell you how to walk the tree and collect or handle refs
+23:02:00 <wking> stevvooe: Docker can say "this is not unique.  Here's what I'm seeing, now give me more info"
+23:02:05 <wking> stevvooe: other tools can just list them all
+23:02:20 <wking> stevvooe: I think we need to stick to the given datastructure
+23:02:48 <wking> stevvooe: the erroring-out approach will make your tool less compatible.  So there are implications to the choices, but they don't need to be encoded in the spec (they are use-case dependent)
+23:03:17 <wking> cyphar: that's all fine.  If it's ok for annotations/selections to be incompatible between implementations, then that's fine
+23:03:34 <wking> stevvooe: I don't think they will be incompatible, because there's no incentive for making incompatible images
+23:03:55 <wking> cyphar: I'm referring to the way the user accesses an entry.
+23:04:08 <wking> cyphar: but I think there should be implementer notes addressing this
+23:04:27 <wking> stevvooe: make a bug and assign it to me, and I'll make some notes for platform matching and address compatibility
+23:04:30 <wking> cyphar: sounds good
+23:04:49 <wking> stevvooe: I have some incoming code in containerd for this, and I'll CC cyphar
+23:04:53 <wking> cyphar: sounds good
+23:04:58 <wking> #endmeeting

@@ -1,0 +1,72 @@
+22:02:09 <vbatts> #startmeeting 2017-02-15 discussion
+22:02:09 <collabot`> Meeting started Wed Feb 15 22:02:09 2017 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:02:09 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:02:09 <collabot`> The meeting name has been set to '2017_02_15_discussion'
+22:02:46 <mrunalp> tianon, vishh, jlbutler: Joining?
+22:03:10 <wking> vbatts: chair me?
+22:03:18 <vbatts> #chair wking mrunalp
+22:03:18 <collabot`> Current chairs: mrunalp vbatts wking
+22:03:33 <wking> #topic runtime-spec triage
+22:03:40 <vbatts> omg vishh
+22:04:06 <wking> #link http://github.com/opencontainers/runtime-spec/issues/657
+22:04:12 <wking> mrunalp: should we include this?
+22:04:29 <tianon> sorry folks, won't be able to join today :x
+22:04:40 <wking> mrunalp: it will make the spec more Docker-like
+22:05:08 <wking> crosbymichael: it reduces the size of the spec alot
+22:05:49 <wking> mrunalp: is this required now?
+22:05:57 <wking> crosbymichael: we can add it later
+22:06:12 <wking> mrunalp: ok, I'll review it
+22:06:19 <crosbymichael> BPF for seccomp can be added later
+22:07:12 <jlbutler> mrunalp - sorry got called away cannot join today
+22:07:23 <wking> #link https://github.com/opencontainers/runtime-spec/pull/616
+22:08:29 <wking> mrunalp: thoughts on this one?
+22:09:01 <wking> crosbymichael: I think we're aiming for all platforms being able to read the spec for all other platforms
+22:09:15 <wking> crosbymichael: we have a platform tag on the Go type fields
+22:09:26 <wking> crosbymichael: I think we can just lean on that instead of redoing the schema
+22:11:04 <wking> #link https://github.com/opencontainers/runtime-spec/pull/618
+22:11:19 <wking> it sounds like crosbymichael is asking for username to become required on Windows
+22:11:37 <wking> I'm happy to write that pull request, but haven't gotten around to it yet
+22:12:49 <wking> [I dropped off for a minute and missed some stuff]
+22:13:28 <wking> #topic runtime-spec RCs before 1.0?
+22:13:53 <wking> crosbymichael: we can get these PRs landed, push a runtime-spec RC, wait a week and see
+22:13:58 <wking> mrunalp: ok
+22:14:21 <wking> crosbymichael: I'll ping justincormack_ on seccomp and see if he wants to look at it
+22:14:27 <wking> #topic runtime-tools triage
+22:14:52 <wking> mrunalp: I haven't had time to push this to far, but will hopefully write some Go test harness stuff soon
+22:15:37 <wking> #topic image-spec releases
+22:15:39 <vbatts> #link https://github.com/opencontainers/image-spec/pull/546
+22:16:14 <wking> vbatts: this^ came up in the change from a refs/ directory to an index.json file
+22:16:46 <wking> vbatts: this is really just a semantic rename from "manifest list" to "image index"
+22:18:49 <wking> vbatts: implementers will mostly need to adjust to the media type rename
+22:19:07 <mrunalp> sorry have to drop
+22:19:13 <wking> stevvooe: I'd like avoid dragging breaking changes over multiple RCs
+22:19:32 <wking> vbatts: if implementers want to weigh in...?
+22:19:48 <wking> vbatts: there are still a few copy-edits to make
+22:20:11 <wking> stevvooe: if we can get an RC out with the name change and ref removals, so folks can start implenting...  We can pick nits later
+22:20:18 <wking> * implementing
+22:20:34 <vbatts> #link https://github.com/opencontainers/image-spec/pull/551
+22:21:09 <wking> vbatts: I think the current rc5 milestone has just three issues
+22:21:29 <wking> #link https://github.com/opencontainers/image-spec/pull/452
+22:21:38 <wking> vbatts: stevvooe and wking have been having most of this conversation
+22:22:21 <wking> stevvooe: all this was attempting to do was to run different validation sets over the content
+22:22:40 <wking> stevvooe: with a visitor pattern, you could drag a train of visitors over the content
+22:26:44 <wking> [I had to step out again and missed a few more minutes]
+22:27:04 <wking> stevvooe: you might want to use image-spec to support different levels of validation
+22:27:52 <wking> vbatts: I'll put a comment with that on this issue and open a new thread to track that conversation
+22:29:02 <wking> vbatts: Bouzane, can you look at #551 and #546?
+22:29:13 <wking> bouzane: I'll try and look at them by the end of the day
+22:29:25 <wking> vbatts: I don't have any other big topics
+22:29:48 <stevvooe> https://github.com/opencontainers/image-spec/issues/482
+22:30:27 <wking> stevvooe: I was thinking of putting this in the config docs, but thought there might be a better place
+22:30:37 <wking> vbatts: isn't this documented in go-digest?
+22:30:46 <wking> stevvooe: no, go-digest is about generic digests, not about layers
+22:31:08 <wking> stevvooe: #482 explains the theory and provides context for diffIDs
+22:31:37 <wking> stevvooe: I can submit a PR if the consensus is "put this in config.md"
+22:31:46 <wking> stevvooe: but I wanted feedback on the location before doing that
+22:32:35 <wking> vbatts: this will be much longer than the current few lines
+22:33:14 <wking> vbatts: but there's already a subheader...
+22:33:28 <wking> stevvooe: there's also cyphar's unpacking doc, but we can move it there later if we want
+22:33:43 <wking> #link https://github.com/opencontainers/image-spec/pull/492
+22:33:50 <wking> ^ cyphar's unpacking doc
+22:34:00 <wking> vbatts: any other topics?
+22:34:30 <wking> #endmeeting

@@ -1,0 +1,51 @@
+17:02:14 <vbatts|work> #startmeeting 2018-12-18 distribution spec walkthrough
+17:02:14 <collabot`> Meeting started Tue Dec 18 17:02:14 2018 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:02:14 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:02:14 <collabot`> The meeting name has been set to '2018_12_18_distribution_spec_walkthrough'
+17:02:43 <vbatts|work> #topic intro and intention
+17:02:55 <vbatts|work> #link https://github.com/opencontainers/distribution-spec/issues/24
+17:03:25 <vbatts|work> #link https://github.com/kinvolk/ocicert/
+17:09:22 * vbatts|work should've thought about screen sharing ...
+17:13:27 <jzelinskie> https://github.com/docker/distribution/tree/master/registry/handlers
+17:13:30 <jzelinskie> https://github.com/docker/distribution/blob/master/registry/handlers/api_test.go
+17:14:56 * sangy sighs, probably his mic doesn't work
+17:15:26 <jzelinskie> https://github.com/docker/distribution/blob/master/registry/api/v2/descriptors.go
+17:15:57 <sangy> wanted to ask (I'm new around here) would something similar to DCT be backported into the distribution spec? (full disclosure, I'm part of the TUF team)
+17:20:42 <vbatts|work> sangy: link to DCT, please?
+17:20:57 <sangy> https://docs.docker.com/engine/security/trust/content_trust/
+17:21:28 <estesp> Docker Content Trust (CNCF Notary/Trust); but since Notary works to sign any content blob, what would be the "backport" into the spec?
+17:21:49 <estesp> meant: "(CNCF Notary/TUF)"
+17:23:10 <sangy> estesp: I may be missing information, but pretty much tying up the concept of a tag to a namespace/id that can be secured with Notary/TUF
+17:25:53 <vbatts|work> dongsu: did you try screen share again?
+17:27:55 <dongsu> vbatts|work: yes, but it didn't work
+17:28:11 <vbatts|work> dongsu: ok. did you see my screen?
+17:28:23 <dongsu> vbatts|work: yes I could see your screen
+17:28:32 <vbatts|work> dongsu: ok
+17:28:45 <vbatts|work> dongsu: how do i authenticate to do the push test?
+17:29:14 <dongsu> vbatts|work: I haven't managed to do it
+17:29:20 <vbatts|work> ah
+17:29:22 <vbatts|work> :-)
+17:30:10 <jzelinskie> DCT doesn't need to be included in the distribution spec
+17:30:14 <jzelinskie> it's overlaid on top of it
+17:31:24 <sangy> fair enough, thanks for clearing it up :)
+17:31:27 <estesp> that was my perspective/understanding; notary has it's own server and validates a specific hash has a certain signature
+17:32:15 <estesp> beyond that, I'm not sure what integration would even make sense as notary is currently unlinked to anything specific to containers at all (since you can use TUF/Notary to sign any kind of blob)
+17:32:51 <vbatts|work> make ro-test
+17:32:55 <vbatts|work> make rw-test
+17:33:16 <sangy> I'd have to read more on the distribution spec exactly because of that. I don't know if it covers a GUN-identifier sort of specification, from which we can anchor namespaces into Notary/TUF
+17:33:25 <sangy> estesp: ^
+17:35:10 <vbatts|work> credential-helpers for testing with
+17:35:35 <sangy> repasted: https://github.com/docker/docker-credential-helpers
+17:35:40 <vbatts|work> #link https://github.com/docker/docker-credential-helpers
+17:35:46 <vbatts|work> sangy: ty :-)
+17:35:52 <estesp> Calavera (from Netlify) has a nice blog post on using them
+17:36:15 <sangy> vbatts|work: np! :)
+17:36:27 <estesp> https://medium.com/@calavera/stop-saving-credential-tokens-in-text-files-65e840a237bb
+17:36:39 <vbatts|work> #link https://github.com/calavera/docker-credential-helpers
+17:36:45 <vbatts|work> #link https://medium.com/@calavera/stop-saving-credential-tokens-in-text-files-65e840a237bb
+17:42:05 <vbatts|work> #action look to cargo-cult from a basis of github.com/docker/distribution/blob/master/registry/api/v2/descriptors.go github.com/docker/distribution/blob/master/registry/handlers/api_test.go
+17:43:13 <vbatts|work> #action basic helper to use an opaque blob for authentication token to test 'rw-test' with
+17:44:58 <vbatts|work> #action merge the ocicert repo into the distribution-spec/ repo
+17:57:53 <mikebrow> cloud-native.slack.com
+17:58:04 <mikebrow> open-containers channel created
+18:02:43 <mikebrow> #endmeeting

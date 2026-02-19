@@ -1,0 +1,125 @@
+22:01:23 <wking> #startmeeting 2016-12-14 discussion
+22:01:23 <collabot> Meeting started Wed Dec 14 22:01:23 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:01:23 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:01:23 <collabot> The meeting name has been set to '2016_12_14_discussion'
+22:01:33 <wking> #chair vbatts mrunalp
+22:01:33 <collabot> Current chairs: mrunalp vbatts wking
+22:01:55 <mrunalp> philips, stevvooe Joining?
+22:02:01 <stevvooe> yea
+22:02:03 <stevvooe> one sec
+22:02:12 <philips> mrunalp: I am on the line
+22:02:18 <mrunalp> cyphar, Are you on?
+22:04:08 <wking> #topic runtime-spec anchor patches
+22:04:25 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/635
+22:04:52 <wking> mrunalp: we want this to unblock some work in runtime-tools
+22:05:01 <wking> mrunalp: they need maintainer review
+22:05:18 <wking> #link https://github.com/opencontainers/runtime-spec/issues/634
+22:05:21 <wking> ^ meta issue
+22:05:41 <vbatts> https://github.com/opencontainers/runtime-spec/pulls/RobDolinMS
+22:05:58 <wking> Although that tracking issue is stale
+22:06:07 <wking> vbatts: no real objections...
+22:06:16 <wking> vbatts: HTML works, but whatever
+22:06:28 <wking> #topic Command-line interface
+22:06:41 <wking> mrunalp: still waiting on runC and then wking will update runtime-spec#513
+22:06:45 <wking> ^yup
+22:07:20 <wking> mrunalp: cyphar or crosbymichael was going to open an issue about passing down the console socket...
+22:07:42 <wking> mrunalp: that's the last major change before 1.0
+22:07:49 <wking> mrunalp: any other runtime topics?
+22:07:58 <wking> vbatts: we cut runtime-spec rc3 today
+22:08:13 <stephenrwalli> Congratulations!
+22:08:17 <wking> vbatts: we should start populating an rc4 and/or 1.0 milestone
+22:08:34 <wking> #topic next runtime-spec milestone
+22:08:45 <wking> mrunalp: we can put anchors and the CLI in the next milestone
+22:08:57 <wking> mikebrow: so an rc4 with those before 1.0?
+22:09:07 <wking> #topic image config conversion
+22:09:13 <mrunalp> https://github.com/opencontainers/image-spec/pull/492
+22:09:36 <wking> stevvooe: what about it?
+22:09:42 <wking> mrunalp: is cyphar around?
+22:10:00 <wking> stevvooe: I haven't voiced my concerns here yet, but we need to be careful about wording
+22:10:11 <wking> stevvooe: we need to support intermediate formats unknown to OCI
+22:10:27 <wking> stevvooe: imagine I have an on-disk image -> local format -> runtime config format
+22:10:58 <wking> stevvooe: if we tightly bind them, even by saying "you shall convert the image config to a runtime spec", it will be impossible to implement this with intermediates like we're doing now
+22:11:12 <wking> stevvooe: there's another issue about CPU shares and memory fields
+22:11:26 <wking> #link https://github.com/opencontainers/image-spec/pull/495
+22:11:39 <wking> stevvooe: these probably don't make a lot of sense in an image format
+22:11:52 <wking> philips: what is the significance of writing it to disk?
+22:12:06 <wking> stevvooe: does it end up in the config whose hash names the image?
+22:12:20 <wking> philips: you're saying that if it's written to disk it effects the config digest?
+22:12:32 <wking> stevvooe: yeah, and that config hash is used from the manifest
+22:13:22 <wking> that sounds more like runtime-spec config -> image config, and cyphar's PR is currently focused on image config -> runtime-spec config
+22:13:26 <wking> stevvooe: It's really not
+22:13:34 <wking> mrunalp: anything else for image?
+22:14:08 <wking> #topic project workflow
+22:14:49 <wking> #link https://github.com/opencontainers/image-spec/pull/486
+22:15:12 <wking> stevvooe: I float this establishe code from Docker, and wking posts lots of distracting feedback, but maintainers are silent
+22:15:19 <wking> stevvooe: what should we do about this?
+22:15:43 <wking> vbatts: I hear the frustration.  The volume of comments is stifling (and I've heard this from many people)
+22:15:58 <wking> vbatts: it feels like too much conversation that's not going anywhere
+22:16:21 <wking> vbatts: this spec has been open from the beginning, without pre-planning to gather maintainer direction
+22:16:35 <wking> vbatts: to exclude anyone at this point would be contrary to the past year
+22:16:42 <wking> vbatts: I don't have any recommendations...
+22:16:51 <wking> stevvooe: I'm happy to stay open, but this is rediculous
+22:17:24 <wking> #link https://github.com/opencontainers/image-spec/pull/487
+22:17:39 <wking> stevvooe: push-back on bumping Go to 1.7 for test-suite support isn't helpful
+22:17:48 <wking> philips: I agree (and just merged the Go bump)
+22:18:20 <wking> philips: humans operate on context, and PRs are fairly targetted.  But the conversation pulls in too much context, which causes confusion and frustration
+22:18:50 <wking> stevvooe: so what are we going to do?
+22:19:41 <wking> stevvooe: we've discussed this in the past, and you keep trying to go to a specific issue
+22:19:50 <wking> stevvooe: we need to focus on the thematic elements
+22:21:19 <wking> It's hard for me to find a way to be clear with less context
+22:22:07 <wking> I can communicate via PRs (and not comment on other's PRs), since that's actionable
+22:22:36 <wking> vbatts: all the references are impressive, but also a big drag on a lot of conversations
+22:23:05 <wking> vbatts: folks expect one line or no response at all, and then they get a few paragraphs with lots of footnotes
+22:23:32 <wking> vbatts: it's difficult.
+22:24:05 <wking> vbatts: merge/reject PRs are still not always helpful for quick iteration
+22:24:28 <wking> stevvooe: I'm not saying, don't comment on PRs.  I'm saying, try rate limiting
+22:25:59 <wking> I think we need a good place for long-term planning (vs. small-step iterations)
+22:26:20 <wking> stevvooe: I agree in principle, but we need a stable base building on existing tech.  A lot of choices are already baked in
+22:27:37 <wking> It's hard to figure out which changes are too big for 1.0 and which can fit in underneath
+22:28:01 <wking> stevvooe: It's difficult to make a hard rule for that.  It takes maintainer wisdom
+22:28:43 <wking> stevvooe: sometime we need to disagree and commit
+22:28:49 <wking> vbatts: 1.0000000000
+22:29:02 * vbatts waves hands wildly
+22:29:32 <wking> stevvooe: sorry to put you on the spot.  Don't stop the good stuff.  But let the conversations breathe
+22:30:05 <wking> sarah-novotny: thanks for having this conversation in the open
+22:30:22 <wking> #topic chainID PR
+22:30:37 <duglin> smoke bomb?
+22:30:42 <wking> #link https://github.com/opencontainers/image-spec/pull/486
+22:30:49 <wking> vbatts: I'm hoping to get there today
+22:31:24 <wking> #topic annotations doc
+22:31:36 <wking> vbatts: I have an annotations doc in the works to try and DRY up the doc
+22:31:52 <wking> #link https://github.com/opencontainers/image-spec/pull/340
+22:31:58 <wking> ^ related to DRY annotations
+22:32:23 <wking> vbatts: there's also not much clarity on the meaning of some of the arch/platform fields
+22:32:42 <wking> vbatts: if we agree that manifest-lists are just descriptor lists, that might be a hinge point
+22:32:54 <wking> vbatts: we should genericize the "manifests" property name
+22:33:11 <wking> vbatts: maybe someone points one at an SQLite database
+22:33:27 <wking> vbatts: anything that references manifests would be further metadata
+22:33:40 <wking> stevvooe: I'm not quite ready to deprecate platform
+22:33:53 <wking> stevvooe: we might be able to map platfom 1:1 to annotations
+22:34:16 <wking> stevvooe: but for 1.0 I think adding annotations to descriptors would be just enough (without breaking existing consumers)
+22:34:22 <wking> stevvooe: did you need anything else?
+22:34:29 <wking> vbatts: maybe some spec wording updates?
+22:34:46 <wking> vbatts: if we stay compatible with the Docker format and just change the spec wording, I understand that
+22:35:13 <wking> vbatts: so keep "manifests" but weaken the manifest assumption in the surrounding spec language
+22:35:19 <wking> philips: I think that plan seems fine to me
+22:35:49 <wking> stevvooe: do you want to resumbit the PR for this discussion?
+22:35:58 <wking> stevvooe: or do we need to make other decisions first?
+22:36:05 <wking> vbatts: I have another comparison PR
+22:36:26 <wking> vbatts: the only other piece would be the index.json file or embedding in oci-layout
+22:36:54 <wking> stevvooe: I'm fine with index.json
+22:37:15 <wking> stevvooe: we declare the media type for index.json and say "it might have these annotations" as a secondary step
+22:37:21 <wking> stevvooe: I don't see a need to make it more complex
+22:37:47 <wking> vbatts: I'll work that up and push it up later
+22:38:15 <wking> vbatts: no other topics outside of some outstanding review
+22:38:18 <wking> philips: me neither
+22:38:28 <wking> #topic next meeting
+22:38:32 <wking> mrunalp: call next week?
+22:38:35 <wking> vbatts: not me
+22:38:38 <wking> philips: me neither
+22:38:44 <wking> mrunalp: Jan 4th for the next call?
+22:38:46 <wking> philips: sure
+22:38:50 <wking> stevvooe: fine
+22:38:57 <wking> vbatts: not me, but it's fine if you have one then
+22:39:03 <wking> mrunalp: See you next year
+22:39:06 <wking> #endmeeting

@@ -1,0 +1,163 @@
+20:59:28 <vbatts|work> #startmeeting 2016-08-17 discussion
+20:59:28 <collabot> Meeting started Wed Aug 17 20:59:28 2016 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+20:59:28 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+20:59:28 <collabot> The meeting name has been set to '2016_08_17_discussion'
+20:59:30 <stevvooe> vbatts|work: are there not parameters somewhere in a gzip stream?
+20:59:50 <wking> vbatts|work: chair me?
+21:00:14 <vbatts|work> stevvooe: it's not so much parameter as it is an approach to building the tree
+21:00:21 <vbatts|work> how it leans
+21:00:34 <vbatts|work> elections on how sliding the window is
+21:00:41 <vbatts|work> #chair wking
+21:00:41 <collabot> Current chairs: vbatts|work wking
+21:00:46 <mrunalp> crosbymichael, dqminh, cyphar, vishh, hqhq: Joining?
+21:00:55 <mrunalp> lk4d4, ^
+21:02:43 <wking> #topic console handling
+21:02:46 <wking> https://gist.github.com/cyphar/8c6b9db84fc1f2cc2d037ef07942ca83
+21:03:00 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/483
+21:03:04 <wking> mrunalp: everybody look that over^^
+21:03:10 <wking> #topic removing hooks
+21:04:39 <wking> #link https://github.com/opencontainers/runc/issues/814 issue for the previous topic (console handling in runC)
+21:04:52 <wking> #link https://github.com/opencontainers/runtime-spec/pull/483
+21:04:58 <wking> ^ removing hooks
+21:05:53 <wking> mrunalp: are there any blockers or can we merge this?
+21:06:03 <wking> crosbymichael: we'll have to rewrite a lot of Docker things to not use hooks
+21:06:10 <wking> mrunalp: I will also have to rewrite things
+21:08:16 <wking> vbatts|work: the only thing that seems confusing about hooks is how 'start' handles a non-zero hook
+21:09:47 <wking> stevvooe: exit code language is in the spec
+21:10:01 <wking> crosbymichael: I don't think parallel hook execution makes sense
+21:10:12 <wking> I had a serial-requirement PR earlier
+21:10:15 <wking> mrunalp: we can open that PR
+21:10:43 <wking> vbatts|work: so we're not saying "remove the create/start split".  I'm trying to figure out if we're missing something else
+21:11:05 <wking> vbatts|work: folks can still do whatever they want between create and start
+21:11:39 <wking> vbatts|work: the serial requirement is just for config hooks
+21:11:57 <wking> mikebrow: why do we want to remove hooks again?  Was it just to remove a MUST?
+21:12:23 <wking> vbatts|work: there was enough confusion about hooks (which namespace do they run in?  What happens when they fail?)
+21:12:48 <wking> #link https://github.com/opencontainers/runtime-spec/pull/265
+21:12:53 <wking> ^ require serial hooks
+21:14:18 <wking> stevvooe: could we handle hooks at a higher level?  And feed into the create/start split?
+21:14:49 <wking> You could definitely wrap 'create' in 'create + pre-start hooks'
+21:15:00 <wking> stevvooe: so shouldn't we punt hooks up a layer?
+21:15:12 <stevvooe> that is not what i said
+21:15:26 <wking> sorry, feel free to rephrase when I misunderstand
+21:15:28 <stevvooe> are hooks not complementary to create/start split?
+21:16:06 <wking> mrunalp: the difference here is we're taking hooks away
+21:16:22 <wking> mikebrow: I think there's a difference between taking hooks away and pulling them out of the spec
+21:16:31 <wking> mikebrow: so you could still implemnt them, but wouldn't require them
+21:17:44 <wking> vbatts|work: I'm opposed to folks using hooks without them in the spec
+21:18:25 <wking> mikebrow: I thought wking was working on an event model
+21:18:41 <wking> The event model is more about replacing early-exit create, not about hooks
+21:18:53 <wking> mrunalp: we need to decide what we're doing
+21:19:11 <wking> RobDolinMS: the spec is about the interop surface.  If hooks are in wide use, they should be in the spec
+21:19:25 <wking> RobDolinMS: I don't think we want an undocumented feature in broad use
+21:20:36 <wking> So is the question just "what spec do hooks live in"?
+21:20:49 <wking> mrunalp: we can look at making them optional if they end up being hard to implement
+21:21:15 <wking> mikebrow: it seems odd to have an initial design that needs hooks
+21:21:31 <wking> mikebrow: maybe we should add more features?
+21:22:10 <wking> I'd rather leave higher-level features (e.g. networking) up to higher levels
+21:22:19 <wking> stevvooe: systemd has hooks, would you bake more in there?
+21:22:26 <wking> mikebrow: good point, most systems do have hooks
+21:22:58 <wking> vbatts|work: clear specification around hooks is a bit of a rabbit hole
+21:23:36 <wking> mikebrow: both ways are rabbit holes
+21:24:07 <wking> vbatts|work: next steps: leave create/start split alone.  Clarify hooks.  Close #483
+21:27:05 <wking> stevvooe: two months ago dropping hooks was more possible
+21:27:16 <wking> stevvooe: now were close to 1.0 and don't want a major change
+21:27:33 <wking> mrunalp: DockerCon discussion was that "we can add them post 1.0 if we need them"
+21:28:35 <wking> And what's changed since DockerCon is that we're conviced that we do need them, and we're ok locking ourselves into hooks for 1.0
+21:28:58 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/527
+21:29:28 <wking> #topic language around compliance profiles
+21:29:35 <wking> #link https://github.com/opencontainers/runtime-spec/pull/527
+21:30:18 <wking> mrunalp: This lets runtimes certify compliance with a subset of the whole spec (e.g. just Linux 386 and amd64, or just Solaris amd64)
+21:30:22 <wking> mrunalp: please review
+21:30:39 <RobDolinMS> I'm planning to submit a PR after this is merged to include Windows Containers similar to Solaris Containers.
+21:30:47 <wking> #topic runC release
+21:30:58 <wking> #link https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/NuvF5AX8910
+21:31:04 <wking> mrunalp: crosbymichael rc2 this week?
+21:31:08 <wking> crosbymichael: yeah, we can bump it
+21:31:19 <wking> RobDolinMS: vote on the dev list?
+21:31:24 <wking> mrunalp: that's the plan
+21:31:34 <wking> crosbymichael: did the console changes drop in?
+21:31:41 <wking> mrunalp: it's being worked on, but hasn't landed yet
+21:31:47 <wking> crosbymichael: it's not trivial
+21:32:10 <wking> crosbymichael: console handling hasn't changed in a while, so this reshuffle need lots of testing
+21:32:28 <wking> mrunalp: it's a big rewrite before 1.0 and won't happen in a week or two
+21:32:51 <stevvooe> https://github.com/docker/docker/issues/25779
+21:32:51 <wking> #topic OCI support in Docker
+21:33:32 <wking> stevvooe: once that proposal has stabilized we'll implement it and pass back feedback to the spec
+21:33:48 <wking> vbatts|work: does it cover media type translation with registry interaction?
+21:34:11 <wking> stevvooe: this is currently independent of registry interaction.  It's about manifest translation and save/load
+21:34:30 <wking> stevvooe: It's also about whether we can leverage an internal library or want a Docker-internal library
+21:34:45 <wking> * internal library -> external library
+21:35:36 <wking> stevvooe: I don't think this needs to be experimental, but we might change behavior in the future if the spec changes or model is broken
+21:35:54 <wking> vbatts|work: I expect a Docker-experimental tag if we might break behavior later
+21:36:09 <wking> stevvooe: if we put it in experimental, you have to build your own Docker to use it
+21:36:22 <wking> stevvooe: so we'll skip that tag and just put up a warning that it is unstable
+21:37:00 <wking> vbatts|work: versioning with ociVersion and schema versioning would be useful in save/load
+21:37:34 <wking> stevvooe: if you have concrete wording, add it to the issue
+21:38:01 <wking> vbatts|work: implementers will eventually (probably) have to talk about which schema version they're dealing with
+21:38:23 <wking> stevvooe: inside of the image-spec repo, there's an image-spec tool.  Can that tool introspect refs
+21:38:45 <wking> #link https://github.com/opencontainers/image-spec/pull/159
+21:38:50 <wking> has a tool to list refs^
+21:39:15 <wking> vbatts|work: resolving refs to image names is still a bit sticky
+21:39:36 <wking> stevvooe: check out my issue.  I think I have something useful there without painting ourselves into a corner before we have a clear OCI direction
+21:40:28 <wking> vbatts|work: 0.4.0 vote will end tomorrow and the hash can be tagged
+21:40:48 <wking> vbatts|work: there was some confusion about ChangeLogs again.  Ideally we'll keep the ChangeLog up to date incrementally
+21:41:03 <wking> vbatts|work: but until now we've been adding the ChangeLog as the last commit before the release
+21:41:12 <wking> #topic image-spec 0.4.0
+21:41:39 <wking> #link https://github.com/opencontainers/image-spec/pull/195
+21:41:50 <wking> vbatts|work: what am I tagging?
+21:41:58 <wking> https://github.com/opencontainers/image-spec/pull/195#issuecomment-240144353
+21:42:07 <wking> vbatts|work: ^ this approach doesn't give a first-parent tag
+21:42:17 <wking> or should I tag the vote commit and leave the ChangeLog out?
+21:42:41 <wking> RobDolinMS: the later master commits look minor.  Maybe just tag the tip?  Or is that not a good precedent?
+21:42:51 <wking> vbatts|work: I agree, and am also mostly concerned about precedence
+21:43:10 <wking> RobDolinMS: We can write a caveat to avoid setting precedent
+21:43:55 <wking> I think "small commits, so let them slide to 0.5"
+21:44:15 <wking> vbatts|work: I'd like to have the ChangeLog in 0.4, but that's not technically what the vote was about
+21:46:24 <wking> the ChangeLog commit's parent is the voted on commit
+21:47:18 <wking> vbatts|work: I'll do https://github.com/opencontainers/image-spec/pull/195#issuecomment-240144353
+21:47:36 <wking> RobDolinMS: I think the vote actually ended today
+21:47:48 <mikebrow> victory
+21:47:50 <wking> vbatts|work: I'll do this right now
+21:48:03 <wking> vbatts|work: wooo
+21:48:05 <mikebrow> whahhooo
+21:48:35 <wking> #topic meeting next week
+21:48:44 <wking> vbatts|work: are we meeting next week with the Toronto face to face?
+21:49:15 <wking> crosbymichael: I'm fine skipping it
+21:49:19 <wking> RobDolinMS: +1 to cancel
+21:49:33 <wking> RobDolinMS: there's also a trademark board meeting on Monday and some ContainerCon meetings
+21:49:37 <wking> vbatts|work: I'm also +1 to cancel
+21:49:43 <mrunalp> +1
+21:49:46 <wking> anush: +1 to cancel
+21:49:49 <stevvooe> +1 to cancel
+21:50:06 <tianon> +1 for cancel, +1 for remote participation next wed
+21:50:06 <stevvooe> we'll be all container'd out!
+21:50:07 <mikebrow> +1 to move to dial in to the f2f
+21:50:28 <wking> #topic are we consolidating tooling?
+21:50:47 <wking> #link https://groups.google.com/a/opencontainers.org/d/msg/dev/joX0TGKFhys/noHBAYrzCwAJ
+21:50:56 <wking> RobDolinMS: separating tools from specs is good
+21:51:11 <wking> RobDolinMS: I don't really mind if tools get merged together
+21:51:19 <wking> +1 on separating utilities and testing tools
+21:51:29 <wking> vbatts|work: because then the tools can iterate, or cover multiple versions
+21:51:57 <wking> #link https://github.com/opencontainers/ocitools/issues/83
+21:52:03 <stephenrwalli> +1 to Rob Dolin’s suggestion
+21:52:17 <mikebrow> +1 for separating oci tools from specs
+21:53:00 <wking> RobDolinMS: Would the TOB be ok with making ocitools a Project for certification and utilities, etc.
+21:53:20 <RobDolinMS> @wking TOB -> TDC ^
+21:53:20 <collabot> RobDolinMS: Error: "wking" is not a valid command.
+21:53:27 <wking> thanks RobDolinMS
+21:53:31 <RobDolinMS> wking: TOB -> TDC ^
+21:53:39 <wking> #link https://github.com/opencontainers/tob/issues/11
+21:54:32 <wking> RobDolinMS: stephenrwalli has been pushing to make the spec more precise
+21:54:44 <wking> RobDolinMS: and ocitools has been trying to stick to the spec
+21:55:28 <wking> mikebrow: had spitballed code-reading in runtime-spec#513 for certification, but maybe we don't want to get into that now
+21:55:45 <wking> crosbymichael: I'm not opposed.  It depends on what the tool-writers think
+21:56:10 <wking> RobDolinMS: is cyphar around?
+21:57:15 <mikebrow> >> the spit-ball was to confirm the product being tested is the same product being advertised as OCI compliant.. IOW no shims allowed to make a product compliant, when the ship is not meant to ship with the product.
+21:57:58 <mikebrow> `/s/when the ship/when the shim/`
+21:58:48 <RobDolinMS> https://github.com/RobDolinMS/tob/commit/4fa747360729bc9c588ce78b2382fa3f59bc14f5
+21:58:58 <RobDolinMS> (old proposal)
+21:59:34 <wking> vbatts|work: #endmeeting?
+22:01:28 <wking> mrunalp: we should queue for next meeting getting to the bottom of major/minor and what interfaces are covered by that versioning.
+22:01:31 <wking> https://github.com/opencontainers/tob/issues/16
+22:01:48 <wking> so that everbody agrees on what 1.0 is promising ;)
+22:03:34 <wking> #endmeeting  <- doesn't work if you didn't start the meeting (so vbatts|work has to run it)

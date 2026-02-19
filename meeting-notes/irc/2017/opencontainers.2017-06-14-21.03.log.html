@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:03:23</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-06-14 discussion</span>
+<a name="l-2"></a><span class="tm">21:03:23</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Jun 14 21:03:23 2017 UTC.  The chair is stevvooe. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:03:23</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:03:23</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2017_06_14_discussion'
+<a name="l-5"></a><span class="tm">21:03:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> chair me?
+<a name="l-6"></a><span class="tm">21:04:00</span><span class="nk"> &lt;stevvooe&gt;</span> how do i do that?
+<a name="l-7"></a><span class="tm">21:04:07</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-8"></a><span class="tm">21:04:21</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-9"></a><span class="tm">21:04:21</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: stevvooe wking
+<a name="l-10"></a><span class="tm">21:05:33</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec issues</span>
+<a name="l-11"></a><span class="tm">21:05:45</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/696</span>
+<a name="l-12"></a><span class="tm">21:05:55</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/694</span>
+<a name="l-13"></a><span class="tm">21:06:01</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/695</span>
+<a name="l-14"></a><span class="tm">21:06:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> these need review by other maintainers^
+<a name="l-15"></a><span class="tm">21:06:35</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="cmd">#link</span><span class="cmdline"></span>
+<a name="l-16"></a><span class="tm">21:06:37</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/693</span>
+<a name="l-17"></a><span class="tm">21:06:58</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">RobDolinMS to ping jstarks about image-spec review for #694, #695, and #696</span>
+<a name="l-18"></a><span class="tm">21:07:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> that's all there is to discuss.  Any questions or other image-spec topics?
+<a name="l-19"></a><span class="tm">21:08:08</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec issues</span>
+<a name="l-20"></a><span class="tm">21:08:16</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/850/files
+<a name="l-21"></a><span class="tm">21:08:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> do we want this or not?
+<a name="l-22"></a><span class="tm">21:09:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if there is a platform field in the runtime spec, I'd like to match it to the image spec
+<a name="l-23"></a><span class="tm">21:10:12</span><span class="nk"> &lt;wking&gt;</span> with this change platform would just be a string matching our compliance tracks (no more GOOS reference)
+<a name="l-24"></a><span class="tm">21:10:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we don't use it in runC at all, and we'd added it as metadata
+<a name="l-25"></a><span class="tm">21:10:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> so my initial suggestion was to look into removing it
+<a name="l-26"></a><span class="tm">21:10:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> for the runtime, you're assuming that it's taken care of by the time you call the runtime
+<a name="l-27"></a><span class="tm">21:11:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah, which is why I don't understand johnhoward's position
+<a name="l-28"></a><span class="tm">21:15:12</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">crosbymichael to ask hqhq to completely remove 'platform' from the config JSON</span>
+<a name="l-29"></a><span class="tm">21:15:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> anything else?
+<a name="l-30"></a><span class="tm">21:15:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't see anything else that sticks out in the 1.0 milestone
+<a name="l-31"></a><span class="tm">21:16:06</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

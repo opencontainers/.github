@@ -1,0 +1,63 @@
+21:59:25 <vbatts> #startmeeting 2017-01-18 discussion
+21:59:25 <collabot> Meeting started Wed Jan 18 21:59:25 2017 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:59:25 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:59:25 <collabot> The meeting name has been set to '2017_01_18_discussion'
+22:00:21 <mrunalp> crosbymichael, stevvooe, vishh: Joining?
+22:09:13 <mrunalp> #topic https://github.com/opencontainers/runtime-spec/pull/508
+22:09:20 <duglin> thanks
+22:09:50 <mrunalp> post 1.0
+22:09:53 <mrunalp> everyone agrees
+22:10:35 <mrunalp> #topic https://github.com/opencontainers/runtime-spec/pull/507
+22:11:49 <mrunalp> post 1.0
+22:11:55 <mrunalp> #topic https://github.com/opencontainers/runtime-spec/pull/490
+22:12:21 <mrunalp> Assigning to vbatts to take a look
+22:14:25 <mrunalp> Looks good and merged
+22:14:42 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/471
+22:14:45 <mrunalp> Needs rebase
+22:29:52 <stevvooe> mrunalp: i'm on irc only
+22:30:23 <mrunalp> stevvooe, okay, we are triaging runtime PRs
+22:30:48 <dqminh> yah,but my mic is dead as usual
+22:31:09 <mrunalp> dqminh, no worries :)
+22:40:27 <stephenrwalli> Which PR did you want Stephen Day commentary on please?
+22:41:39 <wking> mrunalp: chair me?
+22:41:50 <mrunalp> #chair wking
+22:41:56 <mrunalp> wking, vbatts started it..
+22:41:59 <mrunalp> vbatts, ^^^
+22:42:06 <wking> #topic https://github.com/opencontainers/image-spec/pull/506
+22:42:36 <wking> vbatts: I feel like we should have annotations in different places (in the runtime too)
+22:42:45 <wking> vbatts: license information could live in annotations
+22:43:00 <wking> vbatts: I don't think license info should be a stand-alone field
+22:43:24 <wking> vbatts: other packaging formats also struggle with licensing, and structured schemas go obsolete quickly
+22:43:51 <wking> RobDolinMS: I think there's a LF project to form a licensing standard, but I'm not sure what state it's in
+22:44:01 <wking> vbatts: there have been a few attempts at standardizing
+22:44:18 <wking> tianon: the OSI has some standardization around OSI-approved licensing
+22:44:32 <wking> someone: I don't think we want spdx in the container format
+22:45:50 <wking> stephenrwalli: spdx is also a lot of boilerplate to pull into an accessible standard
+22:45:59 <wking> RobDolinMS: I think we can scope this outside of v1
+22:46:09 <stephenrwalli> +1
+22:46:27 <wking> #topic https://github.com/opencontainers/image-spec/pull/505
+22:46:41 <wking> merged
+22:46:41 <stevvooe> let's close 506
+22:46:43 <wking> #topic https://github.com/opencontainers/image-spec/pull/504
+22:48:07 <wking> stevvooe: this would prevent what we're currently doing in Docker
+22:48:30 <wking> vbatts: so what happens now?
+22:48:47 <wking> stevvooe: you can copy up from a volume.  You're just not necessarily snapshotting that data in the volume
+22:49:00 <wking> stevvooe: the language is also ambiguous
+22:49:40 <wking> I need to step back out for a bit, mrunalp.  Can you pick up the minutes again?
+22:49:57 <mrunalp> yeah
+22:50:43 <mrunalp> stevvooe: we don't enough info around runtime execution to make statements around what can/can't be done with data volumes
+22:51:06 <mrunalp> mikebrow, makes sense to have a means to switch it off but not forbid it
+22:53:53 <mrunalp> #topic https://github.com/opencontainers/image-spec/pull/506
+22:54:06 <mrunalp> stevvooe, why put licensing in content descriptor?
+22:57:17 <mrunalp> vbatts, flatpack has its own reverse DNS notation.
+22:57:28 <mrunalp> vbatts, There is a manifest of dep trees
+22:57:48 <mrunalp> vbatts, It makes no sense to do it at descriptor level
+22:58:28 <mrunalp> vbatts, what people chose to put in field is upto them
+22:59:13 <mrunalp> stevvooe, Why denormalize?
+23:02:00 <stephenrwalli> ‘Fraid I have to step into the next mtg …
+23:02:21 <mrunalp> RobDolinMS, stevvooe vbatts can discuss next week?
+23:04:06 <mrunalp> stevvooe, how do annotations combine?
+23:05:48 <mrunalp> mikebrow, We should do this post 1.0
+23:06:38 <mrunalp> vbatts, This is being asked by implementors trying out rcs
+23:07:45 <mrunalp> vbatts, could you endmeeting?
+23:07:57 <vbatts> #endmeeting

@@ -1,0 +1,140 @@
+21:00:16 <wking> #startmeeting 2018-04-04 discussion
+21:00:16 <collabot> Meeting started Wed Apr  4 21:00:16 2018 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:00:16 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:00:16 <collabot> The meeting name has been set to '2018_04_04_discussion'
+21:00:49 <wking> agenda: https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/B5qgXiKuQog
+21:03:43 <vbatts|work> wking: thanks
+21:05:14 <wking> #topic distribution-spec vote
+21:05:28 <wking> if it didn't pass unanimously, it was pretty close
+21:05:59 <wking> #topic certification
+21:06:12 <wking> #link https://github.com/opencontainers/certification/issues/35
+21:06:18 <wking> #link https://github.com/opencontainers/certification/issues/36
+21:06:31 <wking> albanc: I'm trying to get the certification scope for the runtime spec
+21:06:46 <wking> ^that's #36
+21:07:02 <wking> albanc: Do we want to certify Docker and other higher-level engines?
+21:07:17 <wking> albanc: I think for the moment we want to focus on runc and similar level runtimes
+21:07:31 <wking> albanc: and for the image-spec, what is the certification focus
+21:07:34 <wking> ^that's #35
+21:07:53 <wking> albanc: is it just the image?  Also registries?  Conversion from the image-spec to a runtime bundle?
+21:08:11 <cracra> [caniszczyk, Open Container Initiative] the initial thought was on registries but happy to discuss more
+21:09:22 <wking> vbatts|work: I don't know if there will be much demand for "this particular Redis build is certified"
+21:09:42 <wking> vbatts|work: I think it will be more like the W3C HTML validator, where you can feed in your image and get a pass/fail
+21:10:00 <wking> vbatts|work: and something like "everything from this registry is compliant"
+21:10:23 <wking> cracra: I have some recollection of registries not supporting multi-arch
+21:10:36 <wking> vbatts|work: so maybe red/green/yellow, with multi-arch being a warning?
+21:10:49 <wking> vbatts|work: Conversion was a bit controversial originally
+21:11:03 <estesp> don't say "Alexa" :)
+21:11:42 <wking> how can we certify implementations without specifying implementations?
+21:11:47 <wking> stevvooe: ?
+21:12:10 <wking> vbatts|work: you pass in something, but ... what are you passing in?
+21:12:15 <estesp> wking: it wasn't always as clear that they didn't support multi-arch; in many cases there were parts of the v2 API that were used mainly in supporting multi-arch that registries decided wasn't that important for their use case
+21:12:35 <wking> stevvooe: like in Docker you have a container, what would you drive on the Docker API to certify it for OCI runtime support?
+21:12:53 <estesp> but definitely in some cases they were denying push when the manifest content-type was a "manifest-list"
+21:13:03 <wking> mrunalp: for runtimes, it makes sense to certify the low-level runtimes (runc, hyper, ...)
+21:13:25 <wking> crosbymichael: I think that makes the most sense.  But how do we word things that use runc?
+21:13:47 <wking> vbatts|work: are we talking about dusting off the CRI discussion?
+21:14:24 <wking> stevvooe: the conversion doc is also problematic.  What are we certifying?  Do we certify a CLI?  Do we certify the conversion spec, which I don't think is a good idea
+21:14:39 <wking> mrunalp: for runc, it would be "if we implement a CLI we all agree on, then ..."
+21:14:50 <wking> stevvooe: what if the implementation doesn't implement a random systemd flag?
+21:14:58 <wking> mrunalp: then that flag shouldn't be in the CLI spec?
+21:15:06 <wking> stevvooe: so which flags are in and which are out?
+21:15:14 <wking> mrunalp: maintainers have to decide what makes sense
+21:18:01 <wking> stevvooe: what value does this bring to the project?
+21:18:48 <cracra> [caniszczyk, Open Container Initiative] section 1 for the OCI charter https://www.opencontainers.org/about/governance "The Open Container Initiative provides an open source technical community within which industry participants may easily contribute to building a vendor-neutral, portable and open specification and runtime that deliver on the promise of containers as a source of application portability backed by a certificati
+21:18:58 <cracra> [caniszczyk, Open Container Initiative] that's where the certification program requirement comes from fyi
+21:19:16 <wking> vbatts|work: rather than rat-holing on the point of it... folks want a tool to complaince test so they can get a green light
+21:20:04 <wking> mrunalp: currently folk implementing a runtime have to reverse-engineer runc because we don't have an official spec
+21:20:39 <wking> stevvooe: how often is this done?  Once or twice a year?  Certification is going to take a lot of effort/time
+21:21:13 <wking> stevvooe: is the benefit that runc, ccrun, kata, etc. all have the same flags and run the same tests?
+21:21:23 <wking> mrunalp: from a pluggable perspective, yes
+21:21:38 <wking> stevvooe: but they're not pluggable, because the isolation primatives are different
+21:21:55 <wking> mrunalp: we can have different flags for Windows/Linux
+21:22:30 <wking> vbatts|work: when I floated the create, etc. JSON structure.  The reason that discussion happened was because any platform could take a JSON data structure and not have to depend on how Windows or other OS does flags
+21:22:54 <wking> vbatts|work: I think a CLI spec would be pretty isolated to the platform
+21:23:34 <wking> What's the Windows option issue?  Is it just -- vs. / conventions for options?
+21:25:04 <wking> vbatts|work: circling back to certification#36
+21:25:42 <wking> s/36/35/
+21:26:10 <wking> crosbymichael: would image compliance help after the distribution-spec is in?
+21:26:39 <wking> I agree that the distribution-spec would help with validating registries for serving compliant images ;)
+21:26:52 <wking> vbatts|work: we tried to make the layout for local images, but yeah
+21:27:21 <wking> stevvooe: you have a test image, you push it to the registry, pull it from the registry, and run it
+21:27:46 <wking> stevvooe: but when I look at an individual image implementation or OCI implementation, looking at the runtime or image spec, it seems like we're just burning up C02
+21:28:23 <wking> albanc: does that mean that image certification should be done only with the distribution spec, not on disk?
+21:28:34 <wking> vbatts|work: I think layouts on disk would be another line item
+21:28:58 <wking> vbatts|work: originally that was for 'docker save' and 'docker load', but you could have the same digests you'd have in a registry
+21:29:30 <wking> vbatts|work: especially for end-to-end certification, the cert group could publish a test image digest, and folks could fetch it, run it, and look for exit 0
+21:29:45 <wking> crosbymichael: I don't think you want to look at runtime exit codes, those are completely separate
+21:30:10 <wking> crosbymichael: were layouts just a stop-gap?  How real is that use-case today?
+21:30:28 <wking> crosbymichael: it may be less work overall if we're not making up things
+21:31:14 <wking> crosbymichael: vbatts|work, you were talking about multi-arch validation?
+21:31:57 <wking> vbatts|work: if an implementation couldn't fetch multi-arch images... It would be ideal if we had a big compliance up/down boolean.  But in reality, it breaks down to implementing all the MUSTs and some SHOULDs so yellow
+21:32:11 <wking> vbatts|work: not even picking on multi-arch per-se
+21:32:27 <wking> crosbymichael: and we have two sides of certification, producers and consumers
+21:32:31 <wking> vbatts|work: yup
+21:33:09 <wking> vbatts|work: even building an image doesn't mean it complies with the spec.  You can get an image in a few different ways and may want to test it before pushing it to a registry
+21:33:24 <wking> vbatts|work: it would be good to be able to check each of those pieces at some point
+21:34:02 <wking> vbatts|work: so albanc, I don't think anyone's in violent disagreement.  It comes down to how, when you look at any one piece, if it's an implementation detail or a compliance issue
+21:35:10 <wking> vbatts|work: the other piece would be if you somehow specify that runtimes should comply with whatever capabilities, seccomp, etc., you could hand it a bundle to see whether the runtime could do that
+21:35:47 <wking> stevvooe: there is a way for the image if you take a hash, walk the hash for the manifest and layouts, etc.  You could abstract out the fetching and run it on layouts or registries, and that's fine
+21:36:10 <wking> stevvooe: I think there's less use for layer extraction, where it's tar based, and there are 40 years of inconsistent tar implementations
+21:36:34 <wking> #link https://github.com/opencontainers/image-spec/pull/342
+21:36:37 <wking> ^ tar spec ;)
+21:37:05 <wking> stevvooe: but some of these do need to be left as implementation details
+21:37:24 <wking> crosbymichael: would it help if we had two working groups, one for the runtime and one for images?
+21:37:45 <wking> crosbymichael: and say, this is what we're certifying and this is what we're not?
+21:38:02 <wking> Isn't that what runtime-tools is already?
+21:38:56 <wking> crosbymichael: but runtime-tools and runtime-spec maintainers are running in parallel now
+21:39:02 <wking> mrunalp: yeah, that makes sense to me
+21:39:18 <cracra> [caniszczyk, Open Container Initiative] we attempted to try to do this awhile ago, it needs some love from the maintainers https://github.com/opencontainers/certification#certification
+21:39:28 <wking> vbatts|work: what's out from the existing certification group?  Does it come down to this level of thing?
+21:39:48 <wking> cracra: We talked about the process, whether it would be self-cert or peer-cert, etc.
+21:40:04 <wking> albanc: is there a certification project?
+21:40:15 <wking> cracra: it's not an OCI Project, it was under the trademark board
+21:40:31 <wking> cracra: I think outside of mrunalp the maintainers weren't involved in that effort
+21:40:34 <estesp> apologies; have to run for today
+21:41:05 <wking> crosbymichael: when I proposed working groups, I didn't mean a separate thing.  I just meant a quick "let's work up a document" to say what gets checked, e.g. yes runc, no CRI-O
+21:41:27 <wking> crosbymichael: and then vbatts|work's idea of pushing in a payload, we work that up after we know what we're going to certify and how
+21:41:42 <wking> vbatts|work: I'm not opposed to a working group
+21:42:16 <wking> cracra: if a working group is justed a google doc, I'm ok with that
+21:42:26 <wking> cracra: as async as possible is best
+21:43:01 <wking> #action cracra to open a certification-scoping Google doc
+21:43:19 <wking> crosbymichael: and our focus will be on the low-level stuff
+21:43:39 <wking> cracra: exactly.  The trademark can take care of the legal stuff, and this can be about what is actually certifiable
+21:44:15 <wking> #topic runtime-spec 1.1
+21:45:12 <wking> #link https://github.com/opencontainers/runtime-spec/pull/942
+21:45:21 <wking> #link https://github.com/opencontainers/runtime-spec/pull/949
+21:45:36 <wking> ^the two minor-level changes since 1.0.1
+21:45:55 <wking> what happens to runc?  Will there be a 1.0 runc for the 1.0 runtime-spec?
+21:46:10 <wking> mrunalp: we should meet and hash out the runc release
+21:46:29 <wking> crosbymichael: or we can get a runc 1.0 out first and then circle back to runtime-spec 1.1
+21:46:35 <wking> vbatts|work: so hold on runtime-spec 1.1?
+21:46:38 <wking> crosbymichael: yeah
+21:47:01 <wking> crosbymichael: there are also discussions about arguments going to the hypervisor
+21:47:13 <wking> #link https://github.com/opencontainers/runtime-spec/pull/949#discussion_r178318374
+21:47:26 <mikebrow> agree.. let's ga runc rc.6? before moving to 1.1
+21:47:54 <wking> vbatts|work: we should open an issue about that
+21:48:42 <mikebrow> tyranny to the implementation!
+21:49:00 <wking> crosbymichael: if everyone is looking at runc, then the only one that's wrong is runtime-tools
+21:49:53 <wking> I think there are some issues with the runc API, but we probably won't settle those in the next 10 minutes
+21:50:06 <wking> #action crosbymichael to file an issue for https://github.com/opencontainers/runtime-spec/pull/949#discussion_r178318374
+21:50:14 <vbatts|work> crosbymichael: https://github.com/opencontainers/runtime-spec/milestone/17
+21:50:16 <wking> or maybe that was a vbatts|work action item
+21:50:55 <wking> #link https://github.com/opencontainers/runtime-spec/milestone/9
+21:51:42 <wking> vbatts|work: hmm, maybe v1.Y.0 is more of a label than a milestone
+21:51:49 <wking> #topic distribution-spec project
+21:52:03 <wking> vbatts|work: crosbymichael added his LGTM, so the vote is complete
+21:52:18 <wking> #topic Copenhagen
+21:52:23 <wking> cracra: albanc will be there
+21:52:44 <wking> #topic distribution-spec
+21:52:51 <wking> we plan on announcing this next week
+21:53:09 <wking> stevvooe: when do you want me to drop the spec as it exists now?
+21:53:27 <wking> cracra: before the 9th, when we announce it, so folks can look at it then
+21:53:46 <wking> cracra: I've setup a GitHub group, and a maintainer set, etc.
+21:54:06 <wking> stevvooe: I plan on decoupling the spec from route definitions, because the spec is currently generated from Go route definitions
+21:54:14 <wking> vbatts|work: you don't want to carry that over?
+21:54:26 <wking> stevvooe: yeah, it's fairly coupled to the implementation
+21:54:39 <wking> stevvooe: and we could use that to generate some OAI
+21:54:55 <wking> vbatts|work: whatever's easiest
+21:55:07 <wking> cracra: yeah, and we can do OAI later down the line; whatever works
+21:55:12 <wking> vbatts|work: anything else?
+21:55:20 <wking> #endmeeting

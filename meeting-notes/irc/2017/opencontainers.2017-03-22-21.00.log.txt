@@ -1,0 +1,155 @@
+21:00:39 <vbatts> #startmeeting 2017-03-22 discussion
+21:00:39 <collabot`> Meeting started Wed Mar 22 21:00:39 2017 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:00:39 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:00:39 <collabot`> The meeting name has been set to '2017_03_22_discussion'
+21:01:17 <wking> vbatts: chair me?  Not sure how much I'll be able to type, but you never know ;)
+21:01:39 <vbatts> no
+21:01:41 <vbatts> ;-)
+21:01:48 <vbatts> #chair wking mrunalp
+21:01:48 <collabot`> Current chairs: mrunalp vbatts wking
+21:02:05 <wking> #topic times for future meetings
+21:02:08 <mrunalp> crosbymichael, stevvooe: Joining?
+21:02:19 <stevvooe> mrunalp: i'll be there shortly
+21:02:38 <wking> #topic runtime-spec 1.0 burn-down
+21:02:50 <wking> vbatts: are we waiting for Docker and cri-o before a 30-day quiet period?
+21:03:05 <wking> mrunalp: I don't think there's an official need for a 30-day quiet period
+21:03:31 <wking> ^ I agree that there's no official need for 30 days of quiet before 1.0, but I still think it's a good idea
+21:05:32 <wking> If nothing has changed since rc5, I agree that there's no point in cutting an rc6 (although I'm not sure what's landed since rc5)
+21:05:46 <wking> crosbymichael: I don't think rc6 is very critical
+21:05:56 <wking> crosbymichael: we're working on getting Docker up to date now
+21:06:18 <wking> #link https://github.com/opencontainers/runtime-spec/issues/726
+21:06:41 <wking> vbatts: we could vote for 1.0 and have 30 days of quiet afterwards
+21:07:19 <wking> mrunalp: I don't think we want 30 days of quiet after 1.0.  It should be before
+21:07:24 <vbatts> wking: only 8 PRs merged since rc5
+21:08:10 <wking> crosbymichael: we're not clear on the 30-day, Member-notification period around releases
+21:08:30 <wking> vbatts: the charter says the 30 days are after a new version
+21:08:40 <wking> #link https://www.opencontainers.org/about/governance section 8.d
+21:09:24 <david-lyle> will 1.0 be a tag or a branch?
+21:09:54 <wking> crosbymichael: what happens if they reject after a release?
+21:09:55 <vbatts> #link https://github.com/opencontainers/runtime-spec/issues/726
+21:10:06 <vbatts> (already done)
+21:11:17 <wking> RobDolinMS: Once we're happy, we can cut an rc6, send out notices, wait 30 days, and then tag it 1.0 if there were no problems, then 30 days for the charter's lawyer review
+21:11:57 <wking> RobDolinMS: I think Chris reached out to Mike Dolan about when the 30 days are, and would rather have them answer that
+21:12:12 <wking> RobDolinMS: I'd rather send cracra an email
+21:12:16 <wking> crosbymichael: yeah, we can do that
+21:12:23 <wking> mrunalp: cri-o will be done by next week
+21:12:43 <cracra> [caniszczyk, Open Container Initiative] once you vote on v1.0 final and the vote is approved, the 30 day starts (note this doesn't mean that the release isn't final, it just gives members 30 days due to the IP policy)
+21:12:47 <cracra> [caniszczyk, Open Container Initiative] hope that makes sense
+21:13:43 <vbatts> cracra: so what does that mean if a member does not accept it?
+21:14:19 <wking> cracra: after the release, members have 30 days to decide to leave or not
+21:14:45 <wking> cracra: 1.0s are the same as any release.  You can just vote "we're going to tag rc6 (or whatever) as 1.0"
+21:15:14 <wking> vbatts: what are the IP issues?
+21:15:27 <wking> cracra: it's a patent grant largely orthogonal to releasing
+21:15:58 <wking> cracra: it's a strange IP policy, but that's what we agreed to before starting
+21:16:12 <wking> cracra: I've been pre-briefing folks, so I don't think anyone will be surprised by a 1.0
+21:16:52 <wking> RobDolinMS: For example, some organization has a patent which is covered by the spec, and then that member would be granting a zero-cost license by accepting that spec version
+21:17:19 <wking> cracra: I'd rather have the TDC focus on cutting the release, and we'll work behind the scenes to cover the patent thing
+21:18:28 <wking> RobDolinMS: Hopefully companies with large patent portfolios will continue to stay in the OCI, and this gives implementers assurances that those patents won't be asserted against the implementations
+21:18:49 <wking> ^ this makes me a lot happier :)
+21:20:07 <wking> #630 and #720 are the only interesting changes since rc5
+21:21:04 <wking> vbatts: the only thing new for 1.0 would be a 1.0.x branch, if we want to do that.
+21:21:08 <wking> mrunalp: I think we can defer that
+21:21:51 <wking> crosbymichael: hopefully it quiets down after 1.0
+21:22:31 <wking> vbatts: is a containerd update part of the milestone?
+21:22:36 <wking> crosbymichael: it's what Docker is currently doing
+21:22:49 <wking> crosbymichael: we need to port over the new TTY, etc. runc changes
+21:23:20 <wking> vbatts: it would be good to get a vote out within a week or less
+21:24:22 <wking> stevvooe: are we not following the milestone?
+21:24:29 <wking> vbatts: right now the milestone is just #726
+21:24:36 <wking> stevvooe: rc6 has seven issues
+21:24:42 <wking> vbatts: we're not to image-spec
+21:25:58 <stevvooe> https://github.com/opencontainers/image-spec/issues/588
+21:26:02 <wking> #topic image-spec
+21:26:07 <wking> https://github.com/opencontainers/image-spec/issues/588
+21:26:30 <wking> stevvooe: I've never had problems with this, and don't know what we can put in the spec to cement these issues
+21:26:40 <wking> stevvooe: I'm not sure where to take this, and look forward having cyphar on the call
+21:27:15 <wking> RobDolinMS: The spec should define what it is, not how to implement it
+21:27:42 <wking> stevvooe: the request is for an implementer's note.  I think the data structures are obvious, but that could be my familiarity
+21:27:53 <wking> stevvooe: the data structures define the algorithms, not the other way around
+21:28:03 <wking> vbatts: there's nothing about algorithms in the current note
+21:28:20 <wking> stevvooe: right.  That's what this issue is asking for.  Do we need to encode that in the spec
+21:28:47 <wking> vbatts: an encoutered media type that is unknown should be safely ignored...
+21:29:04 <wking> stevvooe: I think the issues are "how to handle names that aren't unique?" and platform selection
+21:29:11 <wking> vbatts: there's been lots of discussion about that
+21:29:32 <wking> stevvooe: I think the conclusions are a little hyperbolic, but the core is a concern that some things may be underspecified
+21:29:57 <wking> crosbymichael: the more you start dictating implementations, the more it hurts implementers
+21:30:08 <wking> #link https://github.com/opencontainers/image-spec/issues/622
+21:30:16 <wking> ^ confusion about what 'features' means
+21:31:04 <wking> stevvooe: I think we'll miss wide if we try to explain the datastructure math, and could be inconsistent with what the data structure actually is
+21:31:16 <wking> stevvooe: effectively what crosbymichael said
+21:33:38 <wking> stevvooe: maybe merging the spec would help, so it's harder to selectively read the spec
+21:33:51 <wking> stevvooe: e.g. read one section but miss something important in another section
+21:34:40 <wking> stevvooe: so I'll keep pointing at code in containerd about how to deal with this.  There aren't many ways to deal with this
+21:35:40 <wking> #link https://github.com/opencontainers/image-spec/pull/620
+21:35:46 <vbatts> https://github.com/opencontainers/image-spec/issues/618
+21:35:50 <wking> stevvooe: do we want to make that change in the spec too, but just in Go?
+21:35:55 <wking> * but -> or
+21:35:58 <stevvooe> https://github.com/opencontainers/image-spec/pull/620
+21:36:51 <wking> crosbymichael: the split didn't make much sense to me when I read the spec
+21:36:57 <wking> stevvooe: yeah, and cyphar ran into this as well
+21:37:27 <wking> stevvooe: for example, if your visitor is looking at an index, but is calling a handler that doesn't care if the descriptors are ManifestDescriptors or Descriptors
+21:38:20 <wking> stevvooe: currently as the spec reads it would just be ignored (when parsing JSON)
+21:38:25 <wking> vbatts: like JSON Schema?
+21:38:30 <wking> stevvooe: yeah.  Do we need to do that?
+21:39:26 <wking> vbatts: if someone is using a descriptor outside the manifest, where we don't carry additional fields, having 'platform' doesn't make it invalid
+21:39:36 <wking> vbatts: so maybe no, because it's testing an assumed-broken use case
+21:39:50 <wking> stevvooe: so we can merge #620, and we can adjust the spec later if we need
+21:40:39 <wking> #topic meeting times
+21:40:49 <wking> RobDolinMS: 8am Pacific and 5pm Pacific
+21:40:59 <wking> RobDolinMS: There's a proposal to alternate even-odd
+21:41:22 <wking> vbatts: start that next week?  But next week is KubeCon
+21:41:37 <wking> vbatts: 8am is terrible?
+21:41:46 <wking> RobDolinMS: 8am is dropping off kids and walking the dog ;)
+21:42:02 <wking> #link https://github.com/opencontainers/runtime-spec/pull/719
+21:42:09 <wking> crosbymichael: hopefully post 1.0 these calls are less critical
+21:42:21 <tianon> crosbymichael: "same"
+21:42:22 <wking> crosbymichael: I think they're still useful for conflict resolution
+21:42:26 <tianon> xD
+21:43:19 <wking> RobDolinMS: So starting next week?
+21:44:40 <wking> RobDolinMS: Wed 3-29 lots of people will be in Europe, so favor Europe then
+21:44:47 <wking> I'll update my PR to do that^
+21:45:06 <wking> #topic 1.0 releases
+21:45:19 <wking> vbatts: for the runtime, we're mostly through the final burn-down
+21:45:56 <wking> vbatts: we want to see more testing.  Docker and cri-o, although containerd, etc. would be nice
+21:46:04 <wking> vbatts: we want to see good test coverage there next week
+21:46:13 <wking> vbatts: then put up a 1.0 vote
+21:46:50 <wking> vbatts: the vote will happen like normal, with a tagged release, and then the 30-day stuff happens out of band
+21:47:13 <wking> vbatts: for the image spec, there's an rc6 milestone to burn down, and then it will go through the same 1.0 proces
+21:47:25 <wking> vbatts: so a bit behind the runtime spec, but the same 1.0 process
+21:47:36 <wking> vbatts: best case scenario is a runtime-spec 1.0 in two weeks
+21:47:49 <wking> vbatts: I don't know what an ideal time would be for image-spec
+21:48:01 <wking> vbatts: closing it out before April 15th woudl be a beautiful thing
+21:48:46 <wking> tianon: I'll take a stab at pushing an ICS to match a README
+21:49:26 <wking> that's for minutes?  I can do that
+21:49:56 <tianon> <3
+21:49:58 <wking> vbatts: other issues?
+21:50:05 <wking> #topic image-spec issues
+21:50:13 <wking> stevvooe: I just closed #493
+21:50:19 <wking> stevvooe: let me know if you disagree
+21:50:32 <wking> stevvooe: the charset stuff in #599 needs help, if anyone has time.
+21:50:37 <stevvooe> https://github.com/opencontainers/image-spec/issues/599
+21:50:42 <wking> stevvooe: do we have a help-wanted label?
+21:50:49 <wking> vbatts: can you manage labels without write access?
+21:50:55 <wking> no
+21:51:04 <wking> stevvooe: help-wanted exists
+21:51:47 <stevvooe> https://github.com/opencontainers/image-spec/issues/599
+21:52:10 <tianon> https://twitter.com/DockerCuties/status/839614192436948992
+21:52:54 <stevvooe> https://github.com/opencontainers/image-spec/issues/415
+21:53:03 <wking> stevvooe: we still need Microsoft validation here^
+21:53:15 <vbatts> tianon: <3
+21:53:16 <wking> RobDolinMS: is that the one with some email last week?
+21:53:19 <wking> stevvooe: yeah
+21:53:28 <vbatts> vbatts|cutie
+21:53:32 <tianon> ++
+21:53:33 <wking> RobDolinMS: I'll forward that to some Windows folks today
+21:53:45 <wking> stevvooe: I think we can take #400 of the 1.0 milestone
+21:53:48 <wking> vbatts: so post-1.0?
+21:53:55 <wking> stevvooe: I think we have enough to go on
+21:54:05 <wking> stevvooe: you can sign a hash, and that's enough for now
+21:55:01 <wking> RobDolinMS: You can assign #415 to me, but make a note that I'm asking for colleague import
+21:55:04 <wking> * input
+21:55:26 <stevvooe> https://github.com/opencontainers/image-spec/pull/492
+21:55:28 <wking> stevvooe: do we merge #492?  That's the only one I can see taking extra time
+21:55:59 <wking> stevvooe: I think cyphar needs another pass on this
+21:56:12 <wking> stevvooe: and I was going to have some of our people take another peek at it
+21:57:03 <wking> #endmeeting

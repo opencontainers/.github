@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">20:59:28</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-08-17 discussion</span>
+<a name="l-2"></a><span class="tm">20:59:28</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Aug 17 20:59:28 2016 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">20:59:28</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">20:59:28</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2016_08_17_discussion'
+<a name="l-5"></a><span class="tm">20:59:30</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="hi">vbatts|work:</span> are there not parameters somewhere in a gzip stream?
+<a name="l-6"></a><span class="tm">20:59:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> chair me?
+<a name="l-7"></a><span class="tm">21:00:14</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">stevvooe:</span> it's not so much parameter as it is an approach to building the tree
+<a name="l-8"></a><span class="tm">21:00:21</span><span class="nk"> &lt;vbatts|work&gt;</span> how it leans
+<a name="l-9"></a><span class="tm">21:00:34</span><span class="nk"> &lt;vbatts|work&gt;</span> elections on how sliding the window is
+<a name="l-10"></a><span class="tm">21:00:41</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-11"></a><span class="tm">21:00:41</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: vbatts|work wking
+<a name="l-12"></a><span class="tm">21:00:46</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, dqminh, cyphar, vishh, hqhq: Joining?
+<a name="l-13"></a><span class="tm">21:00:55</span><span class="nk"> &lt;mrunalp&gt;</span> lk4d4, ^
+<a name="l-14"></a><span class="tm">21:02:43</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">console handling</span>
+<a name="l-15"></a><span class="tm">21:02:46</span><span class="nk"> &lt;wking&gt;</span> https://gist.github.com/cyphar/8c6b9db84fc1f2cc2d037ef07942ca83
+<a name="l-16"></a><span class="tm">21:03:00</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/483
+<a name="l-17"></a><span class="tm">21:03:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> everybody look that over^^
+<a name="l-18"></a><span class="tm">21:03:10</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">removing hooks</span>
+<a name="l-19"></a><span class="tm">21:04:39</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runc/issues/814 issue for the previous topic (console handling in runC)</span>
+<a name="l-20"></a><span class="tm">21:04:52</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/483</span>
+<a name="l-21"></a><span class="tm">21:04:58</span><span class="nk"> &lt;wking&gt;</span> ^ removing hooks
+<a name="l-22"></a><span class="tm">21:05:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> are there any blockers or can we merge this?
+<a name="l-23"></a><span class="tm">21:06:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we'll have to rewrite a lot of Docker things to not use hooks
+<a name="l-24"></a><span class="tm">21:06:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I will also have to rewrite things
+<a name="l-25"></a><span class="tm">21:08:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> the only thing that seems confusing about hooks is how 'start' handles a non-zero hook
+<a name="l-26"></a><span class="tm">21:09:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> exit code language is in the spec
+<a name="l-27"></a><span class="tm">21:10:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't think parallel hook execution makes sense
+<a name="l-28"></a><span class="tm">21:10:12</span><span class="nk"> &lt;wking&gt;</span> I had a serial-requirement PR earlier
+<a name="l-29"></a><span class="tm">21:10:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we can open that PR
+<a name="l-30"></a><span class="tm">21:10:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> so we're not saying "remove the create/start split".  I'm trying to figure out if we're missing something else
+<a name="l-31"></a><span class="tm">21:11:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> folks can still do whatever they want between create and start
+<a name="l-32"></a><span class="tm">21:11:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> the serial requirement is just for config hooks
+<a name="l-33"></a><span class="tm">21:11:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> why do we want to remove hooks again?  Was it just to remove a MUST?
+<a name="l-34"></a><span class="tm">21:12:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> there was enough confusion about hooks (which namespace do they run in?  What happens when they fail?)
+<a name="l-35"></a><span class="tm">21:12:48</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/265</span>
+<a name="l-36"></a><span class="tm">21:12:53</span><span class="nk"> &lt;wking&gt;</span> ^ require serial hooks
+<a name="l-37"></a><span class="tm">21:14:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> could we handle hooks at a higher level?  And feed into the create/start split?
+<a name="l-38"></a><span class="tm">21:14:49</span><span class="nk"> &lt;wking&gt;</span> You could definitely wrap 'create' in 'create + pre-start hooks'
+<a name="l-39"></a><span class="tm">21:15:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> so shouldn't we punt hooks up a layer?
+<a name="l-40"></a><span class="tm">21:15:12</span><span class="nk"> &lt;stevvooe&gt;</span> that is not what i said
+<a name="l-41"></a><span class="tm">21:15:26</span><span class="nk"> &lt;wking&gt;</span> sorry, feel free to rephrase when I misunderstand
+<a name="l-42"></a><span class="tm">21:15:28</span><span class="nk"> &lt;stevvooe&gt;</span> are hooks not complementary to create/start split?
+<a name="l-43"></a><span class="tm">21:16:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the difference here is we're taking hooks away
+<a name="l-44"></a><span class="tm">21:16:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> I think there's a difference between taking hooks away and pulling them out of the spec
+<a name="l-45"></a><span class="tm">21:16:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> so you could still implemnt them, but wouldn't require them
+<a name="l-46"></a><span class="tm">21:17:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I'm opposed to folks using hooks without them in the spec
+<a name="l-47"></a><span class="tm">21:18:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> I thought wking was working on an event model
+<a name="l-48"></a><span class="tm">21:18:41</span><span class="nk"> &lt;wking&gt;</span> The event model is more about replacing early-exit create, not about hooks
+<a name="l-49"></a><span class="tm">21:18:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we need to decide what we're doing
+<a name="l-50"></a><span class="tm">21:19:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> the spec is about the interop surface.  If hooks are in wide use, they should be in the spec
+<a name="l-51"></a><span class="tm">21:19:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I don't think we want an undocumented feature in broad use
+<a name="l-52"></a><span class="tm">21:20:36</span><span class="nk"> &lt;wking&gt;</span> So is the question just "what spec do hooks live in"?
+<a name="l-53"></a><span class="tm">21:20:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we can look at making them optional if they end up being hard to implement
+<a name="l-54"></a><span class="tm">21:21:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> it seems odd to have an initial design that needs hooks
+<a name="l-55"></a><span class="tm">21:21:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> maybe we should add more features?
+<a name="l-56"></a><span class="tm">21:22:10</span><span class="nk"> &lt;wking&gt;</span> I'd rather leave higher-level features (e.g. networking) up to higher levels
+<a name="l-57"></a><span class="tm">21:22:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> systemd has hooks, would you bake more in there?
+<a name="l-58"></a><span class="tm">21:22:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> good point, most systems do have hooks
+<a name="l-59"></a><span class="tm">21:22:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> clear specification around hooks is a bit of a rabbit hole
+<a name="l-60"></a><span class="tm">21:23:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> both ways are rabbit holes
+<a name="l-61"></a><span class="tm">21:24:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> next steps: leave create/start split alone.  Clarify hooks.  Close #483
+<a name="l-62"></a><span class="tm">21:27:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> two months ago dropping hooks was more possible
+<a name="l-63"></a><span class="tm">21:27:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> now were close to 1.0 and don't want a major change
+<a name="l-64"></a><span class="tm">21:27:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> DockerCon discussion was that "we can add them post 1.0 if we need them"
+<a name="l-65"></a><span class="tm">21:28:35</span><span class="nk"> &lt;wking&gt;</span> And what's changed since DockerCon is that we're conviced that we do need them, and we're ok locking ourselves into hooks for 1.0
+<a name="l-66"></a><span class="tm">21:28:58</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/527
+<a name="l-67"></a><span class="tm">21:29:28</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">language around compliance profiles</span>
+<a name="l-68"></a><span class="tm">21:29:35</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/527</span>
+<a name="l-69"></a><span class="tm">21:30:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> This lets runtimes certify compliance with a subset of the whole spec (e.g. just Linux 386 and amd64, or just Solaris amd64)
+<a name="l-70"></a><span class="tm">21:30:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> please review
+<a name="l-71"></a><span class="tm">21:30:39</span><span class="nk"> &lt;RobDolinMS&gt;</span> I'm planning to submit a PR after this is merged to include Windows Containers similar to Solaris Containers.
+<a name="l-72"></a><span class="tm">21:30:47</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runC release</span>
+<a name="l-73"></a><span class="tm">21:30:58</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/NuvF5AX8910</span>
+<a name="l-74"></a><span class="tm">21:31:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> crosbymichael rc2 this week?
+<a name="l-75"></a><span class="tm">21:31:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah, we can bump it
+<a name="l-76"></a><span class="tm">21:31:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> vote on the dev list?
+<a name="l-77"></a><span class="tm">21:31:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> that's the plan
+<a name="l-78"></a><span class="tm">21:31:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> did the console changes drop in?
+<a name="l-79"></a><span class="tm">21:31:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> it's being worked on, but hasn't landed yet
+<a name="l-80"></a><span class="tm">21:31:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> it's not trivial
+<a name="l-81"></a><span class="tm">21:32:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> console handling hasn't changed in a while, so this reshuffle need lots of testing
+<a name="l-82"></a><span class="tm">21:32:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> it's a big rewrite before 1.0 and won't happen in a week or two
+<a name="l-83"></a><span class="tm">21:32:51</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/docker/docker/issues/25779
+<a name="l-84"></a><span class="tm">21:32:51</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">OCI support in Docker</span>
+<a name="l-85"></a><span class="tm">21:33:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> once that proposal has stabilized we'll implement it and pass back feedback to the spec
+<a name="l-86"></a><span class="tm">21:33:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> does it cover media type translation with registry interaction?
+<a name="l-87"></a><span class="tm">21:34:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> this is currently independent of registry interaction.  It's about manifest translation and save/load
+<a name="l-88"></a><span class="tm">21:34:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> It's also about whether we can leverage an internal library or want a Docker-internal library
+<a name="l-89"></a><span class="tm">21:34:45</span><span class="nk"> &lt;wking&gt;</span> * internal library -&gt; external library
+<a name="l-90"></a><span class="tm">21:35:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I don't think this needs to be experimental, but we might change behavior in the future if the spec changes or model is broken
+<a name="l-91"></a><span class="tm">21:35:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I expect a Docker-experimental tag if we might break behavior later
+<a name="l-92"></a><span class="tm">21:36:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if we put it in experimental, you have to build your own Docker to use it
+<a name="l-93"></a><span class="tm">21:36:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> so we'll skip that tag and just put up a warning that it is unstable
+<a name="l-94"></a><span class="tm">21:37:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> versioning with ociVersion and schema versioning would be useful in save/load
+<a name="l-95"></a><span class="tm">21:37:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if you have concrete wording, add it to the issue
+<a name="l-96"></a><span class="tm">21:38:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> implementers will eventually (probably) have to talk about which schema version they're dealing with
+<a name="l-97"></a><span class="tm">21:38:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> inside of the image-spec repo, there's an image-spec tool.  Can that tool introspect refs
+<a name="l-98"></a><span class="tm">21:38:45</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/159</span>
+<a name="l-99"></a><span class="tm">21:38:50</span><span class="nk"> &lt;wking&gt;</span> has a tool to list refs^
+<a name="l-100"></a><span class="tm">21:39:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> resolving refs to image names is still a bit sticky
+<a name="l-101"></a><span class="tm">21:39:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> check out my issue.  I think I have something useful there without painting ourselves into a corner before we have a clear OCI direction
+<a name="l-102"></a><span class="tm">21:40:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> 0.4.0 vote will end tomorrow and the hash can be tagged
+<a name="l-103"></a><span class="tm">21:40:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> there was some confusion about ChangeLogs again.  Ideally we'll keep the ChangeLog up to date incrementally
+<a name="l-104"></a><span class="tm">21:41:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> but until now we've been adding the ChangeLog as the last commit before the release
+<a name="l-105"></a><span class="tm">21:41:12</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec 0.4.0</span>
+<a name="l-106"></a><span class="tm">21:41:39</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/195</span>
+<a name="l-107"></a><span class="tm">21:41:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> what am I tagging?
+<a name="l-108"></a><span class="tm">21:41:58</span><span class="nk"> &lt;wking&gt;</span> https://github.com/opencontainers/image-spec/pull/195#issuecomment-240144353
+<a name="l-109"></a><span class="tm">21:42:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> ^ this approach doesn't give a first-parent tag
+<a name="l-110"></a><span class="tm">21:42:17</span><span class="nk"> &lt;wking&gt;</span> or should I tag the vote commit and leave the ChangeLog out?
+<a name="l-111"></a><span class="tm">21:42:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> the later master commits look minor.  Maybe just tag the tip?  Or is that not a good precedent?
+<a name="l-112"></a><span class="tm">21:42:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I agree, and am also mostly concerned about precedence
+<a name="l-113"></a><span class="tm">21:43:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> We can write a caveat to avoid setting precedent
+<a name="l-114"></a><span class="tm">21:43:55</span><span class="nk"> &lt;wking&gt;</span> I think "small commits, so let them slide to 0.5"
+<a name="l-115"></a><span class="tm">21:44:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I'd like to have the ChangeLog in 0.4, but that's not technically what the vote was about
+<a name="l-116"></a><span class="tm">21:46:24</span><span class="nk"> &lt;wking&gt;</span> the ChangeLog commit's parent is the voted on commit
+<a name="l-117"></a><span class="tm">21:47:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I'll do https://github.com/opencontainers/image-spec/pull/195#issuecomment-240144353
+<a name="l-118"></a><span class="tm">21:47:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I think the vote actually ended today
+<a name="l-119"></a><span class="tm">21:47:48</span><span class="nk"> &lt;mikebrow&gt;</span> victory
+<a name="l-120"></a><span class="tm">21:47:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I'll do this right now
+<a name="l-121"></a><span class="tm">21:48:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> wooo
+<a name="l-122"></a><span class="tm">21:48:05</span><span class="nk"> &lt;mikebrow&gt;</span> whahhooo
+<a name="l-123"></a><span class="tm">21:48:35</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">meeting next week</span>
+<a name="l-124"></a><span class="tm">21:48:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> are we meeting next week with the Toronto face to face?
+<a name="l-125"></a><span class="tm">21:49:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'm fine skipping it
+<a name="l-126"></a><span class="tm">21:49:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> +1 to cancel
+<a name="l-127"></a><span class="tm">21:49:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> there's also a trademark board meeting on Monday and some ContainerCon meetings
+<a name="l-128"></a><span class="tm">21:49:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I'm also +1 to cancel
+<a name="l-129"></a><span class="tm">21:49:43</span><span class="nk"> &lt;mrunalp&gt;</span> +1
+<a name="l-130"></a><span class="tm">21:49:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">anush:</span> +1 to cancel
+<a name="l-131"></a><span class="tm">21:49:49</span><span class="nk"> &lt;stevvooe&gt;</span> +1 to cancel
+<a name="l-132"></a><span class="tm">21:50:06</span><span class="nk"> &lt;tianon&gt;</span> +1 for cancel, +1 for remote participation next wed
+<a name="l-133"></a><span class="tm">21:50:06</span><span class="nk"> &lt;stevvooe&gt;</span> we'll be all container'd out!
+<a name="l-134"></a><span class="tm">21:50:07</span><span class="nk"> &lt;mikebrow&gt;</span> +1 to move to dial in to the f2f
+<a name="l-135"></a><span class="tm">21:50:28</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">are we consolidating tooling?</span>
+<a name="l-136"></a><span class="tm">21:50:47</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://groups.google.com/a/opencontainers.org/d/msg/dev/joX0TGKFhys/noHBAYrzCwAJ</span>
+<a name="l-137"></a><span class="tm">21:50:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> separating tools from specs is good
+<a name="l-138"></a><span class="tm">21:51:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I don't really mind if tools get merged together
+<a name="l-139"></a><span class="tm">21:51:19</span><span class="nk"> &lt;wking&gt;</span> +1 on separating utilities and testing tools
+<a name="l-140"></a><span class="tm">21:51:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> because then the tools can iterate, or cover multiple versions
+<a name="l-141"></a><span class="tm">21:51:57</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/ocitools/issues/83</span>
+<a name="l-142"></a><span class="tm">21:52:03</span><span class="nk"> &lt;stephenrwalli&gt;</span> +1 to Rob Dolin’s suggestion
+<a name="l-143"></a><span class="tm">21:52:17</span><span class="nk"> &lt;mikebrow&gt;</span> +1 for separating oci tools from specs
+<a name="l-144"></a><span class="tm">21:53:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> Would the TOB be ok with making ocitools a Project for certification and utilities, etc.
+<a name="l-145"></a><span class="tm">21:53:20</span><span class="nk"> &lt;RobDolinMS&gt;</span> @wking TOB -&gt; TDC ^
+<a name="l-146"></a><span class="tm">21:53:20</span><span class="nk"> &lt;collabot&gt;</span> <span class="hi">RobDolinMS:</span> Error: "wking" is not a valid command.
+<a name="l-147"></a><span class="tm">21:53:27</span><span class="nk"> &lt;wking&gt;</span> thanks RobDolinMS
+<a name="l-148"></a><span class="tm">21:53:31</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">wking:</span> TOB -&gt; TDC ^
+<a name="l-149"></a><span class="tm">21:53:39</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/tob/issues/11</span>
+<a name="l-150"></a><span class="tm">21:54:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> stephenrwalli has been pushing to make the spec more precise
+<a name="l-151"></a><span class="tm">21:54:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> and ocitools has been trying to stick to the spec
+<a name="l-152"></a><span class="tm">21:55:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> had spitballed code-reading in runtime-spec#513 for certification, but maybe we don't want to get into that now
+<a name="l-153"></a><span class="tm">21:55:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'm not opposed.  It depends on what the tool-writers think
+<a name="l-154"></a><span class="tm">21:56:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> is cyphar around?
+<a name="l-155"></a><span class="tm">21:57:15</span><span class="nk"> &lt;mikebrow&gt;</span> &gt;&gt; the spit-ball was to confirm the product being tested is the same product being advertised as OCI compliant.. IOW no shims allowed to make a product compliant, when the ship is not meant to ship with the product.
+<a name="l-156"></a><span class="tm">21:57:58</span><span class="nk"> &lt;mikebrow&gt;</span> `/s/when the ship/when the shim/`
+<a name="l-157"></a><span class="tm">21:58:48</span><span class="nk"> &lt;RobDolinMS&gt;</span> https://github.com/RobDolinMS/tob/commit/4fa747360729bc9c588ce78b2382fa3f59bc14f5
+<a name="l-158"></a><span class="tm">21:58:58</span><span class="nk"> &lt;RobDolinMS&gt;</span> (old proposal)
+<a name="l-159"></a><span class="tm">21:59:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> #endmeeting?
+<a name="l-160"></a><span class="tm">22:01:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we should queue for next meeting getting to the bottom of major/minor and what interfaces are covered by that versioning.
+<a name="l-161"></a><span class="tm">22:01:31</span><span class="nk"> &lt;wking&gt;</span> https://github.com/opencontainers/tob/issues/16
+<a name="l-162"></a><span class="tm">22:01:48</span><span class="nk"> &lt;wking&gt;</span> so that everbody agrees on what 1.0 is promising ;)
+<a name="l-163"></a><span class="tm">22:03:34</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting  </span><span class="cmdline">&lt;- doesn't work if you didn't start the meeting (so vbatts|work has to run it)</span></pre>
+</body></html>

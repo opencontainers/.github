@@ -1,0 +1,25 @@
+15:00:09 <vbatts|work> #startmeeting 2017-06-07 discussion
+15:00:09 <collabot> Meeting started Wed Jun  7 15:00:09 2017 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+15:00:09 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+15:00:09 <collabot> The meeting name has been set to '2017_06_07_discussion'
+15:01:34 <estesp> apologies for not being on the call; this is my favorite meeting time, but today's slot was stolen by an internal meeting today
+15:02:20 <tianon> <3@estesp; I'll be on shortly -- had some mic/comp troubles this morning
+15:05:07 <vbatts|work> #link https://github.com/opencontainers/runtime-spec/milestone/7
+15:08:31 <vbatts|work> this ^^ is the working set of prs. Anything not on this list is likely ignored or closed, until 1.0.0 is out
+15:10:43 <vbatts|work> #topic image-spec
+15:10:48 <vbatts|work> #link https://github.com/opencontainers/image-spec/pulls
+15:12:36 <vbatts|work> #link https://github.com/opencontainers/image-spec/pull/671
+15:15:20 <vbatts|work> #link https://github.com/opencontainers/image-spec/pull/504
+15:15:36 <stevvooe> https://github.com/opencontainers/image-spec/issues/687
+15:15:41 <vbatts|work> #link https://github.com/opencontainers/image-spec/issues/687
+15:19:56 <vbatts|work> stevvooe: to remove the concept of data volumes from the OCI spec. it is just an injected mount point.
+15:22:04 <vbatts|work> #action stevvooe PR for #687
+15:22:43 <vbatts|work> #action stevvooe PR for #692 consistent generic grammar
+15:24:33 <stevvooe> #link https://github.com/opencontainers/image-spec/pull/690
+15:26:18 <vbatts|work> #link https://github.com/opencontainers/runtime-spec/issues/872
+15:31:39 <stevvooe> #link https://docs.google.com/document/d/1zgRBe9rpvogFEotmhxqpjrPdeaIDaIfD0ox-wvwe6nI/edit
+15:32:24 <stevvooe> #link https://golang.org/src/go/build/syslist.go
+15:32:54 <stevvooe> arm64ilp32 would be arm64p32
+15:33:38 <stevvooe> #link https://groups.google.com/a/opencontainers.org/forum/m/#!topic/dev/Eht-i5UbUvo
+15:38:55 <vbatts|work> #stopmeeting
+15:39:00 <vbatts|work> #endmeeting

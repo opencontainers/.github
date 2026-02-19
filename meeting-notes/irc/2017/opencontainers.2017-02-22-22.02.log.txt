@@ -1,0 +1,115 @@
+22:02:53 <wking> #startmeeting 2017-02-22 discussion
+22:02:53 <collabot`> Meeting started Wed Feb 22 22:02:53 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:02:53 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:02:53 <collabot`> The meeting name has been set to '2017_02_22_discussion'
+22:02:57 <collabot`> mrunalp: Error: Can't start another meeting, one is in progress.  Use #endmeeting first.
+22:02:57 <wking> #chair mrunalp vbatts
+22:02:57 <collabot`> Current chairs: mrunalp vbatts wking
+22:03:12 <wking> #topic runtime-spec issues
+22:03:16 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/675
+22:03:25 <wking> mrunalp: that^ needs only one more LGTM
+22:03:44 <wking> crosbymichael: and for seccomp, revising the format looks good
+22:03:53 <wking> crosbymichael: the other thing is just a nit
+22:04:03 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/657
+22:04:20 <wking> mrunalp: I'll ping grantseltzer (he'll be back tomorrow) on the nit
+22:04:26 <stevvooe> brt
+22:04:35 <wking> mrunalp: should we close PRs where we check kernel limits?
+22:04:43 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/533
+22:04:50 <wking> crosbymichael: I think so, otherwise it's a lot of maintenance overhead to stay current
+22:05:00 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/689
+22:05:40 <wking> #link https://github.com/opencontainers/runtime-spec/pull/693
+22:05:48 <wking> this sounds like the direction we want to head in^
+22:06:29 <wking> #link https://github.com/opencontainers/runtime-spec/pull/690
+22:07:29 <wking> I think you have to document either the valid values, or the kernel API you're punting to
+22:07:49 <wking> mrunalp: do we have a reference to the kernel's device cgroup in the doc?
+22:07:56 <wking> crosbymichael: yeah, that sounds fine
+22:08:26 <wking> mrunalp: I'll check to see what we have in terms of referencing kernel APIs
+22:08:40 <wking> mrunalp: anything else for 1.0?
+22:08:56 <mrunalp> https://github.com/opencontainers/runtime-spec/issues/692
+22:09:42 <wking> mrunalp: I guess we can use -1 for unlimited?
+22:09:50 <wking> crosbymichael: isn't that what we have now?
+22:09:59 <wking> mrunalp: yeah, but we'll have to drop the current unsigned types
+22:10:16 <wking> crosbymichael: this is because rlimits are inherited?  So you need a way to unset them?
+22:10:46 <wking> mrunalp: otherwise there is no way to express "set the rlimit to infinity"
+22:10:53 <wking> crosbymichael: what's the value of infinity?
+22:12:57 <wking> they are inherited through fork (says prlimit(2)), so infinity lets you clear limits inherited from the runtime when creating the container process
+22:13:08 <wking> crosbymichael: we can use -1 for this in the spec
+22:14:08 <wking> hqhq: we'll need to pass RLIM_INFINITY to the kernel
+22:14:25 <wking> mrunalp: yeah, so -1 in JSON and then pass whatever the kernel needs through to it
+22:14:41 <wking> crosbymichael: RLIM_INFINITY may already be defined in the syscall package
+22:14:59 <wking> crosbymichael: we can use that in Go^
+22:15:13 <wking> crosbymichael: Go's syscall platform defines that for every platform
+22:15:23 <wking> mrunalp: what would the JSON look like?
+22:15:53 <wking> mrunalp: they'd lookup their local RLIM_INFINITY and put that value into the JSON
+22:16:00 <wking> ^ that was crosbymichael
+22:16:08 <wking> mrunalp: or do we define those as strings?
+22:17:04 <wking> crosbymichael: yeah, it's a string
+22:17:04 <mrunalp> https://github.com/opencontainers/runc/blob/ed2df2906b7ec5c69897d5539ab85371b8ae7776/rlimit_linux.go
+22:18:13 <wking> # define RLIM_INFINITY    (~0UL)
+22:18:23 <wking> ^ from uapi/asm-generic/resource.h in the kernel
+22:18:50 <wking> #link https://github.com/opencontainers/runtime-spec/issues/663
+22:19:16 <wking> it sounds like the plan is to punt here, but nobody has punted it yet ;)
+22:19:43 <wking> mrunalp: I think it may be worth keeping in the spec, so there's only one place to look to find the container state
+22:19:50 <wking> crosbymichael: I'm fine either way
+22:20:03 <wking> so we're closing the issue?
+22:20:12 <wking> crosbymichael: yeah.  I can live with it
+22:20:25 <wking> mrunalp: anything else?
+22:20:37 <wking> mrunalp: crosbymichael, once we cut the final RC, we'll have a cooking period?
+22:20:53 <wking> crosbymichael: yeah.  We'll have to implement it in runC and then see how well runC consumers handle it
+22:21:18 <wking> mrunalp: so cut a new RC after the issues discussed above, and then a 3 or 4 week cooking period?
+22:21:24 <wking> crosbymichael: yeah
+22:21:45 <wking> mrunalp: on a related note, I'd like runtime-tools feedback
+22:22:17 <wking> mrunalp: currently runtime testing creates a busybox rootfs, create a config, launch a container with a test process, and the test process decides if the container matches the config
+22:22:33 <wking> mrunalp: going forward, we want to do this with multiple configs to cover multiple runtime environments
+22:22:53 <wking> mrunalp: we could have a suite of configs, and maybe different root filesystems
+22:23:30 <wking> mrunalp: there's another school of thought to do something like HTML validation, where you go through the suite and test each requirement mostly independetly
+22:23:46 <wking> mrunalp: do we want to be able to map failures back to specific requirements or not?
+22:24:07 <wking> stephenrwalli: it sounds like you're saying two things...  one sounded output specific, and another sounded like a coverage issue
+22:24:25 <wking> stephenrwalli: RobDolinMS and myself have been concerned about output as a means towards the coverage end
+22:25:00 <wking> stephenrwalli: so someone looking at the test results should have a sense of coverage and guidelines for what failed and what we can fix
+22:25:13 <wking> mrunalp: today if you look at the output, you can see 16 sections that passed
+22:25:36 <wking> mrunalp: if we go forward with multiple configs, we'll be checking rlimits (or whatever) many, many times
+22:25:53 <wking> mikebrow: I recommend dumping it out and putting a summary at the end
+22:25:59 <wking> stephenrwalli: I'm a fan of verbose output
+22:27:05 <wking> I think TAP harnesses make this easy
+22:27:34 <wking> mrunalp: with a Go test harness (which is easy to run) we can make the output whatever we want
+22:27:50 <wking> mrunalp: this is the runtime-tools runtime validation
+22:28:25 <wking> crosbymichael: for aggregation, could you have a generic rootfs that you reuse.  Mount that readonly, and provide your config on stdin, and then push JSON test results out stdout?
+22:28:32 <wking> crosbymichael: then generate a report at the end?
+22:28:44 <wking> mrunalp: that's what I had in mind, aggregating across all the runs
+22:28:54 <wking> mrunalp: it will take more work, but it would be possible
+22:29:24 <wking> stephenrwalli: do the runtime-tools instructions cover how newcomers should run this suite?
+22:29:30 <wking> mrunalp: there's an in-flight PR for that
+22:29:45 <wking> crosbymichael: structured output is easier to use
+22:29:56 <stephenrwalli> @mrunalp Do you know the PR?
+22:29:56 <collabot`> stephenrwalli: Error: "mrunalp" is not a valid command.
+22:31:01 <stephenrwalli> mrunalp Do you know the PR?
+22:31:09 <wking> mrunalp: lifecycle tests will have to be separate
+22:31:26 <wking> crosbymichael: I think we have three tests: config validation, runtime validation, and lifecycle validation
+22:31:59 <wking> mrunalp: does anyone have an opinion on testing frameworks?  I don't really mind
+22:32:17 <wking> crosbymichael: I don't mind.  I think the end result should be a report, so callers don't need to know about a particular testing framework
+22:32:37 <wking> stevvooe: my general recommendation is to not get mired in the output format
+22:33:01 <wking> stevvooe: you can re-exec Go tests as you see fit in a compiled binary, parse the output, and convert to other types of testing formats
+22:33:02 <stephenrwalli> When we’re talking about Go test framework, we aren’t talking Go’s _test work — correct?
+22:33:16 <wking> stevvooe: but the idea is to make test addition very lightweight for existing Go developers
+22:33:44 <wking> stephenrwalli: something that gives us a pass/fail with a count is all I think the certification working group needs
+22:33:57 <wking> stephenrwalli: but it should be easy to re-create the certification experiment on your own
+22:34:18 * vbatts watches from afar for just a moment
+22:34:30 <wking> stevvooe: I think Go's testing will avoid lots of bikeshedding over TAP vs. XUnit, vs.
+22:34:40 <wking> stevvooe: we can always convert the output format later if we want
+22:35:04 <wking> #link https://github.com/opencontainers/runtime-tools/pull/326
+22:35:29 <wking> stevvooe: a testing framework has typically already thought through problems of consumption
+22:35:45 <wking> stevvooe: if we completly roll our own we might get something wrong
+22:35:54 <wking> mrunalp: I think that's it for the runtime
+22:35:58 <wking> #topic image-spec issues
+22:36:07 <wking> stevvooe: without vbatts there's not much to discuss
+22:36:22 <wking> stevvooe: looks like the rc5 vote passed
+22:36:41 <wking> stevvooe: I'm in the process of consuming the image-spec now, so I'll be able to provide more feedback soon
+22:37:01 <wking> stevvooe: cyphar is now an image-tools maintainer, so that project should get polishing soon
+22:37:15 <wking> stevvooe: does anyone else have specific image topics to discuss?
+22:37:29 <vbatts> the vote needs the PR to get LGTM'ed!
+22:37:32 <vbatts> wking: ^^
+22:37:35 <wking> jbouzane: I don't have anything I wanted to discuss
+22:37:49 <vbatts> can someone speak this :-)
+22:38:12 <stevvooe> https://github.com/opencontainers/image-spec/pull/566
+22:39:07 <wking> #endmeeting

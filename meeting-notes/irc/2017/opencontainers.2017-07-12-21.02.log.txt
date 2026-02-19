@@ -1,0 +1,94 @@
+21:02:53 <wking> #startmeeting 2017-07-12 discussion
+21:02:53 <collabot`> Meeting started Wed Jul 12 21:02:53 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:02:53 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:02:53 <collabot`> The meeting name has been set to '2017_07_12_discussion'
+21:02:59 <wking> #chair mrunalp
+21:02:59 <collabot`> Current chairs: mrunalp wking
+21:05:15 <wking> #topic runtime-spec 1.0 burndown
+21:05:31 <wking> #link https://github.com/opencontainers/runtime-spec/pull/895
+21:05:39 <wking> #link https://github.com/opencontainers/runtime-spec/pull/894
+21:05:43 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/895
+21:07:24 <wking> I think we want to keep the current master wording on Linux (to support managing the container process before calling 'start').  I don't care what happens to it for Windows/Solaris
+21:07:29 <wking> mrunalp: should we block 1.0 on this?
+21:07:57 <wking> stevvooe: I could swear we were in code freeze
+21:08:13 <wking> crosbymichael: so either be nice and let in a change, or say we're in code freeze, sorry?
+21:08:42 <wking> mrunalp: if we don't get in this change, Windows could still set a known-invalid PID
+21:09:11 <wking> I'd hope that setting a known-invalid PID would not be legal, otherwise it's less useful on Linux
+21:09:23 <wking> mrunalp: this also gets into issues around testing runtime compliance
+21:09:45 <wking> tianon: in this case, it's impossible to get a valid PID value on this platform
+21:09:54 <wking> tianon: so I think it's fine and we can defer to after 1.0
+21:10:12 <wking> mrunalp: is RobDolinMS on the call?  No?
+21:10:31 <wking> mrunalp: we can practically do the right thing in the runtime implementation, but we're in a gray area for validation tools
+21:11:27 <wking> mrunalp: what if we merge the PR to update the state JSON language.  It won't be a config change
+21:11:42 <wking> mrunalp: assuming there's quick feedback on the PR
+21:11:58 <wking> vbatts|work: if we merged it, I could rebase the 1.0 PR for it
+21:12:39 <wking> vbatts|work: does that mean restarting the vote?  Or it's ok because it doesn't change the config file?
+21:13:23 <wking> stevvooe: I don't know that we should be making exceptions for this.  If the platform can't return a PID it can't return a PID.  This is why we need to be more careful with REQUIRED
+21:14:11 <wking> vbatts|work: the only reason I'd be tempted to make this sort of revision.  Post 1.0, how are folks supposed to interpret that if it lands in 1.0.1?
+21:14:36 <wking> vbatts|work: if some runtime sticks with strict 1.0.0 behavior, there could be issues, but I don't see that happening
+21:14:55 <wking> mrunalp: we can say, if it's not a config change and is just a clarification, we can defer it
+21:15:04 <wking> stevvooe: they had two years to review this
+21:15:27 <wking> RobDolinMS: sorry that this is so late, but an earlier PR was closed without my noticing it
+21:15:40 <wking> #link https://github.com/opencontainers/runtime-spec/pull/459
+21:16:25 <wking> RobDolinMS: if we postpone this, I think we'll be cutting 1.0.1 very shortly after 1.0.0
+21:16:42 <wking> RobDolinMS: Is adjusting 1.0.0 more painful than a 1.0.1?
+21:17:06 <wking> RobDolinMS: Although we'll probably have a 1.0.1 in a few months anyway as certification tooling evolves
+21:17:25 <wking> vbatts|work: if we merge this and rebase pretty smoothly, that would be fine.  But that hasn't been our current experience
+21:17:45 <wking> vbatts|work: I'm more inclined to defer to a 1.0-next
+21:18:07 <wking> stevvooe: quality wise, can we do a release with a known problem in it?
+21:18:49 <wking> vbatts|work: If this is the only issue, I think yes
+21:19:10 <wking> RobDolinMS: One issue with this is that 1.0.1 or 1.0.2 is the actual thing we end up using
+21:19:46 <wking> stevvooe: wouldn't we be saying "I comply with 1.0" and not "I comply with 1.0.1" if we're following SemVer
+21:21:06 <wking> Is the state JSON actually covered by SemVer?  I thought that was just the config JSON
+21:21:13 <wking> crosbymichael: why split up what is covered?
+21:25:56 <wking> (I wave my hands around about different consumers, e.g. config JSON authors, state JSON consumers, and runtime maintainers)
+21:26:16 <wking> we're trying to decide if a breaking change to the state JSON, does that mean we have to cut 2.0?
+21:27:53 <wking> say you have a workflow that needs the pid in the state JSON between 'create' and 'start' (because 1.0.0 tells you it is REQUIRED)
+21:28:13 <wking> then we cut a new runtime-spec release where we no longer require the PID, is that a breaking change that needs a 2.0 runtime-spec release?
+21:28:50 <cracra> [dug, Open Container Initiative] required->optional IMO means major bump
+21:30:04 <cracra> [dug, Open Container Initiative] because existing impls that assume its there can no longer assume that and might break.
+21:30:14 <wking> duglin: ^ that's only if we consider state JSON consumers to be covered by the SemVer commitment.  I'm not clear that that is the case
+21:30:44 <wking> I though config JSON authors were covered by SemVer, and runtime maintainers and state JSON consumers were not covered by SemVer
+21:31:20 <wking> mrunalp: I don't mind adding it to 1.0, since it's a known issue.  I'm sure other issues will come up after 1.0, but we can fix what we know now
+21:31:29 <wking> tianon: do we already have press timelines?
+21:31:36 <wking> stevvooe: we shouldn't be considering the press
+21:31:47 <wking> tianon: but this is a very minor issue which we can resolve in a patch release
+21:32:03 <wking> stevvooe: just get it in if it's going to be a big deal
+21:32:17 <wking> vbatts|work: how many other issues need to get in?
+21:32:24 <wking> #link https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/ap9QVwLbY0w
+21:33:35 <wking> mikebrow: definitely second that we need the PID for created on Linux
+21:34:00 <wking> mrunalp: so the change in #895 needs to be platform specific
+21:34:21 <wking> tianon: my issue is that if we make a special case for this PR, when does it end?
+21:34:34 <wking> stevvooe: I'm thinking about the platform/arm issue now
+21:34:45 <wking> tianon: but we removed arch from the runtime, right?
+21:35:23 <wking> stevvooe: the workaround of specifying the arm platform isn't very hard, and cross-builds make it clear that we need to specify it from outside
+21:35:35 <wking> stevvooe: so there are bigger issues that I'm willing to postpone to post 1.0
+21:35:53 <wking> stevvooe: I don't see the proposed change as a breaking change, since it's not possible to implement the current language
+21:37:01 <cracra> [dug, Open Container Initiative] stunned silence  :)
+21:37:18 <wking> vbatts|work: I'm more inclined to say it's 1.0.1
+21:39:02 <cracra> [dug, Open Container Initiative] so just claim it was a typo
+21:39:24 <wking> I'm ok with a patch release if we can assert that "nobody could possibly have implemented a Windows runtime that set a valid PID between 'created' and 'start'"
+21:40:41 <wking> mrunalp: there won't be runtime-tools code checking for pid on Windows between 'created' and 'start' if it's known to be impossible to set
+21:40:55 <wking> RobDolinMS: Do we want to talk about post-1.0 branching plans on this call?
+21:41:10 <wking> vbatts|work: that sounds like a good email thread to me
+21:42:57 <mrunalp> https://github.com/opencontainers/runtime-spec/issues/806
+21:46:53 <wking> RobDolinMS: Can a maintainer tag #895 for 1.0.1 so I can take that back to my team?
+21:47:32 <wking> crosbymichael: so are there two outstanding runtime things that would be good to have?
+21:47:45 <wking> mrunalp: I'm fine either way, unless folks think there will be a lot more new things in the next week
+21:48:14 <wking> crosbymichael: it would be a lot less work to cancel this vote, merge these, and then make a new vote.  Even though it's unfortunate that these came out after the 1.0 vote was proposed
+21:49:46 <wking> #action wking to create a PR moving disableOOMKiller
+21:52:24 <wking> #topic image-spec burn down
+21:52:36 <wking> vbatts|work: stevvooe mentioned the ARM platform issue, but we can fix that post 1.0
+21:52:44 <wking> stevvooe: yeah, I have a TODO to file that bug after 1.0
+21:53:26 <wking> stevvooe: we can do this in a backwards-compatible way
+21:53:38 <wking> stevvooe: there are also ecosystem problems that we won't be able to specify our way out of
+21:56:17 <wking> RobDolinMS: What about adding cyphar as a maintainer?
+21:56:23 <wking> vbatts|work: that's orthogonal to 1.0
+21:56:34 <wking> stevvooe: I think we should wait for after 1.0
+21:56:56 <wking> vbatts|work: in my mind, the folks voting at a release are the maintainers as of the vote being opened
+21:57:08 <wking> stevvooe: I'm just worried about distracting attention
+21:57:15 <wking> vbatts|work: any other topics?
+21:57:31 <wking> crosbymichael: on the PID thing, I'm trying to find some quick text.
+21:59:33 <wking> we can just make 'pid' entirely Linux-specific, and add it on other platforms if/when we have a better feel for their support
+22:00:40 <crosbymichael> https://github.com/opencontainers/runtime-spec/pull/895#issuecomment-314910055
+22:02:21 <wking> #endmeeting

@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2019-01-16</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2019-01-16</h1>
+<span class="details">
+Meeting started by vbatts|work at 22:02:57 UTC
+(<a href="opencontainers.2019-01-16-22.02.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">intro</b> <span class="details">(<a href='opencontainers.2019-01-16-22.02.log.html#l-11'>vbatts|work</a>, 22:05:32)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/docker/cnab-to-oci">https://github.com/docker/cnab-to-oci</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-16-22.02.log.html#l-21'>jzelinskie</a>,
+    22:08:45)</span></li>
+  <li><a
+    href="https://github.com/docker/cnab-to-oci/">https://github.com/docker/cnab-to-oci/</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-16-22.02.log.html#l-22'>mattfarina</a>,
+    22:08:46)</span></li>
+  <li><a
+    href="https://github.com/docker/cnab-to-oci">https://github.com/docker/cnab-to-oci</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-16-22.02.log.html#l-23'>vbatts|work</a>,
+    22:08:55)</span></li>
+  <li><a
+    href="https://github.com/docker/cnab-to-oci#example">https://github.com/docker/cnab-to-oci#example</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-16-22.02.log.html#l-27'>jzelinskie</a>,
+    22:11:34)</span></li>
+  <li><a
+    href="https://github.com/shizhMSFT/oras/blob/master/pkg/oras/push.go#L42">https://github.com/shizhMSFT/oras/blob/master/pkg/oras/push.go#L42</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-16-22.02.log.html#l-28'>jdolitsky</a>,
+    22:12:05)</span></li>
+  <li><a
+    href="https://github.com/shizhMSFT/oras">https://github.com/shizhMSFT/oras</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-16-22.02.log.html#l-29'>jzelinskie</a>,
+    22:12:08)</span></li>
+  <li><a
+    href="https://github.com/shizhMSFT/oras/blob/master/pkg/oras/push.go#L42">https://github.com/shizhMSFT/oras/blob/master/pkg/oras/push.go#L42</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-16-22.02.log.html#l-31'>vbatts|work</a>,
+    22:12:19)</span></li>
+  <li><a
+    href="https://hackmd.io/Jk2XCLP2S2y8AfdXJdRLrw#Strawman-Proposal">https://hackmd.io/Jk2XCLP2S2y8AfdXJdRLrw#Strawman-Proposal</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-16-22.02.log.html#l-32'>jzelinskie</a>,
+    22:12:24)</span></li>
+  <li><a
+    href="https://github.com/shizhMSFT/oras">https://github.com/shizhMSFT/oras</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-16-22.02.log.html#l-33'>vbatts|work</a>,
+    22:12:25)</span></li>
+  <li><a
+    href="https://hackmd.io/Jk2XCLP2S2y8AfdXJdRLrw#Strawman-Proposal">https://hackmd.io/Jk2XCLP2S2y8AfdXJdRLrw#Strawman-Proposal</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-16-22.02.log.html#l-34'>vbatts|work</a>,
+    22:13:09)</span></li>
+  <li><a
+    href="https://hackmd.io/Jk2XCLP2S2y8AfdXJdRLrw#Strawman-Proposal">https://hackmd.io/Jk2XCLP2S2y8AfdXJdRLrw#Strawman-Proposal</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-16-22.02.log.html#l-54'>jdolitsky</a>,
+    22:36:15)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/blob/master/media-types.md">https://github.com/opencontainers/image-spec/blob/master/media-types.md</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-16-22.02.log.html#l-64'>jzelinskie</a>,
+    22:43:36)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/blob/master/annotations.md">https://github.com/opencontainers/image-spec/blob/master/annotations.md</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-16-22.02.log.html#l-65'>jzelinskie</a>,
+    22:43:43)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">vbatts agenda
+    for next call to talk about search</span> <span class="details">(<a
+    href='opencontainers.2019-01-16-22.02.log.html#l-68'>vbatts|work</a>,
+    22:54:18)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC"></b> <span class="details">(<a href='opencontainers.2019-01-16-22.02.log.html#l-69'>vbatts|work</a>, 22:55:09)</span>
+<br></li>
+<li><b class="TOPIC">other items</b> <span class="details">(<a href='opencontainers.2019-01-16-22.02.log.html#l-70'>vbatts|work</a>, 22:55:14)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/tob/issues/52">https://github.com/opencontainers/tob/issues/52</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-16-22.02.log.html#l-78'>vbatts|work</a>,
+    22:59:29)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">jzelinskie to
+    take the strawman to the mailing-list for broader discussion</span>
+    <span class="details">(<a
+    href='opencontainers.2019-01-16-22.02.log.html#l-79'>vbatts|work</a>,
+    23:00:07)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/distribution-spec/milestone/2">https://github.com/opencontainers/distribution-spec/milestone/2</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-16-22.02.log.html#l-81'>jdolitsky</a>,
+    23:01:42)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 23:22:16 UTC
+(<a href="opencontainers.2019-01-16-22.02.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>vbatts agenda for next call to talk about search</li>
+  <li>jzelinskie to take the strawman to the mailing-list for broader discussion</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> jzelinskie <ol>
+    <li>jzelinskie to take the strawman to the mailing-list for broader discussion</li>
+  </ol></li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>vbatts|work (47)</li>
+  <li>jzelinskie (9)</li>
+  <li>jdolitsky (7)</li>
+  <li>cracra (5)</li>
+  <li>mattfarina (4)</li>
+  <li>collabot` (3)</li>
+  <li>estesp (2)</li>
+  <li>tianon (2)</li>
+  <li>hogepodge (1)</li>
+  <li>atlask (1)</li>
+  <li>zendril (1)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

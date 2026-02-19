@@ -1,0 +1,35 @@
+21:01:57 <mrunalp> #startmeeting OCI_9_28
+21:01:57 <collabot> Meeting started Wed Sep 28 21:01:57 2016 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:01:57 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:01:57 <collabot> The meeting name has been set to 'oci_9_28'
+21:02:03 <mrunalp> #chair wking
+21:02:03 <collabot> Current chairs: mrunalp wking
+21:02:53 <mrunalp> #topic: https://github.com/opencontainers/runtime-spec/pull/567
+21:03:15 <wking> crosbymichael: yeah, it's fine if we're heading down that route
+21:03:24 <wking> mrunalp: another idea I had in mind was...
+21:03:56 <wking> mrunalp: we could maintain two versions of the Go code, with a platform-specific version and a namespaced version
+21:04:07 <RobDolinMS> My 1pm is running long :(  I'll join when it is done.
+21:05:06 <wking> mrunalp: it gives you more idiomatic Go code
+21:05:20 <wking> Not writing 'Linux' in a few places doesn't seem like sufficient savings to me
+21:05:43 <philips> sorry, got held up in another meeting
+21:06:02 <wking> #topic console handling
+21:06:29 <wking> #link https://github.com/opencontainers/runc/pull/1018
+21:07:10 <wking> mrunalp: maybe we can update the API PR with what's currently in runC#1018?
+21:07:32 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/513
+21:07:45 <wking> I was waiting on runtime-spec#518 before updating runtime-spec#513, but I can look at documenting the API for runC#1018
+21:07:58 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/518
+21:08:12 <wking> mrunalp: any other runtime topics?
+21:08:24 <wking> mrunalp: philips, image topics?
+21:08:30 <philips> https://github.com/opencontainers/image-spec/milestone/8
+21:08:34 <wking> #topic image-spec 1.0.0-rc1
+21:08:41 <wking> #link https://github.com/opencontainers/image-spec/milestone/8
+21:08:55 <wking> philips: only issue is in vbatts|work's hands.  He was going to get to it later this week
+21:09:07 <philips> https://github.com/opencontainers/image-spec/milestone/8?closed=1
+21:09:33 <wking> there are no other blockers.  I'm hoping to vote for rc1 around Friday
+21:10:22 <wking> I'm not sure what goes in image-spec vs. image-tools
+21:11:23 <wking> philips: we want to be able to run validation tests on the spec itself
+21:11:34 <wking> Is there stuff that's not in JSON Schema that you want run on the spec?
+21:11:58 <wking> philips: my guess is that JSON Schema will cover us, but it gets tricky once you start covering multiple versions
+21:12:33 <wking> #link https://github.com/opencontainers/image-spec/pull/337
+21:13:04 <wking> philips: I'll send an email to the list to pull out any other rc1 blockers
+21:13:19 <wking> #endmeeting

@@ -1,0 +1,117 @@
+18:02:23 <wking> #startmeeting 2016-01-20 discussion
+18:02:23 <collabot`> Meeting started Wed Jan 20 18:02:23 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+18:02:23 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+18:02:23 <collabot`> The meeting name has been set to '2016_01_20_discussion'
+18:02:38 <wking> #chair vbatts|work
+18:02:38 <collabot`> Current chairs: vbatts|work wking
+18:03:14 <wking> #topic versioning OCI repos
+18:04:37 <wking> mrunalp runC master is the major implementation, so maybe ocitools will track runC master
+18:04:53 <duglin> it would be good if we used the same version (major.minor) across all 3 - each might have different .rev numbers tho
+18:05:10 <duglin> so x.y.* should all work together
+18:05:11 <wking> mrunalp after version 0.3.0 we might aim for spec-release compliance
+18:06:04 <wking> mrunalp maybe have a branch that tracks runC's master, and another branch that tracks OCI releases
+18:06:21 <wking> It sounds like everyone is on board with this branched approach
+18:06:59 <RobDolinMS> #info Spec is primary version and other repos should match spec
+18:07:07 <wking> #action mrunalp to setup these branches in opencontainers/ocitools
+18:07:17 <wking> #chair RobDolinMS
+18:07:17 <collabot`> Current chairs: RobDolinMS vbatts|work wking
+18:08:06 <RobDolinMS> vbatts: have been investigating JSON Schema
+18:08:13 <wking> #topic JSON Schema for validation
+18:08:27 <wking> #link https://github.com/opencontainers/specs/pull/313
+18:08:36 <RobDolinMS> vbatts working on JSON Schema for a config file
+18:08:50 <RobDolinMS> vbatts: was hoping for code generation from a JSON Schema
+18:10:35 <wking> vbatts|work: validation is also per-JSON types (e.g. "it's an integer"), but without the granularity we need (e.g. it's an optional uint64)
+18:11:23 <wking> I also suspect cross-cutting options will be difficult (e.g. "if a.b.c is set, a.b.d mus also be set")
+18:12:37 <RobDolinMS> #info: Present: on BlueJeans call: Mrunal Patel, Abhijeeth Nuthan, Brandon Philips, Dug, Guest, Jesse Butler, julz, Mike Brown...
+18:12:57 <wking> #topic single, unified config file
+18:13:01 <wking> #link https://github.com/opencontainers/specs/pull/284
+18:13:05 <RobDolinMS> #info: Present on BlueJeans call: ... Tianon, Trevor King, Vincent Boen Batts, Vishnu Kannan
+18:13:19 <wking> mrunalp: face-to-face review was prositive, go ahead with a reroll
+18:13:31 <wking> #action wking to reroll #284 on the current master
+18:13:44 <wking> #topic splitting mknod from device cgroups
+18:13:53 <wking> #link https://github.com/opencontainers/specs/pull/298
+18:14:09 <wking> mrunalp: this is ready for review
+18:15:06 <RobDolinMS> mrunal adding comment from thread to PR
+18:16:15 <RobDolinMS> #info: Now present on call: Jason Bouzane
+18:16:29 <RobDolinMS> Trevor: You don't need to list default devices directly in spec
+18:16:45 <RobDolinMS> Vincent: I was referring more to the example with the array of devices
+18:17:33 <wking> #link https://github.com/opencontainers/specs/pull/298/files#diff-b753d6f046da0a2956b5218efd779b7fR119
+18:17:47 <wking> ^ requirements for runtime-default devices
+18:18:40 <wking> vbatts|work is wondering on the timing for this
+18:18:46 <wking> to avoid clobbering user-supplied devices
+18:19:16 <RobDolinMS> Vish: If some operations are not possible, there may be challenges
+18:20:06 <RobDolinMS> Mrunal: If you want to overrride something from defaults, it may be a challenge; may be better to be explicit
+18:20:19 <RobDolinMS> Trevor: If you list anything, would you have to list them all?
+18:20:39 <RobDolinMS> #info: Now present on BlueJeans call: crosbymichael
+18:21:53 <wking> crosbymichael: why don't we make this explicit?
+18:22:25 <RobDolinMS> Brandon: These devices are fundamental to the API of Linux; we can do it, but it complicates things
+18:22:35 <wking> philips: these devices are so fundamental, that it's just noise in the config file if we make folks list them all
+18:22:38 <RobDolinMS> Vish: It will also impact application portability
+18:22:42 <wking> vishh: requiring listing might also affect portability
+18:23:42 <wking> mrunalp: one issue is hook for mounting sysfs cgroups, and then runC clobbers /sys
+18:24:03 <wking> vishh: that's an issue with hook ordering in the lifecycle
+18:24:08 <duglin> I though we were getting rid of hooks.
+18:24:20 <wking> ^ me to ;)
+18:24:40 <wking> although you might still need exec pre-start hooks to insert the container-process PID into cgroups, etc.
+18:25:39 <wking> mrunalp: in runC, pre-start is called before the mounts
+18:25:48 <wking> mrunalp: maybe we need more clarity on timing in the spec
+18:25:57 <wking> +1 from me on explicit timing ;)
+18:26:21 <wking> deferred until we have clearer sandbox ideas (the create/exec split?)
+18:26:40 <wking> #topic prctl vs DisableNewPrivileges
+18:26:41 <vbatts> #link https://github.com/opencontainers/specs/milestones/v0.3.0
+18:26:44 <wking> #link https://github.com/opencontainers/specs/pull/290
+18:27:47 <duglin> tap tap tap
+18:28:27 <wking> philips: just wants a consistent name "noNewPrivs"
+18:28:39 <wking> #action mrunalp to reroll with the consistent name
+18:29:06 <mrunalp> https://github.com/opencontainers/specs/pull/225
+18:29:11 <wking> #topic expanded ops definitions
+18:29:19 <wking> #link https://github.com/opencontainers/specs/pull/225
+18:29:45 <wking> duglin: still need to address some comments
+18:32:18 <RobDolinMS> duglin: I'm going with the assumption that if you look at the latest version and don't see a comment, it has been addressed
+18:32:30 <RobDolinMS> duglin: If you don't feel like your comment was addressed, please leave a new onw
+18:32:40 <RobDolinMS> #action Maintainers should review
+18:34:14 <duglin> who has the action to merge config.json and runtime.json ?
+18:34:22 <wking> duglin: that's me ^
+18:34:29 <wking> #topic separate source and schema
+18:34:36 <wking> #link https://github.com/opencontainers/specs/pull/276
+18:35:04 <RobDolinMS> vbatts: for #276 what is the hesitation?
+18:35:33 <wking> duglin: re: unified config, I'll reroll #284 this week
+18:35:55 <duglin> cool
+18:35:58 <RobDolinMS> Mrunal: Do we really need to add this to the document?
+18:37:52 <wking> I think we need some way to be explicit about where a setting sits in the config (e.g. the full JSON path to a setting).  This PR is one way to get at that, but I'm fine handling the anchoring with a differnent approach
+18:38:15 <wking> vbatts|work: generating it for a release would be ok, although coordinating that might be difficult
+18:38:50 <wking> mrunalp: the only issue will be the race/lag https://github.com/opencontainers/specs/pull/276#issuecomment-171462700
+18:39:21 <wking> vbatts|work: in an ideal world this would be automated to stay DRY
+18:40:27 <duglin> https://github.com/opencontainers/runc/pull/465
+18:40:27 <RobDolinMS> #info Targeting Wed, Feb 3rd for v0.3.0
+18:40:36 <RobDolinMS> #topic Split of Create and Start
+18:40:44 <wking> #link
+18:40:46 <wking> #link https://github.com/opencontainers/runc/pull/465
+18:41:19 <wking> duglin: having a sleeping dummy-process to be PID 1 and hold the PID namespace open
+18:41:56 <wking> mrunalp: not sure we need a dummy-process to hold the PID namespace open, just create the PID namespace at exec-time
+18:42:47 <wking> julz: if you have subequent execs auto-join a PID namespace, they'll be killed when the first dies
+18:43:00 <wking> julz: you may not want that to happen
+18:43:19 <wking> mrunalp: but if the PID namespace defines the container, you should be creating a separate container
+18:44:08 <wking> julz doesn't want a mandatory PID 1, so users can go crazy there ;)
+18:44:38 <wking> julz wants to run a number of processes with overlapping lifecycles, where subsequent execs survive a first process that may die early
+18:45:30 <wking> julz currently that's only possible if you know where a sleep/reaper lives in your rootfs
+18:45:43 <wking> julz: currently folks run commands while the build is running
+18:46:01 <wking> julz: but we want the other commands to survive after the build exits
+18:46:54 <wking> crosbymichael: this sounds like a higher-level use case, where you want to run something that isn't what the user specified
+18:47:15 <wking> julz: we're using the containers to run something the user gave us.  The user didn't provide a container, just a rootfs
+18:47:35 <wking> crosbymichael: you can just bind-mount in your smart init
+18:47:45 <wking> julz: that's what we do now, but it seems hacky
+18:48:28 <wking> I asked "why not create a new PID namespace"?
+18:48:47 <wking> crosbymichael and mrunalp pointed out that debugging is hard when you're in a separate PID namespace
+18:49:40 <wking> julz doesn't want to inspect the rootfs to avoid collisions
+18:49:57 <wking> #link https://github.com/wking/ccon#host
+18:50:23 <wking> ^ ccon uses execveat to run a host-side executable in the container
+18:51:13 <RobDolinMS> vishh: This could be solved with a sample JSON Schema
+18:51:31 <RobDolinMS> julz: It's much easier for the runtime to do this than the user
+18:53:47 <wking> crosbymichael: is concerned about security
+18:54:08 <wking> julz sleep() isn't going to make insecure syscalls
+18:54:40 <lk4d4> it's sorta harsh to force runtimes to implement sleeps
+18:54:46 <wking> crosbymichael: is concerened about some container-wide security issue (maybe things not being applied until a final exec?)
+18:55:55 <wking> #action crosbymichael to continue the discussion in https://github.com/opencontainers/runc/pull/465
+18:56:01 <wking> #action julz to continue the discussion in https://github.com/opencontainers/runc/pull/465
+18:56:07 <wking> #endmeeting

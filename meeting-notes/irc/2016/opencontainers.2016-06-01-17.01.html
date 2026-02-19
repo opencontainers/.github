@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2016-07-01 discussion</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2016-07-01 discussion</h1>
+<span class="details">
+Meeting started by vbatts at 17:01:55 UTC
+(<a href="opencontainers.2016-06-01-17.01.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">1.0 issues</b> <span class="details">(<a href='opencontainers.2016-06-01-17.01.log.html#l-9'>wking</a>, 17:03:04)</span>
+<br></li>
+<li><b class="TOPIC">runtime 1.0 issues</b> <span class="details">(<a href='opencontainers.2016-06-01-17.01.log.html#l-10'>wking</a>, 17:03:15)</span>
+<br></li>
+<li><b class="TOPIC">image 1.0 issues</b> <span class="details">(<a href='opencontainers.2016-06-01-17.01.log.html#l-13'>wking</a>, 17:03:44)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/image-spec/milestones/v1.0.0-rc">https://github.com/opencontainers/image-spec/milestones/v1.0.0-rc</a>
+    <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-15'>philips</a>,
+    17:04:08)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/issues/11">https://github.com/opencontainers/image-spec/issues/11</a>
+    <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-17'>philips</a>,
+    17:04:28)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/releases/tag/v0.2.0">https://github.com/opencontainers/image-spec/releases/tag/v0.2.0</a>
+    <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-20'>vbatts</a>,
+    17:05:16)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">runtime 1.0 issues</b> <span class="details">(<a href='opencontainers.2016-06-01-17.01.log.html#l-23'>wking</a>, 17:05:49)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/milestones/1.0.0">https://github.com/opencontainers/runtime-spec/milestones/1.0.0</a>
+    <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-25'>mrunalp</a>,
+    17:06:08)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/449">https://github.com/opencontainers/runtime-spec/pull/449</a>
+    <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-26'>mrunalp</a>,
+    17:06:22)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/412">https://github.com/opencontainers/runtime-spec/pull/412</a>
+    <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-44'>mrunalp</a>,
+    17:10:47)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/397">https://github.com/opencontainers/runtime-spec/pull/397</a>
+    <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-47'>mrunalp</a>,
+    17:11:38)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">wking to roll
+    back #412 namespace description</span> <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-48'>wking</a>,
+    17:11:46)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/397">https://github.com/opencontainers/runtime-spec/pull/397</a>
+    add support for cgroup namespace <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-50'>RobDolinMS</a>,
+    17:12:26)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/299">https://github.com/opencontainers/runtime-spec/issues/299</a>
+    <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-56'>mrunalp</a>,
+    17:14:42)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/299">https://github.com/opencontainers/runtime-spec/issues/299</a>
+    Separate container sandbox lifecycle from that of the processes
+    inside it #299 <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-64'>RobDolinMS</a>,
+    17:15:58)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/20">https://github.com/opencontainers/runtime-spec/issues/20</a>
+    <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-69'>mrunalp</a>,
+    17:17:07)</span></li>
+  <li><i class="itemtype">AGREED</i>: <span class="AGREED">Move #299 out
+    of 1.0</span> <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-71'>RobDolinMS</a>,
+    17:17:20)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/473">https://github.com/opencontainers/runtime-spec/issues/473</a>
+    <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-76'>wking</a>,
+    17:18:44)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">wking to file
+    a hook-dropping PR</span> <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-83'>wking</a>,
+    17:21:15)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/391">https://github.com/opencontainers/runtime-spec/pull/391</a>
+    <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-123'>wking</a>,
+    17:48:32)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">wking to
+    reroll runtime-spec#391 to include multiple examples and add it to a
+    runtime-spec subdir</span> <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-134'>wking</a>,
+    17:53:44)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">OCITools</b> <span class="details">(<a href='opencontainers.2016-06-01-17.01.log.html#l-144'>RobDolinMS</a>, 17:59:02)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/ocitools/issues/83">https://github.com/opencontainers/ocitools/issues/83</a>
+    <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-145'>wking</a>,
+    17:59:12)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">more
+    discussion in ocitools#83</span> <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-151'>wking</a>,
+    18:03:38)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/ocitools/issues/83">https://github.com/opencontainers/ocitools/issues/83</a>
+    <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-152'>RobDolinMS</a>,
+    18:03:56)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">When to cut next runtime-spec release</b> <span class="details">(<a href='opencontainers.2016-06-01-17.01.log.html#l-153'>RobDolinMS</a>, 18:04:42)</span>
+<br></li>
+<li><b class="TOPIC">v1.1 and v2.0</b> <span class="details">(<a href='opencontainers.2016-06-01-17.01.log.html#l-156'>RobDolinMS</a>, 18:07:40)</span>
+<ol type="a">
+  <li><span class="INFO">Michael: We can create milestones and start
+    moving some issues to those</span> <span class="details">(<a
+    href='opencontainers.2016-06-01-17.01.log.html#l-157'>RobDolinMS</a>,
+    18:08:04)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 18:12:55 UTC
+(<a href="opencontainers.2016-06-01-17.01.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>wking to roll back #412 namespace description</li>
+  <li>wking to file a hook-dropping PR</li>
+  <li>wking to reroll runtime-spec#391 to include multiple examples and add it to a runtime-spec subdir</li>
+  <li>more discussion in ocitools#83</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> wking <ol>
+    <li>wking to roll back #412 namespace description</li>
+    <li>wking to file a hook-dropping PR</li>
+    <li>wking to reroll runtime-spec#391 to include multiple examples and add it to a runtime-spec subdir</li>
+  </ol></li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>RobDolinMS (83)</li>
+  <li>wking (50)</li>
+  <li>mrunalp (6)</li>
+  <li>vbatts (5)</li>
+  <li>collabot` (5)</li>
+  <li>duglin (4)</li>
+  <li>philips (3)</li>
+  <li>alagalah (2)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>
