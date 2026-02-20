@@ -1,0 +1,60 @@
+18:02:15 <vbatts> #startmeeting 2015-11-11 discussion
+18:02:15 <collabot> Meeting started Wed Nov 11 18:02:15 2015 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+18:02:15 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+18:02:15 <collabot> The meeting name has been set to '2015_11_11_discussion'
+18:02:54 <vbatts> #topic ocitools - mrunalp
+18:03:37 <vbatts> #topic cgroup values
+18:04:48 <RobDolinMS> Vishnu: Spec should not be limited to just go
+18:05:19 <anuthan> I didn't see an agenda for today is there one?
+18:06:02 <RobDolinMS> anuthan - agenda was roadmap, then open issues.
+18:06:03 <vbatts> #chairs RobDolinMS
+18:06:19 <RobDolinMS> vbatts, I think the command is #chair (w/o the "s")
+18:06:31 <vbatts> #chair RobDolinMS
+18:06:31 <collabot> Current chairs: RobDolinMS vbatts
+18:06:36 <vbatts> k
+18:07:17 <RobDolinMS> vbatts: the problem we're trying to solve is three things:
+18:07:24 <RobDolinMS> (1) people want to set values
+18:07:30 <RobDolinMS> (2) people want to go with defaults
+18:07:41 <RobDolinMS> (3) people want something explicit for not-set values
+18:07:54 <RobDolinMS> Mrunal - If null, don't touch it
+18:08:10 <RobDolinMS> Mrunal: instead of -1 which could have a meaning for some cgroups
+18:09:13 <vbatts> so really only two things to solve with what ever approach
+18:09:30 <RobDolinMS> (Did someone start the meeting already?)
+18:09:37 <RobDolinMS> #topic Merged Roadmpa
+18:09:44 <RobDolinMS> #topic Merged Roadmap
+18:10:17 <RobDolinMS> VBatts: Now that we've merged the roadmap, we can get working.
+18:10:59 <vbatts> https://github.com/opencontainers/specs/blob/master/ROADMAP.md
+18:11:21 <RobDolinMS> #link https://github.com/opencontainers/specs/blob/master/ROADMAP.md Roadmap
+18:11:22 <mrunalp> Next it will be good if we can get this merged https://github.com/opencontainers/specs/pull/231
+18:13:38 <RobDolinMS> VBatts: Does the config have to be human-readable?
+18:14:07 <RobDolinMS> Mrunal: Tooling would write the proto file instead of the JSON?
+18:15:11 <RobDolinMS> Michael: I thought we're still sticking with the JSON for what's on disk but using protos to generate bindings
+18:16:01 <RobDolinMS> VBatts: That's correct, but ...
+18:16:27 <RobDolinMS> Michael: Aren't there tools for JSON schema that generate language bindings?
+18:16:38 <RobDolinMS> Mrunal: that's worth looking into
+18:18:04 <RobDolinMS> Jason Bouzane: Can we have tooling to export an ASCII version of the protobuf ?
+18:19:51 <RobDolinMS> #topic Lifecycle PR
+18:20:19 <RobDolinMS> #link https://github.com/opencontainers/specs/pull/231
+18:20:33 <RobDolinMS> Michael planning to review
+18:20:43 <mrunalp> https://github.com/opencontainers/specs/pull/231
+18:20:51 <RobDolinMS> #topic Actions PR
+18:20:56 <RobDolinMS> #info coming soon
+18:21:54 <RobDolinMS> #topic Volunteering to help with roadmap
+18:22:05 <RobDolinMS> #info Michael recommends submitting a PR to volunteer yourself
+18:22:58 <RobDolinMS> Jesse glad to help with cross-platform too; call-out where he (and colleagues) can help
+18:23:37 <RobDolinMS> #topic What comes after 1.0?
+18:23:52 <vishh> I would like to have lifecycle sorted out as part of the next milestone.
+18:23:56 <RobDolinMS> #info Possibly some of the initial hashing and checking
+18:24:54 <RobDolinMS> Mrunal: Could we just do something basic with a checksum?
+18:25:33 <RobDolinMS> VBatts: Once you get a bundle, unless you keep a tar, it may be hard to validate after extraction.
+18:26:02 <RobDolinMS> VBatts: Anything else after that may get into net new technology.
+18:27:41 <RobDolinMS> Jason: important to be able to verify individual files on disk.
+18:28:06 <RobDolinMS> VBatts: Maybe just provide requirements but not specifics of how to do it.
+18:29:17 <RobDolinMS> VBatts: This piece of spec may be more requirements than specifics.
+18:30:05 <RobDolinMS> Jason: Not sure I agree; It's important to be able to verify contents with possibly different wrappers (tar, etc.)
+18:30:32 <RobDolinMS> Jason: We may want to have something in space that allows you to do those sorts of things.
+18:31:21 <RobDolinMS> Jason: It wouldn't just be contents, might want to include other items
+18:32:50 <RobDolinMS> Mrunal: If we want to pursue this, how do we start with small steps?
+18:34:57 <wking> hashing protos sounds like IPFS ;)
+18:35:52 <RobDolinMS> #action Jason Create PR or start email thread on this topic
+18:37:01 <RobDolinMS> #EndMeeting

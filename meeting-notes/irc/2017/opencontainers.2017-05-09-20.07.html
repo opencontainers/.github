@@ -1,0 +1,235 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2017-05-09 runtime-spec 1.0 preparation</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2017-05-09 runtime-spec 1.0 preparation</h1>
+<span class="details">
+Meeting started by wking at 20:07:45 UTC
+(<a href="opencontainers.2017-05-09-20.07.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">intelRdt wording</b> <span class="details">(<a href='opencontainers.2017-05-09-20.07.log.html#l-5'>wking</a>, 20:07:58)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/787">https://github.com/opencontainers/runtime-spec/pull/787</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-09-20.07.log.html#l-6'>wking</a>,
+    20:08:35)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">Markdown links</b> <span class="details">(<a href='opencontainers.2017-05-09-20.07.log.html#l-7'>wking</a>, 20:08:51)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/786">https://github.com/opencontainers/runtime-spec/pull/786</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-09-20.07.log.html#l-8'>wking</a>,
+    20:08:54)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">JSON Schema CI testing</b> <span class="details">(<a href='opencontainers.2017-05-09-20.07.log.html#l-9'>wking</a>, 20:10:39)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/785">https://github.com/opencontainers/runtime-spec/pull/785</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-09-20.07.log.html#l-10'>wking</a>,
+    20:10:47)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">RFC 2119 wording for oomScoreAdj</b> <span class="details">(<a href='opencontainers.2017-05-09-20.07.log.html#l-14'>wking</a>, 20:11:36)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/781">https://github.com/opencontainers/runtime-spec/pull/781</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-09-20.07.log.html#l-15'>wking</a>,
+    20:12:02)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">RFC 2119 wording for config-linux</b> <span class="details">(<a href='opencontainers.2017-05-09-20.07.log.html#l-16'>wking</a>, 20:13:06)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/746">https://github.com/opencontainers/runtime-spec/issues/746</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-09-20.07.log.html#l-17'>wking</a>,
+    20:13:09)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">bind and rbind</b> <span class="details">(<a href='opencontainers.2017-05-09-20.07.log.html#l-22'>wking</a>, 20:16:45)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/771">https://github.com/opencontainers/runtime-spec/pull/771</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-09-20.07.log.html#l-23'>wking</a>,
+    20:17:44)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC"></b> <span class="details">(<a href='opencontainers.2017-05-09-20.07.log.html#l-26'>wking</a>, 20:18:36)</span>
+<br></li>
+<li><b class="TOPIC">RFC 2119 tightening for namespaces</b> <span class="details">(<a href='opencontainers.2017-05-09-20.07.log.html#l-27'>wking</a>, 20:18:38)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/767">https://github.com/opencontainers/runtime-spec/pull/767</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-09-20.07.log.html#l-28'>wking</a>,
+    20:18:44)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">schema/defs-linux: Drop 'Capability' type</b> <span class="details">(<a href='opencontainers.2017-05-09-20.07.log.html#l-30'>wking</a>, 20:27:04)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/766">https://github.com/opencontainers/runtime-spec/pull/766</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-09-20.07.log.html#l-31'>wking</a>,
+    20:27:09)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">tianon to
+    update the spec language for capabilities</span> <span
+    class="details">(<a
+    href='opencontainers.2017-05-09-20.07.log.html#l-48'>mrunalp</a>,
+    20:33:25)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">config: Require strictly-positive timeout values</b> <span class="details">(<a href='opencontainers.2017-05-09-20.07.log.html#l-67'>wking</a>, 20:42:48)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/764">https://github.com/opencontainers/runtime-spec/pull/764</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-09-20.07.log.html#l-68'>wking</a>,
+    20:42:54)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">specs-go/round_trip_test: Add round-trip testing for the config</b> <span class="details">(<a href='opencontainers.2017-05-09-20.07.log.html#l-71'>wking</a>, 20:44:26)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/759">https://github.com/opencontainers/runtime-spec/pull/759</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-09-20.07.log.html#l-72'>wking</a>,
+    20:44:31)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">config: Drop the redundant config.json filename requirement</b> <span class="details">(<a href='opencontainers.2017-05-09-20.07.log.html#l-74'>wking</a>, 20:56:20)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/756">https://github.com/opencontainers/runtime-spec/pull/756</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-09-20.07.log.html#l-75'>wking</a>,
+    20:56:26)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">spec: Define the property-specification syntax</b> <span class="details">(<a href='opencontainers.2017-05-09-20.07.log.html#l-76'>wking</a>, 20:56:47)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/747">https://github.com/opencontainers/runtime-spec/pull/747</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-09-20.07.log.html#l-77'>wking</a>,
+    20:56:52)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">config-linux: RFC 2119 wording for disableOOMKiller</b> <span class="details">(<a href='opencontainers.2017-05-09-20.07.log.html#l-78'>wking</a>, 21:01:43)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/745">https://github.com/opencontainers/runtime-spec/pull/745</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-09-20.07.log.html#l-79'>wking</a>,
+    21:01:49)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">config: Lead off with the purpose of the config</b> <span class="details">(<a href='opencontainers.2017-05-09-20.07.log.html#l-82'>wking</a>, 21:02:56)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/737">https://github.com/opencontainers/runtime-spec/pull/737</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-09-20.07.log.html#l-83'>wking</a>,
+    21:03:04)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">next steps?</b> <span class="details">(<a href='opencontainers.2017-05-09-20.07.log.html#l-86'>wking</a>, 21:03:24)</span>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 21:04:58 UTC
+(<a href="opencontainers.2017-05-09-20.07.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>tianon to update the spec language for capabilities</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> tianon <ol>
+    <li>tianon to update the spec language for capabilities</li>
+  </ol></li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (84)</li>
+  <li>mrunalp (3)</li>
+  <li>collabot (3)</li>
+  <li>tianon (2)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

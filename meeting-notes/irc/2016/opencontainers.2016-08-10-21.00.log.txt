@@ -1,0 +1,68 @@
+21:00:15 <vbatts|work> #startmeeting 2016-08-10 discussion
+21:00:15 <collabot> Meeting started Wed Aug 10 21:00:15 2016 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:00:15 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:00:15 <collabot> The meeting name has been set to '2016_08_10_discussion'
+21:00:17 <tianon> IT'S OCI TIME
+21:00:32 <vbatts|work> aww yiss
+21:01:05 <JakeWarner|Work> I've missed y'all since DockerCon :(
+21:01:13 <tianon> hurry someone hack up https://media.giphy.com/media/WQD6NEEsVTvxK/giphy.gif to say OCI instead
+21:03:49 <wking> vbatts|work: chair me?
+21:04:45 <wking> philips: I've submitted https://github.com/opencontainers/image-spec/pull/195 with a ChangeLog for 0.4.0
+21:05:23 <wking> philips: Then we'll have a vote on tagging 0.4.0
+21:05:44 <wking> vbatts|work: it would be ideal if the ChangeLog could be automated
+21:06:00 <wking> philips:  Automated ChangeLogs aren't very useful (just use Git log)
+21:06:10 <wking> philips: consumer-useful is different from developer-useful
+21:06:29 <wking> vbatts|work: and yeah, it should close on the 17th
+21:07:00 <wking> mrunalp: there was a question around certification and architectures?  Should we spell it out?
+21:07:18 <wking> philips: why does the architecture matter for images?
+21:07:33 <wking> philips: the image tooling doesn't have to execute the image content
+21:07:52 <wking> mrunalp: if you have a runtime that only works on x86_64, should there be certification language around that?
+21:08:18 <wking> philips: for the runtime, we'll obviously need to certify runtimes for a given architecture, and the spec needs to be particular about that
+21:08:40 <wking> https://github.com/opencontainers/runtime-spec/pull/527
+21:09:36 <wking> The arcitecture and OS (both part of the platform) should be part of the certificate
+21:09:47 <wking> mrunalp: I think we want language about this to land before 1.0
+21:10:09 <wking> philips: I don't see why this matters for the image spec
+21:11:40 <wking> mrunalp: I can roll this into #527
+21:12:01 <wking> mikebrow: I'm not happy with unconditionaly-compliant
+21:12:10 <vbatts|work> #chair wking
+21:12:10 <collabot> Current chairs: vbatts|work wking
+21:13:22 <wking> #topic compliance with the runtime spec
+21:13:37 <wking> #action mrunalp to handle architecture language in #527
+21:14:16 <wking> mrunalp: cyphar?
+21:14:32 <wking> #topic console updates
+21:14:36 <wking> mrunalp: crosbymichael thoughts?
+21:14:47 <wking> crosbymichael: cyphar and I have been busy, so we should probably punt again
+21:14:54 <wking> mrunalp: we can revisit next week
+21:15:00 <wking> mrunalp: other topics?
+21:15:41 <wking> #topic tar ordering in the image-spec
+21:15:57 <wking> stevvooe: we'll need new language to clarify order of application (e.g. a tar with two resources with the same path)
+21:16:15 <wking> stevvooe: we want to only apply one of those to the resulting layer.  With tar it's usually the latest entry
+21:16:31 <wking> stevvooe: with opaque files it's a bit more complex, but we'll want language for that
+21:16:48 <wking> https://github.com/opencontainers/image-spec/issues/128
+21:16:59 <wking> stevvooe: I'll probably implement image-spec#128 soon
+21:17:07 <wking> philips: Can we just require no duplicate entries?
+21:17:33 <wking> stevvooe: the algorithm isn't very fancy.  We just need generic tar handling + opaque bubblign
+21:17:54 <wking> philips: I'm saying it's easier to require no duplicate dentries unless we find a great use case
+21:18:22 <wking> stevvooe: I can't think of a good use case, unless we have existing cases and want to preserve backwards-compat.  Have you seen it?
+21:18:36 <wking> vbatts|work: I've only seen it in the context of "look, tar lets you do this"
+21:18:51 <wking> vbatts|work: There isn't a modern tool that creates duplicate entries in the tar stream
+21:19:14 <wking> stevvooe: If we're confident with that, we can add that requirement, but I'm concerned about backwards compat
+21:19:28 <wking> philips: How does Docker v2.2 handle this?
+21:19:39 <wking> stevvooe: Docker v2.2 was more about manifests than about layers
+21:19:51 <wking> stevvooe: the Docker layering spec doesn't cover a lot of these details
+21:20:23 <wking> stevvooe: I'm fine with either "resources are unique" or "this is how ordering is handled", but we need to do something
+21:20:45 <wking> tianon: We could say "in the case of duplicate entries, behavior is undefined", and not bother testing that
+21:20:59 <wking> philips: the trick is that we're already in custom tar-library land because of the opaques
+21:21:03 <wking> tianon: ah, right
+21:21:35 <wking> philips: I'll comment on the issue, but I'd rather block duplicates, but am ok with documenting something that is Docker-compatible
+21:21:49 <wking> vbatts|work: since Docker 1.8 tarsplit will fail with errors on duplicates
+21:22:22 <wking> stevvooe: we ran a huge job around 1.8 / 1.9 looking at layers.  Before Docker 1.6 there were wierd tar entries around temp files and repeated entries
+21:22:43 <wking> stevvooe: so I suspect modern Docker issues are fine, and we can deal with any fallout from older images
+21:22:46 <wking> vbatts|work: I like that
+21:23:17 <wking> vbatts|work: The only use case ever for duplicates were exploits or literally writing to tape where you don't want to rewind
+21:23:39 <wking> stevvooe: either vbatts|work or I will get this submitted
+21:23:41 <wking> vbatts|work: right on
+21:23:48 <tianon> taking a list of tar layers and smashing them together as-is could be amusing, but it's not a strong or even real-world use case O:)
+21:24:04 <wking> vbatts|work: anything else?
+21:24:38 <wking> vbatts|work: can you #endmeeting
+21:24:45 <vbatts|work> #endmeeting

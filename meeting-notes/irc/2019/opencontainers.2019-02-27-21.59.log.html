@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:59:34</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2019-02-27 discussion</span>
+<a name="l-2"></a><span class="tm">21:59:35</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Feb 27 21:59:34 2019 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:59:35</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:59:35</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2019_02_27_discussion'
+<a name="l-5"></a><span class="tm">22:04:28</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">[org] contribution workflow</span>
+<a name="l-6"></a><span class="tm">22:04:33</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/org/pull/6</span>
+<a name="l-7"></a><span class="tm">22:08:05</span><span class="nk"> &lt;v[m]1&gt;</span> &lt;https://vsoch.github.io/man-opencontainers/&gt;
+<a name="l-8"></a><span class="tm">22:12:01</span><span class="nk"> &lt;vbatts|work&gt;</span> split the PR into two things: 1) move the CoC and security; 2) the web render for contributions
+<a name="l-9"></a><span class="tm">22:21:18</span><span class="nk"> &lt;tianon&gt;</span> https://help.github.com/en/articles/adding-a-code-of-conduct-to-your-project
+<a name="l-10"></a><span class="tm">22:25:28</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">what's needed for distribution-spec v1? (lasker)</span>
+<a name="l-11"></a><span class="tm">22:25:56</span><span class="nk"> &lt;vbatts|work&gt;</span> search could be one of those things. But could be added later.
+<a name="l-12"></a><span class="tm">22:27:14</span><span class="nk"> &lt;vbatts|work&gt;</span> process for registering media-types
+<a name="l-13"></a><span class="tm">22:29:01</span><span class="nk"> &lt;vbatts|work&gt;</span> annotations are okay for _optional_ metadata
+<a name="l-14"></a><span class="tm">22:29:41</span><span class="nk"> &lt;vbatts|work&gt;</span> but this is not suitable for scanners that need required/expected information to determine the artifact type
+<a name="l-15"></a><span class="tm">22:31:32</span><span class="nk"> &lt;tianon&gt;</span> https://github.com/SteveLasker/RegistryArtifactTypes/blob/master/mediaTypes.md
+<a name="l-16"></a><span class="tm">22:33:24</span><span class="nk"> &lt;vbatts|work&gt;</span> [notice] let it be known that lasker is the first sucessful screen share on uberconference. Also, not using a linux host (_windows_)
+<a name="l-17"></a><span class="tm">22:36:19</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/opencontainers/image-spec/blob/master/media-types.md
+<a name="l-18"></a><span class="tm">22:39:12</span><span class="nk"> &lt;vbatts|work&gt;</span> application/vnd.oci.image.ext.*
+<a name="l-19"></a><span class="tm">22:40:52</span><span class="nk"> &lt;estesp[m]&gt;</span> new challenge for cyphar when it's morning his time: wire up uberconf chat window to matrix to IRC to Slack and back 😂
+<a name="l-20"></a><span class="tm">22:41:03</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">estesp[m]:</span> lol yes
+<a name="l-21"></a><span class="tm">22:41:31</span><span class="nk"> &lt;KenBrooks[m]&gt;</span> don't cross the streams
+<a name="l-22"></a><span class="tm">22:46:54</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/SteveLasker/RegistryArtifactTypes/blob/master/mediaTypeMappings.json</span>
+<a name="l-23"></a><span class="tm">22:51:07</span><span class="nk"> &lt;vbatts|work&gt;</span> vbatts likes the idea of a handshake where mediatypes are shared from the server so the client can decide.
+<a name="l-24"></a><span class="tm">22:52:05</span><span class="nk"> &lt;vbatts|work&gt;</span> what the server exports doesn't _have_ to be the exclusive set, but maybe there could be a boolean saying the server side does do blacklist/whitelist
+<a name="l-25"></a><span class="tm">22:52:21</span><span class="nk"> &lt;vbatts|work&gt;</span> error codes need to be clear
+<a name="l-26"></a><span class="tm">22:52:32</span><span class="nk"> &lt;vbatts|work&gt;</span> this approach does not break backwards compat
+<a name="l-27"></a><span class="tm">22:53:13</span><span class="nk"> &lt;KenBrooks[m]&gt;</span> agree...
+<a name="l-28"></a><span class="tm">22:54:16</span><span class="nk"> &lt;v[m]1&gt;</span> Couldn't registries having (or not having support) for a particular media type be used for some malicious entity looking for registries not updated?
+<a name="l-29"></a><span class="tm">22:54:26</span><span class="nk"> &lt;v[m]1&gt;</span> Like Wordpress putting the version string on the login page?
+<a name="l-30"></a><span class="tm">22:56:21</span><span class="nk"> &lt;v[m]1&gt;</span> +1!
+<a name="l-31"></a><span class="tm">22:56:44</span><span class="nk"> &lt;bacongobbler[m]&gt;</span> I'm not too sure if it would or wouldn't. To me it sounds a lot like associating human-readable names for a given file extension. `application/vnd.oci.image.config.v1+json` is to Docker as `.tar.gz` is to Tarballs
+<a name="l-32"></a><span class="tm">22:58:27</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/distribution-spec/issues/58</span>
+<a name="l-33"></a><span class="tm">22:59:23</span><span class="nk"> &lt;vbatts|work&gt;</span> atlas and lasker: the image-index is not quite useful
+<a name="l-34"></a><span class="tm">22:59:25</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/blob/master/image-index.md</span>
+<a name="l-35"></a><span class="tm">23:00:04</span><span class="nk"> &lt;tianon&gt;</span> <span class="cmd">#TooManySlack</span><span class="cmdline"></span>
+<a name="l-36"></a><span class="tm">23:00:10</span><span class="nk"> &lt;v[m]1&gt;</span> lol
+<a name="l-37"></a><span class="tm">23:00:17</span><span class="nk"> &lt;v[m]1&gt;</span> <span class="cmd">#SlackOverflow</span><span class="cmdline"></span>
+<a name="l-38"></a><span class="tm">23:00:24</span><span class="nk"> &lt;tianon&gt;</span> xD
+<a name="l-39"></a><span class="tm">23:00:35</span><span class="nk"> &lt;KenBrooks[m]&gt;</span> As an end user of registries (and someone running one) I can get behind this approach of not trying to define it too strictly and just allowing each repo maintainer to decide when/how/what they support as long as they have a way to identify what type of image that artifact represents via the media types..   and just notify (error response) on unsupported.
+<a name="l-40"></a><span class="tm">23:02:29</span><span class="nk"> &lt;KenBrooks[m]&gt;</span> yes please on some sort of proposal approach/framework.. gives us a place to rally specific discussions around.
+<a name="l-41"></a><span class="tm">23:03:00</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">weekly meetings? (atlas)</span>
+<a name="l-42"></a><span class="tm">23:03:49</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">vbatts|work:</span> I know everyone has too many meeting, though i think that may be helpful here and keep progress rolling.
+<a name="l-43"></a><span class="tm">23:04:45</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">vbatts|work:</span> also, having a proposal workflow like a write-up (markdown or google doc) where comments and conversation can more directly track across mailing-list, slack, etc.
+<a name="l-44"></a><span class="tm">23:05:44</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

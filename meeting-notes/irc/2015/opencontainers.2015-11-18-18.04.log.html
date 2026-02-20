@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">18:04:15</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">OCI discussion</span>
+<a name="l-2"></a><span class="tm">18:04:15</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Nov 18 18:04:15 2015 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">18:04:15</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">18:04:15</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to 'oci_discussion'
+<a name="l-5"></a><span class="tm">18:04:24</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Welcome / Agenda</span>
+<a name="l-6"></a><span class="tm">18:04:37</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Update on Lifecycle</span>
+<a name="l-7"></a><span class="tm">18:04:47</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Mrunal got a bunch of comments</span>
+<a name="l-8"></a><span class="tm">18:04:50</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">OCI Tools</span>
+<a name="l-9"></a><span class="tm">18:04:58</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Mrunal has merged a bunch of PRs</span>
+<a name="l-10"></a><span class="tm">18:05:16</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Planning to re-visit next month if it should be moved under OpenContainer</span>
+<a name="l-11"></a><span class="tm">18:05:54</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Abin:</span> Will it have additional commands for inspection / visibility
+<a name="l-12"></a><span class="tm">18:06:12</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> Not sure if this is needed
+<a name="l-13"></a><span class="tm">18:06:22</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Brandon:</span> Also hesitant
+<a name="l-14"></a><span class="tm">18:06:40</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Liangchenye:</span> Do we need to talk about scope of OCI Tools?
+<a name="l-15"></a><span class="tm">18:06:56</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> We can add support for test cases and team can build on top of that
+<a name="l-16"></a><span class="tm">18:07:27</span><span class="nk"> &lt;RobDolinMS&gt;</span> (Goes to fetch power cord)
+<a name="l-17"></a><span class="tm">18:08:40</span><span class="nk"> &lt;RobDolinMS&gt;</span> (Back)
+<a name="l-18"></a><span class="tm">18:09:11</span><span class="nk"> &lt;mrunalp&gt;</span> philips to create a new PR for optional/required
+<a name="l-19"></a><span class="tm">18:09:39</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info: </span><span class="cmdline">Present on the call: Abin, Brandon, Jason, Liangchenye, Mike Brown, Mrunal, Rob Dolin, Zenlin</span>
+<a name="l-20"></a><span class="tm">18:09:48</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Protobufs</span>
+<a name="l-21"></a><span class="tm">18:09:59</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Jason sent an email</span>
+<a name="l-22"></a><span class="tm">18:10:25</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Jason is catching-up on mailing list feedback and working on additional write-ups and c</span>
+<a name="l-23"></a><span class="tm">18:10:53</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Jason expects to do a write-up on bundle filesystem metadata in the next few days</span>
+<a name="l-24"></a><span class="tm">18:11:19</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Ex:</span> File modes. ACLs, etc.
+<a name="l-25"></a><span class="tm">18:11:40</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Testing</span>
+<a name="l-26"></a><span class="tm">18:12:55</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Liangchenye is doing testing of various runtimes</span>
+<a name="l-27"></a><span class="tm">18:13:33</span><span class="nk"> &lt;philips&gt;</span> Liangchenye tested under rkt
+<a name="l-28"></a><span class="tm">18:13:54</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Liangchenye reports the current test cases work with rkt</span>
+<a name="l-29"></a><span class="tm">18:14:42</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/huawei-openlab/oct ?
+<a name="l-30"></a><span class="tm">18:14:46</span><span class="nk"> &lt;liangchenye&gt;</span> yes
+<a name="l-31"></a><span class="tm">18:15:23</span><span class="nk"> &lt;RobDolinMS&gt;</span> Mrunal suggests Brandon  checks-out
+<a name="l-32"></a><span class="tm">18:15:33</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

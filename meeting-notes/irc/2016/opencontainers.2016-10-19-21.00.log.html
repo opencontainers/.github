@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:00:57</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-10-19 discussion</span>
+<a name="l-2"></a><span class="tm">21:00:57</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Oct 19 21:00:57 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:00:57</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:00:57</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2016_10_19_discussion'
+<a name="l-5"></a><span class="tm">21:01:08</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp vbatts</span>
+<a name="l-6"></a><span class="tm">21:01:08</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp vbatts wking
+<a name="l-7"></a><span class="tm">21:03:43</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/591
+<a name="l-8"></a><span class="tm">21:04:04</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Allowing read-only containers: require mount destinations</span>
+<a name="l-9"></a><span class="tm">21:04:10</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/591</span>
+<a name="l-10"></a><span class="tm">21:04:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we should do this https://github.com/opencontainers/runtime-spec/pull/591#issuecomment-254901271
+<a name="l-11"></a><span class="tm">21:04:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> you should get the same error either way
+<a name="l-12"></a><span class="tm">21:04:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we still need to work on the pivot root stuff
+<a name="l-13"></a><span class="tm">21:04:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the tests were failing but it worked with manual testing
+<a name="l-14"></a><span class="tm">21:04:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> other thoughts on this?
+<a name="l-15"></a><span class="tm">21:05:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> should we wait for pivot-root to go through?
+<a name="l-16"></a><span class="tm">21:05:25</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runc/pull/1125</span>
+<a name="l-17"></a><span class="tm">21:05:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> you can close it
+<a name="l-18"></a><span class="tm">21:06:01</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/513
+<a name="l-19"></a><span class="tm">21:07:14</span><span class="nk"> &lt;mrunalp&gt;</span> Discussion around what happens when terminal is false
+<a name="l-20"></a><span class="tm">21:08:07</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">wking:</span> inherit-stdio would dup runtime's stdio down to container process
+<a name="l-21"></a><span class="tm">21:08:40</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">stdio container setup</span>
+<a name="l-22"></a><span class="tm">21:08:46</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/513</span>
+<a name="l-23"></a><span class="tm">21:09:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> ultimately, folks will want to log to a file.  You don't need to use the runtime's stdio for that
+<a name="l-24"></a><span class="tm">21:09:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> if you want to log to files, setup the runtime stdio to point at that file and pass the descriptor through to the container
+<a name="l-25"></a><span class="tm">21:10:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> so runC itself opening these?
+<a name="l-26"></a><span class="tm">21:10:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> no, it's runC's 0, 1, and 2 getting passed through
+<a name="l-27"></a><span class="tm">21:10:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> no need for special syntax
+<a name="l-28"></a><span class="tm">21:13:16</span><span class="nk"> &lt;mrunalp&gt;</span> wking, cyphar concerned about container writing to host when host tty is passed down to container process
+<a name="l-29"></a><span class="tm">21:15:28</span><span class="nk"> &lt;wking&gt;</span> So is the consensus to use the --inherit-stdio behavior when process.terminal is not set?  And require callers to close fds they don't want to have passed through?
+<a name="l-30"></a><span class="tm">21:16:40</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, Is the console-socket a fd or a path?
+<a name="l-31"></a><span class="tm">21:17:02</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, It doesn't have to be a flag at all.
+<a name="l-32"></a><span class="tm">21:18:43</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, It could be the last one
+<a name="l-33"></a><span class="tm">21:19:05</span><span class="nk"> &lt;mrunalp&gt;</span> wking, It would probably work
+<a name="l-34"></a><span class="tm">21:22:55</span><span class="nk"> &lt;wking&gt;</span> lots of discussion that I didn't get down.  I'll post a summary to #513
+<a name="l-35"></a><span class="tm">21:23:24</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-tools maintainers</span>
+<a name="l-36"></a><span class="tm">21:23:25</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-tools/pull/249
+<a name="l-37"></a><span class="tm">21:23:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> last call for runtime-tools topics
+<a name="l-38"></a><span class="tm">21:24:33</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec vote for rc2</span>
+<a name="l-39"></a><span class="tm">21:24:42</span><span class="nk"> &lt;mrunalp&gt;</span> I gotta drop off for a meeting! See ya all next week.
+<a name="l-40"></a><span class="tm">21:24:52</span><span class="nk"> &lt;wking&gt;</span> https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/eurcUUQRLRs
+<a name="l-41"></a><span class="tm">21:25:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> there are a number of fuzzy issues where we need more input
+<a name="l-42"></a><span class="tm">21:25:18</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/314</span>
+<a name="l-43"></a><span class="tm">21:25:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> and splitting topics between -spec and -tools
+<a name="l-44"></a><span class="tm">21:26:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I've been working over those PRs.  I'll either create an organizational issue or just land the right PRs
+<a name="l-45"></a><span class="tm">21:26:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we probably want docs for the split somewhere too
+<a name="l-46"></a><span class="tm">21:26:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> there's not much else that's major.  Are there things we absolutely want for the next rc?
+<a name="l-47"></a><span class="tm">21:27:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm worried about signing coming in after an rc and being completely incompatible
+<a name="l-48"></a><span class="tm">21:27:08</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/issues/22#issuecomment-254605473
+<a name="l-49"></a><span class="tm">21:27:13</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image signing</span>
+<a name="l-50"></a><span class="tm">21:27:22</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/22</span>
+<a name="l-51"></a><span class="tm">21:27:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> do we agree that we need to agree on the signing targets?
+<a name="l-52"></a><span class="tm">21:27:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> wking has another idea that changes the content being signed, and I don't want to go in that direction
+<a name="l-53"></a><span class="tm">21:28:32</span><span class="nk"> &lt;wking&gt;</span> Actually, I don't think it's possible for CAS-based signing to change the content being signed ;)
+<a name="l-54"></a><span class="tm">21:28:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I think we want to point out the Merkle DAG locations that are good for signing
+<a name="l-55"></a><span class="tm">21:29:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> my general criticism is that proposals are focused on formats, and we already have lots of formats
+<a name="l-56"></a><span class="tm">21:30:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I don't want to delay 1.0, but I want to head off any wrong directions
+<a name="l-57"></a><span class="tm">21:31:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> in early v2 registry API, we had a lot of problems with signature verification
+<a name="l-58"></a><span class="tm">21:31:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> it was hard to coordinate sigs among multiple signers
+<a name="l-59"></a><span class="tm">21:31:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we had lots of sigs that were useless, or competing sigs on the same thing
+<a name="l-60"></a><span class="tm">21:31:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we need a statement to frame the proposals and maintain compatability
+<a name="l-61"></a><span class="tm">21:31:58</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">stevvooe to file a 1.0 condition framing the signature approach</span>
+<a name="l-62"></a><span class="tm">21:32:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> while you're writing it up, a common question is "why not put this in the descriptor type?"
+<a name="l-63"></a><span class="tm">21:32:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there are good reasons ;).  But we need to think about what changes when you sign something
+<a name="l-64"></a><span class="tm">21:32:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> step 1 is which digests to sign
+<a name="l-65"></a><span class="tm">21:33:17</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec conformance language</span>
+<a name="l-66"></a><span class="tm">21:33:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> wking suggested making this more specific
+<a name="l-67"></a><span class="tm">21:33:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> can we run that to ground now?
+<a name="l-68"></a><span class="tm">21:33:42</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/381</span>
+<a name="l-69"></a><span class="tm">21:34:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> like the runtime-spec we need to be specific.  There are whole sections that are optional
+<a name="l-70"></a><span class="tm">21:34:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> Do you have a suggestion on how to frame that?
+<a name="l-71"></a><span class="tm">21:34:29</span><span class="nk"> &lt;philips&gt;</span> An implementation is not compliant for a given CPU architecture if it fails to satisfy one or more of the MUST, REQUIRED, or SHALL requirements for the protocols it implements. An implementation is compliant for a given CPU architecture if it satisfies all the MUST, REQUIRED, and SHALL requirements for the protocols it implements.
+<a name="l-72"></a><span class="tm">21:34:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> We should follow the runtime-spec which lists supported protocols
+<a name="l-73"></a><span class="tm">21:35:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> We need to specify the protocols that are optional (e.g. manifest-lists)
+<a name="l-74"></a><span class="tm">21:35:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> my recommendation would be to not make manifest-lists optional
+<a name="l-75"></a><span class="tm">21:35:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the more implementations that support manifest-listsl, the better
+<a name="l-76"></a><span class="tm">21:37:54</span><span class="nk"> &lt;wking&gt;</span> we need to be clear about whether this is optional for the image  (I think it should be) and whether support is optional for implementations (I think it should not be)
+<a name="l-77"></a><span class="tm">21:39:19</span><span class="nk"> &lt;wking&gt;</span> but this is lower level than #381, which is about landing the framework for declaring these protocols at all (regardless of what the protocols are and whether they are required or not)
+<a name="l-78"></a><span class="tm">21:39:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I tested this out, and it works back to 1.10 in Docker.  So I think implementations should be able to handle manifest lists
+<a name="l-79"></a><span class="tm">21:39:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but if you're pushing an image, you don't need to push a manifest list
+<a name="l-80"></a><span class="tm">21:40:30</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">philips to file a comment about cleaning up the existing manifest-list language</span>
+<a name="l-81"></a><span class="tm">21:40:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> anything else?
+<a name="l-82"></a><span class="tm">21:40:44</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">KubeCon face to face</span>
+<a name="l-83"></a><span class="tm">21:40:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> do we want this^?
+<a name="l-84"></a><span class="tm">21:40:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> we could.  I'll be there
+<a name="l-85"></a><span class="tm">21:41:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> It's in Seattle, so I'll be there
+<a name="l-86"></a><span class="tm">21:41:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> email the list?
+<a name="l-87"></a><span class="tm">21:41:21</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">RobDolinMS to email the list about a KubeCon face-to-face</span>
+<a name="l-88"></a><span class="tm">21:41:48</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

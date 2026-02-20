@@ -1,0 +1,26 @@
+18:12:42 <RobDolinMS> #startmeeting OCI Dev ConCall
+18:12:42 <collabot> Meeting started Wed Feb 17 18:12:42 2016 UTC.  The chair is RobDolinMS. Information about MeetBot at http://wiki.debian.org/MeetBot.
+18:12:42 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+18:12:42 <collabot> The meeting name has been set to 'oci_dev_concall'
+18:13:23 <RobDolinMS> Brandon: I disagree with Doug
+18:13:55 <RobDolinMS> Brandon: concerned about including info in the distributable image
+18:14:10 <RobDolinMS> Mrunal: How do we move forward?
+18:14:20 <RobDolinMS> Brandon: I'm putting this question to the TOB
+18:15:12 <philips> https://github.com/opencontainers/specs/pull/293
+18:17:41 <philips> TOB repo with members and list: https://github.com/opencontainers/tob
+18:19:08 <philips> https://groups.google.com/a/opencontainers.org/forum/#!topic/tob/_MIc_QKHaII
+18:19:34 <RobDolinMS> Brandon: I just want the TOB to have a crisp explanation
+18:21:03 <philips> counter-proposal: https://github.com/opencontainers/specs/pull/293#issuecomment-169276204
+18:21:49 <RobDolinMS> #action Maintainers and TDC should review the proposal and await feedback from TOB
+18:21:53 <RobDolinMS> #topic Ops PR
+18:21:55 <mrunalp> https://github.com/opencontainers/specs/pull/225
+18:22:42 <RobDolinMS> #action Maintainers should take a look
+18:23:14 <RobDolinMS> #topic Other PRs
+18:23:46 <RobDolinMS> #action Brandon will move the image format PR to v0.5
+18:24:36 <mrunalp> https://github.com/opencontainers/specs/pull/276
+18:26:41 <RobDolinMS> #topic OCI Tools
+18:26:52 <RobDolinMS> Mrunal: OCI Tools needs a spec update
+18:27:17 <RobDolinMS> Mrunal: we should first merge v0.3.0 and then update the PRs
+18:27:54 <RobDolinMS> Brandon: Do we need to be tagging stuff on a more regular basis?
+18:28:09 <RobDolinMS> Mrunal: Probably, I've just been traveling.
+18:28:38 <RobDolinMS> #endmeeting

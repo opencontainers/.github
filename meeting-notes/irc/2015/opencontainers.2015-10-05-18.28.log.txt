@@ -1,0 +1,130 @@
+18:28:57 <vbatts|work> #startmeeting autuminal cleaning, for crosbymichael
+18:28:57 <collabot> Meeting started Mon Oct  5 18:28:57 2015 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+18:28:57 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+18:28:57 <collabot> The meeting name has been set to 'autuminal_cleaning__for_crosbymichael'
+18:29:14 <vbatts|work> there's not an "i" in autumnal
+18:29:16 <vbatts|work> w/e
+18:29:33 <vbatts|work> https://github.com/opencontainers/specs/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-asc
+18:29:33 <crosbymichael> Lets start from the bottom up
+18:29:37 <mrunalp> Sounds good
+18:29:46 <crosbymichael> PRs, not issues?
+18:29:58 <vbatts|work> k
+18:30:05 <vbatts|work> https://github.com/opencontainers/specs/pulls?q=is%3Aopen+sort%3Aupdated-asc+is%3Apr
+18:30:16 <vbatts|work> #topic least recently updated PRs
+18:30:20 <vbatts|work> https://github.com/opencontainers/specs/pulls?q=is%3Aopen+sort%3Aupdated-asc+is%3Apr
+18:30:23 <mrunalp> https://github.com/opencontainers/specs/pull/101
+18:31:21 <mrunalp> crosbymichael: Either is fine
+18:31:32 <mrunalp> I think we may be able to close out some issues too
+18:31:43 <crosbymichael> we can start with PRs, then move onto issues
+18:31:47 <wking> #101 still needs edits to the Go before merging, but review on the Markdown seemed like something that should happen first
+18:32:06 <mrunalp> crosbymichael: Sounds good
+18:32:16 <crosbymichael> Ok, lets review #101
+18:32:56 <mrunalp> yeah
+18:33:01 <mrunalp> It needs rebase
+18:33:10 <mrunalp> Looking at the content now
+18:33:33 <crosbymichael> ya, lets mostlly review content
+18:34:26 <crosbymichael> wking: why would Go code need changed?
+18:34:31 <wking> Go comments
+18:35:42 <wking> but if we want to leave the required-ness out of the Go comments, we could leave them alone
+18:37:00 <wking> although if, e.g. uid is optional, we probably can't use a uint32 for it (and would need to use a pointer, or special-case a particular value, or whatever to mark "not set")
+18:37:41 <crosbymichael> its not optional
+18:38:04 <crosbymichael> and it' does not need a pointer because the zero value is valid
+18:38:28 <wking> it is optional, because it makes no sense for a cgroup-only entry
+18:38:43 <crosbymichael> then ur pr is probably wrong
+18:38:45 <wking> like this one: https://github.com/opencontainers/specs/pull/101/files#diff-428eec4013a655816cdefafd5d3505f1R87
+18:39:27 <wking> possibly ;).  My preferred approach was #99, which separated cgroup handling from mknod handling
+18:39:41 <wking> #101 just documents the current overloaded approach
+18:40:09 <wking> what would uid be used for for that cgroup-only entry (https://github.com/opencontainers/specs/pull/101/files#diff-428eec4013a655816cdefafd5d3505f1R87)?
+18:43:47 <wking> anyhow, back to work for me ;).  Good luck with the review :)
+18:44:18 <mrunalp> crosbymichael: The question is whether we should combine the two or it makes more sense to separate
+18:44:35 <crosbymichael> maybe if we want to review creation and permissions together being an issue we couldn't merge and look into that
+18:45:35 <mrunalp> yeah, maybe punt on this one
+18:45:45 <mrunalp> lk4d4: can give his thoughts when he has time :)
+18:46:00 <vbatts> k. i'm back
+18:47:11 <crosbymichael> next one
+18:47:21 <crosbymichael> https://github.com/opencontainers/specs/pull/126
+18:47:30 <vbatts|work> #topic https://github.com/opencontainers/specs/pull/126
+18:47:57 <crosbymichael> -1 the file names are what they are supposed to be in Go
+18:48:00 <crosbymichael> with _ not -
+18:48:02 <vbatts|work> this one looks outdated
+18:48:23 <mrunalp> yeah
+18:48:28 <mrunalp> should close for now
+18:48:30 <crosbymichael> even if it was updated still -1
+18:48:40 <crosbymichael> you name files in go with _ not -
+18:48:42 <vbatts|work> also, likely to change with my "top down" effort
+18:48:44 <crosbymichael> because builds would work
+18:48:47 <crosbymichael> yes
+18:48:49 <mrunalp> crosbymichael: yep
+18:49:13 <vbatts|work> want me to comment?
+18:49:20 <crosbymichael> vbatts|work: yes
+18:49:28 <crosbymichael> comment and close
+18:50:24 <mrunalp> next https://github.com/opencontainers/specs/pull/127/files
+18:50:30 <crosbymichael> #topic https://github.com/opencontainers/specs/pull/144
+18:50:35 <crosbymichael> this one just needs a rebase
+18:51:19 <mrunalp> yep
+18:51:24 <mrunalp> What about 127?
+18:52:40 <crosbymichael> maybe we should just make the change ourself for 127 and merge it and close
+18:52:50 <mrunalp> crosbymichael: okay
+18:53:35 <crosbymichael> i can do it
+18:53:42 <mrunalp> alright
+18:54:10 <crosbymichael> next
+18:54:29 <mrunalp> #topic https://github.com/opencontainers/specs/pull/133/files
+18:54:49 <mrunalp> I think this one probably needs more discussion on the mailing list.
+18:54:58 <crosbymichael> i think that is being discussed on the mailing list and i don't see it being merge yet
+18:55:09 <mrunalp> okay next
+18:55:13 <crosbymichael> so close
+18:55:14 <crosbymichael> ?
+18:55:20 <vbatts|work> that's tough.
+18:55:41 <crosbymichael> what is?
+18:55:59 <vbatts|work> there is a story there. but this mounting of qcow right in the config seems too much
+18:56:05 <mrunalp> yes
+18:56:13 <mrunalp> can open a new one once there is agreement
+18:56:35 <vbatts|work> perhaps there is a space for vendor custom config, but otherwise there the standard minimal core
+18:57:12 <crosbymichael> eww
+18:57:22 <mrunalp> Nothing blocks someone from encoding the source path today. Just the language and long direction need to be figured out w.r.t. hypervisors.
+18:58:54 <mrunalp> closing/ not closing?
+18:59:19 <mrunalp> I am okay keeping it as is for now. We can revisit it next time we do a sweep.
+19:00:16 <crosbymichael> it would be nice to keep the issue tracker and PRs under control
+19:00:29 <mrunalp> okay, let's close it then
+19:00:33 <mrunalp> I can comment and close
+19:00:34 <crosbymichael> makes it easier for reviewers and new ppl
+19:00:36 <vbatts|work> i did
+19:00:40 <vbatts|work> next
+19:00:41 <mrunalp> :D
+19:00:57 <crosbymichael> we don't want the type of volume that docker has, 150 open PRs and 75-120 new / week
+19:01:27 <mrunalp> Makes sense
+19:01:59 <crosbymichael> #topic https://github.com/opencontainers/specs/pull/142
+19:02:01 <crosbymichael> LGTM
+19:02:37 <mrunalp> +1
+19:03:13 <vbatts|work> next
+19:03:24 <vbatts|work> #topic https://github.com/opencontainers/specs/pull/171/files
+19:04:01 <crosbymichael> up to u vbatts|work
+19:04:16 <mrunalp> Looks like it should be split up and updated
+19:04:19 <vbatts|work> hmm. the rebase needed makes this confusing
+19:04:23 <mrunalp> Seems all over the place
+19:05:10 * vbatts|work compares to master
+19:06:38 <vbatts|work> but the namespace mapping isn't in the runtime. it is in the config
+19:06:52 <vbatts|work> ... but _should_ that be runtime specific?
+19:07:17 <mrunalp> yes
+19:07:20 <vbatts|work> perhaps the container-config makes the ask for a uid/gid to be namespaced
+19:07:32 <vbatts|work> and the runtime-config records the uid/gid it is mapped too?
+19:08:04 <crosbymichael> i g2g
+19:08:06 <mrunalp> vbatts|work: No, the mappings are exact
+19:08:13 <mrunalp> crosbymichael: Alright cyl
+19:08:16 <crosbymichael> whatever you two decide will be perfect
+19:08:17 <crosbymichael> ;)
+19:08:20 <mrunalp> Ha :D
+19:08:20 <vbatts|work> heh
+19:08:41 <mrunalp> vbatts|work: It isn't like cgroups..
+19:08:47 <vbatts|work> mrunalp: so if 0 in the container is 2000 on the host, it will have to be 2000 on every/any host?
+19:09:10 <mrunalp> yes, according to our config
+19:09:12 <vbatts|work> its seems like it could eventually be a relative configuration.
+19:09:36 <mrunalp> Still a runtime decision I think
+19:10:17 <vbatts|work> but then the immutable config ought not choose the uid/gid on the host which would be mapped to
+19:11:33 <vbatts|work> i could imagine some priv-escalation, where a container could specifiy that it is to be mapped to ... uid 62, and then if somehow escalated it could access anything httpd has rights to
+19:11:37 <vbatts|work> who knows
+19:12:02 <vbatts|work> mrunalp: want to comment on this PR?
+19:12:28 <mrunalp> vbatts|work: Sure
+19:12:58 <mrunalp> vbatts|work: I have a call coming up but I will comment on this PR. Maybe have another session later or tomorrow?
+19:13:21 <vbatts|work> k
+19:13:25 <vbatts|work> #endmeeting

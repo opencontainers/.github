@@ -1,0 +1,57 @@
+21:58:33 <vbatts|work> #startmeeting 2019-01-30 discussion
+21:58:33 <collabot`> Meeting started Wed Jan 30 21:58:33 2019 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:58:33 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:58:33 <collabot`> The meeting name has been set to '2019_01_30_discussion'
+21:59:34 <RenaudWasTaken> @vbatts hello!
+21:59:34 <collabot`> RenaudWasTaken: Error: "vbatts" is not a valid command.
+22:00:06 <RenaudWasTaken> vbatts: looks like he isn't on IRC, should I shoot him an email?
+22:02:46 <vbatts|work> RenaudWasTaken: sure thing. he shows up on IRC from time to time
+22:04:40 <vbatts|work> #topic distribution-spec RC
+22:04:43 <vbatts|work> #link https://github.com/opencontainers/distribution-spec/milestone/2
+22:08:15 <vbatts|work> date was fairly arbitrary, suggested by cra
+22:09:19 <zendril> OT: Is the "OCI Image Spec Weekly Call" deprecated in favor of this "OCI Dev Call"?
+22:12:22 <vbatts|work> zendril: oh, yeah. it's basically always been whole of OCI dev call
+22:13:04 <estesp> @vbatts|work: here's the comment from stevvooe: https://github.com/opencontainers/distribution-spec/issues/26#issuecomment-454992064
+22:13:05 <collabot`> estesp: Error: "vbatts|work:" is not a valid command.
+22:14:36 <vbatts|work> on the UUID, the language should say something like MAY or SHOULD be UUID like rfc (but is still just a `string`)
+22:15:06 <vbatts|work> on the /v2/_ping endpoint, it was largely ust a legacy header for detecting version
+22:15:17 <vbatts|work> but for OCI distribution, it ought not be required
+22:18:11 <vbatts|work> "magic" headers ought be needed. Particularly for static site use cases.
+22:19:45 <vbatts|work> if anything the payload of a file like _ping or version should have structured version (potentially even feature flag listing)
+22:20:29 <mikebrow> https://github.com/opencontainers/distribution-spec/issues/26
+22:21:33 <vbatts|work> #link https://github.com/opencontainers/distribution-spec/issues/26
+22:26:07 <vbatts|work> ruh roh. Accepts header must be set for ManifestList in order to get an actual list, otherwise you only get the manifest
+22:27:26 <vbatts|work> #link https://github.com/docker/distribution/issues/2395
+22:29:03 <vbatts|work> if the name:tag referenced is a manifestlist, then it should always return _that_ object
+22:34:24 <vbatts|work> #topic jimmi Z strawman for arbitrary objects
+22:34:29 <vbatts|work> #link https://groups.google.com/a/opencontainers.org/d/msg/dev/oguystbnnw4/mKJK4IzSDAAJ
+22:35:07 <vbatts|work> jimmi: crone's proposal is orthogonal. OCI ought to be flexible enough to allow it.
+22:35:56 <vbatts|work> all these mime types, like a Helm or CNAB tarball
+22:36:05 <jdolitsky> Current Helm manifest: https://gist.github.com/jdolitsky/99c7364a892c8e350c85314705a9a7c1#chart-manifest
+22:36:05 <vbatts|work> (mattfarina ^^)
+22:36:14 <vbatts|work> #link https://gist.github.com/jdolitsky/99c7364a892c8e350c85314705a9a7c1#chart-manifest
+22:41:08 <jdolitsky> in any case I think it makes sense for Helm and CNAB to align on manifest layout
+22:41:19 <vbatts|work> jdolitsky: agreed
+22:42:47 <estesp> et
+22:45:09 <vbatts|work> ohman. search and mimetypes
+22:46:26 <vbatts|work> i reckon we're kinda on search API topic now
+22:46:32 <vbatts|work> #topic search API
+22:46:52 <vbatts|work> the registry ought to be dumb to all the client permutations
+22:47:18 <vbatts|work> but clients ought to collate the mimetypes and such, based on what the client supports
+22:47:34 <jdolitsky> manifest layout does not matter so much from the perspective of a tool downloading its own content. I think search / common search API is actually why this is important
+22:47:50 <vbatts|work> fair
+22:48:10 <vbatts|work> mimetypes, but also the annotations on the name:tag
+22:48:26 <vbatts|work> dang, possibly even annotations on the descriptor even
+22:48:43 <vbatts|work> there ought to be a hierarchy of relevance
+22:49:23 <vbatts|work> <name:tag> -> manifest annotation -> descriptor mediaType -> descriptor annotation
+22:53:37 <mattfarina_> https://github.com/mattfarina/image-spec/commit/4012edfeaa6114d84875b5d680257debb1f07a90
+22:53:59 <vbatts|work> #link https://github.com/mattfarina/image-spec/commit/4012edfeaa6114d84875b5d680257debb1f07a90
+22:56:30 <vbatts|work> how to have structured annotations, and the opaque string formating
+22:57:02 <vbatts|work> #link https://github.com/opencontainers/image-spec/blob/master/annotations.md
+22:58:28 <mikebrow> org.opencontainers.image.description Human-readable description of the software packaged in the image (string)
+23:02:12 <vbatts|work> #action vbatts set up call for next wednesday (Feb 6th)
+23:04:52 <tianon> mikebrow: I really hope you're the last to leave on purpose just to get more of that sweet sweet hold music
+23:05:07 <mikebrow> you know it
+23:05:07 <vbatts|work> #action err'body while this call is fresh, please reply on the email for today's agenda the topic you have that didn't get addressed
+23:05:33 <vbatts|work> we'll try to group them. For either handling on the mailing list or a github issue/PR
+23:05:40 <vbatts|work> #endmeeting

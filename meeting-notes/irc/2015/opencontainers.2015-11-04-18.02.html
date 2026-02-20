@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2015-11-04 meeting</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2015-11-04 meeting</h1>
+<span class="details">
+Meeting started by wking at 18:02:59 UTC
+(<a href="opencontainers.2015-11-04-18.02.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">Roadmap procedure</b> <span class="details">(<a href='opencontainers.2015-11-04-18.02.log.html#l-7'>wking</a>, 18:03:23)</span>
+<br></li>
+<li><b class="TOPIC">Container actions</b> <span class="details">(<a href='opencontainers.2015-11-04-18.02.log.html#l-9'>wking</a>, 18:04:13)</span>
+<br></li>
+<li><b class="TOPIC">How to specify "don't touch my cgroups"</b> <span class="details">(<a href='opencontainers.2015-11-04-18.02.log.html#l-17'>wking</a>, 18:07:24)</span>
+<br></li>
+<li><b class="TOPIC">How can we accelerate progress</b> <span class="details">(<a href='opencontainers.2015-11-04-18.02.log.html#l-27'>wking</a>, 18:10:42)</span>
+<br></li>
+<li><b class="TOPIC">OCI Tools</b> <span class="details">(<a href='opencontainers.2015-11-04-18.02.log.html#l-36'>RobDolinMS</a>, 18:12:45)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/mrunalp/ocitools">https://github.com/mrunalp/ocitools</a>
+    <span class="details">(<a
+    href='opencontainers.2015-11-04-18.02.log.html#l-37'>wking</a>,
+    18:13:06)</span></li>
+  <li><span class="INFO">Mrunal has a tool that he wants to share and
+    wondering where to put it</span> <span class="details">(<a
+    href='opencontainers.2015-11-04-18.02.log.html#l-38'>RobDolinMS</a>,
+    18:13:11)</span></li>
+  <li><span class="INFO">Mrunal will post to the list</span> <span
+    class="details">(<a
+    href='opencontainers.2015-11-04-18.02.log.html#l-46'>RobDolinMS</a>,
+    18:15:12)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">Roadmap PR</b> <span class="details">(<a href='opencontainers.2015-11-04-18.02.log.html#l-47'>RobDolinMS</a>, 18:15:37)</span>
+<ol type="a">
+  <li><span class="INFO">we just need one more LGTM and then it's a go
+    to merge</span> <span class="details">(<a
+    href='opencontainers.2015-11-04-18.02.log.html#l-48'>RobDolinMS</a>,
+    18:15:50)</span></li>
+  <li><span class="INFO">the first topic in this meeting also relevant
+    here</span> <span class="details">(<a
+    href='opencontainers.2015-11-04-18.02.log.html#l-49'>wking</a>,
+    18:16:05)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">Splitting Create() and Start() into unique actions</b> <span class="details">(<a href='opencontainers.2015-11-04-18.02.log.html#l-50'>RobDolinMS</a>, 18:16:26)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">splitting
+    create from start</span> <span class="details">(<a
+    href='opencontainers.2015-11-04-18.02.log.html#l-51'>wking</a>,
+    18:16:26)</span></li>
+  <li><span class="INFO">Doug Davis sent email about this on Thu,
+    10/29</span> <span class="details">(<a
+    href='opencontainers.2015-11-04-18.02.log.html#l-52'>RobDolinMS</a>,
+    18:16:40)</span></li>
+  <li><span class="INFO">Mrunal suggests making sure the PR generic and
+    not get into OS-specific details</span> <span class="details">(<a
+    href='opencontainers.2015-11-04-18.02.log.html#l-56'>RobDolinMS</a>,
+    18:18:00)</span></li>
+  <li><a
+    href="https://groups.google.com/a/opencontainers.org/forum/#!search/duglin|sort:date/dev/qWHoKs8Fsrk/GmdaZ2TtDAAJ">https://groups.google.com/a/opencontainers.org/forum/#!search/duglin|sort:date/dev/qWHoKs8Fsrk/GmdaZ2TtDAAJ</a>
+    <span class="details">(<a
+    href='opencontainers.2015-11-04-18.02.log.html#l-61'>duglin</a>,
+    18:19:19)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">Scheduling
+    two weeks from now</span> <span class="details">(<a
+    href='opencontainers.2015-11-04-18.02.log.html#l-69'>wking</a>,
+    18:22:02)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">Scheduling two weeks from now</b> <span class="details">(<a href='opencontainers.2015-11-04-18.02.log.html#l-70'>wking</a>, 18:22:08)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">mrunalp to
+    mail the list and see if anyone needs a time adjustment</span> <span
+    class="details">(<a
+    href='opencontainers.2015-11-04-18.02.log.html#l-73'>wking</a>,
+    18:22:39)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 18:23:35 UTC
+(<a href="opencontainers.2015-11-04-18.02.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>splitting create from start</li>
+  <li>Scheduling two weeks from now</li>
+  <li>mrunalp to mail the list and see if anyone needs a time adjustment</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> mrunalp <ol>
+    <li>mrunalp to mail the list and see if anyone needs a time adjustment</li>
+  </ol></li>
+  <li><b>UNASSIGNED</b><ol>
+    <li>splitting create from start</li>
+    <li>Scheduling two weeks from now</li>
+  </ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (53)</li>
+  <li>RobDolinMS (12)</li>
+  <li>collabot (5)</li>
+  <li>duglin (4)</li>
+  <li>estesp (2)</li>
+  <li>vishh (2)</li>
+  <li>tianon (1)</li>
+  <li>crosbymichael (0)</li>
+  <li>mrunalp (0)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

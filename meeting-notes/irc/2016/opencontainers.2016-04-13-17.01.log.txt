@@ -1,0 +1,97 @@
+17:01:28 <vbatts> #startmeeting 2016-04-13 discussion
+17:01:28 <collabot> Meeting started Wed Apr 13 17:01:28 2016 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:01:28 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:01:28 <collabot> The meeting name has been set to '2016_04_13_discussion'
+17:02:13 <mikebrow> calling in
+17:02:16 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/384/files
+17:02:46 <vbatts> #topic split create and start
+17:02:56 <wking> duglin: split create and start, where create handles the namespaces (including the process namespace)
+17:03:00 <vbatts> #link https://github.com/opencontainers/runtime-spec/pull/384
+17:03:07 <wking> duglin: but the user-specified code doesn't run until 'start' time
+17:03:12 <vbatts> #chairs wking
+17:03:16 <vbatts> #chair wking
+17:03:16 <collabot> Current chairs: vbatts wking
+17:03:19 <vbatts> #chair RobDolinMS
+17:03:19 <collabot> Current chairs: RobDolinMS vbatts wking
+17:03:29 <wking> duglin: I tried to use generic language to avoid restricting implementation
+17:03:58 <wking> duglin: I did not split stop/delete, but have called the closer 'delete' (since you'll want that regardless of whether there is a separate 'stop' command)
+17:04:14 <wking> mrunal_: there's a separate agenda item for stop/signal/kill, so maybe delay that discussion for now
+17:04:23 <wking> duglin: agreed that that's a separate discussion
+17:05:06 <wking> mrunal_: do we keep a combined command to preserve what we have today?
+17:05:24 <wking> duglin: we want to avoid optional support where some folks go one way and some go another
+17:05:31 <wking> mrunal_: I'd require both approaches
+17:06:02 <wking> mrunalp: some existing users prefer the single command
+17:06:08 <mikebrow> yes, both is best to support existing expectations
+17:06:20 <wking> julz_: one advantage of this approach to the split is supporting that combined command
+17:06:43 <wking> #action duglin to modify #384 to restore the combined command
+17:06:54 <wking> duglin: does the overall idea sound right?
+17:07:07 <JakeWarner|Work> This seems to be most inline with proposal 3
+17:07:12 <JakeWarner|Work> is that correct?
+17:07:15 <wking> mrunalp: yes.  But we need to figure out the container-process pausing, and then decide if that goes into the spec or not
+17:07:30 <wking> JakeWarner|Work: yeah, it's pretty much proposal 3
+17:07:39 <JakeWarner|Work> Yeah, very happy with this
+17:07:55 <JakeWarner|Work> also agree with still maintaining a 'run'
+17:07:59 <wking> duglin: does cgroup freezing, sockets, etc. get discussed in the PR?
+17:08:19 <wking> mrunalp: sure.  We can float implementation notes there, and then pull them out if we decide they shouldn't go in the spec
+17:08:55 <wking> #topic stop/kill/delete
+17:08:57 <mrunalp> https://github.com/opencontainers/runtime-spec/issues/356
+17:09:23 <mrunalp> mikebrow, ^
+17:09:25 <vbatts> #link https://github.com/opencontainers/runtime-spec/issues/356
+17:09:47 <mikebrow> not unmutting
+17:10:45 <wking> can someone else take notes?  I have to step out for a second
+17:13:04 <JakeWarner|Work> Does it make sense for the user to be able to specify those signals in the spec?
+17:13:56 <wking> ok, I'm back
+17:14:13 <wking> mikebrow: the issue is that 'stop' isn't clearly defined, but sending a signal is clear
+17:14:44 <wking> some folks like an agnostic, cross-platform command
+17:14:55 <wking> julz_: but we want clarity on how a graceful stop should work
+17:15:20 <JakeWarner|Work> julz_: I agree with that as well. Like, I try to send a SIG_INT first then after 15 seconds, I send a SIG_KILL
+17:15:29 <wking> julz_: we want a forceful stop (like SIGKILL), but need a way to figure out how to handle a graceful stop (e.g. SIGTERM)
+17:16:03 <wking> mikebrow: we certainly need more direction about what happens with 'stop'
+17:16:24 <wking> mrunalp: we should wait to figure out how to do that in a cross-platform, portable approach
+17:16:57 <wking> #action wking to mail RobDolinMS with POSIX signal docs
+17:17:15 <wking> #action RobDolinMS to check with Windows container folks about supporting a signal-style approach
+17:17:25 <wking> #action mikebrow to submit a PR sketching out the signal-style approach
+17:17:32 <mrunalp> #topic rename ociVersion
+17:17:34 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/371
+17:18:09 <wking> vbatts: there hasn't been much conversation around this
+17:18:18 <wking> vbatts: maybe there should be a media type instead of a version?
+17:18:27 <wking> vbatts: or maybe a media type with a version?
+17:18:41 <wking> vbatts: it needs more thought
+17:19:19 <wking> mrunalp: if we're shipping the two specs together, having the same version key sounds reasonable
+17:19:32 <wking> mrunalp: if we're versioning them differently, it probably makes more sense to have different keys
+17:19:59 <wking> vbatts: they're in different repos with decoupled cadences (except for 1.0, hopefully)
+17:20:50 <wking> vbatts: it might make more sense to have a media type, and the ociVersion is just whatever the last tagged version that you are accomodating...
+17:20:57 <wking> ^ I'm not entirely clear on that last line
+17:22:26 <vishh> `version` seems to be good enough.
+17:24:03 <wking> #action vbatts to write up a PR about the media-type approach
+17:25:01 <wking> there are some examples in the image-spec repo of mime types for versioning JSON files
+17:25:10 <mrunalp> #topic remove exec from spec
+17:25:11 <mrunalp> https://github.com/opencontainers/runtime-spec/issues/345
+17:25:26 <vbatts> #chair mrunalp
+17:25:26 <collabot> Current chairs: RobDolinMS mrunalp vbatts wking
+17:25:30 <wking> mrunalp: last call to oppose?
+17:25:37 <vbatts> #topic remove exec from spec
+17:25:44 <vbatts> #link https://github.com/opencontainers/runtime-spec/issues/345
+17:25:47 <duglin> gotta run - bye
+17:25:50 <vbatts> duglin: o/
+17:25:57 <mrunalp> bye
+17:26:01 <vishh> bye
+17:26:14 <wking> #action vishh to post a PR removing exec
+17:26:59 <mrunalp> #topic PR review
+17:27:08 <wking> #348 looks ready
+17:27:36 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/270
+17:29:15 <wking> I still don't like the restricted names (https://github.com/opencontainers/runtime-spec/pull/270/files#r47824814)
+17:29:26 <wking> mrunalp: agree that we should punt to the filesystem limitations
+17:29:35 <wking> vishh: I'm worried about systemd compatibility
+17:29:48 <wking> mrunalp: in runC we created our own syntax, but it's not in the spec
+17:31:05 <wking> vishh: if we don't have character limits the schema is weaker
+17:31:14 <wking> vishh: we should document what the filesystem API expecs
+17:31:16 <wking> *expects
+17:32:15 <wking> #action vishh to update character restrictions to match kernel limits
+17:32:19 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/348
+17:33:06 <wking> mrunalp: seems good to me.  Last call before merging?
+17:33:26 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/366
+17:33:58 <wking> vbatts: this is just dropping the range flag to the git-validation tool, because the tool now looks at the environment variable
+17:35:22 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/360
+17:37:36 <wking> mrunalp: the other PRs have open comments
+17:38:00 <mrunalp> #endmeeting

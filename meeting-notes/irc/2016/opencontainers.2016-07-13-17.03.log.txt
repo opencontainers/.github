@@ -1,0 +1,61 @@
+17:03:54 <mrunalp> #startmeeting OCI_July_13
+17:03:54 <collabot> Meeting started Wed Jul 13 17:03:54 2016 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:03:54 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:03:54 <collabot> The meeting name has been set to 'oci_july_13'
+17:04:52 <wking> mrunalp: chair me?
+17:04:58 <mrunalp> #chair wking
+17:04:58 <collabot> Current chairs: mrunalp wking
+17:05:26 <wking> #topic command-line API
+17:05:34 <wking> #link https://github.com/opencontainers/runtime-spec/pull/511
+17:05:36 <wking> #link https://github.com/opencontainers/runtime-spec/pull/513
+17:05:56 <wking> duglin: I'm looking for some review on #511.  Are we pushing that approach forward?
+17:06:00 <wking> mrunalp: I'm ok either way
+17:06:20 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/513
+17:10:31 <wking> #408 is a blocker to allow us to collect the collect the container exit code in a portable way (without the Linux-specific subreaper stuff)
+17:11:05 <wking> julz_: I think we should cut an API spec with exactly what runC has today, and then we can adjust with smaller pivots
+17:11:15 <wking> mrunalp: and we don't have to cut 1.0 immediately after it lands
+17:13:11 <wking> if we land the current runC API as 1.0, compliance testing for Windows runtimes may be impossible (how would you collect the container process exit code)
+17:13:29 <wking> RobDolanMS: Can someone send me these references so we can evaluate Windows compliance
+17:14:13 <wking> RobDolanMS: We can just add a TODO marker to the PR, so we don't have to put in some stopgap implementation
+17:14:59 <wking> action wking to ping RobDolanMS about #513
+17:15:41 <wking> anuthan_: Solaris currently has create/start/delete
+17:16:29 <wking> which process is waiting on the container process exit code?
+17:16:42 <wking> anuthan_: On Solaris, 'start' waits on the container process exit
+17:17:01 <wking> anuthan_: The kernel thinks it's running at 'create' time, but there's no user process until 'start'
+17:17:10 <wking> duglin:
+17:17:36 <wking> jlb13: The process that anuthan_'s talking about is a daemon, similar to containerd
+17:17:55 <wking> jlb13: When you create a Solaris container, it doesn't add another process.  The process is launched at 'start' time
+17:18:10 <wking> jlb13: I believe Windows works similarly
+17:18:12 <mikebrow> so spec needs to support any model where a process is waiting on the exit
+17:19:14 <wking> ^ difficult to do ;).
+17:19:29 <mikebrow> yes, but not difficult to specify
+17:20:07 <mikebrow> who what how.. isnt a requirement just that the action occurs
+17:20:53 <mikebrow> isn't a requirement of the cli spec..
+17:21:02 <wking> julz_: the --pid approach is the defacto standard
+17:21:09 <wking> Why do we have --pid instead of calling 'state'?
+17:21:22 <wking> julz_: I'm not sure, maybe if the process dies before you call 'state'?
+17:21:50 <wking> julz_: both containerd and Guardian are using --state, but it may not matter
+17:22:24 <mikebrow> ^ let's not boil the ocean
+17:22:24 <wking> And we're punting on Windows/Solaris integration?
+17:22:32 <wking> julz_: yes, for now
+17:23:46 <wking> jlb13: I don't think it's good to have a platform-specific API spec as a first pass
+17:24:09 <wking> jlb13: We may have future trip-ups, but we should be able to abstract in the spec
+17:26:04 <wking> jlb13: I still think there's a terminology hangup here
+17:26:29 <wking> jlb13: when you create a process on Linux, there's a new process
+17:26:35 <wking> yes
+17:26:39 <wking> jlb13: and then at start?
+17:27:00 <wking> julz_: 'start' tells the process from 'create' to exec the user code, and 'start' immediately exits
+17:27:10 <wking> jlb13: we do the same thing, but do the fork and exec at 'start'
+17:27:39 <wking> jlb13: we just have to figure out how to abstract that into the spec
+17:27:59 <wking> julz_: say I do 'runC start "sleep 24 exit 2"'
+17:28:18 <wking> julz_: in the spec as it stands, 'runC start' will send a signal and exit immediately
+17:28:49 <wking> jlb13: I think this is an implementation choice.  We'll compare notes, and maybe be able to match the runC approach in Solaris
+17:29:21 <wking> jlb13: we want to avoid a platform split, and I think we can
+17:29:32 <wking> julz_: in an ideal world we could avoid this with a 'runC wait'
+17:30:39 <wking> I think #508 and the 'event' operation are a pretty straightforward solution to this problem
+17:30:48 <wking> julz_: I don't want so much in the air at one time ;)
+17:30:59 <mikebrow> event and/or mrunal's hook solns each provide a mechanism to resolve this issue.. but these solns should be discussed after moving forward with a PR without it.. so we can discuss it at length
+17:31:04 <wking> Yeah, I can reroll #513 to avoid the #508 blocker to get something landable soon
+17:32:42 <wking> The other blockers in the chain (before #508) decouple from #513 if we punt on #508
+17:33:11 <wking> action wking to reroll #513 to be closer to the current runC, punting on cross-platform portability for now
+17:33:16 <wking> #endmeeting

@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2017-05-12 runtime-spec 1.0 burn-down</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2017-05-12 runtime-spec 1.0 burn-down</h1>
+<span class="details">
+Meeting started by wking at 21:01:33 UTC
+(<a href="opencontainers.2017-05-12-21.01.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">config.md: lifecycle broken links fix</b> <span class="details">(<a href='opencontainers.2017-05-12-21.01.log.html#l-7'>wking</a>, 21:03:17)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/812">https://github.com/opencontainers/runtime-spec/pull/812</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-12-21.01.log.html#l-8'>wking</a>,
+    21:03:22)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">consistency and style fix</b> <span class="details">(<a href='opencontainers.2017-05-12-21.01.log.html#l-9'>wking</a>, 21:03:33)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/811">https://github.com/opencontainers/runtime-spec/pull/811</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-12-21.01.log.html#l-10'>wking</a>,
+    21:03:50)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">config.go: platform-specific properties of process fix</b> <span class="details">(<a href='opencontainers.2017-05-12-21.01.log.html#l-13'>wking</a>, 21:04:49)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/810">https://github.com/opencontainers/runtime-spec/pull/810</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-12-21.01.log.html#l-14'>wking</a>,
+    21:06:14)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">config.md: minor changes for process</b> <span class="details">(<a href='opencontainers.2017-05-12-21.01.log.html#l-20'>wking</a>, 21:08:49)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/809">https://github.com/opencontainers/runtime-spec/pull/809</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-12-21.01.log.html#l-21'>wking</a>,
+    21:08:54)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">config.md: specify mount source</b> <span class="details">(<a href='opencontainers.2017-05-12-21.01.log.html#l-24'>wking</a>, 21:12:08)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/808">https://github.com/opencontainers/runtime-spec/pull/808</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-12-21.01.log.html#l-25'>wking</a>,
+    21:12:14)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">config.md: fix typo of context</b> <span class="details">(<a href='opencontainers.2017-05-12-21.01.log.html#l-33'>wking</a>, 21:15:50)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/807">https://github.com/opencontainers/runtime-spec/pull/807</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-12-21.01.log.html#l-34'>wking</a>,
+    21:15:56)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">question about valid values runtime choose to support</b> <span class="details">(<a href='opencontainers.2017-05-12-21.01.log.html#l-37'>wking</a>, 21:20:06)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/813">https://github.com/opencontainers/runtime-spec/issues/813</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-12-21.01.log.html#l-38'>wking</a>,
+    21:20:14)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">config.md: specify config usage</b> <span class="details">(<a href='opencontainers.2017-05-12-21.01.log.html#l-41'>wking</a>, 21:25:09)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/803">https://github.com/opencontainers/runtime-spec/pull/803</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-12-21.01.log.html#l-42'>wking</a>,
+    21:25:15)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">Update to Windows network options</b> <span class="details">(<a href='opencontainers.2017-05-12-21.01.log.html#l-45'>wking</a>, 21:29:47)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/801">https://github.com/opencontainers/runtime-spec/pull/801</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-12-21.01.log.html#l-46'>wking</a>,
+    21:29:53)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">specs-go/round_trip_test: Add round-trip testing for the config</b> <span class="details">(<a href='opencontainers.2017-05-12-21.01.log.html#l-51'>wking</a>, 21:33:38)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/759">https://github.com/opencontainers/runtime-spec/pull/759</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-12-21.01.log.html#l-52'>wking</a>,
+    21:33:43)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">config-linux: Require no cgroup tweaks when linux.resources is unset</b> <span class="details">(<a href='opencontainers.2017-05-12-21.01.log.html#l-59'>wking</a>, 21:43:24)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/576">https://github.com/opencontainers/runtime-spec/pull/576</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-12-21.01.log.html#l-60'>wking</a>,
+    21:43:29)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">WIP: config: Clarify mounts[].source relative path anchor</b> <span class="details">(<a href='opencontainers.2017-05-12-21.01.log.html#l-63'>wking</a>, 21:48:46)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/735">https://github.com/opencontainers/runtime-spec/pull/735</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-12-21.01.log.html#l-64'>wking</a>,
+    21:48:54)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">config.md: format changes</b> <span class="details">(<a href='opencontainers.2017-05-12-21.01.log.html#l-72'>wking</a>, 21:57:42)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/724">https://github.com/opencontainers/runtime-spec/pull/724</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-12-21.01.log.html#l-73'>wking</a>,
+    21:57:48)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">schema/config-linux: add pattern limit for deviceCgroup</b> <span class="details">(<a href='opencontainers.2017-05-12-21.01.log.html#l-75'>wking</a>, 22:00:27)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/690">https://github.com/opencontainers/runtime-spec/pull/690</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-12-21.01.log.html#l-76'>wking</a>,
+    22:01:14)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/blame/6cc08c24289854bf7a1f48865e49aa4601c5bb60/config-linux.md#L220">https://github.com/opencontainers/runtime-spec/blame/6cc08c24289854bf7a1f48865e49aa4601c5bb60/config-linux.md#L220</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-12-21.01.log.html#l-77'>wking</a>,
+    22:03:00)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">schema/defs-linux: Drop 'Capability' type</b> <span class="details">(<a href='opencontainers.2017-05-12-21.01.log.html#l-79'>wking</a>, 22:09:21)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/766">https://github.com/opencontainers/runtime-spec/pull/766</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-12-21.01.log.html#l-80'>wking</a>,
+    22:09:26)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 22:17:02 UTC
+(<a href="opencontainers.2017-05-12-21.01.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>(none)</li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (78)</li>
+  <li>collabot (4)</li>
+  <li>mrunalp (0)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

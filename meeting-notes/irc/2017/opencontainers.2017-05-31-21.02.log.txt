@@ -1,0 +1,116 @@
+21:02:07 <wking> #startmeeting 2017-05-31 discussion
+21:02:07 <collabot`> Meeting started Wed May 31 21:02:07 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:02:07 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:02:07 <collabot`> The meeting name has been set to '2017_05_31_discussion'
+21:03:43 <wking> #topic annotations: restrict character set of ref.name values
+21:03:48 <wking> #link https://github.com/opencontainers/image-spec/pull/671
+21:05:22 <wking> #link https://www.w3.org/TR/REC-xml/#sec-notation
+21:06:06 <wking> EBNF which defines character ranges^, although the other constructs are not defined as clearly there
+21:06:39 <wking> the XML notation also uses a * suffix for repeation, so it's even closer to your current phrasing
+21:12:06 <vbatts|work> #link https://github.com/opencontainers/image-spec/pulls
+21:12:26 <wking> #topic open image-spec pulls
+21:12:32 <wking> #link https://github.com/opencontainers/image-spec/pulls
+21:12:41 <wking> vbatts|work: we landed the conversion-doc PR today
+21:13:08 <wking> #link https://github.com/opencontainers/image-spec/pull/492
+21:13:16 <wking> vbatts|work: not much left to churn through
+21:13:54 <wking> vbatts|work: minor format discussion in #671.  Some volumes stuff in #504
+21:14:05 <wking> vbatts|work: I think we're in good shape for stabilizing
+21:14:10 <vbatts|work> #link https://github.com/opencontainers/image-spec/pull/690
+21:14:12 <wking> vbatts|work: I don't have a preference for ARM v5
+21:14:18 <wking> #link https://github.com/opencontainers/image-spec/pull/690
+21:14:32 <wking> stevvooe: there are a lot of ARM v5 variations (hard vs. soft float)
+21:14:44 <wking> stevvooe: that's why the ARM folks didn't want it specified
+21:14:49 <wking> vbatts|work: you can still use it
+21:14:58 <wking> stevvooe: yeah, you can still use it, but I don't think we should specify it
+21:15:26 <wking> #action stevvooe to comment on #690 about not specifying v5
+21:16:04 <wking> vbatts|work: we also got the rc6 out last week
+21:16:10 <wking> vbatts|work: any other image-spec topics?
+21:16:27 <wking> stevvooe: had we talked about rc6 before it happened?
+21:16:29 <wking> vbatts|work: yup
+21:16:49 <wking> stevvooe: I must have missed that, because we missed a few milestone items that I had to move off (we're handling them now)
+21:17:41 <wking> RobDolinMS: There's one issue I want John Starks to chime in on, but he's out until tomorrow
+21:17:48 <wking> RobDolinMS: Pull #652
+21:18:03 <wking> #link https://github.com/opencontainers/image-spec/pull/652
+21:18:25 <wking> vbatts|work: some of these I'm deferring to to Microsoft devs.  I can LGTM once he chimes in
+21:18:35 <vbatts|work> #link https://github.com/opencontainers/runtime-spec/pulls
+21:18:46 <wking> #topic runtime-spe pull requests
+21:18:53 <wking> #link https://github.com/opencontainers/runtime-spec/pulls
+21:19:36 <wking> vbatts|work: based on last week's call where we spent 20 minutes figuring out the gameplan, we're trying to draw a line for freezing changes before 1.0
+21:20:00 <wking> vbatts|work: everything else will get tagged v1.NEXT-maybe
+21:20:18 <wking> #link https://github.com/opencontainers/runtime-spec/labels/v1.NEXT-maybe
+21:20:46 <wking> vbatts|work: the v1.0.0-rc6 vote wasn't LGTMed by anyone (except maybe my implicit LGTM from posting the proposal)
+21:20:58 <wking> vbatts|work: because we're still trying to work out the freeze cut-line
+21:21:06 <wking> vbatts|work: crosbymichael, thoughts on an approach?
+21:21:30 <wking> crosbymichael: I really don't know.  We spent a whole week with one hour a day to get down to 10, and now we're back at 33
+21:21:45 <vbatts|work> https://github.com/opencontainers/runtime-spec/milestone/15
+21:21:52 <wking> vbatts|work: one issue is reading/deciding whether we're going to land things before the freeze
+21:22:18 <wking> vbatts|work: we have a tag for maybe and the milestone for things that should go into the freeze
+21:22:45 <wking> vbatts|work: stuff on the "1.0 freeze" milestone should be all that gets merged before a v6/1.0
+21:23:12 <wking> vbatts|work: we can also use a 1.next for tagging things that will go in for certain after 1.0
+21:23:48 <wking> vbatts|work: and we might want a 1.0 branch so master can keep rolling without breaking the freeze
+21:24:00 <wking> crosbymichael: yeah, branching is a big pain
+21:24:15 <wking> crosbymichael: Go closes PRs immediately if they're in a code freeze
+21:24:29 <wking> vbatts|work: I would love that
+21:24:37 <wking> crosbymichael: they're mostly nit-picks, not functional changes
+21:24:55 <wking> crosbymichael: we could move in anything we want to review and mass-close everything else
+21:25:11 <wking> crosbymichael: and then anything new that's not a part of the milestone...
+21:25:31 <wking> crosbymichael: there are still some things we have to change, but you should communicate it on IRC or we'd force-close
+21:26:01 <wking> RobDolinMS: I'm not opposed to getting tight about the bar, but if it takes three hours to review
+21:26:14 <wking> RobDolinMS: And maybe they're an easy one-line change, then we can land it
+21:26:39 <wking> RobDolinMS: An auto-close default but being intelligent about triage rather than bulk closing would be better
+21:27:08 <wking> RobDolinMS: Maybe bulk-close with a message to ping about "please re-open if we need this for 1.0"
+21:28:09 <wking> Why not use v1.NEXT-maybe instead of closing?
+21:28:13 <wking> vbatts|work: that's the nicest way
+21:28:49 <wking> RobDolinMS: I wouldn't object to closing things and asking folks to re-open with reasons for why you need it in 1.0 or why it should be re-opened for v1.NEXT-maybe
+21:29:37 <wking> RobDolinMS: We should recognise that we'll have 10 or 15 things that get re-opened pretty quickly
+21:29:56 <wking> RobDolinMS: Closing helps establish that there is an advocate actively pushing the PR
+21:30:51 <wking> vbatts|work: The golang folks and kernel folks do this
+21:31:10 <wking> vbatts|work: otherwise this could go on forever
+21:31:36 <wking> RobDolinMS: When I was shipping box-product software, we said "you can open something new, but the bar for motivation goes up"
+21:31:58 <wking> RobDolinMS: Maybe there's a template for how to articulate why a change is important
+21:32:31 <wking> mrunalp: another alternative is to only look at the 1.0 freeze milestone
+21:32:48 <wking> mrunalp: and folks who think a change needs to go into the milestone can advocate to get their change added to the milestone
+21:32:52 <vbatts|work> v1.0 FREEZE https://github.com/opencontainers/runtime-spec/milestone/15
+21:32:56 <vbatts|work> v1.0.0 https://github.com/opencontainers/runtime-spec/milestone/7
+21:32:58 <wking> stevvooe: I don't understand why we can't just close these
+21:33:16 <wking> stevvooe: are we worried about feelings?
+21:33:45 <wking> vbatts|work: I don't think it's feelings.  For example, the Windows folks proposing namespacing Linux properties
+21:34:01 <wking> #link https://github.com/opencontainers/runtime-spec/issues/831
+21:34:12 <wking> vbatts|work: if we have that level of discussion on every point it will take a long time
+21:34:30 <wking> stevvooe: there will always be discussion
+21:34:51 <wking> mrunalp: we called for polish, instead of opening 25 PRs, can you have a single polish PR?
+21:36:33 <wking> I can collapse if folks want, but trying to figure out what is a "breaking change" is hard
+21:36:43 <wking> stevvooe: I'd recommend keeping things more tightly scoped
+21:37:14 <wking> stevvooe: 18 PRs seems like a lot, and it's almost unreasonable, but if that's the granularity to avoid pulling in questionable language, then that's probably best
+21:37:24 <wking> RobDolinMS: I like many, small, unrelated PRs
+21:37:49 <wking> stevvooe: a lot of these are changing the spec (and not just adding RFC 2119 language), so we need to be careful reviewing them
+21:38:15 <wking> RobDolinMS: wking can you audit your PRs and flag v1-next
+21:39:59 <wking> stevvooe: I'm not clear on why #852 and #853 are separate
+21:40:18 <wking> I can put those in the same PR if you want
+21:41:31 <wking> mrunalp: RFC 2119 language is hard, because some times you are overly restricting runtimes
+21:41:59 <wking> there's a blanket "do we want RFC 2119 langauge for our properties" and then more specific "what do we want the langauge to be for *this* property"
+21:42:09 <wking> I'm not clear on the maintainer positions at either level^
+21:42:24 <wking> stevvooe: some of the references are confusing, e.g. the IEEE references
+21:45:09 <wking> RobDolinMS: What about inlining the requirements?
+21:46:48 <wking> stevvooe: I'm not saying drop a reference, I'm talking about pulls that are aiming at clarification but fail to achieve it
+21:47:10 <wking> stevvooe: we can assume that the reader can figure out what a relative and absolute paths are, we can defer to the platform
+21:47:37 <wking> stevvooe: but the spec doesn't have to make sense to an alien that doesn't know about relative vs. absolute paths
+21:52:42 <wking> vbatts|work: for example, at some point someone will pull their hair out that some part of float is poorly defined
+21:53:12 <wking> vbatts|work: but in the interest of time, referencing to the nth degree...
+21:53:39 <wking> vbatts|work: if there are links to POSIX, then it makes life difficult for Members to review with their legal teams
+21:54:09 <wking> vbatts|work: so I'd say that generally-accepted, human-readable will better than formally defining absolute paths (or whatever)
+21:54:44 <wking> vbatts|work: if there's a simple merge of capitalizing a "may" or "should", but getting into long-length references or adding restrictions where there weren't any, those could be chopped
+21:55:08 <wking> RobDolinMS: I think that makes sense.  The bar could be "does runtime-tools need clarification for this?"
+21:57:04 <wking> #link https://github.com/opencontainers/runtime-spec/pull/829
+21:58:38 <wking> Do maintainers want this for 1.0 or not?
+21:58:59 <wking> vbatts|work: this could be coding to current versions of kernel APIs
+22:02:23 <vbatts|work> we're at time.
+22:02:46 <wking> vbatts|work: so what's the plan?
+22:02:59 <vbatts|work> #action wking to triage his prs
+22:04:35 <vbatts|work> #link https://github.com/opencontainers/runtime-spec/milestone/7
+22:04:56 <wking> If maintainers don't want RFC 2119 requirements for runtimes, they can close #746, most PRs referencing it, and possibly revert #787 and other PRs that have already landed as part of that effor
+22:05:30 <wking> crosbymichael: should we also send a dev@ email about the freeze?
+22:05:40 <wking> #action vbatts|work to mail dev@ about the freeze
+22:06:33 <wking> crosbymichael: maybe put up a vote on Friday?
+22:06:56 <wking> mrunalp: lets get whatever config changes landed that we want landed
+22:07:30 <wking> #endmeeting

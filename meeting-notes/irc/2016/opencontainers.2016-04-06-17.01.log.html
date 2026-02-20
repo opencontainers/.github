@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">17:01:42</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-04-06 runtime discussion</span>
+<a name="l-2"></a><span class="tm">17:01:42</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Apr  6 17:01:42 2016 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">17:01:42</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">17:01:42</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2016_04_06_runtime_discussion'
+<a name="l-5"></a><span class="tm">17:03:30</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">close issues / PRs</span>
+<a name="l-6"></a><span class="tm">17:03:39</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/293
+<a name="l-7"></a><span class="tm">17:03:50</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/293</span>
+<a name="l-8"></a><span class="tm">17:03:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we should move that to image-spec^
+<a name="l-9"></a><span class="tm">17:04:16</span><span class="nk"> &lt;vbatts&gt;</span> well, be merged'ish
+<a name="l-10"></a><span class="tm">17:04:18</span><span class="nk"> &lt;vbatts&gt;</span> https://github.com/opencontainers/image-spec/pull/6
+<a name="l-11"></a><span class="tm">17:04:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> it doesn't make sense since image-spec is starting from Docker v2.2 manifest, so it should just be closed
+<a name="l-12"></a><span class="tm">17:04:48</span><span class="nk"> &lt;vbatts&gt;</span> that ^ was philips
+<a name="l-13"></a><span class="tm">17:04:57</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/issues/302
+<a name="l-14"></a><span class="tm">17:05:35</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/issues/11
+<a name="l-15"></a><span class="tm">17:06:45</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/issues/344
+<a name="l-16"></a><span class="tm">17:07:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> new topic for 0.5?
+<a name="l-17"></a><span class="tm">17:07:36</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">v0.5.0</span>
+<a name="l-18"></a><span class="tm">17:07:41</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/milestones/v0.5.0</span>
+<a name="l-19"></a><span class="tm">17:07:47</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chairs </span><span class="cmdline">wking</span>
+<a name="l-20"></a><span class="tm">17:07:50</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-21"></a><span class="tm">17:07:50</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: vbatts wking
+<a name="l-22"></a><span class="tm">17:08:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we probably won't resolve the sandbox issue without a PR
+<a name="l-23"></a><span class="tm">17:08:08</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/issues/299</span>
+<a name="l-24"></a><span class="tm">17:08:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> should we bump #299 to 0.6.0, or just delay 0.5.0
+<a name="l-25"></a><span class="tm">17:08:43</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/issues/299
+<a name="l-26"></a><span class="tm">17:08:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I bumped it to 0.6.0
+<a name="l-27"></a><span class="tm">17:09:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> how are we synchronizing image-spec and runtime-spec?  Or are they independent?
+<a name="l-28"></a><span class="tm">17:09:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> the milestones are different, but we want 1.0 around the same time
+<a name="l-29"></a><span class="tm">17:10:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> there is going to be some overlap, because there is shared boilerplate (code of conduct, style checks, etc.)
+<a name="l-30"></a><span class="tm">17:10:21</span><span class="nk"> &lt;philips&gt;</span> Overall there is this note on the runtime-spec &amp; image-spec: https://github.com/opencontainers/image-spec#cooperation-with-oci-runtime-project
+<a name="l-31"></a><span class="tm">17:10:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> there will be JSON Schema overlap as well
+<a name="l-32"></a><span class="tm">17:10:44</span><span class="nk"> &lt;wking&gt;</span> you can link from image-spec to the runtime-spec JSON Schema definitions^
+<a name="l-33"></a><span class="tm">17:10:53</span><span class="nk"> &lt;JakeWarner|Work&gt;</span> Whoa, really excited about this image-spec
+<a name="l-34"></a><span class="tm">17:11:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> appc has a template repository, but copying is probably ok for now
+<a name="l-35"></a><span class="tm">17:11:20</span><span class="nk"> &lt;philips&gt;</span> This is the template-project we use: https://github.com/coreos/template-project
+<a name="l-36"></a><span class="tm">17:11:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> does it make sense to have two weekly calls?  Or keep it in one?
+<a name="l-37"></a><span class="tm">17:11:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the runtime stuff is winding down, so probably keep one weekly call
+<a name="l-38"></a><span class="tm">17:12:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> image spec has a lot of prior art, so we may only need a biweekly call
+<a name="l-39"></a><span class="tm">17:12:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> so Wednesday remains a generic dev call, and we can fork if needed
+<a name="l-40"></a><span class="tm">17:13:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> for 0.5.0, how urgent is cutting the release in the next day or two?
+<a name="l-41"></a><span class="tm">17:13:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> that's pretty subjective
+<a name="l-42"></a><span class="tm">17:13:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> we may have a conformance clause coming, which would make it easier for conformance testing
+<a name="l-43"></a><span class="tm">17:13:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> if we hold 0.5.0, I can have Stephen submit it today (it's just a paragraph or so)
+<a name="l-44"></a><span class="tm">17:13:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we can probably wait for that
+<a name="l-45"></a><span class="tm">17:14:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> anything besides #344 for 0.5.0?  What has changed since 0.4.0?
+<a name="l-46"></a><span class="tm">17:15:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> hook timeouts (#346)
+<a name="l-47"></a><span class="tm">17:15:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> read-only and masked paths (#364)
+<a name="l-48"></a><span class="tm">17:16:25</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">vbatts to update the example JSON (#344)</span>
+<a name="l-49"></a><span class="tm">17:16:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we may need another week or two for the create/start split
+<a name="l-50"></a><span class="tm">17:17:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> for timing 0.6.0^
+<a name="l-51"></a><span class="tm">17:17:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> duglin is traveling for a while, so it probably makes sense to defer create/start
+<a name="l-52"></a><span class="tm">17:17:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> create/start is the only item on 0.6.0
+<a name="l-53"></a><span class="tm">17:18:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> then just keep it open until create/start is ready
+<a name="l-54"></a><span class="tm">17:18:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS_:</span> after create/start lands, cut 0.6.0 and make that the release cantidate
+<a name="l-55"></a><span class="tm">17:18:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS_:</span> after that, release on demand instead of timing releases
+<a name="l-56"></a><span class="tm">17:18:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> works for me
+<a name="l-57"></a><span class="tm">17:18:48</span><span class="nk"> &lt;julz_&gt;</span> sgtm too
+<a name="l-58"></a><span class="tm">17:18:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> sounds good to me
+<a name="l-59"></a><span class="tm">17:18:53</span><span class="nk"> &lt;wking&gt;</span> and to me
+<a name="l-60"></a><span class="tm">17:19:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS_:</span> hopefully we stabilize, and then cut 1.0 in early June
+<a name="l-61"></a><span class="tm">17:19:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> yup
+<a name="l-62"></a><span class="tm">17:19:30</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">create/start split</span>
+<a name="l-63"></a><span class="tm">17:19:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> this is ready for early comments, but it's not in its final form
+<a name="l-64"></a><span class="tm">17:20:14</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/duglin/runtime-spec/tree/SplitCreate</span>
+<a name="l-65"></a><span class="tm">17:20:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I don't think the implementation is controversial, but either duglin or I may put something together so folks can kick the tires
+<a name="l-66"></a><span class="tm">17:20:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> so we'll get something more solid and discuss next week
+<a name="l-67"></a><span class="tm">17:21:08</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

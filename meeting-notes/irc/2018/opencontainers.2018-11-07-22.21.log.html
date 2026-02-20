@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">22:21:02</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2018-11-07</span>
+<a name="l-2"></a><span class="tm">22:21:02</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Nov  7 22:21:02 2018 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">22:21:02</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">22:21:02</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2018_11_07'
+<a name="l-5"></a><span class="tm">22:21:03</span><span class="nk"> &lt;cyphar&gt;</span> my bouncer is down
+<a name="l-6"></a><span class="tm">22:21:21</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">intros</span>
+<a name="l-7"></a><span class="tm">22:21:28</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">distribution conformance</span>
+<a name="l-8"></a><span class="tm">22:21:36</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/distribution-spec/issues/24</span>
+<a name="l-9"></a><span class="tm">22:21:47</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">umoci as an OCI project</span>
+<a name="l-10"></a><span class="tm">22:21:52</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/openSUSE/umoci/</span>
+<a name="l-11"></a><span class="tm">22:23:00</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-tools</span>
+<a name="l-12"></a><span class="tm">22:25:59 </span><span class="nka">* vbatts</span> <span class="ac">opinion</span>
+<a name="l-13"></a><span class="tm">22:26:32</span><span class="nk"> &lt;vbatts&gt;</span> image-tools must do "validate", everything else is nice to have
+<a name="l-14"></a><span class="tm">22:28:38</span><span class="nk"> &lt;vbatts&gt;</span> i know there has been effort by folks on image-tools, but it is not a successful tool for validation/conformance nor even unpacking or generation
+<a name="l-15"></a><span class="tm">22:29:15</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">vbatts:</span> I prefer to see it merged, as that preserves the history and accomplisments of all those involved
+<a name="l-16"></a><span class="tm">22:29:45</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#action </span><span class="cmdline">cyphar to send out a thread about this</span>
+<a name="l-17"></a><span class="tm">22:34:13</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">getting a runc v1</span>
+<a name="l-18"></a><span class="tm">22:34:31</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#action </span><span class="cmdline">cyphar push runc-v1 forward</span>
+<a name="l-19"></a><span class="tm">22:35:06</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">cyphar:</span> there were regressions, and a number of PRs now by akihiro, and getting that fixed and/or resolved
+<a name="l-20"></a><span class="tm">22:37:24</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">cyphar:</span> folks are using 0.6.0 instead of RC releases, to avoid a pre-release...
+<a name="l-21"></a><span class="tm">22:38:35</span><span class="nk"> &lt;cyphar&gt;</span> we should just do a 1.0 release with an mvp and move on -- the release rules for OCI don't really apply to runc in any strong sense
+<a name="l-22"></a><span class="tm">22:39:09</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">22:01:55</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2018-01-10 discussion</span>
+<a name="l-2"></a><span class="tm">22:01:55</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Jan 10 22:01:55 2018 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">22:01:55</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">22:01:55</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2018_01_10_discussion'
+<a name="l-5"></a><span class="tm">22:02:34</span><span class="nk"> &lt;wking&gt;</span> mrunalp, vbatts, stevvooe, tianon, crosbymichael, etc.?
+<a name="l-6"></a><span class="tm">22:03:16</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] only major issue I'd like to bring up is OCI TOB election nomination schedule: https://github.com/opencontainers/tob/issues/33
+<a name="l-7"></a><span class="tm">22:03:20</span><span class="nk"> &lt;vbatts|work&gt;</span> oh man
+<a name="l-8"></a><span class="tm">22:03:30</span><span class="nk"> &lt;stevvooe&gt;</span> hey
+<a name="l-9"></a><span class="tm">22:03:35</span><span class="nk"> &lt;vbatts|work&gt;</span> i'll dial in once i'm in the car
+<a name="l-10"></a><span class="tm">22:03:38</span><span class="nk"> &lt;vbatts|work&gt;</span> :-\
+<a name="l-11"></a><span class="tm">22:21:22</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">wking to file a comment with a link to this log and a call for mrunalp and crosbymichael to weigh in</span>
+<a name="l-12"></a><span class="tm">22:21:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> other topics?
+<a name="l-13"></a><span class="tm">22:21:44</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">distribution API</span>
+<a name="l-14"></a><span class="tm">22:22:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> not much progress last week.  I began drafting an email covering the KubeCon notes
+<a name="l-15"></a><span class="tm">22:22:37</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] here's a relevant github issue for distribution spec discussion: https://github.com/opencontainers/tob/issues/34
+<a name="l-16"></a><span class="tm">22:22:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> we want to bring over the distribution API into OCI
+<a name="l-17"></a><span class="tm">22:22:49</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] here's the gdoc vincent mentioned https://docs.google.com/document/d/15y0SBrrDFIEM7pnU-Oe3Y6pq-eTZfo0mk-k33cS2hR4/edit#heading=h.kmkpd9i5mwli
+<a name="l-18"></a><span class="tm">22:23:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I expect we want to get it circulated for discussion/TOB-vote in the next week or so
+<a name="l-19"></a><span class="tm">22:23:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> but this is somewhat complicated by the TOB vote.  There's no real reason to wait on the initial document
+<a name="l-20"></a><span class="tm">22:23:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> but if discussion takes too long, we might need to start the discussion over with the new TOB
+<a name="l-21"></a><span class="tm">22:24:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I was thinking to not wait
+<a name="l-22"></a><span class="tm">22:24:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I was thinking we would wait
+<a name="l-23"></a><span class="tm">22:24:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> when does the new TOB come online?
+<a name="l-24"></a><span class="tm">22:24:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> January 29th
+<a name="l-25"></a><span class="tm">22:24:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> all the voting before then?
+<a name="l-26"></a><span class="tm">22:25:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> nominations finish next Thursday.  Votes close on the 26th, and the change happens on the 29th
+<a name="l-27"></a><span class="tm">22:25:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> is there an overlap period?
+<a name="l-28"></a><span class="tm">22:25:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> I think votes stop counting when your term is up
+<a name="l-29"></a><span class="tm">22:25:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> so if the vote comes in before the 29th it counts
+<a name="l-30"></a><span class="tm">22:26:11</span><span class="nk"> &lt;wking&gt;</span> I think it would be clearer to have a vote that did not span the 29th
+<a name="l-31"></a><span class="tm">22:26:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> this project doesn't seem as complex as some of our previous ones
+<a name="l-32"></a><span class="tm">22:26:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> the formal process requires a TOB pull request and formally asking the TOB for a vote
+<a name="l-33"></a><span class="tm">22:27:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I think it's fine to proceed, and we'll figure out when the vote falls later
+<a name="l-34"></a><span class="tm">22:27:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> a finallized proposal by the 19th would allow plenty of time for a vote
+<a name="l-35"></a><span class="tm">22:28:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'd prefer to wait for the new TOB instead of pushing it through
+<a name="l-36"></a><span class="tm">22:28:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> that's fine.  I think we can start working on the proposal and see when it's ready
+<a name="l-37"></a><span class="tm">22:28:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I don't think the active TOB will affect the proposal
+<a name="l-38"></a><span class="tm">22:29:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> I'll take that as an action item that everyone will collaborate on that Google Doc
+<a name="l-39"></a><span class="tm">22:29:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> sounds good
+<a name="l-40"></a><span class="tm">22:30:07</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">open PR for VMs in runtime-spec</span>
+<a name="l-41"></a><span class="tm">22:30:23</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] !link distribution spec https://github.com/opencontainers/tob/issues/33
+<a name="l-42"></a><span class="tm">22:30:23</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/405</span>
+<a name="l-43"></a><span class="tm">22:30:37</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] #link distribution spec https://github.com/opencontainers/tob/issues/33
+<a name="l-44"></a><span class="tm">22:30:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> to my memory, this was punted to see how thin-VM containers shake out
+<a name="l-45"></a><span class="tm">22:30:48</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] i'm such a meetbot noob
+<a name="l-46"></a><span class="tm">22:31:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I think now we are at the point where thin-VM containers are clearer
+<a name="l-47"></a><span class="tm">22:31:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> do we know what's missing?
+<a name="l-48"></a><span class="tm">22:31:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> we may need to start the discussion over because things may have changed since the previous discussion
+<a name="l-49"></a><span class="tm">22:32:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the runtime-spec PR seemed pretty minimal
+<a name="l-50"></a><span class="tm">22:32:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> runV can support multiple backends, so what is the minimum viable set of properties for thin-VM runtimes?
+<a name="l-51"></a><span class="tm">22:33:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I have nothing else right now
+<a name="l-52"></a><span class="tm">22:34:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there was some discussion of JSON Schema on the mailing list...
+<a name="l-53"></a><span class="tm">22:34:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but we can all just leave...
+<a name="l-54"></a><span class="tm">22:34:51</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">JSON Schema</span>
+<a name="l-55"></a><span class="tm">22:35:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I just keep running into bugs.  I'm not sure if it's JSON Schema or gojsonschema.  But when I went to modify it, it took me half a day to add a field
+<a name="l-56"></a><span class="tm">22:35:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> in containerd we've had to add our own validation
+<a name="l-57"></a><span class="tm">22:35:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I don't know what ripping it out would...
+<a name="l-58"></a><span class="tm">22:36:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> It's currently causing the runc build to fail, because runc doesn't pin gojsonschema
+<a name="l-59"></a><span class="tm">22:36:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> so this is a Golang issue?
+<a name="l-60"></a><span class="tm">22:37:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm concerned that folks will feel the JSON Schema covers the spec, because it's only really covering a subset
+<a name="l-61"></a><span class="tm">22:37:41</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runc/issues/1680</span>
+<a name="l-62"></a><span class="tm">22:38:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I agree with the compact-ness sentiment, and I'm a huge fan of protobuf and similar for schema declaration
+<a name="l-63"></a><span class="tm">22:38:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but JSON Schema reminds me of XML
+<a name="l-64"></a><span class="tm">22:38:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> XML was better at this
+<a name="l-65"></a><span class="tm">22:38:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> XML was way better at this
+<a name="l-66"></a><span class="tm">22:39:07</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/945</span>
+<a name="l-67"></a><span class="tm">22:39:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I think we already have docs saying the Markdown is normative, and the JSON Schema is informative
+<a name="l-68"></a><span class="tm">22:39:53</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/739</span>
+<a name="l-69"></a><span class="tm">22:40:32</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/blame/v1.0.1/config.md#L6</span>
+<a name="l-70"></a><span class="tm">22:40:41</span><span class="nk"> &lt;wking&gt;</span> ^ current runtime-spec example showing that the JSON Schema is informative
+<a name="l-71"></a><span class="tm">22:41:17</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

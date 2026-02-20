@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">18:28:57</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">autuminal cleaning, for crosbymichael</span>
+<a name="l-2"></a><span class="tm">18:28:57</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Mon Oct  5 18:28:57 2015 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">18:28:57</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">18:28:57</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to 'autuminal_cleaning__for_crosbymichael'
+<a name="l-5"></a><span class="tm">18:29:14</span><span class="nk"> &lt;vbatts|work&gt;</span> there's not an "i" in autumnal
+<a name="l-6"></a><span class="tm">18:29:16</span><span class="nk"> &lt;vbatts|work&gt;</span> w/e
+<a name="l-7"></a><span class="tm">18:29:33</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/opencontainers/specs/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-asc
+<a name="l-8"></a><span class="tm">18:29:33</span><span class="nk"> &lt;crosbymichael&gt;</span> Lets start from the bottom up
+<a name="l-9"></a><span class="tm">18:29:37</span><span class="nk"> &lt;mrunalp&gt;</span> Sounds good
+<a name="l-10"></a><span class="tm">18:29:46</span><span class="nk"> &lt;crosbymichael&gt;</span> PRs, not issues?
+<a name="l-11"></a><span class="tm">18:29:58</span><span class="nk"> &lt;vbatts|work&gt;</span> k
+<a name="l-12"></a><span class="tm">18:30:05</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/opencontainers/specs/pulls?q=is%3Aopen+sort%3Aupdated-asc+is%3Apr
+<a name="l-13"></a><span class="tm">18:30:16</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">least recently updated PRs</span>
+<a name="l-14"></a><span class="tm">18:30:20</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/opencontainers/specs/pulls?q=is%3Aopen+sort%3Aupdated-asc+is%3Apr
+<a name="l-15"></a><span class="tm">18:30:23</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/specs/pull/101
+<a name="l-16"></a><span class="tm">18:31:21</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">crosbymichael:</span> Either is fine
+<a name="l-17"></a><span class="tm">18:31:32</span><span class="nk"> &lt;mrunalp&gt;</span> I think we may be able to close out some issues too
+<a name="l-18"></a><span class="tm">18:31:43</span><span class="nk"> &lt;crosbymichael&gt;</span> we can start with PRs, then move onto issues
+<a name="l-19"></a><span class="tm">18:31:47</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#101 </span><span class="cmdline">still needs edits to the Go before merging, but review on the Markdown seemed like something that should happen first</span>
+<a name="l-20"></a><span class="tm">18:32:06</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">crosbymichael:</span> Sounds good
+<a name="l-21"></a><span class="tm">18:32:16</span><span class="nk"> &lt;crosbymichael&gt;</span> Ok, lets review #101
+<a name="l-22"></a><span class="tm">18:32:56</span><span class="nk"> &lt;mrunalp&gt;</span> yeah
+<a name="l-23"></a><span class="tm">18:33:01</span><span class="nk"> &lt;mrunalp&gt;</span> It needs rebase
+<a name="l-24"></a><span class="tm">18:33:10</span><span class="nk"> &lt;mrunalp&gt;</span> Looking at the content now
+<a name="l-25"></a><span class="tm">18:33:33</span><span class="nk"> &lt;crosbymichael&gt;</span> ya, lets mostlly review content
+<a name="l-26"></a><span class="tm">18:34:26</span><span class="nk"> &lt;crosbymichael&gt;</span> <span class="hi">wking:</span> why would Go code need changed?
+<a name="l-27"></a><span class="tm">18:34:31</span><span class="nk"> &lt;wking&gt;</span> Go comments
+<a name="l-28"></a><span class="tm">18:35:42</span><span class="nk"> &lt;wking&gt;</span> but if we want to leave the required-ness out of the Go comments, we could leave them alone
+<a name="l-29"></a><span class="tm">18:37:00</span><span class="nk"> &lt;wking&gt;</span> although if, e.g. uid is optional, we probably can't use a uint32 for it (and would need to use a pointer, or special-case a particular value, or whatever to mark "not set")
+<a name="l-30"></a><span class="tm">18:37:41</span><span class="nk"> &lt;crosbymichael&gt;</span> its not optional
+<a name="l-31"></a><span class="tm">18:38:04</span><span class="nk"> &lt;crosbymichael&gt;</span> and it' does not need a pointer because the zero value is valid
+<a name="l-32"></a><span class="tm">18:38:28</span><span class="nk"> &lt;wking&gt;</span> it is optional, because it makes no sense for a cgroup-only entry
+<a name="l-33"></a><span class="tm">18:38:43</span><span class="nk"> &lt;crosbymichael&gt;</span> then ur pr is probably wrong
+<a name="l-34"></a><span class="tm">18:38:45</span><span class="nk"> &lt;wking&gt;</span> like this one: https://github.com/opencontainers/specs/pull/101/files#diff-428eec4013a655816cdefafd5d3505f1R87
+<a name="l-35"></a><span class="tm">18:39:27</span><span class="nk"> &lt;wking&gt;</span> possibly ;).  My preferred approach was #99, which separated cgroup handling from mknod handling
+<a name="l-36"></a><span class="tm">18:39:41</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#101 </span><span class="cmdline">just documents the current overloaded approach</span>
+<a name="l-37"></a><span class="tm">18:40:09</span><span class="nk"> &lt;wking&gt;</span> what would uid be used for for that cgroup-only entry (https://github.com/opencontainers/specs/pull/101/files#diff-428eec4013a655816cdefafd5d3505f1R87)?
+<a name="l-38"></a><span class="tm">18:43:47</span><span class="nk"> &lt;wking&gt;</span> anyhow, back to work for me ;).  Good luck with the review :)
+<a name="l-39"></a><span class="tm">18:44:18</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">crosbymichael:</span> The question is whether we should combine the two or it makes more sense to separate
+<a name="l-40"></a><span class="tm">18:44:35</span><span class="nk"> &lt;crosbymichael&gt;</span> maybe if we want to review creation and permissions together being an issue we couldn't merge and look into that
+<a name="l-41"></a><span class="tm">18:45:35</span><span class="nk"> &lt;mrunalp&gt;</span> yeah, maybe punt on this one
+<a name="l-42"></a><span class="tm">18:45:45</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">lk4d4:</span> can give his thoughts when he has time :)
+<a name="l-43"></a><span class="tm">18:46:00</span><span class="nk"> &lt;vbatts&gt;</span> k. i'm back
+<a name="l-44"></a><span class="tm">18:47:11</span><span class="nk"> &lt;crosbymichael&gt;</span> next one
+<a name="l-45"></a><span class="tm">18:47:21</span><span class="nk"> &lt;crosbymichael&gt;</span> https://github.com/opencontainers/specs/pull/126
+<a name="l-46"></a><span class="tm">18:47:30</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/specs/pull/126</span>
+<a name="l-47"></a><span class="tm">18:47:57</span><span class="nk"> &lt;crosbymichael&gt;</span> -1 the file names are what they are supposed to be in Go
+<a name="l-48"></a><span class="tm">18:48:00</span><span class="nk"> &lt;crosbymichael&gt;</span> with _ not -
+<a name="l-49"></a><span class="tm">18:48:02</span><span class="nk"> &lt;vbatts|work&gt;</span> this one looks outdated
+<a name="l-50"></a><span class="tm">18:48:23</span><span class="nk"> &lt;mrunalp&gt;</span> yeah
+<a name="l-51"></a><span class="tm">18:48:28</span><span class="nk"> &lt;mrunalp&gt;</span> should close for now
+<a name="l-52"></a><span class="tm">18:48:30</span><span class="nk"> &lt;crosbymichael&gt;</span> even if it was updated still -1
+<a name="l-53"></a><span class="tm">18:48:40</span><span class="nk"> &lt;crosbymichael&gt;</span> you name files in go with _ not -
+<a name="l-54"></a><span class="tm">18:48:42</span><span class="nk"> &lt;vbatts|work&gt;</span> also, likely to change with my "top down" effort
+<a name="l-55"></a><span class="tm">18:48:44</span><span class="nk"> &lt;crosbymichael&gt;</span> because builds would work
+<a name="l-56"></a><span class="tm">18:48:47</span><span class="nk"> &lt;crosbymichael&gt;</span> yes
+<a name="l-57"></a><span class="tm">18:48:49</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">crosbymichael:</span> yep
+<a name="l-58"></a><span class="tm">18:49:13</span><span class="nk"> &lt;vbatts|work&gt;</span> want me to comment?
+<a name="l-59"></a><span class="tm">18:49:20</span><span class="nk"> &lt;crosbymichael&gt;</span> <span class="hi">vbatts|work:</span> yes
+<a name="l-60"></a><span class="tm">18:49:28</span><span class="nk"> &lt;crosbymichael&gt;</span> comment and close
+<a name="l-61"></a><span class="tm">18:50:24</span><span class="nk"> &lt;mrunalp&gt;</span> next https://github.com/opencontainers/specs/pull/127/files
+<a name="l-62"></a><span class="tm">18:50:30</span><span class="nk"> &lt;crosbymichael&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/specs/pull/144</span>
+<a name="l-63"></a><span class="tm">18:50:35</span><span class="nk"> &lt;crosbymichael&gt;</span> this one just needs a rebase
+<a name="l-64"></a><span class="tm">18:51:19</span><span class="nk"> &lt;mrunalp&gt;</span> yep
+<a name="l-65"></a><span class="tm">18:51:24</span><span class="nk"> &lt;mrunalp&gt;</span> What about 127?
+<a name="l-66"></a><span class="tm">18:52:40</span><span class="nk"> &lt;crosbymichael&gt;</span> maybe we should just make the change ourself for 127 and merge it and close
+<a name="l-67"></a><span class="tm">18:52:50</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">crosbymichael:</span> okay
+<a name="l-68"></a><span class="tm">18:53:35</span><span class="nk"> &lt;crosbymichael&gt;</span> i can do it
+<a name="l-69"></a><span class="tm">18:53:42</span><span class="nk"> &lt;mrunalp&gt;</span> alright
+<a name="l-70"></a><span class="tm">18:54:10</span><span class="nk"> &lt;crosbymichael&gt;</span> next
+<a name="l-71"></a><span class="tm">18:54:29</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/specs/pull/133/files</span>
+<a name="l-72"></a><span class="tm">18:54:49</span><span class="nk"> &lt;mrunalp&gt;</span> I think this one probably needs more discussion on the mailing list.
+<a name="l-73"></a><span class="tm">18:54:58</span><span class="nk"> &lt;crosbymichael&gt;</span> i think that is being discussed on the mailing list and i don't see it being merge yet
+<a name="l-74"></a><span class="tm">18:55:09</span><span class="nk"> &lt;mrunalp&gt;</span> okay next
+<a name="l-75"></a><span class="tm">18:55:13</span><span class="nk"> &lt;crosbymichael&gt;</span> so close
+<a name="l-76"></a><span class="tm">18:55:14</span><span class="nk"> &lt;crosbymichael&gt;</span> ?
+<a name="l-77"></a><span class="tm">18:55:20</span><span class="nk"> &lt;vbatts|work&gt;</span> that's tough.
+<a name="l-78"></a><span class="tm">18:55:41</span><span class="nk"> &lt;crosbymichael&gt;</span> what is?
+<a name="l-79"></a><span class="tm">18:55:59</span><span class="nk"> &lt;vbatts|work&gt;</span> there is a story there. but this mounting of qcow right in the config seems too much
+<a name="l-80"></a><span class="tm">18:56:05</span><span class="nk"> &lt;mrunalp&gt;</span> yes
+<a name="l-81"></a><span class="tm">18:56:13</span><span class="nk"> &lt;mrunalp&gt;</span> can open a new one once there is agreement
+<a name="l-82"></a><span class="tm">18:56:35</span><span class="nk"> &lt;vbatts|work&gt;</span> perhaps there is a space for vendor custom config, but otherwise there the standard minimal core
+<a name="l-83"></a><span class="tm">18:57:12</span><span class="nk"> &lt;crosbymichael&gt;</span> eww
+<a name="l-84"></a><span class="tm">18:57:22</span><span class="nk"> &lt;mrunalp&gt;</span> Nothing blocks someone from encoding the source path today. Just the language and long direction need to be figured out w.r.t. hypervisors.
+<a name="l-85"></a><span class="tm">18:58:54</span><span class="nk"> &lt;mrunalp&gt;</span> closing/ not closing?
+<a name="l-86"></a><span class="tm">18:59:19</span><span class="nk"> &lt;mrunalp&gt;</span> I am okay keeping it as is for now. We can revisit it next time we do a sweep.
+<a name="l-87"></a><span class="tm">19:00:16</span><span class="nk"> &lt;crosbymichael&gt;</span> it would be nice to keep the issue tracker and PRs under control
+<a name="l-88"></a><span class="tm">19:00:29</span><span class="nk"> &lt;mrunalp&gt;</span> okay, let's close it then
+<a name="l-89"></a><span class="tm">19:00:33</span><span class="nk"> &lt;mrunalp&gt;</span> I can comment and close
+<a name="l-90"></a><span class="tm">19:00:34</span><span class="nk"> &lt;crosbymichael&gt;</span> makes it easier for reviewers and new ppl
+<a name="l-91"></a><span class="tm">19:00:36</span><span class="nk"> &lt;vbatts|work&gt;</span> i did
+<a name="l-92"></a><span class="tm">19:00:40</span><span class="nk"> &lt;vbatts|work&gt;</span> next
+<a name="l-93"></a><span class="tm">19:00:41</span><span class="nk"> &lt;mrunalp&gt;</span> :D
+<a name="l-94"></a><span class="tm">19:00:57</span><span class="nk"> &lt;crosbymichael&gt;</span> we don't want the type of volume that docker has, 150 open PRs and 75-120 new / week
+<a name="l-95"></a><span class="tm">19:01:27</span><span class="nk"> &lt;mrunalp&gt;</span> Makes sense
+<a name="l-96"></a><span class="tm">19:01:59</span><span class="nk"> &lt;crosbymichael&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/specs/pull/142</span>
+<a name="l-97"></a><span class="tm">19:02:01</span><span class="nk"> &lt;crosbymichael&gt;</span> LGTM
+<a name="l-98"></a><span class="tm">19:02:37</span><span class="nk"> &lt;mrunalp&gt;</span> +1
+<a name="l-99"></a><span class="tm">19:03:13</span><span class="nk"> &lt;vbatts|work&gt;</span> next
+<a name="l-100"></a><span class="tm">19:03:24</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/specs/pull/171/files</span>
+<a name="l-101"></a><span class="tm">19:04:01</span><span class="nk"> &lt;crosbymichael&gt;</span> up to u vbatts|work
+<a name="l-102"></a><span class="tm">19:04:16</span><span class="nk"> &lt;mrunalp&gt;</span> Looks like it should be split up and updated
+<a name="l-103"></a><span class="tm">19:04:19</span><span class="nk"> &lt;vbatts|work&gt;</span> hmm. the rebase needed makes this confusing
+<a name="l-104"></a><span class="tm">19:04:23</span><span class="nk"> &lt;mrunalp&gt;</span> Seems all over the place
+<a name="l-105"></a><span class="tm">19:05:10 </span><span class="nka">* vbatts|work</span> <span class="ac">compares to master</span>
+<a name="l-106"></a><span class="tm">19:06:38</span><span class="nk"> &lt;vbatts|work&gt;</span> but the namespace mapping isn't in the runtime. it is in the config
+<a name="l-107"></a><span class="tm">19:06:52</span><span class="nk"> &lt;vbatts|work&gt;</span> ... but _should_ that be runtime specific?
+<a name="l-108"></a><span class="tm">19:07:17</span><span class="nk"> &lt;mrunalp&gt;</span> yes
+<a name="l-109"></a><span class="tm">19:07:20</span><span class="nk"> &lt;vbatts|work&gt;</span> perhaps the container-config makes the ask for a uid/gid to be namespaced
+<a name="l-110"></a><span class="tm">19:07:32</span><span class="nk"> &lt;vbatts|work&gt;</span> and the runtime-config records the uid/gid it is mapped too?
+<a name="l-111"></a><span class="tm">19:08:04</span><span class="nk"> &lt;crosbymichael&gt;</span> i g2g
+<a name="l-112"></a><span class="tm">19:08:06</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">vbatts|work:</span> No, the mappings are exact
+<a name="l-113"></a><span class="tm">19:08:13</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">crosbymichael:</span> Alright cyl
+<a name="l-114"></a><span class="tm">19:08:16</span><span class="nk"> &lt;crosbymichael&gt;</span> whatever you two decide will be perfect
+<a name="l-115"></a><span class="tm">19:08:17</span><span class="nk"> &lt;crosbymichael&gt;</span> ;)
+<a name="l-116"></a><span class="tm">19:08:20</span><span class="nk"> &lt;mrunalp&gt;</span> Ha :D
+<a name="l-117"></a><span class="tm">19:08:20</span><span class="nk"> &lt;vbatts|work&gt;</span> heh
+<a name="l-118"></a><span class="tm">19:08:41</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">vbatts|work:</span> It isn't like cgroups..
+<a name="l-119"></a><span class="tm">19:08:47</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">mrunalp:</span> so if 0 in the container is 2000 on the host, it will have to be 2000 on every/any host?
+<a name="l-120"></a><span class="tm">19:09:10</span><span class="nk"> &lt;mrunalp&gt;</span> yes, according to our config
+<a name="l-121"></a><span class="tm">19:09:12</span><span class="nk"> &lt;vbatts|work&gt;</span> its seems like it could eventually be a relative configuration.
+<a name="l-122"></a><span class="tm">19:09:36</span><span class="nk"> &lt;mrunalp&gt;</span> Still a runtime decision I think
+<a name="l-123"></a><span class="tm">19:10:17</span><span class="nk"> &lt;vbatts|work&gt;</span> but then the immutable config ought not choose the uid/gid on the host which would be mapped to
+<a name="l-124"></a><span class="tm">19:11:33</span><span class="nk"> &lt;vbatts|work&gt;</span> i could imagine some priv-escalation, where a container could specifiy that it is to be mapped to ... uid 62, and then if somehow escalated it could access anything httpd has rights to
+<a name="l-125"></a><span class="tm">19:11:37</span><span class="nk"> &lt;vbatts|work&gt;</span> who knows
+<a name="l-126"></a><span class="tm">19:12:02</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">mrunalp:</span> want to comment on this PR?
+<a name="l-127"></a><span class="tm">19:12:28</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">vbatts|work:</span> Sure
+<a name="l-128"></a><span class="tm">19:12:58</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">vbatts|work:</span> I have a call coming up but I will comment on this PR. Maybe have another session later or tomorrow?
+<a name="l-129"></a><span class="tm">19:13:21</span><span class="nk"> &lt;vbatts|work&gt;</span> k
+<a name="l-130"></a><span class="tm">19:13:25</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

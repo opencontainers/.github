@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2017-06-01 runtime-spec PR review</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2017-06-01 runtime-spec PR review</h1>
+<span class="details">
+Meeting started by wking at 17:41:06 UTC
+(<a href="opencontainers.2017-06-01-17.41.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">863</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-5'>wking</a>, 17:41:14)</span>
+<ol type="a">
+  <li><a
+    href="http://www.open-std.org/jtc1/sc22/wg14/www/C99RationaleV5.10.pdf#page=18">http://www.open-std.org/jtc1/sc22/wg14/www/C99RationaleV5.10.pdf#page=18</a>
+    <span class="details">(<a
+    href='opencontainers.2017-06-01-17.41.log.html#l-6'>wking</a>,
+    17:43:10)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">wking to
+    change "unspecified" -&gt;</span> <span class="details">(<a
+    href='opencontainers.2017-06-01-17.41.log.html#l-7'>wking</a>,
+    17:44:34)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">wking to
+    change "unspecified" -&gt; "ignored"</span> <span
+    class="details">(<a
+    href='opencontainers.2017-06-01-17.41.log.html#l-8'>wking</a>,
+    17:44:39)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">862</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-9'>wking</a>, 17:44:52)</span>
+<br></li>
+<li><b class="TOPIC">860</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-10'>wking</a>, 17:46:35)</span>
+<br></li>
+<li><b class="TOPIC">858</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-14'>wking</a>, 17:48:20)</span>
+<br></li>
+<li><b class="TOPIC">854</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-16'>wking</a>, 17:49:25)</span>
+<br></li>
+<li><b class="TOPIC">852</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-20'>wking</a>, 17:52:19)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">wking to
+    remove the retrieved-resource example line</span> <span
+    class="details">(<a
+    href='opencontainers.2017-06-01-17.41.log.html#l-22'>wking</a>,
+    17:53:42)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">851</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-23'>wking</a>, 17:53:55)</span>
+<br></li>
+<li><b class="TOPIC">850</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-25'>wking</a>, 17:54:32)</span>
+<br></li>
+<li><b class="TOPIC">847</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-29'>wking</a>, 17:56:27)</span>
+<br></li>
+<li><b class="TOPIC">844</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-30'>wking</a>, 17:57:44)</span>
+<br></li>
+<li><b class="TOPIC">841</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-38'>wking</a>, 18:00:55)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">crosbymichael
+    to file a replacement PR removing the wildcards (and maybe talkinb
+    about devices.allow and devices.deny?)</span> <span
+    class="details">(<a
+    href='opencontainers.2017-06-01-17.41.log.html#l-45'>wking</a>,
+    18:07:34)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">840</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-46'>wking</a>, 18:07:38)</span>
+<br></li>
+<li><b class="TOPIC">838</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-47'>wking</a>, 18:09:15)</span>
+<br></li>
+<li><b class="TOPIC">835</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-50'>wking</a>, 18:12:08)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">wking to
+    consolidate the Markdown around POSIX</span> <span
+    class="details">(<a
+    href='opencontainers.2017-06-01-17.41.log.html#l-61'>wking</a>,
+    18:17:50)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">crosbymichael
+    to comment around POSIX consolidation</span> <span
+    class="details">(<a
+    href='opencontainers.2017-06-01-17.41.log.html#l-62'>wking</a>,
+    18:18:10)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">834</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-63'>wking</a>, 18:18:19)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/834#issuecomment-302579003">https://github.com/opencontainers/runtime-spec/pull/834#issuecomment-302579003</a>
+    <span class="details">(<a
+    href='opencontainers.2017-06-01-17.41.log.html#l-65'>wking</a>,
+    18:18:42)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">mrunalp too
+    take out line 188 in #834 and add some comment about what cgroups
+    must be joinsd</span> <span class="details">(<a
+    href='opencontainers.2017-06-01-17.41.log.html#l-68'>wking</a>,
+    18:36:56)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">829</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-69'>wking</a>, 18:37:26)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">wking to
+    split out the MAY from #829</span> <span class="details">(<a
+    href='opencontainers.2017-06-01-17.41.log.html#l-71'>wking</a>,
+    18:38:40)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-tools/pull/354">https://github.com/opencontainers/runtime-tools/pull/354</a>
+    <span class="details">(<a
+    href='opencontainers.2017-06-01-17.41.log.html#l-73'>wking</a>,
+    18:41:43)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">825</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-74'>wking</a>, 18:49:30)</span>
+<br></li>
+<li><b class="TOPIC">811</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-76'>wking</a>, 18:49:41)</span>
+<br></li>
+<li><b class="TOPIC">735</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-78'>wking</a>, 18:50:02)</span>
+<br></li>
+<li><b class="TOPIC">809</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-80'>wking</a>, 18:50:11)</span>
+<br></li>
+<li><b class="TOPIC">680</b> <span class="details">(<a href='opencontainers.2017-06-01-17.41.log.html#l-82'>wking</a>, 18:54:05)</span>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 19:02:42 UTC
+(<a href="opencontainers.2017-06-01-17.41.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>wking to change "unspecified" -&gt;</li>
+  <li>wking to change "unspecified" -&gt; "ignored"</li>
+  <li>wking to remove the retrieved-resource example line</li>
+  <li>crosbymichael to file a replacement PR removing the wildcards (and maybe talkinb about devices.allow and devices.deny?)</li>
+  <li>wking to consolidate the Markdown around POSIX</li>
+  <li>crosbymichael to comment around POSIX consolidation</li>
+  <li>mrunalp too take out line 188 in #834 and add some comment about what cgroups must be joinsd</li>
+  <li>wking to split out the MAY from #829</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> wking <ol>
+    <li>wking to change "unspecified" -&gt;</li>
+    <li>wking to change "unspecified" -&gt; "ignored"</li>
+    <li>wking to remove the retrieved-resource example line</li>
+    <li>wking to consolidate the Markdown around POSIX</li>
+    <li>wking to split out the MAY from #829</li>
+  </ol></li>
+  <li><b>UNASSIGNED</b><ol>
+    <li>crosbymichael to file a replacement PR removing the wildcards (and maybe talkinb about devices.allow and devices.deny?)</li>
+    <li>crosbymichael to comment around POSIX consolidation</li>
+    <li>mrunalp too take out line 188 in #834 and add some comment about what cgroups must be joinsd</li>
+  </ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (86)</li>
+  <li>collabot` (3)</li>
+  <li>vbatts|work (1)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

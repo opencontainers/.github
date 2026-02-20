@@ -1,0 +1,81 @@
+17:00:15 <vbatts|work> #startmeeting 2015-09-30 discussion
+17:00:15 <collabot> Meeting started Wed Sep 30 17:00:15 2015 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:00:15 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:00:15 <collabot> The meeting name has been set to '2015_09_30_discussion'
+17:01:43 <vbatts|work> video is https://bluejeans.com/1771332256/
+17:01:48 <vbatts|work> notes at https://docs.google.com/document/d/16Z7I6NS15iuFeYlrEvBxPlsQvmnUf6wzq7tbt2QFN7Q/edit?usp=sharing
+17:01:59 <mrunalp> crosbymichael: vishh: Joining?
+17:02:14 <crosbymichael> sorry, i maybe a little late
+17:02:19 <mrunalp> okay no worries
+17:04:36 <wking> #topic #topic
+17:04:41 <vbatts|work> #topic vbatts - top down spec
+17:06:31 <wking> work on more links: https://github.com/opencontainers/specs/pull/176
+17:06:47 <wking> #action vbatts more work on the overview
+17:06:53 <wking> #topic protobuf transition
+17:07:35 <wking> benefits: generate bindings in many languages
+17:08:00 <wking> drawbacks: hard to map some things into proto2.  Proto3 fixes those, but it's still in beta.
+17:08:12 <wking> https://github.com/opencontainers/specs/pull/185
+17:09:03 <wking> initial tooling work in https://github.com/vbatts/specs/tree/protobuf3 , but it doesn't translate the *.proto syntax to proto3
+17:09:27 <wking> some further work in a few directions: https://github.com/vbatts/specs/pulls
+17:09:37 <vbatts|work> https://github.com/vbatts/specs/pull/1
+17:10:25 <wking> ^ investigating per-platform user extensions in proto2, but there are problems with JSON rendering
+17:10:34 <wking> XXX_extensions   map[int32]proto.Extension `json:"-"`
+17:14:27 <wking> are there other approaches?  vishh says extensions are it in proto2
+17:15:00 <wking> extensions also allow others to extend our fields
+17:15:46 <wking> if we can figure out how to marshal / unmarshal extensions in proto2, that would be a reasonable way forward
+17:17:10 <vbatts|work> #topic Carry the hypervisor discussion on to the mailing-list and next week’s
+17:18:39 <vbatts|work> duglin: regard https://github.com/opencontainers/specs/blob/master/principles.md#5-industrial-grade-delivery
+17:18:43 <vbatts|work> duglin: not really
+17:18:49 <duglin> per https://github.com/opencontainers/specs/blob/master/bundle.md does a bundle start and include the dir containing the config files+rootfs, or is the bundle the contents of the dir (configFile+rootfs) ?
+17:18:54 <wking> xu: can use existing specs and bump pod model up to higher-level tooling
+17:19:15 <duglin> vbatts|work: yea, going to open a PR to clarify some of this - its not as crisp as it should be in places.
+17:19:22 <vbatts|work> jojy_mesos: https://github.com/vbatts/specs/pull/3
+17:19:43 <wking> rob: two Windows container models: Windows server containers and hypervisor containers
+17:19:57 <vbatts|work> duglin: cool. Keep in mind leaning on the mission and spirit of the current charter
+17:20:06 <jojy_mesos> great. thanks vincent!
+17:20:27 <duglin> yes that’s part of what I want to fix - remove stuff not in the charter and only talk about stuff we’ve implemented - leaving the in/out scope questions for the charter folks
+17:20:31 <wking> justincormack: asks for docs on hyperv models
+17:20:39 <wking> #action rob will send docs to the list
+17:20:40 <vbatts|work> jojy_mesos: you can see the current iteration here https://github.com/opencontainers/specs/pull/185
+17:20:44 <vbatts|work> jojy_mesos: `make cpp`
+17:21:07 <vbatts|work> #topic brandon - summarize discussion on bundle identity
+17:21:14 <jojy_mesos> great! will try it
+17:21:38 <vbatts|work> #action he's drafting right now
+17:22:02 <vbatts|work> #topic mrunal - review oct patterns of environment and/or write an initial environment validation tool, to be run as a bundle.
+17:22:49 <vbatts|work> #topic clarifying docs
+17:25:27 <wking> duglin: wants clarity on https://github.com/opencontainers/specs/blob/master/principles.md#5-industrial-grade-delivery
+17:25:35 <wking> everyone agrees the bundle should be deliverable
+17:25:51 <wking> there's disagreement about whether delivery itself is in scope ;)
+17:26:54 <wking> further discussion in PRs against the principles language
+17:27:06 <vbatts|work> #action duglin to open a PR to clarify principles
+17:27:30 <wking> rob: what's the workflow about principles?  Are these things that devs can edit without going through the charter?
+17:27:55 <wking> vbatts: changes to the principles aren't pushed to the charter
+17:28:03 <wking> vbatts: no PRs against opencontainers/web
+17:28:53 <wking> duglin: principles should be consistent with the charter and scoped by the charter
+17:29:03 <wking> but inside those constraints we can change principle wording
+17:29:56 <duglin> or email mike dolan
+17:30:01 <wking> ^ that works for me
+17:30:19 <duglin> he has the pen and is leading the discussions
+17:30:56 <wking> rob: push through a collegue at your company, if you don't have one push to Mike Dolan?
+17:31:44 <duglin> mdolan@linuxfoundation.org
+17:32:24 <wking> duglin: what is a bundle?
+17:35:54 <RobDolinMS> Now at my desk :)
+17:36:18 <vbatts> #topic duglin - clarity around bundle root
+17:36:19 <wking> #action duglin will PR clarified language
+17:36:35 <vbatts> #action doug to review and open PR for clarity
+17:36:39 <vbatts> haha
+17:36:59 <vbatts> #topic wking - lifecycle
+17:37:09 <wking> https://groups.google.com/a/opencontainers.org/d/msg/dev/frUXLljXy8Y/_sg-BidnAwAJ
+17:37:17 <wking> ^ my most recent attempt to summarize this
+17:39:16 <wking> mrunalp: there's existing language around hooks, do we need more?
+17:39:36 <wking> I think we do to clarify the execution environment and exactly when these hooks are triggered
+17:40:13 <RobDolinMS> #link https://groups.google.com/a/opencontainers.org/d/msg/dev/frUXLljXy8Y/_sg-BidnAwAJ wking's most recent attempt to summarize
+17:41:40 <wking> xu: can you create a new container in an existing namespace?
+17:41:44 <wking> mrunalp: yes, with cgroupsPath
+17:41:52 <wking> and namespace paths
+17:44:13 <wking> mrunalp: pre-start hooks are called after creating or joining (not skipped for the joining case)
+17:44:18 <wking> xu: makes sense
+17:44:55 <wking> #action wking to PR the lifecycle docs
+17:45:30 <vbatts> #endmeeting
+17:45:55 <vbatts|work> ...
+17:45:57 <vbatts|work> #endmeeting

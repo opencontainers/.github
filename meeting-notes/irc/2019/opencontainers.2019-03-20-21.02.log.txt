@@ -1,0 +1,15 @@
+21:02:35 <vbatts> #startmeeting 2019-03-20
+21:02:35 <collabot> Meeting started Wed Mar 20 21:02:35 2019 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:02:35 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:02:35 <collabot> The meeting name has been set to '2019_03_20'
+21:02:56 <vbatts> oh... maybe not meetbot. Maybe just hackmd.io ...
+21:03:07 <vbatts> https://hackmd.io/El8Dd2xrTlCaCG59ns5cwg?edit
+21:58:01 <mikebrow> https://hackmd.io/s/BJPAUxDvV#OCI-Catalog-Listing-API---Workgroup
+21:59:37 <tianon> quick quick, race to exit the meeting so you're not last don't get barraged with insane music
+21:59:38 <mikebrow> love this music
+21:59:55 <tianon> ... the timing on our messages couldn't have been more perfect
+21:59:59 <tianon> :D
+22:00:26 <mikebrow> :-) happy to oblige
+22:00:54 <estesp[m]> should have made the announcement but never got a moment of free time once we got into the agenda.. but did everyone realize they were talking to a Senior Principal Engineer at Red Hat today!??! Congrats vbatts on a very well deserved promotion!
+22:03:13 <tianon> moving up that chonk scale!!  OH LAWD HE COMIN
+22:04:39 <vbatts> #endmeeting

@@ -1,0 +1,157 @@
+21:02:34 <mrunalp> #startmeeting OCI_9_14
+21:02:34 <collabot> Meeting started Wed Sep 14 21:02:34 2016 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:02:34 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:02:34 <collabot> The meeting name has been set to 'oci_9_14'
+21:02:50 <vbatts> Join the call: https://www.uberconference.com/opencontainers
+21:02:53 <vbatts> Optional dial in number: 415-968-0849
+21:02:55 <vbatts> No PIN needed
+21:02:59 <mrunalp> stevvooe, ^^
+21:03:17 <stevvooe> i don't have access to a phone right now
+21:03:28 <stevvooe> this was broken in the same way last week
+21:03:31 <mrunalp> #chair vbatts
+21:03:31 <collabot> Current chairs: mrunalp vbatts
+21:03:32 <stevvooe> do we have support for this?
+21:03:49 <mrunalp> stevvooe, We can follow up with Linux Foundation.
+21:04:14 <philips> uber won't let me back in
+21:05:06 <vbatts> ...
+21:05:12 <philips> got in
+21:05:48 <mrunalp> https://github.com/opencontainers/runc/pull/1018
+21:05:52 <mrunalp> #topic https://github.com/opencontainers/runc/pull/1018
+21:14:16 <philips> OMFG uber dropped me
+21:16:36 <Guest77797> mrunalp: chair me?
+21:16:45 <Guest77797> err, once I become wking ;)
+21:16:59 <mrunalp> #chair wking
+21:16:59 <collabot> Current chairs: mrunalp vbatts wking
+21:17:02 <wking> thanks :)
+21:17:11 <mrunalp> sure np :)
+21:17:16 <wking> vbatts: the CI workflow has been limping along
+21:17:41 <Guest95456> philips: do we want to remove the outstanding post-v1.0 issues?
+21:17:50 <philips> https://github.com/opencontainers/image-spec/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20-label%3Acomponent%2Foci-image-tool%20-milestone%3Apost-v1.0.0
+21:17:59 <Guest95456> #topic image-spec v1.0.0 milestone
+21:18:08 <Guest95456> #link https://github.com/opencontainers/image-spec/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20-label%3Acomponent%2Foci-image-tool%20-milestone%3Apost-v1.0.0
+21:18:15 <Guest95456> philips: PDF cleanup should be in the next milestone
+21:18:22 <Guest95456> vbatts: the issue I just opened today?  Yeah
+21:18:29 <Guest95456> philips: do you mind if I move it to rc1?
+21:18:31 <Guest95456> vbatts: no
+21:18:59 <Guest95456> philips: hardlink verbiage?  spec
+21:19:04 <Guest95456> https://github.com/opencontainers/image-spec/issues/306
+21:19:18 <Guest95456> stevvooe: we need to define how hardlinks are supported (or if they are not supported)
+21:19:39 <Guest95456> vbatts: tar likes to keep a number of links on the file
+21:19:56 <Guest95456> vbatts: some tar implementations like to keep those...
+21:20:12 <Guest95456> vbatts: we don't want it to look like a change if the number of links changes
+21:20:40 <Guest95456> vbatts: so you basically need a map for all files with inodes, major, minor, and see if there are chagnes
+21:20:55 <Guest95456> vbatts: and once you consider hardlinks, you're in Linux-specific land
+21:21:18 <Guest95456> vbatts: it's probably a "where applicable" optional layer for systems that support hardlinks
+21:21:31 <Guest95456> stevvooe: in continuity we allow each ... to have multiple paths
+21:21:50 <Guest95456> stevvooe: with a bit of content verification to make sure the content is the same, and then you get one entry for all those files
+21:22:05 <Guest95456> stevvooe: the extra processing is costly (with a map, and maybe an extra pass)
+21:23:01 <Guest95456> philips: just to be clear, this is just about serializing hardlinks
+21:23:18 <Guest95456> vbatts: yes, and we want to preserve links, but not churn excessively
+21:24:03 <Guest95456> philips: so the three options are "1.0 says hardlinks are legal", "1.0 says hardlinks are optional", and "1.0 defines something more specific"
+21:24:18 <Guest95456> vbatts: it's been undefined so far.  It would be good to make it more explicit
+21:24:32 <Guest95456> philips: the current Docker layer format doesn't talk about this?
+21:25:11 <Guest95456> stevvooe: there's definitely stuff in code
+21:25:22 <Guest95456> stevvooe: I can hunt down that prior art
+21:25:34 <Guest95456> stevvooe: it's tricky with multiple layers
+21:25:52 <Guest95456> stevvooe: say you capture the hard-link in the top layer but not the bottom layer, you end up forking the content
+21:26:23 <Guest95456> #topic order of layers in image-layout
+21:26:30 <Guest95456> #link https://github.com/opencontainers/image-spec/issues/276
+21:26:50 <Guest95456> vbatts: we just need a few lines to clarify things
+21:26:59 <Guest95456> philips: the content order matters but the manifest order doesn't
+21:27:04 <Guest95456> philips: or something ;)
+21:27:26 <Guest95456> stevvooe: the manifest order matters to help folks that don't understand the config fetch optimally
+21:27:46 <Guest95456> stevvooe: at some point a simple list may not be good enough and we'll want to relax that requirement
+21:28:07 <vbatts> oh. 62% was for runtime vote (5/8). but image 5 votes is 2/3major (5/7 == 71%)
+21:28:19 <Guest95456> philips: it doesn't hurt me if I do 20 parallel HTTP GETs, and it doesn't matter if they all arrive at once
+21:28:37 <Guest95456> stevvooe: The layer list is the ideal order in which the downloads will finish
+21:28:52 <Guest95456> stevvooe: is there an argument to relax that?
+21:29:04 <Guest95456> philips: no, we just need to add that language to the config section
+21:29:16 <Guest95456> stevvooe: I also saw some confusion about not having layers
+21:29:22 <Guest95456> stevvooe: are there valid use cases for that?
+21:29:38 <Guest95456> #link https://github.com/opencontainers/image-spec/issues/313
+21:29:43 <Guest95456> philips: I don't have a reason for that
+21:29:50 <Guest95456> stevvooe: is there a use case that matters?
+21:30:48 <Guest95456> #topic manifest field order
+21:30:56 <Guest95456> philips: it shouldn't matter.  You have to keep the canonical JSON
+21:31:09 <Guest95456> vbatts: it's good to be deterministic, but it doesn't really matter
+21:31:34 <Guest95456> stevvooe: I think suggestion are fine, but we shouldn't require round-tripping
+21:32:05 <Guest95456> philips: so suggest, but don't require
+21:32:30 <Guest95456> stevvooe: I prefer spec order for readability, so you can pipe through jq and compare with the spec
+21:32:50 <Guest95456> stevvooe: I really don't want to impose these requirements on Python and other implementations
+21:32:59 <Guest95456> +1 on suggest but don't requite
+21:33:01 <Guest95456> *require
+21:33:21 <cyphar> sorry I'm late
+21:33:41 <Guest95456> #topic distinguish REQUIRED vs. OPTIONAL
+21:33:50 <Guest95456> #link https://github.com/opencontainers/image-spec/issues/251
+21:34:01 <Guest95456> #action philips to distinguish REQUIRED vs. OPTIONAL
+21:34:21 <Guest95456> #topic parent manifests in layers
+21:34:26 <Guest95456> #link https://github.com/opencontainers/image-spec/issues/190
+21:34:48 <Guest95456> stevvooe: the original issue was about swapping out underlying dependencies
+21:35:07 <Guest95456> stevvooe: I floated an manifest as a layer entry, which is logically equivalent to including the layers
+21:35:16 <Guest95456> stevvooe: vbatts suggested what we already have
+21:35:28 <Guest95456> stevvooe: I don't know what we need to do
+21:35:58 <Guest95456> philips: I think the OP was "I want to put my binary on libc, can I swap out layer 0 without touching the top?"
+21:36:18 <Guest95456> stevvooe: there are two properties here.  You can swap out at build time and get a new image
+21:36:29 <Guest95456> stevvooe: you can also compose at runtime by mounting images on other images
+21:36:45 <Guest95456> stevvooe: but I don't see a use case for something in between with the image-spec mounting images at paths
+21:36:53 <Guest95456> stevvooe: I don't think that belongs at this layer
+21:37:13 <Guest95456> philips: by build time I think "here are two tarballs and a signed manifest"
+21:37:30 <Guest95456> stevvooe: that's what I mean, you can compose a new image with the shuffled layers.  That's build time
+21:38:27 <Guest95456> philips: I think he was asking if he could reuse layer blobs
+21:38:37 <Guest95456> Yeah that's content addressability.  Close issue ;)
+21:39:02 <Guest95456> #topic UTF-8 ref names
+21:39:17 <Guest95456> #link https://github.com/opencontainers/image-spec/issues/174
+21:39:55 <Guest95456> stevvooe: we considered this in Docker's registry and turned it down because it made debugging harder
+21:40:11 <stevvooe> https://github.com/docker/distribution/issues/124
+21:40:55 <Guest95456> and https://github.com/docker/distribution/pull/128
+21:42:57 <Guest95456> philips: currently we have a restriction.
+21:43:03 <Guest95456> philips: do folks want to lift it?
+21:43:15 <Guest95456> I like base-64 to allow folks to do what they want with ref names
+21:43:25 <Guest95456> And think debugging doesn't get that much harder
+21:44:02 <Guest95456> I think stevvooe and I just differ on weighting the flexibility vs. debugging ease balance
+21:44:33 <Guest95456> philips: if someone wants to create a base-64-ref version, they can do that?
+21:44:37 <Guest95456> as a forked spec?
+21:45:05 <Guest95456> stevvooe: with all the naming discussion, folks mostly agree on tags.  Ensuring tag consistency is good, and this gets us somewhat there without requiring tags
+21:45:17 <Guest95456> * without requiring a particular naming format
+21:45:40 <Guest95456> stevvooe: were we nesting tags inside of refs?
+21:45:53 <Guest95456> vbatts: nesting tags could be nipped in the bud by requiring filename tags
+21:46:09 <Guest95456> stevvooe: I'd like to revisit this after getting the Docker PR compiled
+21:46:28 <Guest95456> #link https://github.com/docker/docker/issues/25779
+21:46:44 <Guest95456> philips: in other places we are very careful about allowing characters
+21:48:04 <Guest95456> philips: folks can push refs like "base64-..." then folks can use whatever they want
+21:48:14 <Guest95456> stevvooe: I agree we want to limit the character set
+21:48:36 <Guest95456> Base 64 is a restricted character set
+21:48:48 <Guest95456> stevvooe: I think base-64 is too unfriendly
+21:48:57 <Guest95456> stevvooe: and needs specialized toolink
+21:48:59 <Guest95456> *tooling
+21:49:28 <philips> "A" to "Z", "a" to "z", "0" to "9", the hyphen `-`, the dot `.`, and the underscore `_`
+21:49:53 <Guest95456> stevvooe: we should look into supporting what's needed by semantic versioning
+21:50:12 <Guest95456> philips: cgroups has a similar problem, and we picked some super-dumb escaping syntax
+21:50:21 <Guest95456> stevvooe: so are you proposing we do that?
+21:50:24 <Guest95456> philips: no
+21:50:54 <Guest95456> vbatts: what we have isn't broken.  If you want UTF-8, you can use base64-... refs or a base64-refs/ directory or whatever
+21:52:36 <Guest95456> philips: we've already said there's no semantic meaning
+21:52:42 <Guest95456> philips: so I think we can just close the issue
+21:52:46 <Guest95456> stevvooe: please, close it
+21:52:56 <Guest95456> philips: I think that's it for all non-milestone and non-tool issues
+21:52:58 <philips> https://github.com/opencontainers/image-spec/milestone/8
+21:53:29 <Guest95456> philips: other topics?
+21:54:06 <Guest95456> #topic console handling in runC
+21:54:31 <Guest95456> cyphar: main spec issue is that in /dev/pts the owner is odd
+21:54:53 <Guest95456> cyphar: in most systems the group for /dev/pts/* is the tty group and the tty group can write to any slave
+21:55:02 <Guest95456> cyphar: this doesn't currently happen in runC
+21:55:20 <Guest95456> cyphar: you can mount devpts with gid=5, and new slaves will default to that group
+21:55:38 <Guest95456> cyphar: with that, you won't need to touch the group owner
+21:56:09 <Guest95456> cyphar: the other way to do this it to implement grantpt in Go, but then you have to parse /etc/group and it gets complicated with user namespaces
+21:56:56 <Guest95456> cyphar: are we looking for solutions that only rely on config.json, or are we ok looking at the rootfs for group information?
+21:57:06 <Guest95456> mrunalp: crosbymichael, any thoughts?
+21:57:17 <Guest95456> crosbymichael: I'd have to look at it
+21:57:31 <Guest95456> mrunalp: cyphar, can you test some software with the gid approach?
+21:57:48 <Guest95456> mrunalp: try tmux, mutt, screen, ...
+21:58:09 <Guest95456> cyphar: the current console branch has this implemented.  I was just bringing it up as a recently-discussed point
+21:58:31 <Guest95456> mrunalp: I'll try it out again soon
+21:58:39 <Guest95456> mrunalp: anything else
+21:58:57 <Guest95456> #endmeeting
+21:59:16 <Guest95456> mrunalp: you might have to end this since I've been punted back off my nick ;)
+21:59:34 <Guest95456> which means my #topics probably didn't stick either
+22:00:58 <vbatts> #endmeeting

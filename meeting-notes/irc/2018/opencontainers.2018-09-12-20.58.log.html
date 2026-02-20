@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">20:58:07</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2018-08-12 discussion</span>
+<a name="l-2"></a><span class="tm">20:58:07</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Sep 12 20:58:07 2018 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">20:58:07</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">20:58:07</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2018_08_12_discussion'
+<a name="l-5"></a><span class="tm">21:04:39</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">cra - feedback on certification proposal</span>
+<a name="l-6"></a><span class="tm">21:04:52</span><span class="nk"> &lt;vbatts|work&gt;</span> dongsu had a proposal
+<a name="l-7"></a><span class="tm">21:05:03</span><span class="nk"> &lt;vbatts|work&gt;</span> crosby had feedback on that
+<a name="l-8"></a><span class="tm">21:05:24</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] https://github.com/opencontainers/certification/issues/36#issuecomment-419155816
+<a name="l-9"></a><span class="tm">21:05:34</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] #link https://github.com/opencontainers/certification/issues/36#issuecomment-419155816
+<a name="l-10"></a><span class="tm">21:05:37</span><span class="nk"> &lt;vbatts|work&gt;</span> !link https://github.com/opencontainers/certification/issues/36#issuecomment-419155816
+<a name="l-11"></a><span class="tm">21:05:39</span><span class="nk"> &lt;vbatts|work&gt;</span> 679016
+<a name="l-12"></a><span class="tm">21:06:14</span><span class="nk"> &lt;vbatts|work&gt;</span> crosby says just have a test harness,
+<a name="l-13"></a><span class="tm">21:12:01</span><span class="nk"> &lt;vbatts|work&gt;</span> we had the cli-spec, but it's trailing runc
+<a name="l-14"></a><span class="tm">21:12:12</span><span class="nk"> &lt;vbatts|work&gt;</span> runc isn't 1.0, so don't firm up a cli-spec
+<a name="l-15"></a><span class="tm">21:12:35</span><span class="nk"> &lt;vbatts|work&gt;</span> this certification/conformance is recommended to be a harness using the cli-spec
+<a name="l-16"></a><span class="tm">21:12:43</span><span class="nk"> &lt;vbatts|work&gt;</span> (that is not official)
+<a name="l-17"></a><span class="tm">21:13:52</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] runc api https://github.com/opencontainers/runc/pull/1788
+<a name="l-18"></a><span class="tm">21:20:05</span><span class="nk"> &lt;vbatts|work&gt;</span> the cli-spec seems insufficeint
+<a name="l-19"></a><span class="tm">21:20:34</span><span class="nk"> &lt;vbatts|work&gt;</span> derek's read on crosby was that runtimes need another interface.
+<a name="l-20"></a><span class="tm">21:20:50</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runc/pull/1788</span>
+<a name="l-21"></a><span class="tm">21:21:34</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/certification/issues/36#issuecomment-419155816</span>
+<a name="l-22"></a><span class="tm">21:21:49</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">kinvolk help</span>
+<a name="l-23"></a><span class="tm">21:22:02</span><span class="nk"> &lt;vbatts|work&gt;</span> cra, get their help on distribution-spec
+<a name="l-24"></a><span class="tm">21:28:50</span><span class="nk"> &lt;vbatts|work&gt;</span> this whole expectation that something about the runtime will be testable has been an assumption since the beginning,
+<a name="l-25"></a><span class="tm">21:29:23</span><span class="nk"> &lt;vbatts|work&gt;</span> and only the goodwill of the regression tests _against_ runc via projects like docker and containerd, are the promise of how to conform
+<a name="l-26"></a><span class="tm">21:30:02</span><span class="nk"> &lt;vbatts|work&gt;</span> there must be a requirement on runtimes, like runc, to have a conformance infterface for testing against
+<a name="l-27"></a><span class="tm">21:30:43</span><span class="nk"> &lt;vbatts|work&gt;</span> derek, is this test ensuring that parameters passed to runtime are reflected inside of the resulting container?
+<a name="l-28"></a><span class="tm">21:32:55</span><span class="nk"> &lt;vbatts|work&gt;</span> derek, it would be interesting to have a shim for test cases
+<a name="l-29"></a><span class="tm">21:34:08</span><span class="nk"> &lt;vbatts|work&gt;</span> like a golang package to import, and do typical testing.T like tests, and the shell out shim to the runtime could be provided
+<a name="l-30"></a><span class="tm">21:39:40</span><span class="nk"> &lt;vbatts|work&gt;</span> delivering a set of tests, with that have a shim/proxy that for you to do conformance testing and can easily include this certification testing package
+<a name="l-31"></a><span class="tm">21:40:03</span><span class="nk"> &lt;vbatts|work&gt;</span> and it would ensure that your implementation is "runc enough"
+<a name="l-32"></a><span class="tm">21:43:17</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">everybody to have ideas that can move this forward</span>
+<a name="l-33"></a><span class="tm">21:44:06</span><span class="nk"> &lt;vbatts|work&gt;</span> mikebrown, reuse runc's integration tests
+<a name="l-34"></a><span class="tm">21:46:45</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">distribution-spec</span>
+<a name="l-35"></a><span class="tm">21:47:01</span><span class="nk"> &lt;vbatts|work&gt;</span> accommodating a non-tar future of image-spec
+<a name="l-36"></a><span class="tm">21:47:21</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">derek:</span> the spec is likely around 90% complete
+<a name="l-37"></a><span class="tm">21:48:13</span><span class="nk"> &lt;vbatts|work&gt;</span> conformance can surely begin there, since it's mostly there. likely only the catalog API is the biggest change
+<a name="l-38"></a><span class="tm">21:49:56</span><span class="nk"> &lt;vbatts|work&gt;</span> cra, can the conformance expectation be a bit more defined than what we've had for runtime?
+<a name="l-39"></a><span class="tm">21:50:17</span><span class="nk"> &lt;vbatts|work&gt;</span> derek, since it's just HTTP, it ought to be more simple and straight forward
+<a name="l-40"></a><span class="tm">21:50:25</span><span class="nk"> &lt;vbatts|work&gt;</span> barring authentication differences
+<a name="l-41"></a><span class="tm">21:50:52</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">derek to email a follow-up on distribution conformance testing</span>
+<a name="l-42"></a><span class="tm">21:53:17</span><span class="nk"> &lt;cracra&gt;</span> [dug, Open Container Initiative] let vbatts drive - he feels the need for speed
+<a name="l-43"></a><span class="tm">21:53:19</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec backlogs</span>
+<a name="l-44"></a><span class="tm">21:53:45</span><span class="nk"> &lt;vbatts|work&gt;</span> there are loads of issues and PRs, someone needs to get mean to clean up house
+<a name="l-45"></a><span class="tm">21:56:34</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">vbatts add to the agenda for next call to use some time for runtime-spec issue reconciling</span>
+<a name="l-46"></a><span class="tm">21:56:39</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

@@ -1,0 +1,12 @@
+20:43:37 <RobDolinMS> #startmeeting Testing MeetBot for OCI Dev
+20:43:37 <collabot> Meeting started Mon Sep 28 20:43:37 2015 UTC.  The chair is RobDolinMS. Information about MeetBot at http://wiki.debian.org/MeetBot.
+20:43:37 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+20:43:37 <collabot> The meeting name has been set to 'testing_meetbot_for_oci_dev'
+20:43:47 <RobDolinMS> #topic test
+20:43:59 <RobDolinMS> #info This is a test
+20:44:13 <RobDolinMS> #link http://meetbot.debian.net/Manual.html MeetBot Manual
+20:44:51 <RobDolinMS> #action RobDolinMS should stop clogging the IRC channel
+20:45:03 <RobDolinMS> #agreed It seems like this works! :)
+20:45:09 <RobDolinMS> #info ending test
+20:45:20 <RobDolinMS> Just a comment without a command
+20:45:23 <RobDolinMS> #endmeeting

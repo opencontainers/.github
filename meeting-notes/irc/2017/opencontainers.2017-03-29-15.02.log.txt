@@ -1,0 +1,12 @@
+15:02:08 <mrunalp> #startmeeting OCI_3_29
+15:02:08 <collabot> Meeting started Wed Mar 29 15:02:08 2017 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+15:02:08 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+15:02:08 <collabot> The meeting name has been set to 'oci_3_29'
+15:02:37 <mrunalp> crosbymichael, stevvooe, cyphar, hqhq, dqminh, wking: Joining?
+15:03:40 <mrunalp> #topic https://github.com/opencontainers/runtime-spec/issues/726
+15:06:08 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/729
+15:07:30 <mrunalp> cri-o waiting on runtime-tools PR to get in spec rc5
+15:08:17 <mrunalp> #action maintainers please take a look at the cleanup PRs in the runtime spec.
+15:10:15 <mrunalp> Rob cert workgroup has draft for certification for the image tools
+15:10:42 <mrunalp> There is a PR open for it in the cert wg repo
+15:11:17 <mrunalp> #endmeeting

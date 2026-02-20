@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">17:01:28</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-04-13 discussion</span>
+<a name="l-2"></a><span class="tm">17:01:28</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Apr 13 17:01:28 2016 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">17:01:28</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">17:01:28</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2016_04_13_discussion'
+<a name="l-5"></a><span class="tm">17:02:13</span><span class="nk"> &lt;mikebrow&gt;</span> calling in
+<a name="l-6"></a><span class="tm">17:02:16</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/384/files
+<a name="l-7"></a><span class="tm">17:02:46</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">split create and start</span>
+<a name="l-8"></a><span class="tm">17:02:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> split create and start, where create handles the namespaces (including the process namespace)
+<a name="l-9"></a><span class="tm">17:03:00</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/384</span>
+<a name="l-10"></a><span class="tm">17:03:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> but the user-specified code doesn't run until 'start' time
+<a name="l-11"></a><span class="tm">17:03:12</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chairs </span><span class="cmdline">wking</span>
+<a name="l-12"></a><span class="tm">17:03:16</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-13"></a><span class="tm">17:03:16</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: vbatts wking
+<a name="l-14"></a><span class="tm">17:03:19</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chair </span><span class="cmdline">RobDolinMS</span>
+<a name="l-15"></a><span class="tm">17:03:19</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: RobDolinMS vbatts wking
+<a name="l-16"></a><span class="tm">17:03:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I tried to use generic language to avoid restricting implementation
+<a name="l-17"></a><span class="tm">17:03:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I did not split stop/delete, but have called the closer 'delete' (since you'll want that regardless of whether there is a separate 'stop' command)
+<a name="l-18"></a><span class="tm">17:04:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunal_:</span> there's a separate agenda item for stop/signal/kill, so maybe delay that discussion for now
+<a name="l-19"></a><span class="tm">17:04:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> agreed that that's a separate discussion
+<a name="l-20"></a><span class="tm">17:05:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunal_:</span> do we keep a combined command to preserve what we have today?
+<a name="l-21"></a><span class="tm">17:05:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> we want to avoid optional support where some folks go one way and some go another
+<a name="l-22"></a><span class="tm">17:05:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunal_:</span> I'd require both approaches
+<a name="l-23"></a><span class="tm">17:06:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> some existing users prefer the single command
+<a name="l-24"></a><span class="tm">17:06:08</span><span class="nk"> &lt;mikebrow&gt;</span> yes, both is best to support existing expectations
+<a name="l-25"></a><span class="tm">17:06:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> one advantage of this approach to the split is supporting that combined command
+<a name="l-26"></a><span class="tm">17:06:43</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">duglin to modify #384 to restore the combined command</span>
+<a name="l-27"></a><span class="tm">17:06:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> does the overall idea sound right?
+<a name="l-28"></a><span class="tm">17:07:07</span><span class="nk"> &lt;JakeWarner|Work&gt;</span> This seems to be most inline with proposal 3
+<a name="l-29"></a><span class="tm">17:07:12</span><span class="nk"> &lt;JakeWarner|Work&gt;</span> is that correct?
+<a name="l-30"></a><span class="tm">17:07:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> yes.  But we need to figure out the container-process pausing, and then decide if that goes into the spec or not
+<a name="l-31"></a><span class="tm">17:07:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">JakeWarner|Work:</span> yeah, it's pretty much proposal 3
+<a name="l-32"></a><span class="tm">17:07:39</span><span class="nk"> &lt;JakeWarner|Work&gt;</span> Yeah, very happy with this
+<a name="l-33"></a><span class="tm">17:07:55</span><span class="nk"> &lt;JakeWarner|Work&gt;</span> also agree with still maintaining a 'run'
+<a name="l-34"></a><span class="tm">17:07:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> does cgroup freezing, sockets, etc. get discussed in the PR?
+<a name="l-35"></a><span class="tm">17:08:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> sure.  We can float implementation notes there, and then pull them out if we decide they shouldn't go in the spec
+<a name="l-36"></a><span class="tm">17:08:55</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">stop/kill/delete</span>
+<a name="l-37"></a><span class="tm">17:08:57</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/issues/356
+<a name="l-38"></a><span class="tm">17:09:23</span><span class="nk"> &lt;mrunalp&gt;</span> mikebrow, ^
+<a name="l-39"></a><span class="tm">17:09:25</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/issues/356</span>
+<a name="l-40"></a><span class="tm">17:09:47</span><span class="nk"> &lt;mikebrow&gt;</span> not unmutting
+<a name="l-41"></a><span class="tm">17:10:45</span><span class="nk"> &lt;wking&gt;</span> can someone else take notes?  I have to step out for a second
+<a name="l-42"></a><span class="tm">17:13:04</span><span class="nk"> &lt;JakeWarner|Work&gt;</span> Does it make sense for the user to be able to specify those signals in the spec?
+<a name="l-43"></a><span class="tm">17:13:56</span><span class="nk"> &lt;wking&gt;</span> ok, I'm back
+<a name="l-44"></a><span class="tm">17:14:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> the issue is that 'stop' isn't clearly defined, but sending a signal is clear
+<a name="l-45"></a><span class="tm">17:14:44</span><span class="nk"> &lt;wking&gt;</span> some folks like an agnostic, cross-platform command
+<a name="l-46"></a><span class="tm">17:14:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> but we want clarity on how a graceful stop should work
+<a name="l-47"></a><span class="tm">17:15:20</span><span class="nk"> &lt;JakeWarner|Work&gt;</span> <span class="hi">julz_:</span> I agree with that as well. Like, I try to send a SIG_INT first then after 15 seconds, I send a SIG_KILL
+<a name="l-48"></a><span class="tm">17:15:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> we want a forceful stop (like SIGKILL), but need a way to figure out how to handle a graceful stop (e.g. SIGTERM)
+<a name="l-49"></a><span class="tm">17:16:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> we certainly need more direction about what happens with 'stop'
+<a name="l-50"></a><span class="tm">17:16:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we should wait to figure out how to do that in a cross-platform, portable approach
+<a name="l-51"></a><span class="tm">17:16:57</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">wking to mail RobDolinMS with POSIX signal docs</span>
+<a name="l-52"></a><span class="tm">17:17:15</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">RobDolinMS to check with Windows container folks about supporting a signal-style approach</span>
+<a name="l-53"></a><span class="tm">17:17:25</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">mikebrow to submit a PR sketching out the signal-style approach</span>
+<a name="l-54"></a><span class="tm">17:17:32</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">rename ociVersion</span>
+<a name="l-55"></a><span class="tm">17:17:34</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/371
+<a name="l-56"></a><span class="tm">17:18:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> there hasn't been much conversation around this
+<a name="l-57"></a><span class="tm">17:18:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> maybe there should be a media type instead of a version?
+<a name="l-58"></a><span class="tm">17:18:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> or maybe a media type with a version?
+<a name="l-59"></a><span class="tm">17:18:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> it needs more thought
+<a name="l-60"></a><span class="tm">17:19:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> if we're shipping the two specs together, having the same version key sounds reasonable
+<a name="l-61"></a><span class="tm">17:19:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> if we're versioning them differently, it probably makes more sense to have different keys
+<a name="l-62"></a><span class="tm">17:19:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> they're in different repos with decoupled cadences (except for 1.0, hopefully)
+<a name="l-63"></a><span class="tm">17:20:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> it might make more sense to have a media type, and the ociVersion is just whatever the last tagged version that you are accomodating...
+<a name="l-64"></a><span class="tm">17:20:57</span><span class="nk"> &lt;wking&gt;</span> ^ I'm not entirely clear on that last line
+<a name="l-65"></a><span class="tm">17:22:26</span><span class="nk"> &lt;vishh&gt;</span> `version` seems to be good enough.
+<a name="l-66"></a><span class="tm">17:24:03</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">vbatts to write up a PR about the media-type approach</span>
+<a name="l-67"></a><span class="tm">17:25:01</span><span class="nk"> &lt;wking&gt;</span> there are some examples in the image-spec repo of mime types for versioning JSON files
+<a name="l-68"></a><span class="tm">17:25:10</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">remove exec from spec</span>
+<a name="l-69"></a><span class="tm">17:25:11</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/issues/345
+<a name="l-70"></a><span class="tm">17:25:26</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp</span>
+<a name="l-71"></a><span class="tm">17:25:26</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: RobDolinMS mrunalp vbatts wking
+<a name="l-72"></a><span class="tm">17:25:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> last call to oppose?
+<a name="l-73"></a><span class="tm">17:25:37</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">remove exec from spec</span>
+<a name="l-74"></a><span class="tm">17:25:44</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/issues/345</span>
+<a name="l-75"></a><span class="tm">17:25:47</span><span class="nk"> &lt;duglin&gt;</span> gotta run - bye
+<a name="l-76"></a><span class="tm">17:25:50</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">duglin:</span> o/
+<a name="l-77"></a><span class="tm">17:25:57</span><span class="nk"> &lt;mrunalp&gt;</span> bye
+<a name="l-78"></a><span class="tm">17:26:01</span><span class="nk"> &lt;vishh&gt;</span> bye
+<a name="l-79"></a><span class="tm">17:26:14</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">vishh to post a PR removing exec</span>
+<a name="l-80"></a><span class="tm">17:26:59</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">PR review</span>
+<a name="l-81"></a><span class="tm">17:27:08</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#348 </span><span class="cmdline">looks ready</span>
+<a name="l-82"></a><span class="tm">17:27:36</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/270
+<a name="l-83"></a><span class="tm">17:29:15</span><span class="nk"> &lt;wking&gt;</span> I still don't like the restricted names (https://github.com/opencontainers/runtime-spec/pull/270/files#r47824814)
+<a name="l-84"></a><span class="tm">17:29:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> agree that we should punt to the filesystem limitations
+<a name="l-85"></a><span class="tm">17:29:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I'm worried about systemd compatibility
+<a name="l-86"></a><span class="tm">17:29:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> in runC we created our own syntax, but it's not in the spec
+<a name="l-87"></a><span class="tm">17:31:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> if we don't have character limits the schema is weaker
+<a name="l-88"></a><span class="tm">17:31:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> we should document what the filesystem API expecs
+<a name="l-89"></a><span class="tm">17:31:16</span><span class="nk"> &lt;wking&gt;</span> *expects
+<a name="l-90"></a><span class="tm">17:32:15</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">vishh to update character restrictions to match kernel limits</span>
+<a name="l-91"></a><span class="tm">17:32:19</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/348
+<a name="l-92"></a><span class="tm">17:33:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> seems good to me.  Last call before merging?
+<a name="l-93"></a><span class="tm">17:33:26</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/366
+<a name="l-94"></a><span class="tm">17:33:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> this is just dropping the range flag to the git-validation tool, because the tool now looks at the environment variable
+<a name="l-95"></a><span class="tm">17:35:22</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/360
+<a name="l-96"></a><span class="tm">17:37:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the other PRs have open comments
+<a name="l-97"></a><span class="tm">17:38:00</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

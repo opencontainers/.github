@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2016-07-27 discussion</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2016-07-27 discussion</h1>
+<span class="details">
+Meeting started by vbatts at 21:00:59 UTC
+(<a href="opencontainers.2016-07-27-21.00.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">console handling in runtime implementations</b> <span class="details">(<a href='opencontainers.2016-07-27-21.00.log.html#l-10'>wking</a>, 21:01:50)</span>
+<br></li>
+<li><b class="TOPIC">image-spec 0.4.0</b> <span class="details">(<a href='opencontainers.2016-07-27-21.00.log.html#l-18'>wking</a>, 21:03:11)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/171">https://github.com/opencontainers/image-spec/pull/171</a>
+    <span class="details">(<a
+    href='opencontainers.2016-07-27-21.00.log.html#l-25'>stevvooe</a>,
+    21:04:06)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/issues?utf8=%E2%9C%93&amp;q=milestone%3Av0.4.0">https://github.com/opencontainers/image-spec/issues?utf8=%E2%9C%93&amp;q=milestone%3Av0.4.0</a>
+    <span class="details">(<a
+    href='opencontainers.2016-07-27-21.00.log.html#l-26'>philips</a>,
+    21:04:15)</span></li>
+  <li><a
+    href="https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/Am7byGvLCUQ">https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/Am7byGvLCUQ</a>
+    <span class="details">(<a
+    href='opencontainers.2016-07-27-21.00.log.html#l-38'>wking</a>,
+    21:08:22)</span></li>
+  <li><a
+    href="https://github.com/cyphar/oboci">https://github.com/cyphar/oboci</a>
+    <span class="details">(<a
+    href='opencontainers.2016-07-27-21.00.log.html#l-41'>wking</a>,
+    21:09:15)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/159">https://github.com/opencontainers/image-spec/pull/159</a>
+    <span class="details">(<a
+    href='opencontainers.2016-07-27-21.00.log.html#l-43'>cyphar</a>,
+    21:09:33)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">wking to
+    update image-spec#159 with an unstable caveat</span> <span
+    class="details">(<a
+    href='opencontainers.2016-07-27-21.00.log.html#l-54'>wking</a>,
+    21:15:14)</span></li>
+  <li><a
+    href="https://github.com/containers/image">https://github.com/containers/image</a>
+    <span class="details">(<a
+    href='opencontainers.2016-07-27-21.00.log.html#l-58'>vbatts</a>,
+    21:16:38)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/milestone/3">https://github.com/opencontainers/image-spec/milestone/3</a>
+    <span class="details">(<a
+    href='opencontainers.2016-07-27-21.00.log.html#l-88'>vbatts</a>,
+    21:25:34)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/issues/176">https://github.com/opencontainers/image-spec/issues/176</a>
+    <span class="details">(<a
+    href='opencontainers.2016-07-27-21.00.log.html#l-101'>wking</a>,
+    21:30:09)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">console handling and the command-line API</b> <span class="details">(<a href='opencontainers.2016-07-27-21.00.log.html#l-126'>wking</a>, 21:37:21)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/513/files#diff-0c1e5a5baa5649945697a530e09acbf5R35">https://github.com/opencontainers/runtime-spec/pull/513/files#diff-0c1e5a5baa5649945697a530e09acbf5R35</a>
+    <span class="details">(<a
+    href='opencontainers.2016-07-27-21.00.log.html#l-158'>cyphar</a>,
+    21:52:25)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/518">https://github.com/opencontainers/runtime-spec/pull/518</a>
+    <span class="details">(<a
+    href='opencontainers.2016-07-27-21.00.log.html#l-164'>wking</a>,
+    21:56:20)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runc/pull/950">https://github.com/opencontainers/runc/pull/950</a>
+    &lt;&lt; refactoring of nsenter <span class="details">(<a
+    href='opencontainers.2016-07-27-21.00.log.html#l-170'>cyphar</a>,
+    21:59:33)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 22:01:26 UTC
+(<a href="opencontainers.2016-07-27-21.00.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>wking to update image-spec#159 with an unstable caveat</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> wking <ol>
+    <li>wking to update image-spec#159 with an unstable caveat</li>
+  </ol></li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (155)</li>
+  <li>cyphar (7)</li>
+  <li>vbatts (5)</li>
+  <li>collabot (4)</li>
+  <li>philips (3)</li>
+  <li>stevvooe (2)</li>
+  <li>mrunalp (2)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

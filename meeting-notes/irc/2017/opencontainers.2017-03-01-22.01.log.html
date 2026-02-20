@@ -1,0 +1,213 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">22:01:25</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">OCI_weekly_3_1_2017</span>
+<a name="l-2"></a><span class="tm">22:01:25</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Mar  1 22:01:25 2017 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">22:01:25</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">22:01:25</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to 'oci_weekly_3_1_2017'
+<a name="l-5"></a><span class="tm">22:01:32</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#chairs </span><span class="cmdline">vbatts wking</span>
+<a name="l-6"></a><span class="tm">22:02:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> is cyphar here?
+<a name="l-7"></a><span class="tm">22:02:43</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image update</span>
+<a name="l-8"></a><span class="tm">22:02:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> stevvooe or vbatts?
+<a name="l-9"></a><span class="tm">22:03:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'll ping stevvooe
+<a name="l-10"></a><span class="tm">22:03:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm on
+<a name="l-11"></a><span class="tm">22:03:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I closed down rc5, since that's been cut
+<a name="l-12"></a><span class="tm">22:03:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> is vbatts on?
+<a name="l-13"></a><span class="tm">22:04:39</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/milestone/13
+<a name="l-14"></a><span class="tm">22:04:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">[grand-pairie]:</span> are we all looking at something in particular?
+<a name="l-15"></a><span class="tm">22:04:58</span><span class="nk"> &lt;dqminh&gt;</span> <span class="hi">mrunalp:</span> i cant join today, its late and it has been a long week at work :( i will try to continue looking at the remaining PRs in spec and runc
+<a name="l-16"></a><span class="tm">22:05:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> #575, #580, and ... are small and just need more LGTMs
+<a name="l-17"></a><span class="tm">22:05:13</span><span class="nk"> &lt;mrunalp&gt;</span> dqminh, No worries. Thanks!
+<a name="l-18"></a><span class="tm">22:05:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> and I've opened a PR defining ChainID
+<a name="l-19"></a><span class="tm">22:05:25</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/586</span>
+<a name="l-20"></a><span class="tm">22:06:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there's also a discussion around ref.name being unique
+<a name="l-21"></a><span class="tm">22:06:18</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/581</span>
+<a name="l-22"></a><span class="tm">22:06:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but validating annotations would be a fair amount of scope creep
+<a name="l-23"></a><span class="tm">22:07:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> haven't we had annotations been opaque?  At least in the runtime-spec
+<a name="l-24"></a><span class="tm">22:07:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> consumers can put in whatever they want and we won't blow up by reading them
+<a name="l-25"></a><span class="tm">22:08:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> when I run into a problem, I assume I'm doing something wrong, not that there's a problem with the spec
+<a name="l-26"></a><span class="tm">22:08:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but I'd rather discuss this after cyphar shows up
+<a name="l-27"></a><span class="tm">22:09:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I need to mute y'all for a minute
+<a name="l-28"></a><span class="tm">22:09:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> ^ can you take notes
+<a name="l-29"></a><span class="tm">22:10:02</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/milestones/1.0.0
+<a name="l-30"></a><span class="tm">22:10:08</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime spec 1.0</span>
+<a name="l-31"></a><span class="tm">22:12:18</span><span class="nk"> &lt;mrunalp&gt;</span> stephenrwalli, I want something light weight so test cases can refer to the spec
+<a name="l-32"></a><span class="tm">22:13:22</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#action </span><span class="cmdline">one more pass for the anchors</span>
+<a name="l-33"></a><span class="tm">22:13:35</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/532 wking needs rebase
+<a name="l-34"></a><span class="tm">22:14:10</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/395
+<a name="l-35"></a><span class="tm">22:14:15</span><span class="nk"> &lt;stephenrwalli&gt;</span> I want to be clear. The developers are in the best position to judge that the suite matches the specs. I do NOT want to burden the developers, however, with a lot of busy work so we have some perfect visible alignment. I’ve seen that time sync before now and it never ends well.
+<a name="l-36"></a><span class="tm">22:16:24</span><span class="nk"> &lt;mrunalp&gt;</span> vishh, We want to understand the scenarios where pinning namespaces break
+<a name="l-37"></a><span class="tm">22:16:43</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, It could be feature creep into the runtime
+<a name="l-38"></a><span class="tm">22:17:21</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, It expands the scope
+<a name="l-39"></a><span class="tm">22:17:49</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, It's not a simple task where runc can launch a container. It adds more external container mgmt.
+<a name="l-40"></a><span class="tm">22:18:56</span><span class="nk"> &lt;mrunalp&gt;</span> vishh, Are we going to hide namespaces or let users deal with namespaces themselves
+<a name="l-41"></a><span class="tm">22:19:11</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, They are exposed in the spec. One can specify which ones to join or not.
+<a name="l-42"></a><span class="tm">22:19:25</span><span class="nk"> &lt;mrunalp&gt;</span> vishh, Agree that power users could deal with namespaces
+<a name="l-43"></a><span class="tm">22:19:51</span><span class="nk"> &lt;mrunalp&gt;</span> vishh, bind mount pinning namespaces is pretty low level
+<a name="l-44"></a><span class="tm">22:20:12</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, sharing namespaces conflicts with runc managing single container
+<a name="l-45"></a><span class="tm">22:21:01</span><span class="nk"> &lt;mrunalp&gt;</span> vishh, Maybe document about creating own holder container
+<a name="l-46"></a><span class="tm">22:21:28</span><span class="nk"> &lt;mrunalp&gt;</span> vishh, documenting is fine
+<a name="l-47"></a><span class="tm">22:23:25</span><span class="nk"> &lt;mrunalp&gt;</span> mrunalp, maybe add it to the wiki
+<a name="l-48"></a><span class="tm">22:24:36</span><span class="nk"> &lt;mrunalp&gt;</span> vishh, plan for 1.0
+<a name="l-49"></a><span class="tm">22:24:45</span><span class="nk"> &lt;mrunalp&gt;</span> mrunalp, cut final rc and then wait 3 weeks or so
+<a name="l-50"></a><span class="tm">22:24:58</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, image spec isn't quite ready yet but close
+<a name="l-51"></a><span class="tm">22:25:31</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, hopeful for 1.0 in a month or so
+<a name="l-52"></a><span class="tm">22:26:04</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">runc I/O</span>
+<a name="l-53"></a><span class="tm">22:26:04</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="hi">mrunalp:</span> "next few months" &lt;- much less non-comittal
+<a name="l-54"></a><span class="tm">22:26:14</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, okay :)
+<a name="l-55"></a><span class="tm">22:26:36</span><span class="nk"> &lt;mrunalp&gt;</span> cyphar, we have 3-4 different ways to specify I/O with fds
+<a name="l-56"></a><span class="tm">22:27:25</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, listen fds is needed for socket activation but conflicts with other cases
+<a name="l-57"></a><span class="tm">22:28:18</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, overall I can see what the problem was I have PR that fixes it by removing chown when I/O is provided
+<a name="l-58"></a><span class="tm">22:28:40</span><span class="nk"> &lt;mrunalp&gt;</span> cyphar, problem with removing chown is that its used today
+<a name="l-59"></a><span class="tm">22:28:54</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, The caller should set it up
+<a name="l-60"></a><span class="tm">22:29:28</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, code that was originally there in runc run had to be chowned manually and it got copied over
+<a name="l-61"></a><span class="tm">22:30:02</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, The caller can ensure that I/O is accessible by the container
+<a name="l-62"></a><span class="tm">22:30:49</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, From my example caller can set stdin/stdout to whatever you give
+<a name="l-63"></a><span class="tm">22:31:30</span><span class="nk"> &lt;mrunalp&gt;</span> cyphar, Yeah sounds good
+<a name="l-64"></a><span class="tm">22:32:06</span><span class="nk"> &lt;mrunalp&gt;</span> cyphar, PRs adding more features to I/O which is concerning
+<a name="l-65"></a><span class="tm">22:32:23</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, Two modes 1. runc is attached 2. runc is detaches and container inherits stdio
+<a name="l-66"></a><span class="tm">22:32:29</span><span class="nk"> &lt;mrunalp&gt;</span> There isn't a way to unify the 2
+<a name="l-67"></a><span class="tm">22:33:17</span><span class="nk"> &lt;mrunalp&gt;</span> cyphar, For other fds we have other things (non 0,1,2)
+<a name="l-68"></a><span class="tm">22:33:47</span><span class="nk"> &lt;mrunalp&gt;</span> cyphar, preserve-fds doesn't preserve stdio
+<a name="l-69"></a><span class="tm">22:34:17</span><span class="nk"> &lt;mrunalp&gt;</span> cyphar, We can unify implicit stdio and listen_fds
+<a name="l-70"></a><span class="tm">22:34:40</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, That's UNIX stdio forever and common way
+<a name="l-71"></a><span class="tm">22:34:59</span><span class="nk"> &lt;mrunalp&gt;</span> cyphar, fair enough
+<a name="l-72"></a><span class="tm">22:35:28</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, rootless containers looking nice
+<a name="l-73"></a><span class="tm">22:35:38</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, Can we merge to avoid rebases?
+<a name="l-74"></a><span class="tm">22:35:57</span><span class="nk"> &lt;mrunalp&gt;</span> cyphar, Two things remaining 1. cgroup mgmt
+<a name="l-75"></a><span class="tm">22:36:20</span><span class="nk"> &lt;mrunalp&gt;</span> cyphar, 2. Tests are failing because of dumpable
+<a name="l-76"></a><span class="tm">22:37:40</span><span class="nk"> &lt;wking&gt;</span> mrunalp, I'm back
+<a name="l-77"></a><span class="tm">22:37:44</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, cgroups leave to higher layers
+<a name="l-78"></a><span class="tm">22:37:47</span><span class="nk"> &lt;mrunalp&gt;</span> wking, okay :)
+<a name="l-79"></a><span class="tm">22:38:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> when crating a container, it's hard to check to see if you need to create a higher-level cgroup hierarchy yourself
+<a name="l-80"></a><span class="tm">22:38:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> there's essentially a permission check missing
+<a name="l-81"></a><span class="tm">22:38:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I could look into the cgroups stuff, but I don't think we need a lot of complexity
+<a name="l-82"></a><span class="tm">22:39:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> either the higher levels setup a hierarchy for you, or we fail
+<a name="l-83"></a><span class="tm">22:39:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we touch cgroups on our own for process accounting and tracking, so what more can you do
+<a name="l-84"></a><span class="tm">22:39:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> currently processes in the libcontainer API...  there is a way to fix it, but I'm cautious about it because it would require exec'ing in ...
+<a name="l-85"></a><span class="tm">22:40:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> can you mount your own cgroup hierarchy?
+<a name="l-86"></a><span class="tm">22:40:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> your new namespace will always be rooted where you were
+<a name="l-87"></a><span class="tm">22:40:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> and there hasn't been much motion in the kernel to allow cgroup namespacing to change ownership
+<a name="l-88"></a><span class="tm">22:41:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I wonder if having a named runC cgroup would fix process tracking issues
+<a name="l-89"></a><span class="tm">22:41:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we'd need loose permissions to make it workable, but then it might not be useful for accounting
+<a name="l-90"></a><span class="tm">22:41:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't know how much of a self-contained thing we can make rootless containers for runC
+<a name="l-91"></a><span class="tm">22:41:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> apart from that, everything else works
+<a name="l-92"></a><span class="tm">22:42:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I tried it out, and I had to change the root for the state, but overall it just works
+<a name="l-93"></a><span class="tm">22:42:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> the dumpable stuff is the only thing blocking it from being mergable?
+<a name="l-94"></a><span class="tm">22:42:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> the dumpable thing is... [something about star] you can't exec?
+<a name="l-95"></a><span class="tm">22:42:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> yeah
+<a name="l-96"></a><span class="tm">22:43:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> there's no limitation on creating a network namespace, but you can't connect that namespace to the internet
+<a name="l-97"></a><span class="tm">22:43:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> someone else can do that for you
+<a name="l-98"></a><span class="tm">22:44:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I feel like a lot of this rootless stuff is dependent on a more-privileged user facilitating networking, cgroups, etc. and that's what most other systems do
+<a name="l-99"></a><span class="tm">22:44:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> you could have small, auditable setuid helpers
+<a name="l-100"></a><span class="tm">22:44:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> but that doesn't help with the academic "we can't install any setuid stuff" use-case
+<a name="l-101"></a><span class="tm">22:45:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I'm sure there will be something that allows users to create their own cgroups.  And we'll see what happens for network namespaces
+<a name="l-102"></a><span class="tm">22:45:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I heard somthing about [...] last year
+<a name="l-103"></a><span class="tm">22:45:48</span><span class="nk"> &lt;mrunalp&gt;</span> unprivileged network namespace setup
+<a name="l-104"></a><span class="tm">22:45:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we can still be useful for "I just need to install this package".  It's still useful without cgroups and a network namespace
+<a name="l-105"></a><span class="tm">22:46:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> there's also a console-socket race?
+<a name="l-106"></a><span class="tm">22:46:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah
+<a name="l-107"></a><span class="tm">22:46:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> the reason why we have two sockets is that we don't want to expose the internal synchronization socket
+<a name="l-108"></a><span class="tm">22:47:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> the solution might be blocking somewhere...  There's probably a good fix for this
+<a name="l-109"></a><span class="tm">22:47:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> using the sync socket to also pass the console socket?
+<a name="l-110"></a><span class="tm">22:47:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> you could say "don't send it down the sync socket, send it down this one"
+<a name="l-111"></a><span class="tm">22:47:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> maybe.  I'd have to look at it
+<a name="l-112"></a><span class="tm">22:47:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> it seems like an easy way to get the blocking to work
+<a name="l-113"></a><span class="tm">22:48:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I can work up a patch if you're ok with that approach
+<a name="l-114"></a><span class="tm">22:48:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> sounds good
+<a name="l-115"></a><span class="tm">22:48:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> we also need to figure out the console socket API
+<a name="l-116"></a><span class="tm">22:48:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> anything else?
+<a name="l-117"></a><span class="tm">22:48:31</span><span class="nk"> &lt;erikh&gt;</span> do I have everyone on ignore accidentally or something?
+<a name="l-118"></a><span class="tm">22:48:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> ref naming?
+<a name="l-119"></a><span class="tm">22:48:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> sure
+<a name="l-120"></a><span class="tm">22:48:56</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">unique ref names</span>
+<a name="l-121"></a><span class="tm">22:49:06</span><span class="nk"> &lt;crosbymichael&gt;</span> <span class="hi">erikh:</span> can you hear us?
+<a name="l-122"></a><span class="tm">22:49:12</span><span class="nk"> &lt;crosbymichael&gt;</span> or can we not hear you?
+<a name="l-123"></a><span class="tm">22:49:16</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/581</span>
+<a name="l-124"></a><span class="tm">22:49:27</span><span class="nk"> &lt;erikh&gt;</span> oh you guys are doing a hangout or osmething
+<a name="l-125"></a><span class="tm">22:49:33</span><span class="nk"> &lt;erikh&gt;</span> sorry, late to the party. sorry to interrupt.
+<a name="l-126"></a><span class="tm">22:49:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> with index.json, ref [names] have become a second-class citizen
+<a name="l-127"></a><span class="tm">22:49:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> that's not true
+<a name="l-128"></a><span class="tm">22:49:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> as a user trying to access something with a ref of $X
+<a name="l-129"></a><span class="tm">22:50:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> with non-unique refs, you could have multiple refs that match
+<a name="l-130"></a><span class="tm">22:50:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> if the program says "go away, give me a name that only has one ref", that's one thing, but seems like a poor choice
+<a name="l-131"></a><span class="tm">22:50:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> or you can return a set of all matching refs, and then the ref system doesn't seem like a complete solution
+<a name="l-132"></a><span class="tm">22:51:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> you'd need an out-of-spec way to select which of those matching refs you want
+<a name="l-133"></a><span class="tm">22:51:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> your model of the problem does not exist
+<a name="l-134"></a><span class="tm">22:51:34</span><span class="nk"> &lt;stevvooe&gt;</span> select * from descriptors where match(myplatform, platform);
+<a name="l-135"></a><span class="tm">22:51:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> asking for a ref by name does not exist in OCI or anything around it
+<a name="l-136"></a><span class="tm">22:51:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> you'd need a centralized naming system, or Notary, or something like that
+<a name="l-137"></a><span class="tm">22:51:52</span><span class="nk"> &lt;stevvooe&gt;</span> select * from descriptors where match(myplatform, platform) and name = "foo";
+<a name="l-138"></a><span class="tm">22:52:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I don't see why it has to be unique.
+<a name="l-139"></a><span class="tm">22:52:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there's no given value for it being unique
+<a name="l-140"></a><span class="tm">22:52:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the data structure does not provide uniqueness, it provides annotations
+<a name="l-141"></a><span class="tm">22:52:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the idea that this will create incompatibilities is absolutely rediculous
+<a name="l-142"></a><span class="tm">22:53:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> create a UX to help users make the choice
+<a name="l-143"></a><span class="tm">22:53:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> why is this a spec problem?
+<a name="l-144"></a><span class="tm">22:53:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I understand your arguments, and that queries are a better way to handle the current situation
+<a name="l-145"></a><span class="tm">22:53:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> the incompatibilies are not that you couldn't pass an image between implementations
+<a name="l-146"></a><span class="tm">22:54:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> the incompat is, if you have an image, and you want to plug it into Docker, cri-o, etc.
+<a name="l-147"></a><span class="tm">22:54:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> while all of these implementations will provide a way for parsing the refs, the UX will be different in each case
+<a name="l-148"></a><span class="tm">22:54:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I'm not saying we need a global aggreement.  But as it stands, there is no way to refer to a single ref in the image
+<a name="l-149"></a><span class="tm">22:55:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> this is the first problem users will have when they try to use an image
+<a name="l-150"></a><span class="tm">22:55:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> is Docker doing it differently from everyone else?
+<a name="l-151"></a><span class="tm">22:55:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the current implemenation is by a skopeo maintainer
+<a name="l-152"></a><span class="tm">22:56:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> going back to schema1, the tag was part of the content addressable blob
+<a name="l-153"></a><span class="tm">22:56:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> a normalized data structure would have  these pointers in an area where you could enforce uniqueness
+<a name="l-154"></a><span class="tm">22:57:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> once you move your UX away from the datastructure, you get more complexity
+<a name="l-155"></a><span class="tm">22:57:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if we made the name unique, we make this one case simpler, but lots of other cases more complex
+<a name="l-156"></a><span class="tm">22:58:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I must be missing something
+<a name="l-157"></a><span class="tm">22:58:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> if you have an index.json, and a single tag referencing one index, and that index references multiple manifests, that's one way to get a platform-independent images
+<a name="l-158"></a><span class="tm">22:58:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> sure
+<a name="l-159"></a><span class="tm">22:58:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> so what do you gain by allowing repeated tags?
+<a name="l-160"></a><span class="tm">22:59:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> once you have an index referencing indexes, you open up lots of edge cases
+<a name="l-161"></a><span class="tm">22:59:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if indexes could only reference manifests, the tree depth was limited
+<a name="l-162"></a><span class="tm">22:59:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> you need to be able to traverse that tree, assemble all reference descriptors, and then list the gathered set
+<a name="l-163"></a><span class="tm">22:59:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> it's convenient to flatten that tree
+<a name="l-164"></a><span class="tm">23:00:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> with a tuple set like this for two platforms
+<a name="l-165"></a><span class="tm">23:00:12</span><span class="nk"> &lt;stevvooe&gt;</span> (mediatype, digest, "osx", "foo")
+<a name="l-166"></a><span class="tm">23:00:12</span><span class="nk"> &lt;stevvooe&gt;</span> (mediatype, digest, "windows, "foo")
+<a name="l-167"></a><span class="tm">23:00:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> with two entries with the tag "foo"
+<a name="l-168"></a><span class="tm">23:00:51</span><span class="nk"> &lt;stevvooe&gt;</span> (mediatype, digest, null, "foo") -&gt;
+<a name="l-169"></a><span class="tm">23:00:51</span><span class="nk"> &lt;stevvooe&gt;</span> (mediatype, digest, "windows, null)
+<a name="l-170"></a><span class="tm">23:00:51</span><span class="nk"> &lt;stevvooe&gt;</span> (mediatype, digest, "osx", null)
+<a name="l-171"></a><span class="tm">23:01:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> to tools, these should be identical
+<a name="l-172"></a><span class="tm">23:01:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there's no point in limiting these
+<a name="l-173"></a><span class="tm">23:01:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the spec does not need to tell you how to walk the tree and collect or handle refs
+<a name="l-174"></a><span class="tm">23:02:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> Docker can say "this is not unique.  Here's what I'm seeing, now give me more info"
+<a name="l-175"></a><span class="tm">23:02:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> other tools can just list them all
+<a name="l-176"></a><span class="tm">23:02:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think we need to stick to the given datastructure
+<a name="l-177"></a><span class="tm">23:02:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the erroring-out approach will make your tool less compatible.  So there are implications to the choices, but they don't need to be encoded in the spec (they are use-case dependent)
+<a name="l-178"></a><span class="tm">23:03:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> that's all fine.  If it's ok for annotations/selections to be incompatible between implementations, then that's fine
+<a name="l-179"></a><span class="tm">23:03:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I don't think they will be incompatible, because there's no incentive for making incompatible images
+<a name="l-180"></a><span class="tm">23:03:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I'm referring to the way the user accesses an entry.
+<a name="l-181"></a><span class="tm">23:04:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> but I think there should be implementer notes addressing this
+<a name="l-182"></a><span class="tm">23:04:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> make a bug and assign it to me, and I'll make some notes for platform matching and address compatibility
+<a name="l-183"></a><span class="tm">23:04:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> sounds good
+<a name="l-184"></a><span class="tm">23:04:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I have some incoming code in containerd for this, and I'll CC cyphar
+<a name="l-185"></a><span class="tm">23:04:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> sounds good
+<a name="l-186"></a><span class="tm">23:04:58</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

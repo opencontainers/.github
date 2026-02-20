@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:00:15</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-08-10 discussion</span>
+<a name="l-2"></a><span class="tm">21:00:15</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Aug 10 21:00:15 2016 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:00:15</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:00:15</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2016_08_10_discussion'
+<a name="l-5"></a><span class="tm">21:00:17</span><span class="nk"> &lt;tianon&gt;</span> IT'S OCI TIME
+<a name="l-6"></a><span class="tm">21:00:32</span><span class="nk"> &lt;vbatts|work&gt;</span> aww yiss
+<a name="l-7"></a><span class="tm">21:01:05</span><span class="nk"> &lt;JakeWarner|Work&gt;</span> I've missed y'all since DockerCon :(
+<a name="l-8"></a><span class="tm">21:01:13</span><span class="nk"> &lt;tianon&gt;</span> hurry someone hack up https://media.giphy.com/media/WQD6NEEsVTvxK/giphy.gif to say OCI instead
+<a name="l-9"></a><span class="tm">21:03:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> chair me?
+<a name="l-10"></a><span class="tm">21:04:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I've submitted https://github.com/opencontainers/image-spec/pull/195 with a ChangeLog for 0.4.0
+<a name="l-11"></a><span class="tm">21:05:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> Then we'll have a vote on tagging 0.4.0
+<a name="l-12"></a><span class="tm">21:05:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> it would be ideal if the ChangeLog could be automated
+<a name="l-13"></a><span class="tm">21:06:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span>  Automated ChangeLogs aren't very useful (just use Git log)
+<a name="l-14"></a><span class="tm">21:06:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> consumer-useful is different from developer-useful
+<a name="l-15"></a><span class="tm">21:06:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> and yeah, it should close on the 17th
+<a name="l-16"></a><span class="tm">21:07:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> there was a question around certification and architectures?  Should we spell it out?
+<a name="l-17"></a><span class="tm">21:07:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> why does the architecture matter for images?
+<a name="l-18"></a><span class="tm">21:07:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> the image tooling doesn't have to execute the image content
+<a name="l-19"></a><span class="tm">21:07:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> if you have a runtime that only works on x86_64, should there be certification language around that?
+<a name="l-20"></a><span class="tm">21:08:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> for the runtime, we'll obviously need to certify runtimes for a given architecture, and the spec needs to be particular about that
+<a name="l-21"></a><span class="tm">21:08:40</span><span class="nk"> &lt;wking&gt;</span> https://github.com/opencontainers/runtime-spec/pull/527
+<a name="l-22"></a><span class="tm">21:09:36</span><span class="nk"> &lt;wking&gt;</span> The arcitecture and OS (both part of the platform) should be part of the certificate
+<a name="l-23"></a><span class="tm">21:09:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I think we want language about this to land before 1.0
+<a name="l-24"></a><span class="tm">21:10:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I don't see why this matters for the image spec
+<a name="l-25"></a><span class="tm">21:11:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I can roll this into #527
+<a name="l-26"></a><span class="tm">21:12:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> I'm not happy with unconditionaly-compliant
+<a name="l-27"></a><span class="tm">21:12:10</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-28"></a><span class="tm">21:12:10</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: vbatts|work wking
+<a name="l-29"></a><span class="tm">21:13:22</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">compliance with the runtime spec</span>
+<a name="l-30"></a><span class="tm">21:13:37</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">mrunalp to handle architecture language in #527</span>
+<a name="l-31"></a><span class="tm">21:14:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> cyphar?
+<a name="l-32"></a><span class="tm">21:14:32</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">console updates</span>
+<a name="l-33"></a><span class="tm">21:14:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> crosbymichael thoughts?
+<a name="l-34"></a><span class="tm">21:14:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> cyphar and I have been busy, so we should probably punt again
+<a name="l-35"></a><span class="tm">21:14:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we can revisit next week
+<a name="l-36"></a><span class="tm">21:15:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> other topics?
+<a name="l-37"></a><span class="tm">21:15:41</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">tar ordering in the image-spec</span>
+<a name="l-38"></a><span class="tm">21:15:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we'll need new language to clarify order of application (e.g. a tar with two resources with the same path)
+<a name="l-39"></a><span class="tm">21:16:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we want to only apply one of those to the resulting layer.  With tar it's usually the latest entry
+<a name="l-40"></a><span class="tm">21:16:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> with opaque files it's a bit more complex, but we'll want language for that
+<a name="l-41"></a><span class="tm">21:16:48</span><span class="nk"> &lt;wking&gt;</span> https://github.com/opencontainers/image-spec/issues/128
+<a name="l-42"></a><span class="tm">21:16:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'll probably implement image-spec#128 soon
+<a name="l-43"></a><span class="tm">21:17:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> Can we just require no duplicate entries?
+<a name="l-44"></a><span class="tm">21:17:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the algorithm isn't very fancy.  We just need generic tar handling + opaque bubblign
+<a name="l-45"></a><span class="tm">21:17:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I'm saying it's easier to require no duplicate dentries unless we find a great use case
+<a name="l-46"></a><span class="tm">21:18:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I can't think of a good use case, unless we have existing cases and want to preserve backwards-compat.  Have you seen it?
+<a name="l-47"></a><span class="tm">21:18:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I've only seen it in the context of "look, tar lets you do this"
+<a name="l-48"></a><span class="tm">21:18:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> There isn't a modern tool that creates duplicate entries in the tar stream
+<a name="l-49"></a><span class="tm">21:19:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> If we're confident with that, we can add that requirement, but I'm concerned about backwards compat
+<a name="l-50"></a><span class="tm">21:19:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> How does Docker v2.2 handle this?
+<a name="l-51"></a><span class="tm">21:19:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> Docker v2.2 was more about manifests than about layers
+<a name="l-52"></a><span class="tm">21:19:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the Docker layering spec doesn't cover a lot of these details
+<a name="l-53"></a><span class="tm">21:20:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm fine with either "resources are unique" or "this is how ordering is handled", but we need to do something
+<a name="l-54"></a><span class="tm">21:20:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> We could say "in the case of duplicate entries, behavior is undefined", and not bother testing that
+<a name="l-55"></a><span class="tm">21:20:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> the trick is that we're already in custom tar-library land because of the opaques
+<a name="l-56"></a><span class="tm">21:21:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> ah, right
+<a name="l-57"></a><span class="tm">21:21:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I'll comment on the issue, but I'd rather block duplicates, but am ok with documenting something that is Docker-compatible
+<a name="l-58"></a><span class="tm">21:21:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> since Docker 1.8 tarsplit will fail with errors on duplicates
+<a name="l-59"></a><span class="tm">21:22:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we ran a huge job around 1.8 / 1.9 looking at layers.  Before Docker 1.6 there were wierd tar entries around temp files and repeated entries
+<a name="l-60"></a><span class="tm">21:22:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> so I suspect modern Docker issues are fine, and we can deal with any fallout from older images
+<a name="l-61"></a><span class="tm">21:22:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I like that
+<a name="l-62"></a><span class="tm">21:23:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> The only use case ever for duplicates were exploits or literally writing to tape where you don't want to rewind
+<a name="l-63"></a><span class="tm">21:23:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> either vbatts|work or I will get this submitted
+<a name="l-64"></a><span class="tm">21:23:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> right on
+<a name="l-65"></a><span class="tm">21:23:48</span><span class="nk"> &lt;tianon&gt;</span> taking a list of tar layers and smashing them together as-is could be amusing, but it's not a strong or even real-world use case O:)
+<a name="l-66"></a><span class="tm">21:24:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> anything else?
+<a name="l-67"></a><span class="tm">21:24:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> can you #endmeeting
+<a name="l-68"></a><span class="tm">21:24:45</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">17:03:02</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-05-11 discussion</span>
+<a name="l-2"></a><span class="tm">17:03:02</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed May 11 17:03:02 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">17:03:02</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">17:03:02</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2016_05_11_discussion'
+<a name="l-5"></a><span class="tm">17:03:23</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp</span>
+<a name="l-6"></a><span class="tm">17:03:23</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: mrunalp wking
+<a name="l-7"></a><span class="tm">17:03:35</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/384
+<a name="l-8"></a><span class="tm">17:03:38</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">create/start split</span>
+<a name="l-9"></a><span class="tm">17:03:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> this just needs reviews
+<a name="l-10"></a><span class="tm">17:04:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> autoremove might make more sense as a runtime option, because it might not apply to other implementations
+<a name="l-11"></a><span class="tm">17:04:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> maybe the runtime should be responsible for populating part of the config.json?
+<a name="l-12"></a><span class="tm">17:04:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I was thinking of not putting it in the spec and making it a runC option
+<a name="l-13"></a><span class="tm">17:05:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> for example, you would say: runc create --autoremove PATH ID
+<a name="l-14"></a><span class="tm">17:05:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> yeah, I'm just putting that up for discussion
+<a name="l-15"></a><span class="tm">17:06:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I don't really care, but I'm not sure where you draw the line once you open that door
+<a name="l-16"></a><span class="tm">17:06:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> it shouldn't be in the config
+<a name="l-17"></a><span class="tm">17:07:23</span><span class="nk"> &lt;JakeWarner&gt;</span> Why not part of the config?
+<a name="l-18"></a><span class="tm">17:07:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I can see this if you consider the config a portable thing.  But I see the config as "what you need to run the container", whether or not it's portable
+<a name="l-19"></a><span class="tm">17:08:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I think hooks also fall under this runtime-option, not-in-the-config position
+<a name="l-20"></a><span class="tm">17:08:10</span><span class="nk"> &lt;JakeWarner&gt;</span> (sorry, don't have a mic)
+<a name="l-21"></a><span class="tm">17:08:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> do you mean that different Linux implementations can handle the idling container process in different ways?
+<a name="l-22"></a><span class="tm">17:08:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> you have to implement it, but the mechanism is optional
+<a name="l-23"></a><span class="tm">17:09:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> but we need to make sure hooks can be written in a portable manner, so some of the implementation has to be standardized
+<a name="l-24"></a><span class="tm">17:09:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> agreed, but I don't want the wording to be too perscriptive
+<a name="l-25"></a><span class="tm">17:09:57</span><span class="nk"> &lt;JakeWarner&gt;</span> ty wking
+<a name="l-26"></a><span class="tm">17:10:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> config.json is supposed to be portable
+<a name="l-27"></a><span class="tm">17:10:58</span><span class="nk"> &lt;JakeWarner&gt;</span> It scares me for the sake of the future to not have an atomic config for runtime
+<a name="l-28"></a><span class="tm">17:11:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the other argument is that this is a lifecycle option, and the same config can have different lifecycles
+<a name="l-29"></a><span class="tm">17:11:33</span><span class="nk"> &lt;JakeWarner&gt;</span> Like, wouldn't some containers by nature ask to be autoremove?
+<a name="l-30"></a><span class="tm">17:11:59</span><span class="nk"> &lt;JakeWarner&gt;</span> If we introduce —autoremove as a flag, what other flags will there be in the future?
+<a name="l-31"></a><span class="tm">17:12:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> what's the rationale for whether something is in config.json vs. a command-line option?
+<a name="l-32"></a><span class="tm">17:12:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> good question.  In this case, it feels like it doesn't belong in the config
+<a name="l-33"></a><span class="tm">17:13:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> we were moving down the "everything the runtime needs goes into the config" path, and the runtime option isn't following that approach
+<a name="l-34"></a><span class="tm">17:13:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> as an orchestrator, autoremove is important from a cleanup perspective.  I'd rather not have to inspect the container to figure out whether I need to clean it up
+<a name="l-35"></a><span class="tm">17:14:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I think someone *does* have to look at the config, e.g. "are they asking for too much memory".  Why is autoremove different from that?
+<a name="l-36"></a><span class="tm">17:15:28</span><span class="nk"> &lt;JakeWarner&gt;</span> maybe we do need a runtime.json again. I like the idea of being able to pull down a config.json and never have to take a look at it but then also have the runtime.json that allows me as an orchestrator to specify what needs to happen
+<a name="l-37"></a><span class="tm">17:15:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> do we have to worry about this now?  Can we punt and talk about autoremove later?
+<a name="l-38"></a><span class="tm">17:16:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> can we go with a runtime option now, and then talk about it again later if we have portability issue
+<a name="l-39"></a><span class="tm">17:16:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I'm ok with it this time, but I don't want to set a precedent to have a portable vs. non-portable discussion all over again
+<a name="l-40"></a><span class="tm">17:16:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I don't want an annoying overlay process
+<a name="l-41"></a><span class="tm">17:17:07</span><span class="nk"> &lt;JakeWarner&gt;</span> i'd agree with duglin there
+<a name="l-42"></a><span class="tm">17:17:14</span><span class="nk"> &lt;wking&gt;</span> me too
+<a name="l-43"></a><span class="tm">17:17:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> how would portability-time changes work with extensions?
+<a name="l-44"></a><span class="tm">17:18:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> analogy: I think --autoremove is an operation
+<a name="l-45"></a><span class="tm">17:18:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> create-with-pinning vs. create-without-pinning
+<a name="l-46"></a><span class="tm">17:18:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> but I don't want the user to be able to make that call
+<a name="l-47"></a><span class="tm">17:18:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> but what about memory options?
+<a name="l-48"></a><span class="tm">17:19:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> changing memory limits changes the container.  This is the exact same container, just started with/without pinning.  The container doesn't care whether those namespaces are pinned
+<a name="l-49"></a><span class="tm">17:19:39</span><span class="nk"> &lt;JakeWarner&gt;</span> I think the config.json would be treated as immutable — it'd come with the container and you wouldn't need to tweak it. It's specific to the container. The runtime.json would be things you'd like to customize about actually running the container
+<a name="l-50"></a><span class="tm">17:20:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">JakeWarner:</span> problem with that^ is if a user has a malicious hook or some such
+<a name="l-51"></a><span class="tm">17:20:22</span><span class="nk"> &lt;JakeWarner&gt;</span> <span class="hi">wking:</span> but if hook is part of orchestration
+<a name="l-52"></a><span class="tm">17:20:26</span><span class="nk"> &lt;JakeWarner&gt;</span> wouldn't that be in runtime.json?
+<a name="l-53"></a><span class="tm">17:20:38</span><span class="nk"> &lt;wking&gt;</span> but removing hooks and such is a job for the runtime-caller, not a job for the runtime itself
+<a name="l-54"></a><span class="tm">17:20:46</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/412/files
+<a name="l-55"></a><span class="tm">17:20:53</span><span class="nk"> &lt;wking&gt;</span> defining which bits are part of "orchestration" is a slippery slope ;)
+<a name="l-56"></a><span class="tm">17:21:05</span><span class="nk"> &lt;JakeWarner&gt;</span> lol true true.
+<a name="l-57"></a><span class="tm">17:21:11</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Explicit container namespace for uid, gid</span>
+<a name="l-58"></a><span class="tm">17:21:18</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#url </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/412</span>
+<a name="l-59"></a><span class="tm">17:24:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the glossary docs don't seem super clear to me.  I don't have suggestions now, but will take another look after the call
+<a name="l-60"></a><span class="tm">17:24:41</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">post-stop hooks</span>
+<a name="l-61"></a><span class="tm">17:24:45</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/395
+<a name="l-62"></a><span class="tm">17:24:50</span><span class="nk"> &lt;wking&gt;</span> url https://github.com/opencontainers/runtime-spec/pull/395
+<a name="l-63"></a><span class="tm">17:24:53</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#url </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/395</span>
+<a name="l-64"></a><span class="tm">17:25:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> duglin, is this getting rolled into #384?
+<a name="l-65"></a><span class="tm">17:25:09</span><span class="nk"> &lt;JakeWarner&gt;</span> I was under the belief that hooks would go away with 384
+<a name="l-66"></a><span class="tm">17:25:12</span><span class="nk"> &lt;JakeWarner&gt;</span> as well
+<a name="l-67"></a><span class="tm">17:25:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I think post-stop hooks are gone after #384
+<a name="l-68"></a><span class="tm">17:25:37</span><span class="nk"> &lt;wking&gt;</span> I thought so too, which is why we were adding autoremove^
+<a name="l-69"></a><span class="tm">17:26:02</span><span class="nk"> &lt;wking&gt;</span> but the all-in-one operation will still need hooks
+<a name="l-70"></a><span class="tm">17:26:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> ^
+<a name="l-71"></a><span class="tm">17:26:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I was under the impression that folks who need hooks would not use 'run'
+<a name="l-72"></a><span class="tm">17:26:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> there are users of hooks today that will not need the split
+<a name="l-73"></a><span class="tm">17:26:56</span><span class="nk"> &lt;JakeWarner&gt;</span> I'm not sure I agree with that
+<a name="l-74"></a><span class="tm">17:27:02</span><span class="nk"> &lt;JakeWarner&gt;</span> if we haven't hit 1.0 yet
+<a name="l-75"></a><span class="tm">17:27:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we don't want to change the all-in-one command because of this split
+<a name="l-76"></a><span class="tm">17:27:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> if the new model supports all the hook use cases, why keep them as a first-class items?
+<a name="l-77"></a><span class="tm">17:27:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> why force people to change?
+<a name="l-78"></a><span class="tm">17:27:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> we can have ocitools map the 'run' workflow into the new workflow
+<a name="l-79"></a><span class="tm">17:29:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> it's not so much "the usecase isn't valid" as "there's a simpler bottom layer"
+<a name="l-80"></a><span class="tm">17:29:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> runc could support this on top of create/start/stop/delete
+<a name="l-81"></a><span class="tm">17:30:03</span><span class="nk"> &lt;JakeWarner&gt;</span> Maybe the hooks only come into play if someone specifies 'run' vs 'create/start' ?
+<a name="l-82"></a><span class="tm">17:30:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> but the previous approach was to keep the old 'run', and now folks want to delete it
+<a name="l-83"></a><span class="tm">17:30:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> not "delete it", maybe "not specify it"
+<a name="l-84"></a><span class="tm">17:30:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the old approach was "we'll add the new approach", not "we'll also remove the proven-today workflow"
+<a name="l-85"></a><span class="tm">17:31:01</span><span class="nk"> &lt;JakeWarner&gt;</span> I'd agree with julz_
+<a name="l-86"></a><span class="tm">17:31:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I'm not suggesting removing it from runC, but I don't think we need it in the spec
+<a name="l-87"></a><span class="tm">17:31:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> if we put it in 1.0 and it turns out that it's not necessary, we're stuck supporting it forever
+<a name="l-88"></a><span class="tm">17:31:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I don't like having multiple ways to do the same thing in the spec
+<a name="l-89"></a><span class="tm">17:31:44</span><span class="nk"> &lt;JakeWarner&gt;</span> Maybe we support hooks up until RunC 1.0? Deprecate it
+<a name="l-90"></a><span class="tm">17:32:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> create/start/stop/delete is a clean base layer.  Combining that to build in hooks sounds like a layer on top
+<a name="l-91"></a><span class="tm">17:32:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> as julz_ said, runtimes are free to support this
+<a name="l-92"></a><span class="tm">17:32:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> but you can do everything you do now with hooks?  Why not drop create/start?
+<a name="l-93"></a><span class="tm">17:33:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> because with create/start you don't need binary hooks, although they are still possible
+<a name="l-94"></a><span class="tm">17:33:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I acknowledge that, but don't like throwing out workflows that are used in production
+<a name="l-95"></a><span class="tm">17:33:49</span><span class="nk"> &lt;JakeWarner&gt;</span> I had attached a usecase to the PR regarding how removing the hooks benefits the CaaS I'm working on: https://github.com/opencontainers/runtime-spec/pull/384#issuecomment-218347771
+<a name="l-96"></a><span class="tm">17:33:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> It's ok to say "until this is proven, we won't make the switch"
+<a name="l-97"></a><span class="tm">17:34:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> if you want access to your host mount namespace, there's a problem with create/start.
+<a name="l-98"></a><span class="tm">17:34:44</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">mrunalp to comment on #384 about host mount namespace access</span>
+<a name="l-99"></a><span class="tm">17:34:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> so punt until we understand all the use cases
+<a name="l-100"></a><span class="tm">17:35:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> yeah.  And I don't like dropping the current all-in-one approach.  But that can be visited later
+<a name="l-101"></a><span class="tm">17:36:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> implementers have a choice between all-in-one (like it is now), or to use create/start/...
+<a name="l-102"></a><span class="tm">17:37:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I want to understand use-cases that aren't supported by the split
+<a name="l-103"></a><span class="tm">17:37:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> mount namespace issue: before a pivot, you have access to the host mount namespace until the pivot
+<a name="l-104"></a><span class="tm">17:38:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> there's a time in the lifecycle where we're in the container mount namespace before the pivot
+<a name="l-105"></a><span class="tm">17:38:28</span><span class="nk"> &lt;wking&gt;</span> that's when you bind mount from the host into the container
+<a name="l-106"></a><span class="tm">17:38:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> then you pivot and it locks the mount namespace into the new root
+<a name="l-107"></a><span class="tm">17:39:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the current hooks get called before the pivot happens
+<a name="l-108"></a><span class="tm">17:39:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> why not handle the bind mounts through the config?
+<a name="l-109"></a><span class="tm">17:39:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> if the config doesn't require mount ordering, we should fix that
+<a name="l-110"></a><span class="tm">17:40:17</span><span class="nk"> &lt;wking&gt;</span> I think the current spec already requires config-specified mounts happen in order
+<a name="l-111"></a><span class="tm">17:40:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> previously we had to make the container privileged, but with hooks we don't need to
+<a name="l-112"></a><span class="tm">17:40:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> but you can achieve this by modifying the config...
+<a name="l-113"></a><span class="tm">17:41:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> but it's a good feature for the runtime-caller to modify the mount namespace
+<a name="l-114"></a><span class="tm">17:41:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> but you can inspect the command via the config.  Why do you need hooks?
+<a name="l-115"></a><span class="tm">17:41:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> this is something that you don't want users to specify every time that should happen automatically
+<a name="l-116"></a><span class="tm">17:41:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> you can see "the user is trying to run systemd, so I want to setup these mounts..."
+<a name="l-117"></a><span class="tm">17:41:53</span><span class="nk"> &lt;mikebrow&gt;</span> what's the difference between a custom edit of the config vs a custom tool on a hook?
+<a name="l-118"></a><span class="tm">17:41:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> that sounds like a runtime-caller concern
+<a name="l-119"></a><span class="tm">17:42:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> yeah, we could do that with some command line options, but now we get it easily with a hook
+<a name="l-120"></a><span class="tm">17:42:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I don't see why we need spec support for this, when you could put in a higher wrapper that does this
+<a name="l-121"></a><span class="tm">17:42:52</span><span class="nk"> &lt;JakeWarner&gt;</span> I agree with vishh
+<a name="l-122"></a><span class="tm">17:42:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> there are use cases that we don't want to support in the spec, and you need hook-like things for that
+<a name="l-123"></a><span class="tm">17:43:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> hooks aren't for specific use-cases anyway.  They're lifecycle-extention points where you can do anything
+<a name="l-124"></a><span class="tm">17:43:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we've been talking about the same 1% use cases for two months, and aren't getting anything done
+<a name="l-125"></a><span class="tm">17:44:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> the config is the I/O for a container.  If you want to do more stuff, make your own runtime that does create/start today
+<a name="l-126"></a><span class="tm">17:44:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> there's no reason to put that in the spec.
+<a name="l-127"></a><span class="tm">17:47:07</span><span class="nk"> &lt;JakeWarner&gt;</span> (relevant again: https://github.com/opencontainers/runtime-spec/pull/384#issuecomment-218347771)
+<a name="l-128"></a><span class="tm">17:47:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> if networking is not in the spec, then it's a higher-level decision to set that up
+<a name="l-129"></a><span class="tm">17:47:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> orchestrators will have their own runtimes, so they can call their network-setup script however they want
+<a name="l-130"></a><span class="tm">17:47:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> it's not something that needs to be exposed to the users
+<a name="l-131"></a><span class="tm">17:48:19</span><span class="nk"> &lt;wking&gt;</span> ^ in response to me asking "when to I call my network-setup code if we don't specify either hooks or create/start?"
+<a name="l-132"></a><span class="tm">17:48:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> to me it comes down to interop.  If we go with crosbymichael's really low level, then that really limits interop between runtimes
+<a name="l-133"></a><span class="tm">17:49:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> there's not interop anyway with the create/start split, because there's too much flexibility (whether you pin namespaces or not, etc.)
+<a name="l-134"></a><span class="tm">17:49:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I think this is the exact reason that we want create/start *or* an all-in-one, and not "the runtime can do whatever it wants"
+<a name="l-135"></a><span class="tm">17:50:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> right now the contract is, "I give you the config and the root filesystem, please make a container"
+<a name="l-136"></a><span class="tm">17:50:43</span><span class="nk"> &lt;mikebrow&gt;</span> ^ pick one...
+<a name="l-137"></a><span class="tm">17:51:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I still think we need to pick one basic layer which covers everyone, and folks can put 99% solutions on top of that
+<a name="l-138"></a><span class="tm">17:51:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">dqminh_:</span> we can achieve the same things by having the upper layer create namespaces ahead of time
+<a name="l-139"></a><span class="tm">17:52:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> for all these use cases, you can setup the namespaces ahead of time.  But people don't want to write all that
+<a name="l-140"></a><span class="tm">17:53:08</span><span class="nk"> &lt;JakeWarner&gt;</span> The thing I like about the create/start split is that I don't have to call another binary to make changes
+<a name="l-141"></a><span class="tm">17:53:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> what's the point of a spec if I have to rewrite the runtime?
+<a name="l-142"></a><span class="tm">17:54:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> if we can make everyone happy, why not do that?
+<a name="l-143"></a><span class="tm">17:55:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> create/start is a 1% use case that is the orchestrator's problem
+<a name="l-144"></a><span class="tm">17:55:43</span><span class="nk"> &lt;JakeWarner&gt;</span> I disagree with that :\
+<a name="l-145"></a><span class="tm">17:56:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> if you buy that argument, why have hooks?  Just fork the runtime
+<a name="l-146"></a><span class="tm">17:56:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> because hooks are a small change that adds the most flexibility
+<a name="l-147"></a><span class="tm">17:57:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> even if it does pause during create, the runtime is still jumping in and out of container namespaces
+<a name="l-148"></a><span class="tm">17:57:46</span><span class="nk"> &lt;JakeWarner&gt;</span> Completely agree with julz_
+<a name="l-149"></a><span class="tm">17:57:55</span><span class="nk"> &lt;JakeWarner&gt;</span> (though super applicable to my use case)
+<a name="l-150"></a><span class="tm">17:57:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> but the orchestrator can keep the hook-like-things in memory and doesn't have to write hooks to disk
+<a name="l-151"></a><span class="tm">17:57:57</span><span class="nk"> &lt;JakeWarner&gt;</span> …so biased.
+<a name="l-152"></a><span class="tm">17:58:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> hooks live on tmpfs, and can talk to the orchestrator as they run
+<a name="l-153"></a><span class="tm">17:58:39</span><span class="nk"> &lt;wking&gt;</span> this does not sound appealing to me^ ;)
+<a name="l-154"></a><span class="tm">17:58:50</span><span class="nk"> &lt;JakeWarner&gt;</span> <span class="hi">wking:</span> which?
+<a name="l-155"></a><span class="tm">17:59:12</span><span class="nk"> &lt;wking&gt;</span> hooks in a tmpfs talking to the orchestrator over sockets ;)
+<a name="l-156"></a><span class="tm">17:59:19</span><span class="nk"> &lt;JakeWarner&gt;</span> yeah
+<a name="l-157"></a><span class="tm">17:59:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> hooks are a minimal change to the current orchestrators
+<a name="l-158"></a><span class="tm">18:00:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> there's a danger to doing the expedient thing in a spec, because once we cut 1.0 we're stuck with it
+<a name="l-159"></a><span class="tm">18:00:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> we're at 11
+<a name="l-160"></a><span class="tm">18:00:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> can julz_ write up his approach?
+<a name="l-161"></a><span class="tm">18:01:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> it's just duglin's #384.  We still need an implementation PR in runC, but the spec side is there and waiting for comments
+<a name="l-162"></a><span class="tm">18:01:34</span><span class="nk"> &lt;JakeWarner&gt;</span> I'd agree with that action (384)
+<a name="l-163"></a><span class="tm">18:01:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> so the action is "everyone review #384 so we can make an up/down decision on this next week"?
+<a name="l-164"></a><span class="tm">18:01:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> yeah
+<a name="l-165"></a><span class="tm">18:02:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I don't know that we need to wait for a quorum, but it would be good to move forward on this
+<a name="l-166"></a><span class="tm">18:02:35</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">dockercon meetup</span>
+<a name="l-167"></a><span class="tm">18:02:41</span><span class="nk"> &lt;RobDolinMS&gt;</span> Actually, I think we SHOULD wait for quorum as we have a few folks missing
+<a name="l-168"></a><span class="tm">18:02:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> we're meeting Wednesday from 9 to 12.  Not sure where yet
+<a name="l-169"></a><span class="tm">18:02:49</span><span class="nk"> &lt;JakeWarner&gt;</span> I'll meet you all there! :D
+<a name="l-170"></a><span class="tm">18:02:59</span><span class="nk"> &lt;RobDolinMS&gt;</span> Thanks Doug!
+<a name="l-171"></a><span class="tm">18:03:00</span><span class="nk"> &lt;wking&gt;</span> RoDolinMS, ah, sorry.  Quorum sounds good to me too ;)
+<a name="l-172"></a><span class="tm">18:03:13</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

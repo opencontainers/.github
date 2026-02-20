@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">17:03:54</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">OCI_July_13</span>
+<a name="l-2"></a><span class="tm">17:03:54</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Jul 13 17:03:54 2016 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">17:03:54</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">17:03:54</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to 'oci_july_13'
+<a name="l-5"></a><span class="tm">17:04:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> chair me?
+<a name="l-6"></a><span class="tm">17:04:58</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-7"></a><span class="tm">17:04:58</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp wking
+<a name="l-8"></a><span class="tm">17:05:26</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">command-line API</span>
+<a name="l-9"></a><span class="tm">17:05:34</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/511</span>
+<a name="l-10"></a><span class="tm">17:05:36</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/513</span>
+<a name="l-11"></a><span class="tm">17:05:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I'm looking for some review on #511.  Are we pushing that approach forward?
+<a name="l-12"></a><span class="tm">17:06:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I'm ok either way
+<a name="l-13"></a><span class="tm">17:06:20</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/513
+<a name="l-14"></a><span class="tm">17:10:31</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#408 </span><span class="cmdline">is a blocker to allow us to collect the collect the container exit code in a portable way (without the Linux-specific subreaper stuff)</span>
+<a name="l-15"></a><span class="tm">17:11:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I think we should cut an API spec with exactly what runC has today, and then we can adjust with smaller pivots
+<a name="l-16"></a><span class="tm">17:11:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> and we don't have to cut 1.0 immediately after it lands
+<a name="l-17"></a><span class="tm">17:13:11</span><span class="nk"> &lt;wking&gt;</span> if we land the current runC API as 1.0, compliance testing for Windows runtimes may be impossible (how would you collect the container process exit code)
+<a name="l-18"></a><span class="tm">17:13:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolanMS:</span> Can someone send me these references so we can evaluate Windows compliance
+<a name="l-19"></a><span class="tm">17:14:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolanMS:</span> We can just add a TODO marker to the PR, so we don't have to put in some stopgap implementation
+<a name="l-20"></a><span class="tm">17:14:59</span><span class="nk"> &lt;wking&gt;</span> action wking to ping RobDolanMS about #513
+<a name="l-21"></a><span class="tm">17:15:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">anuthan_:</span> Solaris currently has create/start/delete
+<a name="l-22"></a><span class="tm">17:16:29</span><span class="nk"> &lt;wking&gt;</span> which process is waiting on the container process exit code?
+<a name="l-23"></a><span class="tm">17:16:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">anuthan_:</span> On Solaris, 'start' waits on the container process exit
+<a name="l-24"></a><span class="tm">17:17:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">anuthan_:</span> The kernel thinks it's running at 'create' time, but there's no user process until 'start'
+<a name="l-25"></a><span class="tm">17:17:10</span><span class="nk"> &lt;wking&gt;</span> duglin:
+<a name="l-26"></a><span class="tm">17:17:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> The process that anuthan_'s talking about is a daemon, similar to containerd
+<a name="l-27"></a><span class="tm">17:17:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> When you create a Solaris container, it doesn't add another process.  The process is launched at 'start' time
+<a name="l-28"></a><span class="tm">17:18:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> I believe Windows works similarly
+<a name="l-29"></a><span class="tm">17:18:12</span><span class="nk"> &lt;mikebrow&gt;</span> so spec needs to support any model where a process is waiting on the exit
+<a name="l-30"></a><span class="tm">17:19:14</span><span class="nk"> &lt;wking&gt;</span> ^ difficult to do ;).
+<a name="l-31"></a><span class="tm">17:19:29</span><span class="nk"> &lt;mikebrow&gt;</span> yes, but not difficult to specify
+<a name="l-32"></a><span class="tm">17:20:07</span><span class="nk"> &lt;mikebrow&gt;</span> who what how.. isnt a requirement just that the action occurs
+<a name="l-33"></a><span class="tm">17:20:53</span><span class="nk"> &lt;mikebrow&gt;</span> isn't a requirement of the cli spec..
+<a name="l-34"></a><span class="tm">17:21:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> the --pid approach is the defacto standard
+<a name="l-35"></a><span class="tm">17:21:09</span><span class="nk"> &lt;wking&gt;</span> Why do we have --pid instead of calling 'state'?
+<a name="l-36"></a><span class="tm">17:21:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I'm not sure, maybe if the process dies before you call 'state'?
+<a name="l-37"></a><span class="tm">17:21:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> both containerd and Guardian are using --state, but it may not matter
+<a name="l-38"></a><span class="tm">17:22:24</span><span class="nk"> &lt;mikebrow&gt;</span> ^ let's not boil the ocean
+<a name="l-39"></a><span class="tm">17:22:24</span><span class="nk"> &lt;wking&gt;</span> And we're punting on Windows/Solaris integration?
+<a name="l-40"></a><span class="tm">17:22:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> yes, for now
+<a name="l-41"></a><span class="tm">17:23:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> I don't think it's good to have a platform-specific API spec as a first pass
+<a name="l-42"></a><span class="tm">17:24:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> We may have future trip-ups, but we should be able to abstract in the spec
+<a name="l-43"></a><span class="tm">17:26:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> I still think there's a terminology hangup here
+<a name="l-44"></a><span class="tm">17:26:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> when you create a process on Linux, there's a new process
+<a name="l-45"></a><span class="tm">17:26:35</span><span class="nk"> &lt;wking&gt;</span> yes
+<a name="l-46"></a><span class="tm">17:26:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> and then at start?
+<a name="l-47"></a><span class="tm">17:27:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> 'start' tells the process from 'create' to exec the user code, and 'start' immediately exits
+<a name="l-48"></a><span class="tm">17:27:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> we do the same thing, but do the fork and exec at 'start'
+<a name="l-49"></a><span class="tm">17:27:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> we just have to figure out how to abstract that into the spec
+<a name="l-50"></a><span class="tm">17:27:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> say I do 'runC start "sleep 24 exit 2"'
+<a name="l-51"></a><span class="tm">17:28:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> in the spec as it stands, 'runC start' will send a signal and exit immediately
+<a name="l-52"></a><span class="tm">17:28:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> I think this is an implementation choice.  We'll compare notes, and maybe be able to match the runC approach in Solaris
+<a name="l-53"></a><span class="tm">17:29:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> we want to avoid a platform split, and I think we can
+<a name="l-54"></a><span class="tm">17:29:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> in an ideal world we could avoid this with a 'runC wait'
+<a name="l-55"></a><span class="tm">17:30:39</span><span class="nk"> &lt;wking&gt;</span> I think #508 and the 'event' operation are a pretty straightforward solution to this problem
+<a name="l-56"></a><span class="tm">17:30:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I don't want so much in the air at one time ;)
+<a name="l-57"></a><span class="tm">17:30:59</span><span class="nk"> &lt;mikebrow&gt;</span> event and/or mrunal's hook solns each provide a mechanism to resolve this issue.. but these solns should be discussed after moving forward with a PR without it.. so we can discuss it at length
+<a name="l-58"></a><span class="tm">17:31:04</span><span class="nk"> &lt;wking&gt;</span> Yeah, I can reroll #513 to avoid the #508 blocker to get something landable soon
+<a name="l-59"></a><span class="tm">17:32:42</span><span class="nk"> &lt;wking&gt;</span> The other blockers in the chain (before #508) decouple from #513 if we punt on #508
+<a name="l-60"></a><span class="tm">17:33:11</span><span class="nk"> &lt;wking&gt;</span> action wking to reroll #513 to be closer to the current runC, punting on cross-platform portability for now
+<a name="l-61"></a><span class="tm">17:33:16</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

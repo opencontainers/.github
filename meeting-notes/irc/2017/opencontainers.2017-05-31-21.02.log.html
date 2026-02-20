@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:02:07</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-05-31 discussion</span>
+<a name="l-2"></a><span class="tm">21:02:07</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed May 31 21:02:07 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:02:07</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:02:07</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2017_05_31_discussion'
+<a name="l-5"></a><span class="tm">21:03:43</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">annotations: restrict character set of ref.name values</span>
+<a name="l-6"></a><span class="tm">21:03:48</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/671</span>
+<a name="l-7"></a><span class="tm">21:05:22</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://www.w3.org/TR/REC-xml/#sec-notation</span>
+<a name="l-8"></a><span class="tm">21:06:06</span><span class="nk"> &lt;wking&gt;</span> EBNF which defines character ranges^, although the other constructs are not defined as clearly there
+<a name="l-9"></a><span class="tm">21:06:39</span><span class="nk"> &lt;wking&gt;</span> the XML notation also uses a * suffix for repeation, so it's even closer to your current phrasing
+<a name="l-10"></a><span class="tm">21:12:06</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pulls</span>
+<a name="l-11"></a><span class="tm">21:12:26</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">open image-spec pulls</span>
+<a name="l-12"></a><span class="tm">21:12:32</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pulls</span>
+<a name="l-13"></a><span class="tm">21:12:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> we landed the conversion-doc PR today
+<a name="l-14"></a><span class="tm">21:13:08</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/492</span>
+<a name="l-15"></a><span class="tm">21:13:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> not much left to churn through
+<a name="l-16"></a><span class="tm">21:13:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> minor format discussion in #671.  Some volumes stuff in #504
+<a name="l-17"></a><span class="tm">21:14:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I think we're in good shape for stabilizing
+<a name="l-18"></a><span class="tm">21:14:10</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/690</span>
+<a name="l-19"></a><span class="tm">21:14:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I don't have a preference for ARM v5
+<a name="l-20"></a><span class="tm">21:14:18</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/690</span>
+<a name="l-21"></a><span class="tm">21:14:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there are a lot of ARM v5 variations (hard vs. soft float)
+<a name="l-22"></a><span class="tm">21:14:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> that's why the ARM folks didn't want it specified
+<a name="l-23"></a><span class="tm">21:14:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> you can still use it
+<a name="l-24"></a><span class="tm">21:14:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> yeah, you can still use it, but I don't think we should specify it
+<a name="l-25"></a><span class="tm">21:15:26</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">stevvooe to comment on #690 about not specifying v5</span>
+<a name="l-26"></a><span class="tm">21:16:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> we also got the rc6 out last week
+<a name="l-27"></a><span class="tm">21:16:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> any other image-spec topics?
+<a name="l-28"></a><span class="tm">21:16:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> had we talked about rc6 before it happened?
+<a name="l-29"></a><span class="tm">21:16:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> yup
+<a name="l-30"></a><span class="tm">21:16:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I must have missed that, because we missed a few milestone items that I had to move off (we're handling them now)
+<a name="l-31"></a><span class="tm">21:17:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> There's one issue I want John Starks to chime in on, but he's out until tomorrow
+<a name="l-32"></a><span class="tm">21:17:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> Pull #652
+<a name="l-33"></a><span class="tm">21:18:03</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/652</span>
+<a name="l-34"></a><span class="tm">21:18:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> some of these I'm deferring to to Microsoft devs.  I can LGTM once he chimes in
+<a name="l-35"></a><span class="tm">21:18:35</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pulls</span>
+<a name="l-36"></a><span class="tm">21:18:46</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spe pull requests</span>
+<a name="l-37"></a><span class="tm">21:18:53</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pulls</span>
+<a name="l-38"></a><span class="tm">21:19:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> based on last week's call where we spent 20 minutes figuring out the gameplan, we're trying to draw a line for freezing changes before 1.0
+<a name="l-39"></a><span class="tm">21:20:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> everything else will get tagged v1.NEXT-maybe
+<a name="l-40"></a><span class="tm">21:20:18</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/labels/v1.NEXT-maybe</span>
+<a name="l-41"></a><span class="tm">21:20:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> the v1.0.0-rc6 vote wasn't LGTMed by anyone (except maybe my implicit LGTM from posting the proposal)
+<a name="l-42"></a><span class="tm">21:20:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> because we're still trying to work out the freeze cut-line
+<a name="l-43"></a><span class="tm">21:21:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> crosbymichael, thoughts on an approach?
+<a name="l-44"></a><span class="tm">21:21:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I really don't know.  We spent a whole week with one hour a day to get down to 10, and now we're back at 33
+<a name="l-45"></a><span class="tm">21:21:45</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/opencontainers/runtime-spec/milestone/15
+<a name="l-46"></a><span class="tm">21:21:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> one issue is reading/deciding whether we're going to land things before the freeze
+<a name="l-47"></a><span class="tm">21:22:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> we have a tag for maybe and the milestone for things that should go into the freeze
+<a name="l-48"></a><span class="tm">21:22:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> stuff on the "1.0 freeze" milestone should be all that gets merged before a v6/1.0
+<a name="l-49"></a><span class="tm">21:23:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> we can also use a 1.next for tagging things that will go in for certain after 1.0
+<a name="l-50"></a><span class="tm">21:23:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> and we might want a 1.0 branch so master can keep rolling without breaking the freeze
+<a name="l-51"></a><span class="tm">21:24:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah, branching is a big pain
+<a name="l-52"></a><span class="tm">21:24:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> Go closes PRs immediately if they're in a code freeze
+<a name="l-53"></a><span class="tm">21:24:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I would love that
+<a name="l-54"></a><span class="tm">21:24:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> they're mostly nit-picks, not functional changes
+<a name="l-55"></a><span class="tm">21:24:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we could move in anything we want to review and mass-close everything else
+<a name="l-56"></a><span class="tm">21:25:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> and then anything new that's not a part of the milestone...
+<a name="l-57"></a><span class="tm">21:25:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> there are still some things we have to change, but you should communicate it on IRC or we'd force-close
+<a name="l-58"></a><span class="tm">21:26:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I'm not opposed to getting tight about the bar, but if it takes three hours to review
+<a name="l-59"></a><span class="tm">21:26:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> And maybe they're an easy one-line change, then we can land it
+<a name="l-60"></a><span class="tm">21:26:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> An auto-close default but being intelligent about triage rather than bulk closing would be better
+<a name="l-61"></a><span class="tm">21:27:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> Maybe bulk-close with a message to ping about "please re-open if we need this for 1.0"
+<a name="l-62"></a><span class="tm">21:28:09</span><span class="nk"> &lt;wking&gt;</span> Why not use v1.NEXT-maybe instead of closing?
+<a name="l-63"></a><span class="tm">21:28:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> that's the nicest way
+<a name="l-64"></a><span class="tm">21:28:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I wouldn't object to closing things and asking folks to re-open with reasons for why you need it in 1.0 or why it should be re-opened for v1.NEXT-maybe
+<a name="l-65"></a><span class="tm">21:29:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> We should recognise that we'll have 10 or 15 things that get re-opened pretty quickly
+<a name="l-66"></a><span class="tm">21:29:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> Closing helps establish that there is an advocate actively pushing the PR
+<a name="l-67"></a><span class="tm">21:30:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> The golang folks and kernel folks do this
+<a name="l-68"></a><span class="tm">21:31:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> otherwise this could go on forever
+<a name="l-69"></a><span class="tm">21:31:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> When I was shipping box-product software, we said "you can open something new, but the bar for motivation goes up"
+<a name="l-70"></a><span class="tm">21:31:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> Maybe there's a template for how to articulate why a change is important
+<a name="l-71"></a><span class="tm">21:32:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> another alternative is to only look at the 1.0 freeze milestone
+<a name="l-72"></a><span class="tm">21:32:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> and folks who think a change needs to go into the milestone can advocate to get their change added to the milestone
+<a name="l-73"></a><span class="tm">21:32:52</span><span class="nk"> &lt;vbatts|work&gt;</span> v1.0 FREEZE https://github.com/opencontainers/runtime-spec/milestone/15
+<a name="l-74"></a><span class="tm">21:32:56</span><span class="nk"> &lt;vbatts|work&gt;</span> v1.0.0 https://github.com/opencontainers/runtime-spec/milestone/7
+<a name="l-75"></a><span class="tm">21:32:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I don't understand why we can't just close these
+<a name="l-76"></a><span class="tm">21:33:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> are we worried about feelings?
+<a name="l-77"></a><span class="tm">21:33:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I don't think it's feelings.  For example, the Windows folks proposing namespacing Linux properties
+<a name="l-78"></a><span class="tm">21:34:01</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/issues/831</span>
+<a name="l-79"></a><span class="tm">21:34:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> if we have that level of discussion on every point it will take a long time
+<a name="l-80"></a><span class="tm">21:34:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there will always be discussion
+<a name="l-81"></a><span class="tm">21:34:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we called for polish, instead of opening 25 PRs, can you have a single polish PR?
+<a name="l-82"></a><span class="tm">21:36:33</span><span class="nk"> &lt;wking&gt;</span> I can collapse if folks want, but trying to figure out what is a "breaking change" is hard
+<a name="l-83"></a><span class="tm">21:36:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'd recommend keeping things more tightly scoped
+<a name="l-84"></a><span class="tm">21:37:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> 18 PRs seems like a lot, and it's almost unreasonable, but if that's the granularity to avoid pulling in questionable language, then that's probably best
+<a name="l-85"></a><span class="tm">21:37:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I like many, small, unrelated PRs
+<a name="l-86"></a><span class="tm">21:37:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> a lot of these are changing the spec (and not just adding RFC 2119 language), so we need to be careful reviewing them
+<a name="l-87"></a><span class="tm">21:38:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> wking can you audit your PRs and flag v1-next
+<a name="l-88"></a><span class="tm">21:39:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm not clear on why #852 and #853 are separate
+<a name="l-89"></a><span class="tm">21:40:18</span><span class="nk"> &lt;wking&gt;</span> I can put those in the same PR if you want
+<a name="l-90"></a><span class="tm">21:41:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> RFC 2119 language is hard, because some times you are overly restricting runtimes
+<a name="l-91"></a><span class="tm">21:41:59</span><span class="nk"> &lt;wking&gt;</span> there's a blanket "do we want RFC 2119 langauge for our properties" and then more specific "what do we want the langauge to be for *this* property"
+<a name="l-92"></a><span class="tm">21:42:09</span><span class="nk"> &lt;wking&gt;</span> I'm not clear on the maintainer positions at either level^
+<a name="l-93"></a><span class="tm">21:42:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> some of the references are confusing, e.g. the IEEE references
+<a name="l-94"></a><span class="tm">21:45:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> What about inlining the requirements?
+<a name="l-95"></a><span class="tm">21:46:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm not saying drop a reference, I'm talking about pulls that are aiming at clarification but fail to achieve it
+<a name="l-96"></a><span class="tm">21:47:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we can assume that the reader can figure out what a relative and absolute paths are, we can defer to the platform
+<a name="l-97"></a><span class="tm">21:47:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but the spec doesn't have to make sense to an alien that doesn't know about relative vs. absolute paths
+<a name="l-98"></a><span class="tm">21:52:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> for example, at some point someone will pull their hair out that some part of float is poorly defined
+<a name="l-99"></a><span class="tm">21:53:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> but in the interest of time, referencing to the nth degree...
+<a name="l-100"></a><span class="tm">21:53:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> if there are links to POSIX, then it makes life difficult for Members to review with their legal teams
+<a name="l-101"></a><span class="tm">21:54:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> so I'd say that generally-accepted, human-readable will better than formally defining absolute paths (or whatever)
+<a name="l-102"></a><span class="tm">21:54:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> if there's a simple merge of capitalizing a "may" or "should", but getting into long-length references or adding restrictions where there weren't any, those could be chopped
+<a name="l-103"></a><span class="tm">21:55:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I think that makes sense.  The bar could be "does runtime-tools need clarification for this?"
+<a name="l-104"></a><span class="tm">21:57:04</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/829</span>
+<a name="l-105"></a><span class="tm">21:58:38</span><span class="nk"> &lt;wking&gt;</span> Do maintainers want this for 1.0 or not?
+<a name="l-106"></a><span class="tm">21:58:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> this could be coding to current versions of kernel APIs
+<a name="l-107"></a><span class="tm">22:02:23</span><span class="nk"> &lt;vbatts|work&gt;</span> we're at time.
+<a name="l-108"></a><span class="tm">22:02:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> so what's the plan?
+<a name="l-109"></a><span class="tm">22:02:59</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">wking to triage his prs</span>
+<a name="l-110"></a><span class="tm">22:04:35</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/milestone/7</span>
+<a name="l-111"></a><span class="tm">22:04:56</span><span class="nk"> &lt;wking&gt;</span> If maintainers don't want RFC 2119 requirements for runtimes, they can close #746, most PRs referencing it, and possibly revert #787 and other PRs that have already landed as part of that effor
+<a name="l-112"></a><span class="tm">22:05:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> should we also send a dev@ email about the freeze?
+<a name="l-113"></a><span class="tm">22:05:40</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">vbatts|work to mail dev@ about the freeze</span>
+<a name="l-114"></a><span class="tm">22:06:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> maybe put up a vote on Friday?
+<a name="l-115"></a><span class="tm">22:06:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> lets get whatever config changes landed that we want landed
+<a name="l-116"></a><span class="tm">22:07:30</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

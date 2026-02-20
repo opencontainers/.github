@@ -1,0 +1,21 @@
+21:09:07 <wking> #startmeeting 2017-11-01 discussion
+21:09:07 <collabot> Meeting started Wed Nov  1 21:09:07 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:09:07 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:09:07 <collabot> The meeting name has been set to '2017_11_01_discussion'
+21:09:11 <wking> #chair mrunalp
+21:09:11 <collabot> Current chairs: mrunalp wking
+21:09:24 <wking> I missed the first 10 minutes of meeting, so not sure what happened there
+21:09:55 <wking> #topic runC issues
+21:09:59 <wking> #link https://github.com/opencontainers/runc/pull/1185
+21:11:07 <wking> crosbymichael: any other topics?
+21:11:16 <wking> mrunalp: vbatts|work, you have votes on 1.0.1?
+21:11:24 <wking> #topic 1.0.1 releases
+21:11:34 <wking> vbatts|work: runtime-spec 1.0.1 has all the votes it needs
+21:11:45 <wking> vbatts|work: I think image-spec has 6/9 votes, if I counted right today
+21:12:00 <wking> vbatts|work: I can go ahead and release runtime-spec, and we can give image-spec a few more days to time out
+21:12:14 <wking> vbatts|work: do you have a preference for releasing runtime-spec now or waiting?
+21:12:23 <wking> mrunalp: I guess if we have the votes, we can release it
+21:12:35 <wking> #todo vbatts|work cut runtime-spec 1.0.1
+21:12:39 <wking> mrunalp: any other topics?
+21:12:44 <wking> crosbymichael: I don't have any
+21:13:01 <wking> #endmeeting

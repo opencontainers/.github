@@ -1,0 +1,101 @@
+22:03:04 <wking> #startmeeting 2017-01-25 discussion
+22:03:04 <collabot> Meeting started Wed Jan 25 22:03:04 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:03:04 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:03:04 <collabot> The meeting name has been set to '2017_01_25_discussion'
+22:03:09 <wking> #chair vbatts
+22:03:09 <collabot> Current chairs: vbatts wking
+22:08:11 <RobDolinMS> I'm present on the call and waiting for the UberConference video buffering
+22:08:27 <RobDolinMS> I'm in a shared space so I've muted my audio
+22:09:03 <wking> #topic timeline for upcoming milestones?
+22:09:35 <wking> vbatts: specifically an rc4 for image-spec (which currently has no timeline)
+22:09:51 <wking> stevvooe: the manifest index is a big change.  Should that be rc4 or rc5?
+22:10:00 <wking> vbatts: I'm still working that over in a local branch
+22:10:52 <wking> vbatts: that conversation could last until another RC.  It depends on the rc4 timeline
+22:11:16 <wking> stevvooe: I think the index is the only rc4 blocker.  If we punt it to rc5, we can cut rc4 now
+22:11:28 <wking> stevvooe: But I think we need to figure out indexing before we cut 1.0
+22:11:53 <wking> #link https://github.com/opencontainers/image-spec/pull/438
+22:12:07 <wking> vbatts: for example, can we relax the 'manifests' field name?
+22:12:23 <wking> stevvooe: what other things will we point at?
+22:12:40 <wking> vbatts: in image-layout, it could be anything
+22:12:53 <wking> stevvooe: so you want to define tagged CAS roots
+22:13:21 <wking> stevvooe: you can push blobs to the registry, but to walk the Merkle DAG you need to start somewherer
+22:13:29 <wking> stevvooe: the index is saying "here's the roots"
+22:13:46 <wking> vbatts: we already have that with image-layout
+22:14:28 <wking> vbatts: with the AppStream project, there's XML with this sort of thing
+22:15:06 <wking> vbatts: an annotation might give information like an AppStream revision
+22:15:13 <wking> vbatts: the media type would be their XML media type
+22:15:23 <wking> vbatts: the CAS blob would be their XML file
+22:16:23 <wking> vbatts: so it's more generic than manifests
+22:16:29 <wking> stevvooe: it's sort of like channels
+22:16:48 <wking> vbatts: some folks handle this with tags/annotations too
+22:17:22 <wking> vbatts: I realize platform/OS makes sense in some contexts, but it may not make sense in all contexts
+22:18:02 <wking> stevvooe: first, the platform stuff is not required (Docker will default to the first one)
+22:18:08 <wking> stevvooe: the platform stuff is annotation-like
+22:18:39 <wking> stevvooe: but these other things are like channels/extensions, and aren't manifests
+22:18:54 <wking> vbatts: so keep 'manifests' and add 'channels' with more descriptors?
+22:19:19 <wking> stevvooe: then how narrow is the roll of the channels/extentions type?
+22:19:50 <wking> stevvooe: I think we should relax the platform requirement anyway
+22:20:26 <wking> stevvooe: so basically, the goal of a manifest list is to be a useful top-level root object
+22:20:51 <wking> stevvooe: how flexible do we want to make that entry point?  And do we want to allow multiple entry points?
+22:21:03 <wking> stevvooe: in my experience, changing the entry point is a huge pain
+22:21:21 <wking> stevvooe: even renaming the manifest list to 'index' and allowing more fields might be reasonable here
+22:21:32 <wking> stevvooe: it almost becomes a package list
+22:21:56 <wking> vbatts: would any image have multiple manifest lists?
+22:22:04 <wking> vbatts: I guess if it had a v6 tag...
+22:23:13 <wking> vbatts: so to preserve manifest lists as the entry point, it would be safest to just loosen some requirements (platform, manifest values, ...)
+22:23:34 <wking> vbatts: then nothing serious has changed (except maybe 'manifests' -> 'descriptors')
+22:24:01 <wking> vbatts: images that have an existing manifest list don't need to change it (besides maybe the field name)
+22:24:26 <wking> vbatts: I think we want that as an optional index.json
+22:24:45 <wking> stevvooe: I think we want to have 'manifests' but keep it optional and then add a new 'channels' or some such
+22:25:00 <wking> stevvooe: I'm also open to renaming "manifest list" to "index"
+22:25:27 <wking> stevvooe: so you can get your index (or manifest list or whatever) JSON from wherever, and then dump it into the same processor
+22:26:34 <wking> stevvooe: we can also kick this around offline
+22:26:56 <wking> vbatts: so this seems resolvable in the short term
+22:27:12 <wking> vbatts: so cut v4 now and punt this to v5?
+22:28:00 <stevvooe> https://github.com/opencontainers/image-spec/issues/247
+22:29:06 <wking> RobDolinMS: vbatts, have you tried using absolute references for this^?
+22:29:22 <RobDolinMS> <img src="img/media-types.png" />
+22:29:30 <wking> vbatts: I haven't tried tat
+22:29:47 <RobDolinMS> Maybe: <img src="http://opencontainers.github.io/image-spec/img/media-types.png" />
+22:31:06 <wking> vbatts: when you build the doc it works fine.  I just hadn't bundled the image directory into the released content
+22:31:39 <wking> vbatts: you could also base-64 encode the files and inline them (to get stand-alone HTML)
+22:31:53 <wking> vbatts: but I couldn't find a straightforward way to do that
+22:32:41 <RobDolinMS> https://github.com/opencontainers/image-spec/releases/tag/v1.0.0-rc3
+22:35:05 <wking> RobDolinMS: can you just push the extra images?
+22:35:08 <RobDolinMS> Per chat on OCI Dev ConCall, a partial (and sufficient) solution would be for a /img/ directory to be included with the release.  When the HTML spec is published, the /img/ directory should be published in the same location and the images will render.
+22:35:18 <wking> can we just push a tar or zip of the whole thing?
+22:35:31 <wking> vbatts: some people won't bother looking inside a tar/zip
+22:35:49 <wking> RobDolinMS: when we publish the spec externally this won't be a problem
+22:36:52 <wking> you might also be able to set 'base' pointing at GitHub
+22:38:15 <wking> I'll file a PR for #389, since #480 seems dead
+22:38:40 <wking> vbatts: there's a lot of stuff since rc3, so we should just cut rc4 now (without the index stuff)
+22:38:48 <wking> stevvooe: sounds good
+22:39:06 <wking> stevvooe: what about removing vendoring?
+22:39:12 <wking> #link https://github.com/opencontainers/image-spec/pull/528
+22:39:34 <wking> vbatts: I think this is going to be a problem for the wider Go community and the vendor/ magic
+22:39:48 <wking> vbatts: the compiler favors the longer import name
+22:40:30 <wking> vbatts: so if Go finds github.com/.../vendor/.../vendor/... the most-deeply-vendored package wins out
+22:40:49 <wking> vbatts: and there's not a good way to alias around it
+22:41:29 <wking> tianon: can't we solve this by moving the vendor directory?
+22:41:52 <wking> vbatts: yeah, we can rename 'vendor' to 'deps' (or whatever)
+22:42:03 <wking> stevvooe: You can also move it under cmd/
+22:42:13 <wking> tianon: yeah, we can have a cmd/vendor
+22:42:34 <wking> stevvooe: mostly this is used by tests.  Maybe we could move it into schema?
+22:43:04 <wking> stevvooe: no need to vendor go-digest (it should be stable)
+22:43:24 <wking> stevvooe: errors should also be stable.  The rest of this is for tests...  Also JSON Schema validation...
+22:44:03 <wking> vbatts: I'd thought this was repo-level.  I'm not sure how difficult this problem is
+22:44:54 <wking> vbatts: does anyone else have image-spec topics?
+22:44:56 <stevvooe> https://github.com/opencontainers/image-spec/pull/388
+22:45:49 <wking> vbatts: I didn't like this the last time I looked at it.  stevvooe, what changed?
+22:46:06 <wking> stevvooe: this won't be as much of a pain for containerd
+22:46:19 <wking> stevvooe: having gzip in the layers forever will limit us
+22:46:52 <wking> stevvooe: my first issue was a problem for sharing images, but I found a way to make that matter less
+22:47:12 <wking> vbatts: the tar archives started with the assumption that compression was just for the transfer
+22:47:47 <stevvooe> https://github.com/docker/containerd/pull/427
+22:49:42 <wking> vbatts: we'll try to get everything in for rc4 by tomorrow
+22:50:10 <wking> RobDolinMS: will the runtime also want an rc4?  It's convenient that the specs are fairly synchronizd
+22:50:23 <wking> vbatts: I'm not sure
+22:51:37 <wking> vbatts: anything else?
+22:52:09 <wking> RobDolinMS: stephenrwalli has offered to demo things at next week's meeting
+22:52:17 <wking> vbatts: I'd appreciate that
+22:52:47 <wking> #endmeeting

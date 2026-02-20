@@ -1,0 +1,128 @@
+22:05:32 <wking> #startmeeting 2016-11-30 discussion
+22:05:32 <collabot`> Meeting started Wed Nov 30 22:05:32 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:05:32 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:05:32 <collabot`> The meeting name has been set to '2016_11_30_discussion'
+22:05:37 <wking> I missed the first few minutes...
+22:05:48 <wking> #topic runtime-spec command line API
+22:05:54 <wking> #link https://github.com/opencontainers/runtime-spec/pull/513
+22:06:08 <wking> #action crosbymichael to comment about socket handling in the PR
+22:06:30 <wking> mrunalp: other thoughts for the command line API PR?
+22:06:41 <wking> crosbymichael: I can't think of anything else that we were missing
+22:06:50 <wking> #topic anchor updates
+22:07:57 <wking> RobDolinMS: I'm happy to keep going with the Markdown anchors for v1
+22:08:16 <wking> mrunalp: works for me, any objections?
+22:08:26 <wking> Works for me too, as long as I'm not doing the work ;)
+22:08:47 <wking> #action RobDolinMS to work up PRs for Markdown anchors for the rest of runtime-spec
+22:09:09 <wking> #topic runtime testing feedback
+22:09:38 <wking> RobDolinMS if we're getting started from scratch, where should those docs go?  The README?  A wiki?
+22:09:48 <wking> mrunalp: runtime-tools README is a good place
+22:09:57 <wking> +1 to putting the notes in the runtime-tools README
+22:10:19 <wking> stephenrwalli: RobDolinMS and I worked up Ubuntu and Fedora notes already
+22:10:30 <wking> #action stephenrwalli to PR Fedora notes for runtime-tools
+22:10:42 <wking> #action RobDolinMS to PR Ubuntu notes for runtime-tools
+22:11:09 <wking> stephenrwalli: we have a dependency on the Go capabilities library which doesn't have an open-source license
+22:11:49 <wking> #topic image-spec rc3
+22:11:57 <wking> vbatts: I posted a vote for this today
+22:12:11 <wking> stephenrwalli:
+22:13:22 <wking> stephenrwalli: going back a topic, gocapability is 2-clause BSD: https://github.com/syndtr/gocapability/blob/master/LICENSE
+22:14:07 <wking> vbatts: having some sort of notes about naming would be good for 1.0 (even if it's just "naming is not defined")
+22:14:53 <wking> stevvooe: If we were working on ELF or PDF, do those specs talk about distribution over HTTP
+22:14:56 <wking> ^ probably not ;)
+22:15:15 <wking> stevvooe: the image format is based on Docker tech, but...
+22:15:31 <wking> [stevvooe dropped]
+22:15:39 <stevvooe> reloading
+22:16:35 <stevvooe> chrome stopped recognizing my mic
+22:16:36 <stevvooe> once sec
+22:17:44 <stephenrwalli> wking: You are completely correct. My apologies, All. 2-Clause BSD. I stand corrected.
+22:17:59 <stevvooe> i'll be in seattle as well
+22:18:01 <stevvooe> one sec
+22:18:05 <mrunalp> stephenrwalli, yep, I checked that as well
+22:18:21 <stevvooe> chrome sucks
+22:19:05 <RobDolinMS> stevvooe: You can direct dial into the meeting from a land line or mobile: 415-968-0849
+22:19:37 <wking> philips: I'm not clear on the index use case
+22:20:09 <wking> vbatts: If you have a tar image with an early oci-layout index, you can exit early on missed lookups (without reading the tar file)
+22:20:16 <wking> * the whole tar file
+22:20:46 <wking> vbatts: also a flat-pack use-case with lots of reference objects (assorted GNOME runtimes, Gedit runtimes, etc., etc.)
+22:20:50 <stevvooe> "Due to the size of the call, you have been auto muted to improve call quality."
+22:21:19 <wking> vbatts: instead of walking over HTTP you could fetch a single, required file and use the optional index to find your ref list
+22:21:57 <wking> vbatts: it's for ref-listing efficiency and for packing descriptor annotations
+22:22:36 <wking> #link https://github.com/opencontainers/image-spec/pull/438
+22:22:47 <wking> stevvooe: what's the role of refs/ if we already have an index?
+22:23:01 <wking> vbatts: it does kindof clobber that
+22:23:44 <wking> vbatts: the refs/ directory has a named descriptor, whereas the index... all the blobs or just the refs or whatever... more for people who want a single source for fetching what's in the layout
+22:24:16 <wking> vbatts: it's painful/impossible to walk refs/ in some cases
+22:24:20 <wking> stevvooe: so can we pick one?
+22:24:36 <wking> vbatts: get rid of refs/ (if we replace it with an index)
+22:24:46 <wking> stevvooe: refs/ is nice because merging is easy
+22:24:56 <wking> stevvooe: but your point about HTTP fetching is an interesting thing
+22:25:07 <wking> stevvooe: although it's looking a lot like a manifest list...
+22:26:14 <wking> stevvooe: we should compare this with the Docker safe format too
+22:27:47 <wking> stevvooe: I guess what I'm saying is that this should be a full-blown object (generalizing manifest list) and replacing refs/* with a well-known path
+22:27:51 <stevvooe> https://github.com/opencontainers/image-spec/blob/master/manifest-list.md
+22:28:06 <wking> vbatts: I'll have to check once I can get to my work station...
+22:28:14 <wking> philips: I see what you're saying, stevvooe
+22:28:33 <wking> stevvooe: if we add annotations as an optional descriptor field, then manifest lists cover this case
+22:28:51 <wking> vbatts: and we're replacing refs/* with... a new entry in oci-layout?  Or a refs.json?
+22:29:12 <wking> vbatts: that would be like manifest.json in the current Docker format
+22:29:29 <wking> stevvooe: I think index.json, because there are no refs (naming would be via annotations)
+22:29:37 <stevvooe> https://github.com/opencontainers/image-spec/pull/438/files
+22:30:02 <wking> #action stevvooe to add comments to the PR about a manifest-list approach
+22:31:35 <wking> I think we need to keep first class naming for things like 'unpack v1.0'
+22:32:14 <wking> stevvooe: but refs are not reliable, since we don't have verifiable names
+22:32:30 <wking> stevvooe: image tags have a larger character set, and image names are more than just the tag
+22:32:49 <wking> stevvooe: doing this by annotation lets applications figure out how they want to handle naming
+22:33:11 <wking> Is image-tools unpack just going to be by digest?
+22:33:29 <wking> stevvooe: I think there will be tools that let you select a portion of the index by annotation
+22:33:53 <wking> stevvooe: you can do this without a specified naming scheme, just "unpack the images matching this selector..."
+22:34:31 <wking> so something like "unpack com.example.name=v1.0"?
+22:34:46 <wking> stevvooe: the main problem with refs is that there are many namespaces, so you need translations between them
+22:35:01 <wking> stevvooe: if you just declare what it is for each system there's no need to meet in the middle
+22:35:14 <wking> stevvooe: I think this is a good change, and I'll add commentary to the PR
+22:36:26 <wking> stevvooe: this is a big change (but I think it's the right change).  Let's make sure we handle it appropriately
+22:37:06 <wking> vbatts: with the vote out for image-spec rc3 and the holidays coming up...
+22:37:55 <wking> vbatts: future RCs and 1.0 are probably in mid/late January
+22:38:32 <wking> vbatts: there's also in-flight work about integrating image-layout support into Docker
+22:38:48 <wking> stevvooe: the draw-back to image.json is that it's unverifiable
+22:38:51 <wking> philips: why?
+22:39:13 <wking> stevvooe: say you get a URL without a hash/verification/signature.  You download, unpack, and don't trust index.json
+22:39:33 <wking> stevvooe: presumably someone will be hashing/signing the index.json with a side-declaration
+22:39:54 <wking> stevvooe: I think this gets back around to defining a framework for signing, and we don't need to address this before 1.0
+22:40:15 <wking> philips: this is like refs now, where there's no verification unless you have out-of-band signatures
+22:40:26 <wking> stevvooe: it's easier if it's in one file
+22:40:44 <wking> philips: there are a bunch of random, open PRs which need attention too
+22:41:01 <stevvooe> https://github.com/opencontainers/image-spec/pull/451
+22:41:11 <wking> #topic Shipping runtime-spec configs
+22:41:16 <wking> #link https://github.com/opencontainers/image-spec/pull/451
+22:41:29 <wking> stevvooe: this is a bad idea
+22:41:32 <wking> philips: yeah, never do that
+22:41:44 <wking> stevvooe: it seems like a good idea, but there's so much host-specific stuff
+22:42:03 <wking> stevvooe: translating from the image-config to the host-config is a great security barrier
+22:42:19 <wking> stevvooe: if we look at the Docker image/host config, there are many fewer image configs
+22:42:47 <wking> stevvooe: the OCI spec split distribution and runtime, but the image config and runtime config should be separate (but translatable
+22:43:16 <wking> philips: The spec at one point separated host-specific from runtime-specific, but some things are specific to a single machine/run
+22:44:05 <wking> I think you can handle this with sanitization
+22:44:18 <wking> stevvooe: this is like building a salad bowl with a sieve, plugging all the holes
+22:44:37 <wking> stevvooe: if you let things go through and then whitelist/blacklist, it's going to be bad
+22:45:16 <wking> are you concerned with people who don't sanitize, or about people who sanitize poorly?
+22:45:28 <duglin> YES! XML lives!
+22:45:30 <wking> stevvooe: I'm concerend that you don't understand the ramifications of this proposal
+22:45:38 <wking> vbatts: we need XSLT...
+22:45:50 <wking> crosbymichael: we have two specs for this very reason
+22:46:03 <wking> crosbymichael: this is a horrible idea
+22:46:52 <wking> vbatts: we were talking about this in San Francisco last year, with hints at memory requests and such in annotations.  But it would be implementation specific
+22:47:05 <wking> vbatts: so it would be "your implementation chose to poke a security hole"
+22:47:23 <wking> philips: I think we have a consensus and just need to post a clear reason
+22:47:35 <wking> #action stevvooe to post a comment explaining why this is a bad idea
+22:48:57 <wking> So with runtime specs off the table, I think we need to define how the translation should work in more detail
+22:50:23 <wking> philips: there aren't many fields to map, so that shouldn't be a problem
+22:50:57 <wking> stevvooe: command is pretty straightforward.  Entrypoint is always confusing.  Volumes is the only real unknown
+22:51:11 <wking> philips: Volumes and ExposedPorts are hints to the UX, and not directly actionable
+22:51:51 <wking> We might also have to expand the image config to cover other OSes (and VMs?)
+22:51:59 <wking> philips: I'll start with the more clearly scoped stuff first
+22:53:25 <wking> #topic image-tools maintenance
+22:53:40 <wking> RobDolinMS: I hit some snags trying to run this
+22:53:45 <wking> vbatts: open an issue?
+22:53:56 <wking> #action RobDolinMS to open an issue about image-tools snage
+22:53:58 <wking> *snags
+22:54:08 <wking> [vbatts leaves]
+22:54:15 <wking> #endmeeting

@@ -1,0 +1,120 @@
+21:00:24 <vbatts|work> #startmeeting 2016-09-07 discussion
+21:00:24 <collabot> Meeting started Wed Sep  7 21:00:24 2016 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:00:24 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:00:24 <collabot> The meeting name has been set to '2016_09_07_discussion'
+21:00:50 <cyphar> mrunalp: hi :D
+21:01:01 <mrunalp> cyphar, I was just looking at 1018 :)
+21:01:10 <mrunalp> cyphar, Is it getting stuck in c code for recvmsg?
+21:01:19 <cyphar> yeah, it is
+21:01:39 <mrunalp> okay, cool.
+21:01:52 <cyphar> I spent far too long debugging the strace issue only to find out that it affects master as well
+21:02:01 <cyphar> and that it affects a bunch of other versions
+21:03:49 <vbatts|work> #chair mrunalp
+21:03:49 <collabot> Current chairs: mrunalp vbatts|work
+21:05:13 <mrunalp> cyphar, What other data do we send with the master fd
+21:06:37 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/554
+21:06:40 <wking> vbatts|work: chair me?
+21:07:19 <mrunalp> #topic https://github.com/opencontainers/runtime-spec/pull/554
+21:07:25 <wking> RobDolinMS: My preference would be to put in a placeholder for -rc2, and then fill it in for the rc3
+21:07:37 <stevvooe> so, the meeting room ain't working
+21:07:59 <wking> RobDolinMS: To make it clear that the spec will treat Windows containers as first-class platforms
+21:07:59 <vbatts|work> #chair wking
+21:07:59 <collabot> Current chairs: mrunalp vbatts|work wking
+21:08:09 <wking> philips: why is this critical for 1.0?
+21:08:23 <wking> RobDolinMS: It's important for the OCI that the 1.0 spec is about Windows
+21:08:34 <wking> RobDolinMS: ... as well
+21:08:45 <wking> philips: What's the Windows timeline?  Do we block 1.0?
+21:09:09 <vbatts|work> why has uberconf given me this avatar?
+21:09:12 <wking> RobDolinMS: The question I asked in the mailing list, was do we want a stub or a big, monolithic PR?
+21:09:21 <stephenrwalli> How big is the Big monolithic PR, and when does it arrive?
+21:09:26 <vbatts|work> oh i think it's because i mis-spelled my name
+21:09:29 <wking> RobDolinMS: IF folks want a monolithic PR, I can ask for that
+21:09:32 <stevvooe> uberconf is pretty broken
+21:09:51 <stevvooe> i'd not prefer a monolithic PR
+21:09:59 <wking> RobDolinMS: It's important that Microsoft is engaged with the OCI
+21:10:27 <wking> philips: I think we all agree with the goals.  But if we start now, we're 6-8 weeks off from a 1.0
+21:10:41 <wking> philips: if Windows has any debate, we're probably pushing back 1.0 significantly
+21:11:19 <stevvooe> so, are we going to resolve the issues with the conference system or just continue with the meeting?
+21:11:40 <wking> We can push Windows support into 1.1 and land it as a minor bump
+21:11:55 <wking> RobDolinMS: I don't expect it to be a long pull for Windows support
+21:12:27 <cyphar> stevvooe: use the call-in number
+21:12:51 <wking> stephenrwalli: I don't remember how Solaris worked.  Was that long or easy?
+21:13:01 <wking> vbatts|work: it was pretty straightforward
+21:13:05 <cyphar> stevvooe: use the real phone #
+21:13:07 <cyphar> 415-968-0849
+21:13:09 <RobDolinMS> If someone is having trouble getting into the call: 415-968-0849
+21:13:45 <wking> #link https://github.com/opencontainers/runtime-spec/pull/411
+21:13:49 <wking> ^ Solaris PR
+21:14:31 <wking> In flight for ~ a week?
+21:14:53 <wking> stephenrwalli: so then maybe PR for Windows can be fast enough, but it should start going
+21:14:58 <wking> RobDolinMS: understood
+21:15:18 <wking> philips: mrunalp, what else is on the docket?  The API stuff is wrapping up?
+21:15:27 <wking> mrunalp: yeah, and this Windows stuff is the only other major bit
+21:15:36 <wking> RobDolinMS: Do you want the placeholder now?
+21:15:41 <wking> mrunalp: I don't mind either way
+21:16:04 <wking> mrunalp: other runtime-spec topics?
+21:16:25 <wking> #topic runtime-spec 1.0.0-rc2
+21:16:34 <wking> vbatts|work: there's a day left on the vote
+21:16:55 <wking> #link https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/5qj2hATVxew
+21:17:48 <wking> vbatts|work: runtime maintainers on this call, vote for/against the proposal
+21:18:04 <wking> vbatts|work: I might push a PR to pull in the ChangeLog and handle the version bumps
+21:19:10 <wking> vbatts|work: RobDolinMS, it looks like #554 is missing a signed-off-by or some such
+21:20:05 <wking> philips: so we're cutting -rc2 with the Windows stuff half done?
+21:20:42 <wking> philips: legal-ese is great, but I don't think #554 is a material change...
+21:21:05 <philips> https://github.com/opencontainers/image-spec/milestone/7
+21:21:08 <wking> #topic image-spec v0.5.0 milestone
+21:21:15 <wking> #link https://github.com/opencontainers/image-spec/milestone/7
+21:21:44 <wking> philips: is there anything else folks want in 0.5.0 besides those three bits?
+21:22:22 <wking> vbatts|work: Pulling in #231 got a file rename that is complicated
+21:22:33 <wking> philips: I've removed the rename, so you can rebase on that to drop it
+21:22:38 <wking> vbatts|work: I'll do that shortly
+21:22:50 <philips> https://github.com/opencontainers/image-spec/milestone/3
+21:23:12 <wking> philips: the v1.0.0 milestone has the extension PR, which is getting close
+21:23:19 <wking> #link https://github.com/opencontainers/image-spec/pull/164
+21:23:39 <wking> philips: the other active discussion is on foreign
+21:24:10 <wking> stevvooe: we can relax the language a bit per stephenrwalli's suggestion
+21:24:22 <wking> stevvooe: but we need to get it merged sooner than later
+21:24:39 <wking> #link https://github.com/opencontainers/image-spec/pull/233
+21:24:53 <wking> philips: I'm fine with stephenrwalli's language and stevvooe's language
+21:24:56 <philips> https://github.com/opencontainers/image-spec/pull/233#issuecomment-245415558
+21:25:33 <wking> I like not having a MUST if we're not defining "distribute"
+21:25:45 <wking> stevvooe: "distribute" is clearly defined legally
+21:26:51 <wking> I suspect "distribute" cannot be baked down into a technical implementation
+21:27:23 <wking> philips: I think it's fine.  My main issue was that I wanted it to be clear that it's a legal/licensing requirement
+21:27:49 <wking> philips: once you mention that it's legal/licensing, I don't thing that the rest matters so much
+21:28:06 <wking> stevvooe: I'll work with stephenrwalli to get something in the specific/vague sweet spot
+21:28:33 <wking> stevvooe: we can't enforce the lack of distribution without crypto, so I don't want to get into that level of technical discussion
+21:28:45 <wking> philips: I just moved that into the v1.0.0 milestone
+21:28:59 <stevvooe> https://github.com/opencontainers/image-spec/pull/224
+21:28:59 <wking> #topic Dropping rootfs.type
+21:29:29 <wking> stevvooe: I've tried to identify the rules and the risk of not including it
+21:29:39 <wking> stevvooe: I think the risk is sufficient that it's better to leave it alone
+21:30:08 <wking> stevvooe: I'd rather not deal with the microcomplexities that aren't neccessary for stable interop
+21:30:24 <wking> stevvooe: I don't see removing it as solving a particular problem
+21:30:40 <wking> philips: I view it as a stupid magic number, and that's fine
+21:32:05 <wking> I've said a few times that if we don't want to remove it, we need to actually define the field
+21:32:23 <wking> #action wking to replace #224 with another PR to actually define rootfs.type
+21:32:48 <wking> philips: I'll also add that to v1.0.0
+21:33:29 <wking> #topic image-spec v1.0 milestone
+21:33:36 <wking> #link https://github.com/opencontainers/image-spec/issues/126
+21:33:48 <wking> philips: we have a number of implementations now (skopeo, rkt, Docker has a proposal)
+21:33:53 <wking> philips: anything else for v1.0
+21:33:56 <wking> vbatts|work: nope
+21:34:16 <wking> philips: after we cut 0.5.0, I'd like to get a v1.0.0-rc1 next, but we can do 0.6.0 if we can't sort these other issues
+21:34:26 <duglin> OCI F2F@CNDay/KubeCon:  https://docs.google.com/document/d/1wtJeXhiVOL7qdDK_zouZPjskTIrsOLmD-9Ij478y7_Y/edit
+21:34:40 <wking> #topic Tool repositories
+21:34:50 <wking> #link https://github.com/opencontainers/tob/pull/18
+21:34:58 <philips> https://github.com/opencontainers/tob/pull/18
+21:35:15 <wking> philips: we want to get that sorted
+21:35:46 <wking> philips: should be a week-long vote, so maybe  landed in 10 days
+21:35:55 <wking> philips: I don't expect much deliberation, but we'll see
+21:36:29 <wking> RobDolinMS: Should this start with spec maintainers, or pull in frequent contributoris
+21:36:32 <wking> * contributors
+21:37:54 <wking> philips: I hate being super process-y, but ocitools wasn't an official project, so I'd rather re-induct Liang
+21:38:04 <wking> philips: I'm sure everyone will say yes
+21:38:27 <wking> #action RobDolinMS to update the list of initial tool maintainers to match the spec maintainers
+21:38:40 <wking> #action philips to put the tool-repo proposal up for a vote
+21:38:46 <wking> philips: other topics?
+21:38:55 <wking> vbatts|work: I've rebased #255 to remove the rename
+21:39:09 <wking> philips: everyone has 22 minutes after this call to review PRs
+21:39:12 <wking> #endmeeting

@@ -1,0 +1,27 @@
+22:02:28 <vbatts> #startmeeting 2019-02-13 discussion
+22:02:28 <collabot`> Meeting started Wed Feb 13 22:02:28 2019 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:02:28 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:02:28 <collabot`> The meeting name has been set to '2019_02_13_discussion'
+22:03:18 <jdolitsky> #link
+22:03:35 <jdolitsky> whoops
+22:03:49 <vbatts> #topic distribution rc0
+22:05:46 <vbatts> 928447
+22:06:33 <vbatts> #action vbatts to tag rc0 thursday, make an rc1 milestone, and let the cadence begin
+22:08:07 <vbatts> #topic merge dongsu's `make test` PR
+22:08:20 <vbatts> #action derek to give that a review
+22:11:11 <vbatts> #topic cgroupv2 is on the horizon
+22:11:45 <vbatts> #topic (allen sun) CVE disclosure
+22:12:15 <vbatts> allen: can OCI organization manage disclosure in a responsible way?
+22:12:40 <vbatts> allen: we can all work together to reduce the risk for everyone
+22:14:40 <vbatts> #link https://github.com/opencontainers/org
+22:20:55 <vbatts> #link https://github.com/opencontainers/org/issues/3
+22:21:41 <vbatts> #link https://github.com/kubernetes/sig-release/tree/master/security-release-process-documentation
+22:22:18 <vbatts> #link https://github.com/kata-containers/community/blob/master/VMT/VMT.md
+22:25:23 <vbatts> #topic (steve lasker) artifact persistance guidance
+22:26:07 <vbatts> #link https://github.com/SteveLasker/RegistryArtifactTypes
+22:34:23 <vbatts> #link https://github.com/SteveLasker/RegistryArtifactTypes/blob/master/artifactTypeRequirements.md#Registry-Requirements-of-New-Artifact-Types
+22:34:31 <vbatts> #link https://github.com/SteveLasker/RegistryArtifactTypes/blob/master/approaches.md
+22:34:40 <vbatts> #link https://github.com/SteveLasker/RegistryArtifactTypes/blob/master/mediaTypes.md
+22:48:55 <vbatts> #link https://cloud-native.slack.com/messages/CG5DGLH32/
+22:53:31 <vbatts> #link https://github.com/SteveLasker/RegistryArtifactTypes/blob/master/artifactTypeRequirements.md#ease-of-support
+23:02:37 <vbatts> #endmeeting

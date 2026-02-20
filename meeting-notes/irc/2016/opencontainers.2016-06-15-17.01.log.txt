@@ -1,0 +1,52 @@
+17:01:55 <mrunalp> #startmeeting OCI 6/15
+17:01:55 <collabot`> Meeting started Wed Jun 15 17:01:55 2016 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:01:55 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:01:55 <collabot`> The meeting name has been set to 'oci_6_15'
+17:02:05 <mrunalp> #chair vbatts
+17:02:05 <collabot`> Current chairs: mrunalp vbatts
+17:02:26 <philips> https://github.com/opencontainers/tob/pull/15
+17:03:14 <wking> mrunalp, vbatts: can one of you chair me?
+17:03:25 <mrunalp> #chair wking
+17:03:25 <collabot`> Current chairs: mrunalp vbatts wking
+17:03:28 <wking> thanks
+17:03:49 <wking> #topic release-approval process
+17:03:57 <wking> #link https://github.com/opencontainers/tob/pull/15
+17:04:14 <wking> crosbymichael: I still want more concrete criteria
+17:04:49 <wking> crosbymichael: if we hit a certain set of checkpoints, I want the release to be a no-brainer
+17:05:16 <wking> philips: this is stuff like "tests cover all required features.  Release notes help users through breaking changes.  Etc."
+17:05:19 <wking> crosbymichael: yeah
+17:05:31 <wking> philips: would you be ok with landing the process independently of those criteria?
+17:05:53 <wking> philips: I'd like to start making image-spec releases, and I don't want to block that while we wait for criteria
+17:06:07 <wking> crosbymichael: yeah, we can work on that in parallel
+17:06:19 <wking> philips: the main motivator is an image-spec v0.3 this week
+17:06:43 <wking> crosbymichael: we can finalize the process, and then land the criteria, and then get back to the 1.0 releases
+17:06:46 <wking> philips: that sounds good
+17:06:55 <wking> crosbymichael: I'll take another pass through tob#15 today
+17:07:07 <stevvooe> my mic is having problems, did we have a minimum quorum requirement?
+17:07:13 <wking> mrunalp: to confirm, we're keeping 1.0 paused until we get both the process and criteria
+17:07:16 <wking> crosbymichael: yes
+17:08:02 <stevvooe> i saw it, just wanted to make sure we agreed there was minimum quorum
+17:08:13 <stevvooe> great!
+17:08:14 <wking> philips: essentially, we have a one-week time for the release, and we'll probably have a 2/3 quorum for that vote
+17:08:25 <philips> https://github.com/opencontainers/tob/pull/15#discussion_r67036851
+17:08:25 <wking> #action philips to add quorum language after the meeting
+17:08:36 <wking> #topic image-spec 0.3 release
+17:08:54 <philips> https://github.com/opencontainers/image-spec/milestones/v1.0.0-rc1
+17:09:08 <wking> philips: we have a 1.0.0-rc1 milestone without much in there, and I want to get that out without waiting for 1.0
+17:09:17 <stevvooe> sounds good!
+17:09:29 <wking> philips: the plan is to rename the milestone to 0.3.0 to get the tooling and wording cleanups released
+17:09:44 <mrunalp> https://github.com/RobDolinMS/tob/blob/master/proposals/tools.md
+17:10:08 <wking> mrunalp: RobDolinMS has created a proposal for tooling repositories^
+17:10:17 <wking> mrunalp: we should comment on that (inline or on dev@)
+17:10:27 <wking> mrunalp: and we can talk about it in the DockerCon meeting
+17:10:40 <wking> mrunalp: any specific PRs folks want to look at?
+17:10:44 <wking> (nothing)
+17:10:54 <wking> mrunalp: so shall we continue reviewing PRs asynchronously
+17:11:07 <wking> crosbymichael: yeah
+17:11:17 <wking> #topic no meeting next week
+17:11:27 <wking> mrunalp: most of the maintainers will be at the DockerCon face-to-face
+17:11:50 <stevvooe> i'll be there
+17:11:53 <wking> philips: I'll be at the face-to-face.  I don't know how many image-spec maintainers will be there, but they know it's happening
+17:12:08 <stevvooe> are we okay with the splits on tar and config i've proposed?
+17:12:11 <wking> mrunalp: everyone review tob#15!
+17:12:15 <wking> #endmeeting

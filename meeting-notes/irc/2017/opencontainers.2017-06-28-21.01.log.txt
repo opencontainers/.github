@@ -1,0 +1,12 @@
+21:01:46 <vbatts1> #startmeeting 2017-06-28 discussion
+21:01:46 <collabot`> Meeting started Wed Jun 28 21:01:46 2017 UTC.  The chair is vbatts1. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:01:46 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:01:46 <collabot`> The meeting name has been set to '2017_06_28_discussion'
+21:02:03 <mrunalp> crosbymichael, stevvooe: Joinging?
+21:02:35 <mrunalp> tianon, ^
+21:05:01 <vbatts1> #topic v1.0 freeze
+21:10:43 <vbatts1> https://github.com/opencontainers/image-spec/milestone/3
+21:15:22 <vbatts1> #topic runtime-spec
+21:15:25 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/838
+21:18:08 <vbatts1> wking!
+21:22:55 <vbatts1> #endmeeting

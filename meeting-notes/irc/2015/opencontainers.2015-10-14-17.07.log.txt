@@ -1,0 +1,51 @@
+17:07:20 <wking> #startmeeting 2015-10-14 meeting
+17:07:20 <collabot> Meeting started Wed Oct 14 17:07:20 2015 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:07:20 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:07:20 <collabot> The meeting name has been set to '2015_10_14_meeting'
+17:07:27 <wking> #topic lifecycle docs
+17:07:39 <wking> #action mrunalp to create a new lifecycle PR
+17:07:44 <wking> #chair mrunalp
+17:07:44 <collabot> Current chairs: mrunalp wking
+17:08:43 <wking> #topic checking cgroups from inside the container
+17:09:03 <wking> mrunalp: do we care about checking this from inside the cgroup for validation?
+17:09:26 <wking> mrunalp: runC mounts it, but that's not in the spec
+17:09:36 <wking> philips: I think it is in the spec
+17:09:50 <wking> ^ maybe that was lk4d4 ;)
+17:09:59 <wking> mrunalp: I think we'd punted it earlier
+17:10:22 <wking> mrunalp: anyone from OCT?
+17:10:37 <wking> mrunalp: I couldn't use it, can we get a demo?
+17:11:09 <wking> liangchenye: I think we fixed those issues, does it still not work?
+17:12:10 <wking> liangchenye: I'd like more details on what sort of demo you're looking for
+17:12:35 <wking> #action mrunalp to contact liangchenye to setup a demo and check for validation overlap
+17:12:44 <wking> #topic Next milestone
+17:13:08 <wking> crosbymichael: no specifics for the next milestone, but wants to start on a long-term roadmap and allocate for milestones from there
+17:14:28 <mrunalp> optional/required
+17:14:41 <wking> also spec-supplied bindings (e.g. protobuf)
+17:15:03 <wking> #action mrunalp to post details of a next-week hack-day to the list
+17:15:25 <mrunalp> protobuf should be done
+17:15:41 <wking> philips: land protobuf stuff, get lifecycle landed in the near-ish future
+17:16:05 <mrunalp> philips; Lifecycle should be a part of it
+17:16:19 <mrunalp> validation tooling
+17:17:13 <wking> mrunalp: what about updating cgroups, rlimits?
+17:17:27 <wking> philips: wouldn't be opposed, but not super enthusiastic either
+17:17:36 <wking> #action vishh to push forward on updating
+17:18:28 <wking> #topic defining standard operations
+17:18:55 <wking> duglin: opened https://github.com/opencontainers/specs/pull/225
+17:19:06 <wking> philips: wants to move that to a list thread
+17:20:24 <duglin> I think they’re related and should be discussed at the same time
+17:20:39 <duglin> to me lifecycle and ops are bound together
+17:21:44 <wking> I suggest the following order: lifecycle docs, define operations, add an API for those operations
+17:21:55 <wking> so this is blocking on mrunalp's lifecycle PR
+17:22:23 <wking> #topic Summarizing digest status
+17:22:54 <wking> philips: stevvooe's continuity approach seems solid
+17:23:34 <wking> philips: preliminary summary in https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/xo4SQ92aWJ8
+17:23:58 <wking> #topic two- to three-person working groups on milestone items?
+17:24:05 <wking> crosbymichael: proposing this topic
+17:24:14 <wking> mrunalp: agrees
+17:24:23 <wking> #action mrunalp to collaborate with crosbymichael on the lifecycle
+17:24:32 <wking> #action crosbymichael to collaborate with mrunalp on the lifecycle
+17:24:45 <wking> #action everyone optional/required on the hack-day
+17:25:28 <wking> #action vbatts to work on protobuf
+17:25:37 <wking> mrunalp: ^ vbatts will be back Friday
+17:25:55 <wking> I'm happy to help vbatts on the protobuf stuff if he's wants assistance
+17:26:34 <wking> #endmeeting

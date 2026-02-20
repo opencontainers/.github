@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">20:59:05</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2018-08-29</span>
+<a name="l-2"></a><span class="tm">20:59:05</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Aug 29 20:59:05 2018 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">20:59:05</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">20:59:05</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2018_08_29'
+<a name="l-5"></a><span class="tm">21:05:07</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">cra stuff</span>
+<a name="l-6"></a><span class="tm">21:05:15</span><span class="nk"> &lt;vbatts|work&gt;</span> alibaba announcement
+<a name="l-7"></a><span class="tm">21:06:00</span><span class="nk"> &lt;vbatts|work&gt;</span> re-look at the certification
+<a name="l-8"></a><span class="tm">21:06:06</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] https://github.com/opencontainers/certification/issues/36#issuecomment-414692343
+<a name="l-9"></a><span class="tm">21:11:12</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec</span>
+<a name="l-10"></a><span class="tm">21:11:14</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/opencontainers/runtime-spec/issues/964
+<a name="l-11"></a><span class="tm">21:21:34</span><span class="nk"> &lt;vbatts|work&gt;</span> some windows PRs would be good to get in for a release
+<a name="l-12"></a><span class="tm">21:21:50</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">runc release</span>
+<a name="l-13"></a><span class="tm">21:22:15</span><span class="nk"> &lt;vbatts|work&gt;</span> there was something that broke lxc. That needs to be reverted and resolved before moving forward.
+<a name="l-14"></a><span class="tm">21:22:52</span><span class="nk"> &lt;vbatts|work&gt;</span> want to wait on an RC even, before tagging a next release
+<a name="l-15"></a><span class="tm">21:23:52</span><span class="nk"> &lt;tianon&gt;</span> (sorry folks, I gotta drop ♥)
+<a name="l-16"></a><span class="tm">21:25:48</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">tianon:</span> &lt;3
+<a name="l-17"></a><span class="tm">21:27:35</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/owtaylor/flagstate
+<a name="l-18"></a><span class="tm">21:29:41</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">distribution-spec</span>
+<a name="l-19"></a><span class="tm">21:31:40</span><span class="nk"> &lt;vbatts|work&gt;</span> /v2/_catalog is like a paginating admin function
+<a name="l-20"></a><span class="tm">21:31:51</span><span class="nk"> &lt;vbatts|work&gt;</span> not ideal for search by clients
+<a name="l-21"></a><span class="tm">21:32:43</span><span class="nk"> &lt;vbatts|work&gt;</span> for companion services like flagstate, it would be best to have it only do triggers from new
+<a name="l-22"></a><span class="tm">21:50:38</span><span class="nk"> &lt;vbatts|work&gt;</span> OPTIONAL catalog api
+<a name="l-23"></a><span class="tm">21:50:50</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">distribution client lib</span>
+<a name="l-24"></a><span class="tm">21:51:29</span><span class="nk"> &lt;vbatts|work&gt;</span> conformance testing basically requires blessing one
+<a name="l-25"></a><span class="tm">21:51:33</span><span class="nk"> &lt;vbatts|work&gt;</span> there are so many
+<a name="l-26"></a><span class="tm">21:52:05</span><span class="nk"> &lt;vbatts|work&gt;</span> auth is not really a conformance thing, but may be required
+<a name="l-27"></a><span class="tm">21:58:21</span><span class="nk"> &lt;vbatts|work&gt;</span> line 88 about client error codes?
+<a name="l-28"></a><span class="tm">21:58:26</span><span class="nk"> &lt;vbatts|work&gt;</span> say consumer?
+<a name="l-29"></a><span class="tm">21:58:37</span><span class="nk"> &lt;vbatts|work&gt;</span> /v2/ consumer requirements
+<a name="l-30"></a><span class="tm">22:01:28</span><span class="nk"> &lt;vbatts|work&gt;</span> something like the ./specs-go/ of image-spec and runtime-spec
+<a name="l-31"></a><span class="tm">22:01:34</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#endmeething</span><span class="cmdline"></span>
+<a name="l-32"></a><span class="tm">22:01:40</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

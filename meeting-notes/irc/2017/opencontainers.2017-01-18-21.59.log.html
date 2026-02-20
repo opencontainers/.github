@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:59:25</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-01-18 discussion</span>
+<a name="l-2"></a><span class="tm">21:59:25</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Jan 18 21:59:25 2017 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:59:25</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:59:25</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2017_01_18_discussion'
+<a name="l-5"></a><span class="tm">22:00:21</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, stevvooe, vishh: Joining?
+<a name="l-6"></a><span class="tm">22:09:13</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/runtime-spec/pull/508</span>
+<a name="l-7"></a><span class="tm">22:09:20</span><span class="nk"> &lt;duglin&gt;</span> thanks
+<a name="l-8"></a><span class="tm">22:09:50</span><span class="nk"> &lt;mrunalp&gt;</span> post 1.0
+<a name="l-9"></a><span class="tm">22:09:53</span><span class="nk"> &lt;mrunalp&gt;</span> everyone agrees
+<a name="l-10"></a><span class="tm">22:10:35</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/runtime-spec/pull/507</span>
+<a name="l-11"></a><span class="tm">22:11:49</span><span class="nk"> &lt;mrunalp&gt;</span> post 1.0
+<a name="l-12"></a><span class="tm">22:11:55</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/runtime-spec/pull/490</span>
+<a name="l-13"></a><span class="tm">22:12:21</span><span class="nk"> &lt;mrunalp&gt;</span> Assigning to vbatts to take a look
+<a name="l-14"></a><span class="tm">22:14:25</span><span class="nk"> &lt;mrunalp&gt;</span> Looks good and merged
+<a name="l-15"></a><span class="tm">22:14:42</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/471
+<a name="l-16"></a><span class="tm">22:14:45</span><span class="nk"> &lt;mrunalp&gt;</span> Needs rebase
+<a name="l-17"></a><span class="tm">22:29:52</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="hi">mrunalp:</span> i'm on irc only
+<a name="l-18"></a><span class="tm">22:30:23</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, okay, we are triaging runtime PRs
+<a name="l-19"></a><span class="tm">22:30:48</span><span class="nk"> &lt;dqminh&gt;</span> yah,but my mic is dead as usual
+<a name="l-20"></a><span class="tm">22:31:09</span><span class="nk"> &lt;mrunalp&gt;</span> dqminh, no worries :)
+<a name="l-21"></a><span class="tm">22:40:27</span><span class="nk"> &lt;stephenrwalli&gt;</span> Which PR did you want Stephen Day commentary on please?
+<a name="l-22"></a><span class="tm">22:41:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> chair me?
+<a name="l-23"></a><span class="tm">22:41:50</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-24"></a><span class="tm">22:41:56</span><span class="nk"> &lt;mrunalp&gt;</span> wking, vbatts started it..
+<a name="l-25"></a><span class="tm">22:41:59</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, ^^^
+<a name="l-26"></a><span class="tm">22:42:06</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/image-spec/pull/506</span>
+<a name="l-27"></a><span class="tm">22:42:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I feel like we should have annotations in different places (in the runtime too)
+<a name="l-28"></a><span class="tm">22:42:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> license information could live in annotations
+<a name="l-29"></a><span class="tm">22:43:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I don't think license info should be a stand-alone field
+<a name="l-30"></a><span class="tm">22:43:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> other packaging formats also struggle with licensing, and structured schemas go obsolete quickly
+<a name="l-31"></a><span class="tm">22:43:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I think there's a LF project to form a licensing standard, but I'm not sure what state it's in
+<a name="l-32"></a><span class="tm">22:44:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> there have been a few attempts at standardizing
+<a name="l-33"></a><span class="tm">22:44:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> the OSI has some standardization around OSI-approved licensing
+<a name="l-34"></a><span class="tm">22:44:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">someone:</span> I don't think we want spdx in the container format
+<a name="l-35"></a><span class="tm">22:45:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stephenrwalli:</span> spdx is also a lot of boilerplate to pull into an accessible standard
+<a name="l-36"></a><span class="tm">22:45:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I think we can scope this outside of v1
+<a name="l-37"></a><span class="tm">22:46:09</span><span class="nk"> &lt;stephenrwalli&gt;</span> +1
+<a name="l-38"></a><span class="tm">22:46:27</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/image-spec/pull/505</span>
+<a name="l-39"></a><span class="tm">22:46:41</span><span class="nk"> &lt;wking&gt;</span> merged
+<a name="l-40"></a><span class="tm">22:46:41</span><span class="nk"> &lt;stevvooe&gt;</span> let's close 506
+<a name="l-41"></a><span class="tm">22:46:43</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/image-spec/pull/504</span>
+<a name="l-42"></a><span class="tm">22:48:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> this would prevent what we're currently doing in Docker
+<a name="l-43"></a><span class="tm">22:48:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> so what happens now?
+<a name="l-44"></a><span class="tm">22:48:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> you can copy up from a volume.  You're just not necessarily snapshotting that data in the volume
+<a name="l-45"></a><span class="tm">22:49:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the language is also ambiguous
+<a name="l-46"></a><span class="tm">22:49:40</span><span class="nk"> &lt;wking&gt;</span> I need to step back out for a bit, mrunalp.  Can you pick up the minutes again?
+<a name="l-47"></a><span class="tm">22:49:57</span><span class="nk"> &lt;mrunalp&gt;</span> yeah
+<a name="l-48"></a><span class="tm">22:50:43</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">stevvooe:</span> we don't enough info around runtime execution to make statements around what can/can't be done with data volumes
+<a name="l-49"></a><span class="tm">22:51:06</span><span class="nk"> &lt;mrunalp&gt;</span> mikebrow, makes sense to have a means to switch it off but not forbid it
+<a name="l-50"></a><span class="tm">22:53:53</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/image-spec/pull/506</span>
+<a name="l-51"></a><span class="tm">22:54:06</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, why put licensing in content descriptor?
+<a name="l-52"></a><span class="tm">22:57:17</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, flatpack has its own reverse DNS notation.
+<a name="l-53"></a><span class="tm">22:57:28</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, There is a manifest of dep trees
+<a name="l-54"></a><span class="tm">22:57:48</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, It makes no sense to do it at descriptor level
+<a name="l-55"></a><span class="tm">22:58:28</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, what people chose to put in field is upto them
+<a name="l-56"></a><span class="tm">22:59:13</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, Why denormalize?
+<a name="l-57"></a><span class="tm">23:02:00</span><span class="nk"> &lt;stephenrwalli&gt;</span> ‘Fraid I have to step into the next mtg …
+<a name="l-58"></a><span class="tm">23:02:21</span><span class="nk"> &lt;mrunalp&gt;</span> RobDolinMS, stevvooe vbatts can discuss next week?
+<a name="l-59"></a><span class="tm">23:04:06</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, how do annotations combine?
+<a name="l-60"></a><span class="tm">23:05:48</span><span class="nk"> &lt;mrunalp&gt;</span> mikebrow, We should do this post 1.0
+<a name="l-61"></a><span class="tm">23:06:38</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, This is being asked by implementors trying out rcs
+<a name="l-62"></a><span class="tm">23:07:45</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, could you endmeeting?
+<a name="l-63"></a><span class="tm">23:07:57</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

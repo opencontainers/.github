@@ -1,0 +1,136 @@
+18:03:52 <wking> #startmeeting 2016-01-06 discussion
+18:03:52 <collabot`> Meeting started Wed Jan  6 18:03:52 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+18:03:52 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+18:03:52 <collabot`> The meeting name has been set to '2016_01_06_discussion'
+18:04:03 <wking> #chair crosbymichael mrunalp vbatts|work RobDolinMS
+18:04:03 <collabot`> Current chairs: RobDolinMS crosbymichael mrunalp vbatts|work wking
+18:04:23 <mrunalp> http://wking.github.io/nmbug-oci/
+18:04:46 <RobDolinMS> #info We'll start with existing issues and then discuss planning
+18:04:50 <wking> #topic Feedback on --state
+18:06:00 <RobDolinMS> Doug: Is this getting us away from a notion of a OCI file sharing state in the filesystem in a shared location
+18:06:00 <wking> #link https://groups.google.com/a/opencontainers.org/forum/#!searchin/dev/state/dev/q6TYqVZOcX8/W1RVyCXCCQAJ
+18:06:18 <wking> #link https://github.com/wking/oci-command-line-api/pull/14
+18:06:22 <RobDolinMS> Mrunal: Unpriv'd containers can't necessarily write to file system b/c won't have permissions
+18:06:58 <RobDolinMS> Mrunal: Suggest we touch on this next week (at F2F)
+18:07:06 <RobDolinMS> Michael: What happens when you don't pass this flag?
+18:07:14 <RobDolinMS> Trevor: If you don't pass, the file doesn't get written
+18:07:42 <duglin> +1 I’d prefer: runc —id xxx  state
+18:07:44 <RobDolinMS> Mrunal: I had a different understanding
+18:08:02 <duglin> can people mute
+18:08:13 <RobDolinMS> Trevor: should we continue discussion on list?
+18:08:19 <duglin> vbatts?
+18:08:33 <vbatts|work> duglin: gracious
+18:08:44 <wking> to be continued on the list, since we're not all on the same page
+18:08:59 <RobDolinMS> Crosby: maybe we just say we don't have the directory in the spec so store it where you want.
+18:09:06 <wking> duglin: concerned about lack of interop in the absence of a global directory
+18:09:17 <RobDolinMS> Doug: It seems like this would be mandating a CLI
+18:09:24 <wking> duglin: is personally ok with this, but not sure everyone is onboard
+18:09:40 <RobDolinMS> Mrunal: Not suggesting we remove state, just change requirement of where to store it.
+18:10:08 <RobDolinMS> Trevor: This just gives the option to get out of global directory
+18:11:01 <mikebrow> prefer the requirement be that the location be configurable
+18:11:09 <RobDolinMS> Trevor: There is a summary of benefits in the email to list and PR
+18:11:23 <crosbymichael> https://github.com/opencontainers/runc/blob/master/main.go#L60
+18:11:26 <RobDolinMS> Trevor: Will add example of unprivileged user if not added.
+18:11:31 <wking> #action wking to check for a concrete example of an unprivileged user and add one if missing
+18:11:41 <RobDolinMS> Thanks Trevor :)
+18:13:43 <wking> #topic separating device cgroups and mknod
+18:14:19 <wking> #link https://groups.google.com/a/opencontainers.org/forum/#!searchin/dev/mknod/dev/y_Fsa2_jJaM/SydzptqPBQAJ
+18:15:11 <wking> mrunalp so you can specify devices you want to create without messing with cgroups, which is useful for unprivileged containers
+18:15:30 <RobDolinMS> Crosby: How does this help nested containers?
+18:15:31 <wking> crosbymichael how does it help nested containers?
+18:15:51 <wking> mrunalp there's no current way to opt-out of cgroup device changes
+18:15:53 <RobDolinMS> Mrunal: Having this in the old place requires specifying
+18:16:51 <RobDolinMS> wking: This simplifies logic and reduces complexity
+18:17:29 <wking> this separation also makes it easy to distinguish between join and join-and-modify cgroups, because you don't have to parse a unified mknod/cgroups to decide if it makes group changes
+18:17:47 <wking> #link http://github.com/opencontainers/specs/pull/99
+18:17:55 <wking> ^ previous pull request in this direction
+18:18:17 <wking> crosbymichael: concerned that if we go too low level, the OCI isn't very useful
+18:19:21 <wking> #action rebase #99 and re-submit
+18:19:28 <wking> #action wking rebase #99 and re-submit
+18:19:37 <wking> #action mrunalp will post with an example of why this is useful
+18:19:46 <wking> #action single, unified config file
+18:19:51 <wking> #topic single, unified config file
+18:20:13 <wking> #link https://groups.google.com/a/opencontainers.org/forum/#!searchin/dev/unified$20config$20file/dev/0QbyJDM9fWY/VP-tGxG_DgAJ
+18:20:22 <wking> crosbymichael: doesn't care, but stop waffling
+18:20:33 <RobDolinMS> Crosby: I'm open to either direction, but want us to choose one and move forward
+18:20:58 <RobDolinMS> Trevor: recording reasons for decisions we make would be useful
+18:21:13 <RobDolinMS> Trevor has posted to the list to this effect.
+18:21:42 <duglin> I’d just like to know when a fireplace became a desk  :-)
+18:21:55 <wking> #link https://github.com/opencontainers/specs/pull/88#issuecomment-126516625
+18:22:06 <wking> ^ my initial pushback on "this split is not well defined"
+18:22:39 <wking> vbatts|work: once we realized you can override anything, and that the bundle-author config is just a suggestion, unifying makes more sense
+18:23:51 <wking> vbatts|work: if we store what we ran, the bundle-author can compare the executed config against their supplied config and see how close they got to something acceptable
+18:23:56 <duglin> to me its not so much about what an impl can override, it can always do whatever it wants/needs, rather its about what we think a bundle author might want to specify when running a container - which should probably be a pretty large list.
+18:25:36 <wking> vbatts|work: agrees that flip-flopping is frustrating
+18:25:58 <RobDolinMS> Vincent: Biggest concern is what is host-dependent and what is host-independent
+18:26:07 <RobDolinMS> Vincent: This is not solving that problem
+18:32:59 <RobDolinMS> Vincent: important to have the primitives available for trust
+18:33:13 <RobDolinMS> Trevor: what's the gain by splitting the config?
+18:33:20 <RobDolinMS> Vincent: b/c one of them is not distributed
+18:33:58 <duglin> I’m wondering if it we need to separate the “distribution” discussion from the “run this container” discussion.
+18:34:25 <RobDolinMS> Trevor: how is this different?
+18:35:23 <RobDolinMS> Vincent: If you have two files (one being changed and one not), the file not being changed can be part of a trust verification process
+18:35:46 <RobDolinMS> Mrunal: proposes continuing discussion next week
+18:35:47 <wking> ^ I agree that it's worth splitting distribution from "start the container"
+18:36:11 <duglin> yes I’ll have a call-in # for the f2f next week
+18:36:54 <wking> #link https://github.com/opencontainers/specs/pull/284
+18:36:58 <wking> ^ the unification PR
+18:36:59 <RobDolinMS> #action vbatts|work to write-up perspective on why two files
+18:37:27 <wking> #topic Disable new privileges
+18:37:33 <mrunalp> https://github.com/opencontainers/specs/pull/290
+18:37:34 <wking> #link https://github.com/opencontainers/specs/pull/290
+18:38:08 <wking> philips: suggests just exposing prctl
+18:38:09 <RobDolinMS> Mrunal: Brandon had input on this
+18:38:32 <wking> mrunalp: feels like we want a higher-level UI like disableNewPrivileges
+18:38:43 <RobDolinMS> Mrunal: suggests it makes sense to have a flag
+18:38:59 <RobDolinMS> Mrunal: brandon is proposing something more complex
+18:39:17 <RobDolinMS> Mrunal: We're trying to figure-out which approach we should have in the spec
+18:39:26 <RobDolinMS> a) Expose raw system calls
+18:39:32 <RobDolinMS> b) Higher-level fields
+18:39:46 <wking> crosbymichael: likes higher level fields and abstractions, because if we're just exposing syscalls, what's the point?
+18:39:48 <RobDolinMS> Crosby: likes (b)
+18:40:06 <RobDolinMS> Mrunal: this provides more flexibility for unique run-time implementations
+18:40:25 <wking> mrunalp: higher-level APIs like disableNewPrivileges allow different runtimes to implement the feature differently
+18:40:47 <wking> although if the specs require a particular syscall for implementing that^, I don't see how they could do it differently
+18:40:48 <RobDolinMS> Crosby: We're a step up from the kernel
+18:41:07 <RobDolinMS> #info Mrunal: we'll just record this in the PR and take it forward next week
+18:41:24 <RobDolinMS> Crosby: Maybe we can change th boolean name to be more cross-platform
+18:41:43 <wking> mrunalp: maybe we did that earlier and have since split it out?  Not sure
+18:42:01 <wking> #action mrunalp to investigate a split-out security section and post notes
+18:42:23 <RobDolinMS> Mrunal: That's all I had for active issues
+18:42:50 <duglin> I’d like to talk about the f2f - just briefly before we end the call
+18:43:02 <RobDolinMS> +1
+18:43:38 <wking> #topic splitting the rootfs into a content-addressable entity, not embedded in the bundle
+18:43:54 <wking> vbatts|work: suggesting this^
+18:44:23 <wking> I think this is a distribution issue, so we don't need runtime changes to address it
+18:44:58 <wking> #link https://github.com/opencontainers/specs/pull/293
+18:45:08 <wking> ^ proposal for stacking layers to create a rootfs
+18:45:31 <wking> #link https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/6ZKMNWujDhU
+18:45:38 <wking> ^ thread about optional rootfs
+18:46:19 <wking> #link https://groups.google.com/a/opencontainers.org/forum/#!search/messageid$3A%22CAD2oYtN-9yLLhG_STO3F1h58Bn5QovK$2Bu3wOBa$3Dt$2B7TQi-hP1Q@mail.gmail.com%22/dev/xo4SQ92aWJ8/NHpSQ19KCAAJ
+18:46:26 <wking> ^ most recent bundle/distribution discussion
+18:46:45 <wking> vbatts|work: this is not layering, this is content-addressing the whole rootfs filesystem
+18:46:54 <RobDolinMS> Mrunal: Suggests starting a new discussion on the list
+18:46:56 <wking> #action will post a new thread to the list explaining this approach
+18:47:02 <wking> #action vbatts|work will post a new thread to the list explaining this approach
+18:48:15 <wking> vbatts|work: could allow you to have separate sigs for rootfs and config, so you could have an audited config from an untrusted user running on a trusted rootfs (e.g. Debian, or whatever, from a more well-known entity)
+18:48:30 <wking> #topic milestones
+18:48:38 <wking> mrunalp: talk about them next week?
+18:48:40 <RobDolinMS> #info It makes sense to discuss next week
+18:48:47 <wking> crosbymichael: talk about feature completion
+18:48:57 <RobDolinMS> Crosby: We're at "alpha" now, let's try to get to "beta"
+18:49:37 <wking> we can punt on image distribution until we get to runtime feature completion
+18:49:53 <duglin> f2f doc: https://docs.google.com/document/d/1AtpEgQOc0lzuwRIJuPZgCHdYz4olpTwszsCoeRR1_r4/edit
+18:49:55 <RobDolinMS> We can have a rotating "release manager" role to make sure we hit milestones
+18:50:16 <wking> #topic discussing the face-to-face meeting
+18:50:55 <RobDolinMS> Day 1: 10am - 6pm
+18:52:45 <RobDolinMS> #info Day 1: 10am - 6pm (Pacific)
+18:53:14 <RobDolinMS> #info Day 2: 8:30am - 4pm (Pacific)
+18:53:35 <RobDolinMS> #info Thumbs-up to dinner on day 2
+18:54:02 <RobDolinMS> Vincent: that's fine with me
+18:55:06 <RobDolinMS> #link https://docs.google.com/document/d/1AtpEgQOc0lzuwRIJuPZgCHdYz4olpTwszsCoeRR1_r4/edit please review topics and add at least a one-liner to the document in advance
+18:55:17 <RobDolinMS> #info Doug: We'll decide order when we get there
+18:56:02 <RobDolinMS> #info Lunch on Day 1 looks like Jimmy John's
+18:56:13 <RobDolinMS> Rob LOVES the #14 with cheese easy mayo ;)
+18:57:11 <RobDolinMS> BIG THANKS Doug for hosting the F2F !
+18:57:16 <wking> #endmeeting

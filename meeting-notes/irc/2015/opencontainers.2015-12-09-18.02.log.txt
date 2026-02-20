@@ -1,0 +1,66 @@
+18:02:04 <vbatts> #startmeeting 2015-12-09 discussion
+18:02:04 <collabot> Meeting started Wed Dec  9 18:02:04 2015 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+18:02:04 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+18:02:04 <collabot> The meeting name has been set to '2015_12_09_discussion'
+18:02:23 <vbatts> #chair mrunalp wking
+18:02:23 <collabot> Current chairs: mrunalp vbatts wking
+18:02:38 <vbatts> https://bluejeans.com/1771332256/ for posterity
+18:03:59 <vbatts> #topic wking update on the CLI API
+18:08:47 <vbatts> Video Attendees: mrunalp, philips, crosbymichael, duglin, julz, liangchenye, mikebrow_, neicy, estesp, RobDolinMS, tianon, wking, vishh
+18:09:35 <wking> I just summarized https://groups.google.com/a/opencontainers.org/d/msg/dev/zKNoOV1RP-k/Q_aSoPnACQAJ
+18:09:49 <wking> Feedback from runC and other runtime authors welcome
+18:10:24 <wking> #action wking to PR opencontainers/specs to land the command-line API in the spec itself
+18:10:48 <RobDolinMS> (sorry I'm late, busy with launch of http://OpenLiveWriter.org/ this morning)
+18:10:49 <wking> ^ will talk with mrunalp and Co. after the meeting to figure out how to orchestrate that
+18:11:50 <RobDolinMS> Brandon: trying to capture reasonable subset of operations on a container through CLI may be premature
+18:12:16 <RobDolinMS> Brandon: We should start with a harness and if that's successful, we can put into spec
+18:12:28 <RobDolinMS> Mrunal: Is this something that will evolve?
+18:12:44 <vbatts> #chair RobDolinMS
+18:12:44 <collabot> Current chairs: RobDolinMS mrunalp vbatts wking
+18:13:47 <RobDolinMS> Julz: people are doing this, but reverse-engineering from runc
+18:16:30 <wking> philips: suggesting don't merge it into opencontainers/specs until we have something that works
+18:17:11 <wking> julz: the value of this goes down as long as its not official
+18:17:29 <RobDolinMS> julz: there are several people attempting to do this simultaneously
+18:19:08 <RobDolinMS> ... discussion ...
+18:19:27 <RobDolinMS> Julz: Better to iterate on one document together
+18:19:44 <RobDolinMS> Brandon: with testing of appc, we generate a bundle and test
+18:19:57 <RobDolinMS> Brandon: we're having to implement both internal spec and external spec
+18:22:10 <RobDolinMS> Trevor: This may not be that big after all.
+18:22:40 <RobDolinMS> Mrunal: All of the major implementers can continue collaborating.
+18:23:03 <RobDolinMS> Julz: It seems best to have in an official, foundation-owned location rather than Trevor's personal GitHub
+18:23:04 <wking> I think the conclusion is "don't land it in opencontainers/specs yet, get some buy-in from runtimes, see if it works, and then land it"
+18:24:00 <RobDolinMS> Liangchenye: Test case writers can write commands down in test cases so problem can be solved.
+18:24:16 <wking> liangchenye: the test suite can write an adaptor for runtimes that don't implement a common API
+18:24:42 <lk4d4> but it's sorta hard for test suite, right? :) and test suite doesn't belong to runtime author
+18:24:46 <duglin> lots of background noise
+18:24:50 <liangchenye> Yes @wking we already did this
+18:25:00 <RobDolinMS> #topic Roadmap updates
+18:25:06 <liangchenye> @wking, we call it 'factory'
+18:25:06 <collabot> liangchenye: Error: "wking," is not a valid command.
+18:25:16 <RobDolinMS> #topic Top-down approach
+18:25:21 <wking> lk4d4: I agree, better to have the runtime authors write the adaptor.  But it's a valid work-around until they do
+18:25:30 <RobDolinMS> Vincent: I'm hoping to organize documents we have
+18:25:42 <liangchenye> @lk4d4, yes, with a offical command line, it will be much easier.
+18:25:42 <collabot> liangchenye: Error: "lk4d4," is not a valid command.
+18:25:59 <RobDolinMS> Vincent: Docs about config file might reference others
+18:26:10 <liangchenye> lk4d4: yes, with offical command line, it will be much easier.
+18:26:10 <RobDolinMS> Vincent:
+18:26:13 <vbatts> https://github.com/opencontainers/specs/pull/263
+18:26:52 <wking> #link https://github.com/opencontainers/specs/pull/263
+18:28:08 <RobDolinMS> #topic Next milestones
+18:28:09 <wking> #action wking will mock an alternative using Jekyll imports, https://github.com/opencontainers/specs/pull/263#issuecomment-163341758
+18:28:23 <RobDolinMS> Should 0.2.0 be a release?
+18:28:47 <RobDolinMS> Vincent: appologies for v0.1.0 --> v0.1.1 issue
+18:29:05 <RobDolinMS> Vincent: We have not gone through the repo to start tagging issues for 0.2.0
+18:29:20 <RobDolinMS> (wking - sorry for being too quick with the #topic lines)
+18:30:13 <vbatts> also, https://vbatts.fedorapeople.org/oci.pdf is an example of the printable pdf ..
+18:30:41 <RobDolinMS> wking: Should we have a cadence that is high enough so folks can grab tags rather than commits
+18:31:49 <duglin> way too quiet
+18:33:20 <wking> vbatts: suggests focusing on a single area per release, to get more movement
+18:33:27 <wking> oops, vishh: ^
+18:35:01 <wking> #topic hashing with metadata
+18:35:21 <wking> philips: guesses we end up with a just-filesystem hash and a filesystem+metadata hash
+18:35:31 <wking> philips: leaning towards just using tar
+18:35:50 <wking> mrunalp: suggests that^ for 0.3.0
+18:36:03 <wking> mrunalp: suggests landing 0.2.0 now?
+18:36:44 <vbatts> #endmeeting

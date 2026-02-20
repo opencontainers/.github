@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">20:07:45</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-05-09 runtime-spec 1.0 preparation</span>
+<a name="l-2"></a><span class="tm">20:07:45</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Tue May  9 20:07:45 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">20:07:45</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">20:07:45</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2017_05_09_runtime_spec_1_0_preparation'
+<a name="l-5"></a><span class="tm">20:07:58</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">intelRdt wording</span>
+<a name="l-6"></a><span class="tm">20:08:35</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/787</span>
+<a name="l-7"></a><span class="tm">20:08:51</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Markdown links</span>
+<a name="l-8"></a><span class="tm">20:08:54</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/786</span>
+<a name="l-9"></a><span class="tm">20:10:39</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">JSON Schema CI testing</span>
+<a name="l-10"></a><span class="tm">20:10:47</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/785</span>
+<a name="l-11"></a><span class="tm">20:10:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> maybe this should move to runtime-tools?
+<a name="l-12"></a><span class="tm">20:11:06</span><span class="nk"> &lt;wking&gt;</span> I don't care where it lives, but want CI for missing commas and such
+<a name="l-13"></a><span class="tm">20:11:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> if it moves, there will be a lag.  Maybe leave it in runtime-spec?
+<a name="l-14"></a><span class="tm">20:11:36</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">RFC 2119 wording for oomScoreAdj</span>
+<a name="l-15"></a><span class="tm">20:12:02</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/781</span>
+<a name="l-16"></a><span class="tm">20:13:06</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">RFC 2119 wording for config-linux</span>
+<a name="l-17"></a><span class="tm">20:13:09</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/issues/746</span>
+<a name="l-18"></a><span class="tm">20:13:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't have time to work on this now, since I'm focused on the TTY issue
+<a name="l-19"></a><span class="tm">20:13:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I can take a few
+<a name="l-20"></a><span class="tm">20:14:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I think the one we just merged looks fine
+<a name="l-21"></a><span class="tm">20:16:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> Just don't make it too explicit
+<a name="l-22"></a><span class="tm">20:16:45</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">bind and rbind</span>
+<a name="l-23"></a><span class="tm">20:17:44</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/771</span>
+<a name="l-24"></a><span class="tm">20:18:18</span><span class="nk"> &lt;wking&gt;</span> So drop the mount(8) link, add a table with everything that gets mapped to to MS_*, and say everything else goes to data with comment separators?
+<a name="l-25"></a><span class="tm">20:18:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah
+<a name="l-26"></a><span class="tm">20:18:36</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic</span><span class="topicline"></span>
+<a name="l-27"></a><span class="tm">20:18:38</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">RFC 2119 tightening for namespaces</span>
+<a name="l-28"></a><span class="tm">20:18:44</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/767</span>
+<a name="l-29"></a><span class="tm">20:22:00</span><span class="nk"> &lt;wking&gt;</span> I think we need wording about where the new namespaces are created, but am ok punting
+<a name="l-30"></a><span class="tm">20:27:04</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">schema/defs-linux: Drop 'Capability' type</span>
+<a name="l-31"></a><span class="tm">20:27:09</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/766</span>
+<a name="l-32"></a><span class="tm">20:27:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> if we're using the Linux-kernel enum directly, we don't have to define it
+<a name="l-33"></a><span class="tm">20:28:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> but if we define a mapping from a string to an integer, we need to say something about it
+<a name="l-34"></a><span class="tm">20:28:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> you'd get an error at runtime
+<a name="l-35"></a><span class="tm">20:29:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> if you add something that isn't implemented by your runtime because your kernel is too new, then the runtime will throw an error for a valid config
+<a name="l-36"></a><span class="tm">20:29:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> so one option is punting to the kernel and getting rid of the strings
+<a name="l-37"></a><span class="tm">20:29:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> then you'd look at the spec and have no clue what the caps were
+<a name="l-38"></a><span class="tm">20:30:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I think the strings are good for visibility and usability
+<a name="l-39"></a><span class="tm">20:30:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I also don't want a list of valid caps in the spec, because a new kernel comes out with a new cap, and then we have to wait for a new spec version?
+<a name="l-40"></a><span class="tm">20:31:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> what about "reasonable effort should be made to map these strings to the kernel constants"?
+<a name="l-41"></a><span class="tm">20:31:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> so pass-through for unrecognized strings?
+<a name="l-42"></a><span class="tm">20:31:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> can the runtime do this lookup dynamically?
+<a name="l-43"></a><span class="tm">20:31:42</span><span class="nk"> &lt;wking&gt;</span> ^ last line was mrunalp, not tianon
+<a name="l-44"></a><span class="tm">20:31:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> the runtime can do that
+<a name="l-45"></a><span class="tm">20:32:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> the spec should just say you have to report an error for unmapped entries
+<a name="l-46"></a><span class="tm">20:32:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> so we leave the mapping up to the runtime, but they have to match the names, and they MUST error when they can't get a mapping for whatever reason
+<a name="l-47"></a><span class="tm">20:32:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> does anyone want to take that PR up?
+<a name="l-48"></a><span class="tm">20:33:25</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#action </span><span class="cmdline">tianon to update the spec language for capabilities</span>
+<a name="l-49"></a><span class="tm">20:34:00</span><span class="nk"> &lt;mrunalp&gt;</span> wking, this may not map to solaris
+<a name="l-50"></a><span class="tm">20:34:13</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, Solaris can add their own platform specific regex
+<a name="l-51"></a><span class="tm">20:34:44</span><span class="nk"> &lt;wking&gt;</span> but you'd need to say what you were mapping to
+<a name="l-52"></a><span class="tm">20:34:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> so maybe say "capability constants in the kernel" and don't get more specific
+<a name="l-53"></a><span class="tm">20:35:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> we have lots of CAP_ examples, so I don't think we need to be more specific about that
+<a name="l-54"></a><span class="tm">20:35:53</span><span class="nk"> &lt;wking&gt;</span> so do we revisit #766?
+<a name="l-55"></a><span class="tm">20:36:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we'll come back to that after we've adjusted the spec
+<a name="l-56"></a><span class="tm">20:36:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> is there a non-blocker label?
+<a name="l-57"></a><span class="tm">20:36:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> we currently link to the capabilities man page which has a pretty simple list.
+<a name="l-58"></a><span class="tm">20:37:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> but I don't see this as a 1.0 blocker
+<a name="l-59"></a><span class="tm">20:38:09</span><span class="nk"> &lt;wking&gt;</span> there's a gap between "gets the point across" and "useful for compliance testing"
+<a name="l-60"></a><span class="tm">20:40:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I don't think we need to worry about folks submitting no-op runtimes for certification
+<a name="l-61"></a><span class="tm">20:40:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> and testers would probably be taking a closer look at those
+<a name="l-62"></a><span class="tm">20:41:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> you can assign an issue in the cert repo to me for this
+<a name="l-63"></a><span class="tm">20:41:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I don't expect this to be a practical issue
+<a name="l-64"></a><span class="tm">20:42:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> to crosbymichael's point, even with firmer language for the Linux string, is there an issue with...
+<a name="l-65"></a><span class="tm">20:42:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we can hash it out on tianon's PR
+<a name="l-66"></a><span class="tm">20:42:41</span><span class="nk"> &lt;tianon&gt;</span> ++
+<a name="l-67"></a><span class="tm">20:42:48</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config: Require strictly-positive timeout values</span>
+<a name="l-68"></a><span class="tm">20:42:54</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/764</span>
+<a name="l-69"></a><span class="tm">20:43:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> the earlier version of this was depointerizing, which is not what we want
+<a name="l-70"></a><span class="tm">20:43:36</span><span class="nk"> &lt;wking&gt;</span> I've spun that part out into https://github.com/opencontainers/runtime-spec/issues/772
+<a name="l-71"></a><span class="tm">20:44:26</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">specs-go/round_trip_test: Add round-trip testing for the config</span>
+<a name="l-72"></a><span class="tm">20:44:31</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/759</span>
+<a name="l-73"></a><span class="tm">20:53:01</span><span class="nk"> &lt;tianon&gt;</span> (new capabilities PR is opened at https://github.com/opencontainers/runtime-spec/pull/790 for hashing out that previous string conversion topic)
+<a name="l-74"></a><span class="tm">20:56:20</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config: Drop the redundant config.json filename requirement</span>
+<a name="l-75"></a><span class="tm">20:56:26</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/756</span>
+<a name="l-76"></a><span class="tm">20:56:47</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">spec: Define the property-specification syntax</span>
+<a name="l-77"></a><span class="tm">20:56:52</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/747</span>
+<a name="l-78"></a><span class="tm">21:01:43</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config-linux: RFC 2119 wording for disableOOMKiller</span>
+<a name="l-79"></a><span class="tm">21:01:49</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/745</span>
+<a name="l-80"></a><span class="tm">21:02:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the not-set lines seem like they could be pulled out (and not be per-property)
+<a name="l-81"></a><span class="tm">21:02:19</span><span class="nk"> &lt;wking&gt;</span> that sounds good to me, but I couldn't figure out the wording
+<a name="l-82"></a><span class="tm">21:02:56</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config: Lead off with the purpose of the config</span>
+<a name="l-83"></a><span class="tm">21:03:04</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/737</span>
+<a name="l-84"></a><span class="tm">21:03:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> please rebase
+<a name="l-85"></a><span class="tm">21:03:11</span><span class="nk"> &lt;wking&gt;</span> will do
+<a name="l-86"></a><span class="tm">21:03:24</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">next steps?</span>
+<a name="l-87"></a><span class="tm">21:03:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> with another hour we can knock out another 10
+<a name="l-88"></a><span class="tm">21:03:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> regular call at 8am, and then another meeting for this at 2pm?
+<a name="l-89"></a><span class="tm">21:04:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> sounds good.  I need to figure out the terminal stuff
+<a name="l-90"></a><span class="tm">21:04:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">tianon:</span> all I did was discover it ;)
+<a name="l-91"></a><span class="tm">21:04:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'll see, I might be headed to the airport
+<a name="l-92"></a><span class="tm">21:04:58</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

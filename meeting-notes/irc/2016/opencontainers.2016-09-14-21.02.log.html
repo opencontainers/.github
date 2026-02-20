@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:02:34</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">OCI_9_14</span>
+<a name="l-2"></a><span class="tm">21:02:34</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Sep 14 21:02:34 2016 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:02:34</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:02:34</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to 'oci_9_14'
+<a name="l-5"></a><span class="tm">21:02:50</span><span class="nk"> &lt;vbatts&gt;</span> Join the call: https://www.uberconference.com/opencontainers
+<a name="l-6"></a><span class="tm">21:02:53</span><span class="nk"> &lt;vbatts&gt;</span> Optional dial in number: 415-968-0849
+<a name="l-7"></a><span class="tm">21:02:55</span><span class="nk"> &lt;vbatts&gt;</span> No PIN needed
+<a name="l-8"></a><span class="tm">21:02:59</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, ^^
+<a name="l-9"></a><span class="tm">21:03:17</span><span class="nk"> &lt;stevvooe&gt;</span> i don't have access to a phone right now
+<a name="l-10"></a><span class="tm">21:03:28</span><span class="nk"> &lt;stevvooe&gt;</span> this was broken in the same way last week
+<a name="l-11"></a><span class="tm">21:03:31</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#chair </span><span class="cmdline">vbatts</span>
+<a name="l-12"></a><span class="tm">21:03:31</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp vbatts
+<a name="l-13"></a><span class="tm">21:03:32</span><span class="nk"> &lt;stevvooe&gt;</span> do we have support for this?
+<a name="l-14"></a><span class="tm">21:03:49</span><span class="nk"> &lt;mrunalp&gt;</span> stevvooe, We can follow up with Linux Foundation.
+<a name="l-15"></a><span class="tm">21:04:14</span><span class="nk"> &lt;philips&gt;</span> uber won't let me back in
+<a name="l-16"></a><span class="tm">21:05:06</span><span class="nk"> &lt;vbatts&gt;</span> ...
+<a name="l-17"></a><span class="tm">21:05:12</span><span class="nk"> &lt;philips&gt;</span> got in
+<a name="l-18"></a><span class="tm">21:05:48</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runc/pull/1018
+<a name="l-19"></a><span class="tm">21:05:52</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="topic">#topic </span><span class="topicline">https://github.com/opencontainers/runc/pull/1018</span>
+<a name="l-20"></a><span class="tm">21:14:16</span><span class="nk"> &lt;philips&gt;</span> OMFG uber dropped me
+<a name="l-21"></a><span class="tm">21:16:36</span><span class="nk"> &lt;Guest77797&gt;</span> <span class="hi">mrunalp:</span> chair me?
+<a name="l-22"></a><span class="tm">21:16:45</span><span class="nk"> &lt;Guest77797&gt;</span> err, once I become wking ;)
+<a name="l-23"></a><span class="tm">21:16:59</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-24"></a><span class="tm">21:16:59</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp vbatts wking
+<a name="l-25"></a><span class="tm">21:17:02</span><span class="nk"> &lt;wking&gt;</span> thanks :)
+<a name="l-26"></a><span class="tm">21:17:11</span><span class="nk"> &lt;mrunalp&gt;</span> sure np :)
+<a name="l-27"></a><span class="tm">21:17:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> the CI workflow has been limping along
+<a name="l-28"></a><span class="tm">21:17:41</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> do we want to remove the outstanding post-v1.0 issues?
+<a name="l-29"></a><span class="tm">21:17:50</span><span class="nk"> &lt;philips&gt;</span> https://github.com/opencontainers/image-spec/issues?utf8=%E2%9C%93&amp;q=is%3Aissue%20is%3Aopen%20-label%3Acomponent%2Foci-image-tool%20-milestone%3Apost-v1.0.0
+<a name="l-30"></a><span class="tm">21:17:59</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec v1.0.0 milestone</span>
+<a name="l-31"></a><span class="tm">21:18:08</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues?utf8=%E2%9C%93&amp;q=is%3Aissue%20is%3Aopen%20-label%3Acomponent%2Foci-image-tool%20-milestone%3Apost-v1.0.0</span>
+<a name="l-32"></a><span class="tm">21:18:15</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> PDF cleanup should be in the next milestone
+<a name="l-33"></a><span class="tm">21:18:22</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">vbatts:</span> the issue I just opened today?  Yeah
+<a name="l-34"></a><span class="tm">21:18:29</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> do you mind if I move it to rc1?
+<a name="l-35"></a><span class="tm">21:18:31</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">vbatts:</span> no
+<a name="l-36"></a><span class="tm">21:18:59</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> hardlink verbiage?  spec
+<a name="l-37"></a><span class="tm">21:19:04</span><span class="nk"> &lt;Guest95456&gt;</span> https://github.com/opencontainers/image-spec/issues/306
+<a name="l-38"></a><span class="tm">21:19:18</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> we need to define how hardlinks are supported (or if they are not supported)
+<a name="l-39"></a><span class="tm">21:19:39</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">vbatts:</span> tar likes to keep a number of links on the file
+<a name="l-40"></a><span class="tm">21:19:56</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">vbatts:</span> some tar implementations like to keep those...
+<a name="l-41"></a><span class="tm">21:20:12</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">vbatts:</span> we don't want it to look like a change if the number of links changes
+<a name="l-42"></a><span class="tm">21:20:40</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">vbatts:</span> so you basically need a map for all files with inodes, major, minor, and see if there are chagnes
+<a name="l-43"></a><span class="tm">21:20:55</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">vbatts:</span> and once you consider hardlinks, you're in Linux-specific land
+<a name="l-44"></a><span class="tm">21:21:18</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">vbatts:</span> it's probably a "where applicable" optional layer for systems that support hardlinks
+<a name="l-45"></a><span class="tm">21:21:31</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> in continuity we allow each ... to have multiple paths
+<a name="l-46"></a><span class="tm">21:21:50</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> with a bit of content verification to make sure the content is the same, and then you get one entry for all those files
+<a name="l-47"></a><span class="tm">21:22:05</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> the extra processing is costly (with a map, and maybe an extra pass)
+<a name="l-48"></a><span class="tm">21:23:01</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> just to be clear, this is just about serializing hardlinks
+<a name="l-49"></a><span class="tm">21:23:18</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">vbatts:</span> yes, and we want to preserve links, but not churn excessively
+<a name="l-50"></a><span class="tm">21:24:03</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> so the three options are "1.0 says hardlinks are legal", "1.0 says hardlinks are optional", and "1.0 defines something more specific"
+<a name="l-51"></a><span class="tm">21:24:18</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">vbatts:</span> it's been undefined so far.  It would be good to make it more explicit
+<a name="l-52"></a><span class="tm">21:24:32</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> the current Docker layer format doesn't talk about this?
+<a name="l-53"></a><span class="tm">21:25:11</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> there's definitely stuff in code
+<a name="l-54"></a><span class="tm">21:25:22</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> I can hunt down that prior art
+<a name="l-55"></a><span class="tm">21:25:34</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> it's tricky with multiple layers
+<a name="l-56"></a><span class="tm">21:25:52</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> say you capture the hard-link in the top layer but not the bottom layer, you end up forking the content
+<a name="l-57"></a><span class="tm">21:26:23</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="topic">#topic </span><span class="topicline">order of layers in image-layout</span>
+<a name="l-58"></a><span class="tm">21:26:30</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/276</span>
+<a name="l-59"></a><span class="tm">21:26:50</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">vbatts:</span> we just need a few lines to clarify things
+<a name="l-60"></a><span class="tm">21:26:59</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> the content order matters but the manifest order doesn't
+<a name="l-61"></a><span class="tm">21:27:04</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> or something ;)
+<a name="l-62"></a><span class="tm">21:27:26</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> the manifest order matters to help folks that don't understand the config fetch optimally
+<a name="l-63"></a><span class="tm">21:27:46</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> at some point a simple list may not be good enough and we'll want to relax that requirement
+<a name="l-64"></a><span class="tm">21:28:07</span><span class="nk"> &lt;vbatts&gt;</span> oh. 62% was for runtime vote (5/8). but image 5 votes is 2/3major (5/7 == 71%)
+<a name="l-65"></a><span class="tm">21:28:19</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> it doesn't hurt me if I do 20 parallel HTTP GETs, and it doesn't matter if they all arrive at once
+<a name="l-66"></a><span class="tm">21:28:37</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> The layer list is the ideal order in which the downloads will finish
+<a name="l-67"></a><span class="tm">21:28:52</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> is there an argument to relax that?
+<a name="l-68"></a><span class="tm">21:29:04</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> no, we just need to add that language to the config section
+<a name="l-69"></a><span class="tm">21:29:16</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> I also saw some confusion about not having layers
+<a name="l-70"></a><span class="tm">21:29:22</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> are there valid use cases for that?
+<a name="l-71"></a><span class="tm">21:29:38</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/313</span>
+<a name="l-72"></a><span class="tm">21:29:43</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> I don't have a reason for that
+<a name="l-73"></a><span class="tm">21:29:50</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> is there a use case that matters?
+<a name="l-74"></a><span class="tm">21:30:48</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="topic">#topic </span><span class="topicline">manifest field order</span>
+<a name="l-75"></a><span class="tm">21:30:56</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> it shouldn't matter.  You have to keep the canonical JSON
+<a name="l-76"></a><span class="tm">21:31:09</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">vbatts:</span> it's good to be deterministic, but it doesn't really matter
+<a name="l-77"></a><span class="tm">21:31:34</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> I think suggestion are fine, but we shouldn't require round-tripping
+<a name="l-78"></a><span class="tm">21:32:05</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> so suggest, but don't require
+<a name="l-79"></a><span class="tm">21:32:30</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> I prefer spec order for readability, so you can pipe through jq and compare with the spec
+<a name="l-80"></a><span class="tm">21:32:50</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> I really don't want to impose these requirements on Python and other implementations
+<a name="l-81"></a><span class="tm">21:32:59</span><span class="nk"> &lt;Guest95456&gt;</span> +1 on suggest but don't requite
+<a name="l-82"></a><span class="tm">21:33:01</span><span class="nk"> &lt;Guest95456&gt;</span> *require
+<a name="l-83"></a><span class="tm">21:33:21</span><span class="nk"> &lt;cyphar&gt;</span> sorry I'm late
+<a name="l-84"></a><span class="tm">21:33:41</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="topic">#topic </span><span class="topicline">distinguish REQUIRED vs. OPTIONAL</span>
+<a name="l-85"></a><span class="tm">21:33:50</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/251</span>
+<a name="l-86"></a><span class="tm">21:34:01</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="cmd">#action </span><span class="cmdline">philips to distinguish REQUIRED vs. OPTIONAL</span>
+<a name="l-87"></a><span class="tm">21:34:21</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="topic">#topic </span><span class="topicline">parent manifests in layers</span>
+<a name="l-88"></a><span class="tm">21:34:26</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/190</span>
+<a name="l-89"></a><span class="tm">21:34:48</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> the original issue was about swapping out underlying dependencies
+<a name="l-90"></a><span class="tm">21:35:07</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> I floated an manifest as a layer entry, which is logically equivalent to including the layers
+<a name="l-91"></a><span class="tm">21:35:16</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> vbatts suggested what we already have
+<a name="l-92"></a><span class="tm">21:35:28</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> I don't know what we need to do
+<a name="l-93"></a><span class="tm">21:35:58</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> I think the OP was "I want to put my binary on libc, can I swap out layer 0 without touching the top?"
+<a name="l-94"></a><span class="tm">21:36:18</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> there are two properties here.  You can swap out at build time and get a new image
+<a name="l-95"></a><span class="tm">21:36:29</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> you can also compose at runtime by mounting images on other images
+<a name="l-96"></a><span class="tm">21:36:45</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> but I don't see a use case for something in between with the image-spec mounting images at paths
+<a name="l-97"></a><span class="tm">21:36:53</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> I don't think that belongs at this layer
+<a name="l-98"></a><span class="tm">21:37:13</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> by build time I think "here are two tarballs and a signed manifest"
+<a name="l-99"></a><span class="tm">21:37:30</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> that's what I mean, you can compose a new image with the shuffled layers.  That's build time
+<a name="l-100"></a><span class="tm">21:38:27</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> I think he was asking if he could reuse layer blobs
+<a name="l-101"></a><span class="tm">21:38:37</span><span class="nk"> &lt;Guest95456&gt;</span> Yeah that's content addressability.  Close issue ;)
+<a name="l-102"></a><span class="tm">21:39:02</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="topic">#topic </span><span class="topicline">UTF-8 ref names</span>
+<a name="l-103"></a><span class="tm">21:39:17</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/174</span>
+<a name="l-104"></a><span class="tm">21:39:55</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> we considered this in Docker's registry and turned it down because it made debugging harder
+<a name="l-105"></a><span class="tm">21:40:11</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/docker/distribution/issues/124
+<a name="l-106"></a><span class="tm">21:40:55</span><span class="nk"> &lt;Guest95456&gt;</span> and https://github.com/docker/distribution/pull/128
+<a name="l-107"></a><span class="tm">21:42:57</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> currently we have a restriction.
+<a name="l-108"></a><span class="tm">21:43:03</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> do folks want to lift it?
+<a name="l-109"></a><span class="tm">21:43:15</span><span class="nk"> &lt;Guest95456&gt;</span> I like base-64 to allow folks to do what they want with ref names
+<a name="l-110"></a><span class="tm">21:43:25</span><span class="nk"> &lt;Guest95456&gt;</span> And think debugging doesn't get that much harder
+<a name="l-111"></a><span class="tm">21:44:02</span><span class="nk"> &lt;Guest95456&gt;</span> I think stevvooe and I just differ on weighting the flexibility vs. debugging ease balance
+<a name="l-112"></a><span class="tm">21:44:33</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> if someone wants to create a base-64-ref version, they can do that?
+<a name="l-113"></a><span class="tm">21:44:37</span><span class="nk"> &lt;Guest95456&gt;</span> as a forked spec?
+<a name="l-114"></a><span class="tm">21:45:05</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> with all the naming discussion, folks mostly agree on tags.  Ensuring tag consistency is good, and this gets us somewhat there without requiring tags
+<a name="l-115"></a><span class="tm">21:45:17</span><span class="nk"> &lt;Guest95456&gt;</span> * without requiring a particular naming format
+<a name="l-116"></a><span class="tm">21:45:40</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> were we nesting tags inside of refs?
+<a name="l-117"></a><span class="tm">21:45:53</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">vbatts:</span> nesting tags could be nipped in the bud by requiring filename tags
+<a name="l-118"></a><span class="tm">21:46:09</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> I'd like to revisit this after getting the Docker PR compiled
+<a name="l-119"></a><span class="tm">21:46:28</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/docker/docker/issues/25779</span>
+<a name="l-120"></a><span class="tm">21:46:44</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> in other places we are very careful about allowing characters
+<a name="l-121"></a><span class="tm">21:48:04</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> folks can push refs like "base64-..." then folks can use whatever they want
+<a name="l-122"></a><span class="tm">21:48:14</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> I agree we want to limit the character set
+<a name="l-123"></a><span class="tm">21:48:36</span><span class="nk"> &lt;Guest95456&gt;</span> Base 64 is a restricted character set
+<a name="l-124"></a><span class="tm">21:48:48</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> I think base-64 is too unfriendly
+<a name="l-125"></a><span class="tm">21:48:57</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> and needs specialized toolink
+<a name="l-126"></a><span class="tm">21:48:59</span><span class="nk"> &lt;Guest95456&gt;</span> *tooling
+<a name="l-127"></a><span class="tm">21:49:28</span><span class="nk"> &lt;philips&gt;</span> "A" to "Z", "a" to "z", "0" to "9", the hyphen `-`, the dot `.`, and the underscore `_`
+<a name="l-128"></a><span class="tm">21:49:53</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> we should look into supporting what's needed by semantic versioning
+<a name="l-129"></a><span class="tm">21:50:12</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> cgroups has a similar problem, and we picked some super-dumb escaping syntax
+<a name="l-130"></a><span class="tm">21:50:21</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> so are you proposing we do that?
+<a name="l-131"></a><span class="tm">21:50:24</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> no
+<a name="l-132"></a><span class="tm">21:50:54</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">vbatts:</span> what we have isn't broken.  If you want UTF-8, you can use base64-... refs or a base64-refs/ directory or whatever
+<a name="l-133"></a><span class="tm">21:52:36</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> we've already said there's no semantic meaning
+<a name="l-134"></a><span class="tm">21:52:42</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> so I think we can just close the issue
+<a name="l-135"></a><span class="tm">21:52:46</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">stevvooe:</span> please, close it
+<a name="l-136"></a><span class="tm">21:52:56</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> I think that's it for all non-milestone and non-tool issues
+<a name="l-137"></a><span class="tm">21:52:58</span><span class="nk"> &lt;philips&gt;</span> https://github.com/opencontainers/image-spec/milestone/8
+<a name="l-138"></a><span class="tm">21:53:29</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">philips:</span> other topics?
+<a name="l-139"></a><span class="tm">21:54:06</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="topic">#topic </span><span class="topicline">console handling in runC</span>
+<a name="l-140"></a><span class="tm">21:54:31</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">cyphar:</span> main spec issue is that in /dev/pts the owner is odd
+<a name="l-141"></a><span class="tm">21:54:53</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">cyphar:</span> in most systems the group for /dev/pts/* is the tty group and the tty group can write to any slave
+<a name="l-142"></a><span class="tm">21:55:02</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">cyphar:</span> this doesn't currently happen in runC
+<a name="l-143"></a><span class="tm">21:55:20</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">cyphar:</span> you can mount devpts with gid=5, and new slaves will default to that group
+<a name="l-144"></a><span class="tm">21:55:38</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">cyphar:</span> with that, you won't need to touch the group owner
+<a name="l-145"></a><span class="tm">21:56:09</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">cyphar:</span> the other way to do this it to implement grantpt in Go, but then you have to parse /etc/group and it gets complicated with user namespaces
+<a name="l-146"></a><span class="tm">21:56:56</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">cyphar:</span> are we looking for solutions that only rely on config.json, or are we ok looking at the rootfs for group information?
+<a name="l-147"></a><span class="tm">21:57:06</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">mrunalp:</span> crosbymichael, any thoughts?
+<a name="l-148"></a><span class="tm">21:57:17</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">crosbymichael:</span> I'd have to look at it
+<a name="l-149"></a><span class="tm">21:57:31</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">mrunalp:</span> cyphar, can you test some software with the gid approach?
+<a name="l-150"></a><span class="tm">21:57:48</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">mrunalp:</span> try tmux, mutt, screen, ...
+<a name="l-151"></a><span class="tm">21:58:09</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">cyphar:</span> the current console branch has this implemented.  I was just bringing it up as a recently-discussed point
+<a name="l-152"></a><span class="tm">21:58:31</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">mrunalp:</span> I'll try it out again soon
+<a name="l-153"></a><span class="tm">21:58:39</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">mrunalp:</span> anything else
+<a name="l-154"></a><span class="tm">21:58:57</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span>
+<a name="l-155"></a><span class="tm">21:59:16</span><span class="nk"> &lt;Guest95456&gt;</span> <span class="hi">mrunalp:</span> you might have to end this since I've been punted back off my nick ;)
+<a name="l-156"></a><span class="tm">21:59:34</span><span class="nk"> &lt;Guest95456&gt;</span> which means my #topics probably didn't stick either
+<a name="l-157"></a><span class="tm">22:00:58</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

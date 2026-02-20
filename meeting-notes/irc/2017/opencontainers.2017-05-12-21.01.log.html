@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:01:33</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-05-12 runtime-spec 1.0 burn-down</span>
+<a name="l-2"></a><span class="tm">21:01:33</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Fri May 12 21:01:33 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:01:33</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:01:33</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2017_05_12_runtime_spec_1_0_burn_down'
+<a name="l-5"></a><span class="tm">21:01:38</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp</span>
+<a name="l-6"></a><span class="tm">21:01:38</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp wking
+<a name="l-7"></a><span class="tm">21:03:17</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config.md: lifecycle broken links fix</span>
+<a name="l-8"></a><span class="tm">21:03:22</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/812</span>
+<a name="l-9"></a><span class="tm">21:03:33</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">consistency and style fix</span>
+<a name="l-10"></a><span class="tm">21:03:50</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/811</span>
+<a name="l-11"></a><span class="tm">21:04:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> let's let this one cook longer
+<a name="l-12"></a><span class="tm">21:04:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> yeah
+<a name="l-13"></a><span class="tm">21:04:49</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config.go: platform-specific properties of process fix</span>
+<a name="l-14"></a><span class="tm">21:06:14</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/810</span>
+<a name="l-15"></a><span class="tm">21:06:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> should we make this Linux-specific again and have other platforms add their own caps?
+<a name="l-16"></a><span class="tm">21:07:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I think with caps split up, I think it's Linux-specific
+<a name="l-17"></a><span class="tm">21:08:18</span><span class="nk"> &lt;wking&gt;</span> I think bounding/effective and such (but prob. not ambient) were part of the withdrawn POSIX spec, so Solaris might support them
+<a name="l-18"></a><span class="tm">21:08:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> should we ping Windows/Solaris folks and ask?
+<a name="l-19"></a><span class="tm">21:08:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah, let's ping them and wait on it
+<a name="l-20"></a><span class="tm">21:08:49</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config.md: minor changes for process</span>
+<a name="l-21"></a><span class="tm">21:08:54</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/809</span>
+<a name="l-22"></a><span class="tm">21:10:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we can wait on this one too
+<a name="l-23"></a><span class="tm">21:11:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> for responses to the existing feedback
+<a name="l-24"></a><span class="tm">21:12:08</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config.md: specify mount source</span>
+<a name="l-25"></a><span class="tm">21:12:14</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/808</span>
+<a name="l-26"></a><span class="tm">21:12:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't think we need the absolute-path restriction anyway
+<a name="l-27"></a><span class="tm">21:12:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> lets leave it to the runtime for now
+<a name="l-28"></a><span class="tm">21:13:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> runc makes it absolute to protect against chcwd()s during setup
+<a name="l-29"></a><span class="tm">21:14:16</span><span class="nk"> &lt;wking&gt;</span> there is a possible security issue floating in this area
+<a name="l-30"></a><span class="tm">21:14:41</span><span class="nk"> &lt;wking&gt;</span> link in #735
+<a name="l-31"></a><span class="tm">21:15:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> that's up to the config author (e.g. caps also have security impact)
+<a name="l-32"></a><span class="tm">21:15:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> runc is only doing this for chdir() protection, not for the FUSE exploit
+<a name="l-33"></a><span class="tm">21:15:50</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config.md: fix typo of context</span>
+<a name="l-34"></a><span class="tm">21:15:56</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/807</span>
+<a name="l-35"></a><span class="tm">21:17:34</span><span class="nk"> &lt;wking&gt;</span> I think neither master or the current tip of this PR are quite where we want.  Either `filesystemtype` or my suggestion in that comment thread
+<a name="l-36"></a><span class="tm">21:17:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'm fine splitting it
+<a name="l-37"></a><span class="tm">21:20:06</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">question about valid values runtime choose to support</span>
+<a name="l-38"></a><span class="tm">21:20:14</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/issues/813</span>
+<a name="l-39"></a><span class="tm">21:20:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> if the runtime doesn't support some new feature, that's fine.  But if the runtime doesn't support 90% of the features, that's probably not right
+<a name="l-40"></a><span class="tm">21:24:54</span><span class="nk"> &lt;wking&gt;</span> [some talk] &lt;-- I'll add a comment to #807 with this
+<a name="l-41"></a><span class="tm">21:25:09</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config.md: specify config usage</span>
+<a name="l-42"></a><span class="tm">21:25:15</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/803</span>
+<a name="l-43"></a><span class="tm">21:25:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I'm not sure what to do with this
+<a name="l-44"></a><span class="tm">21:28:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> you need the config for 'create', and you need 'create' to work before you can call 'kill'
+<a name="l-45"></a><span class="tm">21:29:47</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Update to Windows network options</span>
+<a name="l-46"></a><span class="tm">21:29:53</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/801</span>
+<a name="l-47"></a><span class="tm">21:30:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> H might be correct
+<a name="l-48"></a><span class="tm">21:30:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> do we have a link to backing docs somewhere?
+<a name="l-49"></a><span class="tm">21:30:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't think so
+<a name="l-50"></a><span class="tm">21:32:35</span><span class="nk"> &lt;wking&gt;</span> I'm not sure how this PR fits into 1.0 (I'll add a comment to the PR)
+<a name="l-51"></a><span class="tm">21:33:38</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">specs-go/round_trip_test: Add round-trip testing for the config</span>
+<a name="l-52"></a><span class="tm">21:33:43</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/759</span>
+<a name="l-53"></a><span class="tm">21:33:55</span><span class="nk"> &lt;wking&gt;</span> We just need to close this with motivation for not pointerizing UID/GID
+<a name="l-54"></a><span class="tm">21:37:31</span><span class="nk"> &lt;wking&gt;</span> It's hard for me to write the comment because I don't understand the pattern
+<a name="l-55"></a><span class="tm">21:37:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> if we push through a node serializer, we won't change the spec
+<a name="l-56"></a><span class="tm">21:38:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> let's just remove the types from the repo and I'll maintain them myself
+<a name="l-57"></a><span class="tm">21:39:10</span><span class="nk"> &lt;wking&gt;</span> I can file that PR, but that sounds like a bottomless pit
+<a name="l-58"></a><span class="tm">21:41:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I'll add a comment with the style pattern
+<a name="l-59"></a><span class="tm">21:43:24</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config-linux: Require no cgroup tweaks when linux.resources is unset</span>
+<a name="l-60"></a><span class="tm">21:43:29</span><span class="nk"> &lt;wking&gt;</span> https://github.com/opencontainers/runtime-spec/pull/576
+<a name="l-61"></a><span class="tm">21:47:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> let me file a replacement PR
+<a name="l-62"></a><span class="tm">21:47:04</span><span class="nk"> &lt;wking&gt;</span> sounds good
+<a name="l-63"></a><span class="tm">21:48:46</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">WIP: config: Clarify mounts[].source relative path anchor</span>
+<a name="l-64"></a><span class="tm">21:48:54</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/735</span>
+<a name="l-65"></a><span class="tm">21:49:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> people are interacting with this at a higher level
+<a name="l-66"></a><span class="tm">21:49:36</span><span class="nk"> &lt;wking&gt;</span> but people who are writing the config JSON know where the bundle is (same dir as config.json)
+<a name="l-67"></a><span class="tm">21:49:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> so chdir to the bundle path and run the mounts
+<a name="l-68"></a><span class="tm">21:50:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah, we do anchor to bundle in .... line 58
+<a name="l-69"></a><span class="tm">21:50:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> in exec.go?
+<a name="l-70"></a><span class="tm">21:51:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> in the root of the repo-utils.go
+<a name="l-71"></a><span class="tm">21:51:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> so I'm fine anchoring to the bundle
+<a name="l-72"></a><span class="tm">21:57:42</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">config.md: format changes</span>
+<a name="l-73"></a><span class="tm">21:57:48</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/724</span>
+<a name="l-74"></a><span class="tm">21:57:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> merging
+<a name="l-75"></a><span class="tm">22:00:27</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">schema/config-linux: add pattern limit for deviceCgroup</span>
+<a name="l-76"></a><span class="tm">22:01:14</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/690</span>
+<a name="l-77"></a><span class="tm">22:03:00</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/blame/6cc08c24289854bf7a1f48865e49aa4601c5bb60/config-linux.md#L220</span>
+<a name="l-78"></a><span class="tm">22:08:14</span><span class="nk"> &lt;wking&gt;</span> we can leave this close and I can work up a PR that adjust the Markdown side to be more permissive
+<a name="l-79"></a><span class="tm">22:09:21</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">schema/defs-linux: Drop 'Capability' type</span>
+<a name="l-80"></a><span class="tm">22:09:26</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/766</span>
+<a name="l-81"></a><span class="tm">22:12:03</span><span class="nk"> &lt;wking&gt;</span> the master JSON Schema is saying "the Linux kernel will always use CAP_" (which may be true, but doesn't seem like grounds for a invalidating a config)
+<a name="l-82"></a><span class="tm">22:17:02</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

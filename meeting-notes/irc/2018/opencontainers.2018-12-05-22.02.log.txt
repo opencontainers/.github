@@ -1,0 +1,16 @@
+22:02:38 <vbatts> #startmeeting 2018-12-05 discussion
+22:02:38 <collabot`> Meeting started Wed Dec  5 22:02:38 2018 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:02:38 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:02:38 <collabot`> The meeting name has been set to '2018_12_05_discussion'
+22:08:26 <vbatts> looking at https://groups.google.com/a/opencontainers.org/forum/#!forum/dev for past calls
+22:12:29 <vbatts> #topic agenda
+22:12:35 <vbatts> #link https://github.com/opencontainers/distribution-spec/issues/24
+22:13:31 <vbatts> #link https://github.com/kinvolk/ocicert/pull/1
+22:16:54 <vbatts> we need to have a dedicated time to confirm the work of dongsu/kinvolk
+22:17:06 <vbatts> amenable for CET
+22:20:52 <vbatts> #Action vbatts email list to confirm kinvolk work on confirming conformance tests
+22:22:25 <vbatts> #action vbatts note for KubeCon attendees
+22:26:39 <vbatts> #topic distribution spec
+22:34:32 <vbatts> #action derekmcgowan email about time to walk through distribution-spec use-case and how to introduce "future" transition pieces and not break compatibility
+22:34:53 <vbatts> #action vbatts rope in atlas kerr and josephschorr
+22:39:04 <vbatts> #endmeeting

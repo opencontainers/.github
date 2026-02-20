@@ -1,0 +1,20 @@
+15:02:58 <vbatts> #startmeeting 2017-06-21
+15:02:58 <collabot> Meeting started Wed Jun 21 15:02:58 2017 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+15:02:58 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+15:02:58 <collabot> The meeting name has been set to '2017_06_21'
+15:03:11 <vbatts> #topic image-spec
+15:03:30 <stevvooe> #link https://github.com/opencontainers/image-spec/pull/699/files
+15:04:21 <vbatts> https://github.com/opencontainers/image-spec/milestone/3
+15:05:02 <stevvooe> #link https://github.com/opencontainers/image-spec/pull/695
+15:05:31 <stevvooe> #link https://github.com/opencontainers/image-spec/pull/694
+15:05:43 <stevvooe> 695, 699 are ready to go
+15:05:54 <stevvooe> 694 needs some clarification, which we'll do now
+15:06:12 <vbatts> cyphar: are you alive atthis hour
+15:10:14 <stevvooe> #action move implementation lines from volumes pr 694 to conversion.md
+15:13:33 <stevvooe> #link https://github.com/opencontainers/image-spec/pull/652
+15:15:33 <stevvooe> #link https://github.com/opencontainers/image-spec/issues/637
+15:22:31 <vbatts> #link https://github.com/opencontainers/image-spec/milestone/3
+15:22:34 <vbatts> errr
+15:22:39 <vbatts> #link https://github.com/opencontainers/runtime-spec/milestone/7
+15:22:40 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/873/files
+15:29:52 <vbatts> #endmeeting

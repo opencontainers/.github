@@ -1,0 +1,92 @@
+20:07:45 <wking> #startmeeting 2017-05-09 runtime-spec 1.0 preparation
+20:07:45 <collabot> Meeting started Tue May  9 20:07:45 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+20:07:45 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+20:07:45 <collabot> The meeting name has been set to '2017_05_09_runtime_spec_1_0_preparation'
+20:07:58 <wking> #topic intelRdt wording
+20:08:35 <wking> #link https://github.com/opencontainers/runtime-spec/pull/787
+20:08:51 <wking> #topic Markdown links
+20:08:54 <wking> #link https://github.com/opencontainers/runtime-spec/pull/786
+20:10:39 <wking> #topic JSON Schema CI testing
+20:10:47 <wking> #link https://github.com/opencontainers/runtime-spec/pull/785
+20:10:56 <wking> crosbymichael: maybe this should move to runtime-tools?
+20:11:06 <wking> I don't care where it lives, but want CI for missing commas and such
+20:11:20 <wking> mrunalp: if it moves, there will be a lag.  Maybe leave it in runtime-spec?
+20:11:36 <wking> #topic RFC 2119 wording for oomScoreAdj
+20:12:02 <wking> #link https://github.com/opencontainers/runtime-spec/pull/781
+20:13:06 <wking> #topic RFC 2119 wording for config-linux
+20:13:09 <wking> #link https://github.com/opencontainers/runtime-spec/issues/746
+20:13:23 <wking> crosbymichael: I don't have time to work on this now, since I'm focused on the TTY issue
+20:13:26 <wking> mrunalp: I can take a few
+20:14:27 <wking> mrunalp: I think the one we just merged looks fine
+20:16:34 <wking> crosbymichael: Just don't make it too explicit
+20:16:45 <wking> #topic bind and rbind
+20:17:44 <wking> #link https://github.com/opencontainers/runtime-spec/pull/771
+20:18:18 <wking> So drop the mount(8) link, add a table with everything that gets mapped to to MS_*, and say everything else goes to data with comment separators?
+20:18:21 <wking> crosbymichael: yeah
+20:18:36 <wking> #topic
+20:18:38 <wking> #topic RFC 2119 tightening for namespaces
+20:18:44 <wking> #link https://github.com/opencontainers/runtime-spec/pull/767
+20:22:00 <wking> I think we need wording about where the new namespaces are created, but am ok punting
+20:27:04 <wking> #topic schema/defs-linux: Drop 'Capability' type
+20:27:09 <wking> #link https://github.com/opencontainers/runtime-spec/pull/766
+20:27:56 <wking> vbatts: if we're using the Linux-kernel enum directly, we don't have to define it
+20:28:16 <wking> vbatts: but if we define a mapping from a string to an integer, we need to say something about it
+20:28:36 <wking> crosbymichael: you'd get an error at runtime
+20:29:20 <wking> tianon: if you add something that isn't implemented by your runtime because your kernel is too new, then the runtime will throw an error for a valid config
+20:29:35 <wking> mrunalp: so one option is punting to the kernel and getting rid of the strings
+20:29:55 <wking> crosbymichael: then you'd look at the spec and have no clue what the caps were
+20:30:13 <wking> crosbymichael: I think the strings are good for visibility and usability
+20:30:51 <wking> crosbymichael: I also don't want a list of valid caps in the spec, because a new kernel comes out with a new cap, and then we have to wait for a new spec version?
+20:31:13 <wking> tianon: what about "reasonable effort should be made to map these strings to the kernel constants"?
+20:31:22 <wking> crosbymichael: so pass-through for unrecognized strings?
+20:31:33 <wking> tianon: can the runtime do this lookup dynamically?
+20:31:42 <wking> ^ last line was mrunalp, not tianon
+20:31:47 <wking> crosbymichael: the runtime can do that
+20:32:09 <wking> crosbymichael: the spec should just say you have to report an error for unmapped entries
+20:32:52 <wking> tianon: so we leave the mapping up to the runtime, but they have to match the names, and they MUST error when they can't get a mapping for whatever reason
+20:32:59 <wking> mrunalp: does anyone want to take that PR up?
+20:33:25 <mrunalp> #action tianon to update the spec language for capabilities
+20:34:00 <mrunalp> wking, this may not map to solaris
+20:34:13 <mrunalp> vbatts, Solaris can add their own platform specific regex
+20:34:44 <wking> but you'd need to say what you were mapping to
+20:34:57 <wking> tianon: so maybe say "capability constants in the kernel" and don't get more specific
+20:35:18 <wking> tianon: we have lots of CAP_ examples, so I don't think we need to be more specific about that
+20:35:53 <wking> so do we revisit #766?
+20:36:09 <wking> crosbymichael: we'll come back to that after we've adjusted the spec
+20:36:14 <wking> vbatts: is there a non-blocker label?
+20:36:56 <wking> tianon: we currently link to the capabilities man page which has a pretty simple list.
+20:37:02 <wking> tianon: but I don't see this as a 1.0 blocker
+20:38:09 <wking> there's a gap between "gets the point across" and "useful for compliance testing"
+20:40:26 <wking> mrunalp: I don't think we need to worry about folks submitting no-op runtimes for certification
+20:40:40 <wking> mrunalp: and testers would probably be taking a closer look at those
+20:41:07 <wking> RobDolinMS: you can assign an issue in the cert repo to me for this
+20:41:29 <wking> mrunalp: I don't expect this to be a practical issue
+20:42:05 <wking> vbatts: to crosbymichael's point, even with firmer language for the Linux string, is there an issue with...
+20:42:34 <wking> crosbymichael: we can hash it out on tianon's PR
+20:42:41 <tianon> ++
+20:42:48 <wking> #topic config: Require strictly-positive timeout values
+20:42:54 <wking> #link https://github.com/opencontainers/runtime-spec/pull/764
+20:43:26 <wking> crosbymichael: the earlier version of this was depointerizing, which is not what we want
+20:43:36 <wking> I've spun that part out into https://github.com/opencontainers/runtime-spec/issues/772
+20:44:26 <wking> #topic specs-go/round_trip_test: Add round-trip testing for the config
+20:44:31 <wking> #link https://github.com/opencontainers/runtime-spec/pull/759
+20:53:01 <tianon> (new capabilities PR is opened at https://github.com/opencontainers/runtime-spec/pull/790 for hashing out that previous string conversion topic)
+20:56:20 <wking> #topic config: Drop the redundant config.json filename requirement
+20:56:26 <wking> #link https://github.com/opencontainers/runtime-spec/pull/756
+20:56:47 <wking> #topic spec: Define the property-specification syntax
+20:56:52 <wking> #link https://github.com/opencontainers/runtime-spec/pull/747
+21:01:43 <wking> #topic config-linux: RFC 2119 wording for disableOOMKiller
+21:01:49 <wking> #link https://github.com/opencontainers/runtime-spec/pull/745
+21:02:06 <wking> mrunalp: the not-set lines seem like they could be pulled out (and not be per-property)
+21:02:19 <wking> that sounds good to me, but I couldn't figure out the wording
+21:02:56 <wking> #topic config: Lead off with the purpose of the config
+21:03:04 <wking> #link https://github.com/opencontainers/runtime-spec/pull/737
+21:03:10 <wking> mrunalp: please rebase
+21:03:11 <wking> will do
+21:03:24 <wking> #topic next steps?
+21:03:34 <wking> crosbymichael: with another hour we can knock out another 10
+21:03:55 <wking> mrunalp: regular call at 8am, and then another meeting for this at 2pm?
+21:04:05 <wking> crosbymichael: sounds good.  I need to figure out the terminal stuff
+21:04:14 <wking> tianon: all I did was discover it ;)
+21:04:49 <wking> vbatts: I'll see, I might be headed to the airport
+21:04:58 <wking> #endmeeting

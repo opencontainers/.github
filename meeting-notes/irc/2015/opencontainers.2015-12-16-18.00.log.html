@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">18:00:26</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2015-12-16 discussion</span>
+<a name="l-2"></a><span class="tm">18:00:26</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Dec 16 18:00:26 2015 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">18:00:26</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">18:00:26</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2015_12_16_discussion'
+<a name="l-5"></a><span class="tm">18:01:21</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">vbatts|mobile vbatts RobDolinMS mrunalp crosbymichael</span>
+<a name="l-6"></a><span class="tm">18:01:21</span><span class="nk"> &lt;collabot`&gt;</span> <span class="hi">Warning:</span> Nick not in channel: RobDolinMS
+<a name="l-7"></a><span class="tm">18:01:21</span><span class="nk"> &lt;collabot`&gt;</span> <span class="hi">Warning:</span> Nick not in channel: mrunalp
+<a name="l-8"></a><span class="tm">18:01:21</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: RobDolinMS crosbymichael mrunalp vbatts vbatts|mobile wking
+<a name="l-9"></a><span class="tm">18:02:03</span><span class="nk"> &lt;lk4d4&gt;</span> I'm guest :)
+<a name="l-10"></a><span class="tm">18:03:24</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">0.2.0 pull requests</span>
+<a name="l-11"></a><span class="tm">18:03:32</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#url </span><span class="cmdline">https://github.com/opencontainers/specs/milestones/v0.2.0</span>
+<a name="l-12"></a><span class="tm">18:03:55</span><span class="nk"> &lt;wking&gt;</span> vishh just updated https://github.com/opencontainers/specs/pull/233
+<a name="l-13"></a><span class="tm">18:04:19</span><span class="nk"> &lt;wking&gt;</span> b684645 -&gt; 9173eb8
+<a name="l-14"></a><span class="tm">18:04:28</span><span class="nk"> &lt;wking&gt;</span> mrunalp still sees some strings
+<a name="l-15"></a><span class="tm">18:04:50</span><span class="nk"> &lt;wking&gt;</span> discussion to continue on #233
+<a name="l-16"></a><span class="tm">18:05:03</span><span class="nk"> &lt;duglin&gt;</span> <span class="hi">wking:</span> are you sitting on a fireplace?
+<a name="l-17"></a><span class="tm">18:05:09</span><span class="nk"> &lt;wking&gt;</span> yup
+<a name="l-18"></a><span class="tm">18:05:16</span><span class="nk"> &lt;duglin&gt;</span> funny
+<a name="l-19"></a><span class="tm">18:05:35</span><span class="nk"> &lt;wking&gt;</span> but warm :)
+<a name="l-20"></a><span class="tm">18:05:47</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">face-to-face meeting</span>
+<a name="l-21"></a><span class="tm">18:05:57</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">duglin to mail the list with ideas/times</span>
+<a name="l-22"></a><span class="tm">18:06:44</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp</span>
+<a name="l-23"></a><span class="tm">18:06:44</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: RobDolinMS crosbymichael mrunalp vbatts vbatts|mobile wking
+<a name="l-24"></a><span class="tm">18:06:56</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">focus for the next milestone</span>
+<a name="l-25"></a><span class="tm">18:07:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> Can we separate create and start?
+<a name="l-26"></a><span class="tm">18:07:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> Death of the container process and state cleanup?
+<a name="l-27"></a><span class="tm">18:08:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> What are we doing about the container ID?
+<a name="l-28"></a><span class="tm">18:08:31</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> We agree we need some sort of ID
+<a name="l-29"></a><span class="tm">18:08:34</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#url </span><span class="cmdline">https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/q6TYqVZOcX8</span>
+<a name="l-30"></a><span class="tm">18:08:51</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Trevor:</span> Is this a new issue or email thread?
+<a name="l-31"></a><span class="tm">18:08:58</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> this is related but not exactly the same
+<a name="l-32"></a><span class="tm">18:09:19</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> we can target nailing this down for 0.3
+<a name="l-33"></a><span class="tm">18:09:31</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">vishh to open an issue with thoughts on container ID</span>
+<a name="l-34"></a><span class="tm">18:09:58</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> I can open an issue on the separation of start steps
+<a name="l-35"></a><span class="tm">18:10:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> it's from November 25th, so not that new
+<a name="l-36"></a><span class="tm">18:10:02</span><span class="nk"> &lt;RobDolinMS&gt;</span> ... and another for the clean-up
+<a name="l-37"></a><span class="tm">18:10:27</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">(WKing:</span> good point)
+<a name="l-38"></a><span class="tm">18:10:43</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">punt on protobuf</span>
+<a name="l-39"></a><span class="tm">18:11:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> maybe use per-platform directories so we can compile cross-platform parsers for now
+<a name="l-40"></a><span class="tm">18:11:51</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#url </span><span class="cmdline">https://github.com/opencontainers/specs/pull/185</span>
+<a name="l-41"></a><span class="tm">18:12:06</span><span class="nk"> &lt;wking&gt;</span> ^ that's protobuf
+<a name="l-42"></a><span class="tm">18:12:45</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/specs/pull/135
+<a name="l-43"></a><span class="tm">18:12:55</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#url </span><span class="cmdline">https://github.com/opencontainers/specs/pull/135</span>
+<a name="l-44"></a><span class="tm">18:13:04</span><span class="nk"> &lt;wking&gt;</span> ^ problem that protobuf was trying to solve
+<a name="l-45"></a><span class="tm">18:13:13</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">handling users</span>
+<a name="l-46"></a><span class="tm">18:13:25</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/specs/pull/191
+<a name="l-47"></a><span class="tm">18:13:28</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#url </span><span class="cmdline">https://github.com/opencontainers/specs/pull/191</span>
+<a name="l-48"></a><span class="tm">18:14:49</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">back to cross-platform JSON parsing in Go</span>
+<a name="l-49"></a><span class="tm">18:14:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> wondering what the issue is for #135
+<a name="l-50"></a><span class="tm">18:15:21</span><span class="nk"> &lt;wking&gt;</span> mrunalp and wking trying to explain the platform-specific Go type compilation
+<a name="l-51"></a><span class="tm">18:15:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> we want platform-independent stuff, so we don't want spec-parsing config that's compilation-platform dependent
+<a name="l-52"></a><span class="tm">18:16:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">wking:</span> I think we all agree with that^
+<a name="l-53"></a><span class="tm">18:16:29</span><span class="nk"> &lt;wking&gt;</span> mrunalp's suggestion fixes that, and protobuf would have fixed it (but protobuf landing may not happen, and is far out in any case)
+<a name="l-54"></a><span class="tm">18:17:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> hoping all of these topics end up in 0.3.0 by late January
+<a name="l-55"></a><span class="tm">18:18:03</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">cgroup parent config (like Docker)</span>
+<a name="l-56"></a><span class="tm">18:18:24</span><span class="nk"> &lt;vbatts|mobile&gt;</span> Or systemd?
+<a name="l-57"></a><span class="tm">18:18:47</span><span class="nk"> &lt;wking&gt;</span> vishh thinks parents aren't worth the trouble, just use cgroupsPath
+<a name="l-58"></a><span class="tm">18:19:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> the less we have to do around cgroups, the better
+<a name="l-59"></a><span class="tm">18:19:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> this is somehow tied up with systemd [wking: although I don't understand that point]
+<a name="l-60"></a><span class="tm">18:20:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> should we require cgroupsPath to always start with a forward slash?
+<a name="l-61"></a><span class="tm">18:21:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> or just require it to be relative to cgroups mount point, regardless of leading slash
+<a name="l-62"></a><span class="tm">18:21:35</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">vishh to open a PR with his approach</span>
+<a name="l-63"></a><span class="tm">18:22:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> anything else for 0.3.0?
+<a name="l-64"></a><span class="tm">18:22:23</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">defining a tar format</span>
+<a name="l-65"></a><span class="tm">18:22:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">liangchenye:</span> we might want this^
+<a name="l-66"></a><span class="tm">18:22:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> don't we already define the tar format by defining the bundle filesystem layout?
+<a name="l-67"></a><span class="tm">18:23:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> has been working with philips on this
+<a name="l-68"></a><span class="tm">18:23:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> hopefully will get the proposal out within a week or so
+<a name="l-69"></a><span class="tm">18:24:14</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">0.3.0 procedure</span>
+<a name="l-70"></a><span class="tm">18:24:33</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">mrunalp open a 0.3.0 milestone listing these topics with a soft deadline</span>
+<a name="l-71"></a><span class="tm">18:24:45</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Next meeting</span>
+<a name="l-72"></a><span class="tm">18:24:53</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#agreed </span><span class="cmdline">Cancel next two weeks</span>
+<a name="l-73"></a><span class="tm">18:24:53</span><span class="nk"> &lt;wking&gt;</span> with year-end, next meeting to happen on 2016-01-06
+<a name="l-74"></a><span class="tm">18:25:04</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">mrunalp to mail the list about that^</span>
+<a name="l-75"></a><span class="tm">18:25:12</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#agreed </span><span class="cmdline">next meeting on Wed, 06 Jan, 2016</span>
+<a name="l-76"></a><span class="tm">18:25:26</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Validation of multiple implementations</span>
+<a name="l-77"></a><span class="tm">18:26:07</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vishnu:</span> We should have multiple interoperable implementations
+<a name="l-78"></a><span class="tm">18:26:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> ocitools and OCT will help testing multiple implemenations
+<a name="l-79"></a><span class="tm">18:26:26</span><span class="nk"> &lt;vbatts|mobile&gt;</span> Need for annotations.
+<a name="l-80"></a><span class="tm">18:26:31</span><span class="nk"> &lt;RobDolinMS&gt;</span> (wking just typed what I was starting to type :) )
+<a name="l-81"></a><span class="tm">18:26:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> wants multiple implementations (not just runC) to test generality
+<a name="l-82"></a><span class="tm">18:27:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> wants other stakeholders to get involved (so they should review opencontainers/specs)
+<a name="l-83"></a><span class="tm">18:27:39</span><span class="nk"> &lt;vbatts|mobile&gt;</span> And can we have a platform dependent strict for handling things like uid/gid user strict.
+<a name="l-84"></a><span class="tm">18:27:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> not sure what the BSD folks want, they seem more interested in Docker + jails
+<a name="l-85"></a><span class="tm">18:28:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> have a runC running on Solaris with zones, looking into porting libcontainer now
+<a name="l-86"></a><span class="tm">18:28:28</span><span class="nk"> &lt;vbatts|mobile&gt;</span> Nice
+<a name="l-87"></a><span class="tm">18:30:19</span><span class="nk"> &lt;duglin&gt;</span> can’t find my window to unmute!!!
+<a name="l-88"></a><span class="tm">18:30:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> duglin will you coordinate OCI LF meeting?
+<a name="l-89"></a><span class="tm">18:30:31</span><span class="nk"> &lt;lk4d4&gt;</span> <span class="hi">duglin:</span> haha :D
+<a name="l-90"></a><span class="tm">18:30:40</span><span class="nk"> &lt;duglin&gt;</span> which meeting?
+<a name="l-91"></a><span class="tm">18:31:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> your f2f meeting, and a LF company rep meeting to elect a trademark chair
+<a name="l-92"></a><span class="tm">18:31:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> what dates did they propose?
+<a name="l-93"></a><span class="tm">18:31:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> no dates yet, maybe by Friday or by next week
+<a name="l-94"></a><span class="tm">18:31:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> will try to align, but may not want to wait for them
+<a name="l-95"></a><span class="tm">18:32:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> wants this to be not a weekend
+<a name="l-96"></a><span class="tm">18:33:13</span><span class="nk"> &lt;vbatts&gt;</span> back
+<a name="l-97"></a><span class="tm">18:33:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> Oracle isn't getting these communications, please include us ;)
+<a name="l-98"></a><span class="tm">18:33:33</span><span class="nk"> &lt;wking&gt;</span> * Oracle may be getting them, but jlb13 isn't ;)
+<a name="l-99"></a><span class="tm">18:33:54</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">RobDolinMS to link jlb13 in on who at Oracle is getting them</span>
+<a name="l-100"></a><span class="tm">18:34:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> this is all about oci-formation or some other lawyer-ish list
+<a name="l-101"></a><span class="tm">18:34:59</span><span class="nk"> &lt;duglin&gt;</span> we need to take off the full month for the superbowl?  :-)
+<a name="l-102"></a><span class="tm">18:35:14</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

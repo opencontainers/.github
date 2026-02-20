@@ -1,0 +1,141 @@
+17:02:30 <vbatts|work> #startmeeting 2015-10-07 discussion
+17:02:30 <collabot> Meeting started Wed Oct  7 17:02:30 2015 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:02:30 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:02:30 <collabot> The meeting name has been set to '2015_10_07_discussion'
+17:02:59 <vbatts|work> philips will not be making it today. Sounds like his batteries are dead, somewhere in dublin.
+17:03:09 <mrunalp> okay
+17:03:51 <RobDolinMS_> Good day
+17:03:55 <duglin> Howdy
+17:03:57 <wking> hi
+17:03:59 <julz> yo
+17:04:02 <Stefan> hi
+17:04:05 <mikebrow> .
+17:04:06 <lk4d4> hello
+17:04:11 <jojy_mesos> aloha
+17:04:20 <RobDolinMS_> #info RobDolinMS_ from Microsoft in Seattle
+17:04:34 <jlb13> hi vbatts
+17:05:06 <vbatts|work> o/
+17:05:18 <vishh> Hello
+17:05:30 <vbatts|work> #topic duglin clarifying a couple of things
+17:05:49 <RobDolinMS_> #info duglin is Doug Davis from IBM
+17:06:08 <duglin> https://github.com/opencontainers/specs/pull/209
+17:06:23 <anuthan> hello
+17:08:59 <duglin> https://github.com/opencontainers/specs/pull/210
+17:09:04 <RobDolinMS> Suggested replacing "Equinox" with "fiber hotel" and Doug fixed
+17:09:38 <RobDolinMS> (or will fix)
+17:12:09 <wking> vbatts|work and mrunalp distinguishing between "filesystem bundles" and "on the wire bundles" for runtime.json
+17:14:51 <wking> duglin points out that the bundle.md is just talking about filesystem bundles, and we're still not sure whether wire bundles are in or out of scope
+17:15:33 <anuthan> solaris wouldn't be needing the runtime.json , so we prefer this be optional
+17:16:02 <anuthan> Even for a running container on filesystem
+17:16:43 <lk4d4> yeah, I agree, it should be optional everywhere
+17:16:46 <mrunalp> Fair, it could be optional
+17:17:54 <RobDolinMS> anuthan  is Abhijeeth Nuthan
+17:18:09 <wking> crosbymichael asks where the runtime.json settings come from for Solaris
+17:18:20 <RobDolinMS> anuthan explains how Solaris handles this
+17:18:22 <wking> anuthan says they're part of the runtime's configuration outside of the bundle
+17:18:51 <RobDolinMS> In config.json, there is a Linux object and a separate Solaris object
+17:19:07 <wking> #action anuthan to mail the list with more details on how Solaris handles it
+17:19:14 <RobDolinMS> #action anuthan to send an mail elaborating on this
+17:19:47 <RobDolinMS> Doh; double-posted with wking :)
+17:20:16 <wking> ;)
+17:20:20 <wking> more actions :)
+17:20:26 <wking> vishh: asks how hooks are handled
+17:20:42 <wking> anuthan says Solaris doesn't currently support hooks
+17:21:10 <wking> he feels like hooks should be handled by the runtime itself, but it's complicated ;).  We'll wait for more details
+17:22:57 <wking> should we amend #210 to make runtime.json optional?
+17:23:23 <wking> mrunal thinks maybe, crosbymichael is concerned about leaving some config unspecified
+17:23:46 <wking> I think we should land the #210 rewording as it stands and then have a separate discussion on the list about making runtime.json optional
+17:25:42 <wking> vbatts|work thinks maybe the distinction is how much the bundle is asking for, vs. what the runtime is granting
+17:26:35 <wking> anuthan configuration is set for the zone in which the container runs, so the zone config sets maximum caps on resources
+17:27:14 <wking> anuthan we don't want to lose that runtime.json configuration when moving the container between hosts
+17:28:53 <RobDolinMS> Anyone else have trouble hearing Vish?
+17:29:16 <jlb13> yeah, his audio stream goes a bit underwater
+17:31:44 <wking> jlb13: maybe the config.json / runtime.json split makes sense, and the current Solaris stuff can be reshuffled to use both configs.
+17:31:56 <jlb13> i think correct, yes
+17:32:25 <wking> feel free to add your own language ;).  I'm just trying to paraphrase for the minutes :p
+17:32:48 <wking> duglin: why require runtime.json if we can guess reasonable defaults
+17:32:56 <wking> e.g. with 'runc spec'
+17:33:12 <RobDolinMS> #info duglin asks: If through runc spec we can produce valid defaults, why require runtime.json to be present?
+17:33:45 <wking> mrunalp: we don't specify defaults in the spec (the runC values are runC-specific)
+17:33:47 <RobDolinMS> #info We don't currently have default values in spec.
+17:34:11 <RobDolinMS> #info (said mrunalp)
+17:34:40 <wking> duglin: maybe you should be able to say "I don't care", and have them use unspecified defaults (whatever the runtime wants to use as the defaults)
+17:35:34 <RobDolinMS> File can be required w/ some fields required and some fields optional.
+17:35:53 <mrunalp> lk4d4: Your voice is breaking up
+17:36:33 <wking> lk4d4: doesn't like runtime-specific defaults
+17:36:44 <wking> vishh: agrees, no runtime-specific defaults
+17:36:57 <wking> vishh: clearly state which fields are optional and which are required
+17:37:06 <lk4d4> mrunalp: seems like bluejeans wants too much memory from my laptop
+17:37:16 <wking> ^^ we're getting better at that now, but we still have more to do
+17:37:21 <lk4d4> duglin: require
+17:37:33 <wking> ^ "a runtime.json"
+17:37:58 <wking> duglin: is ok keeping it required for now, and revisit once we finish required/optional for the fields inside
+17:38:00 <vishh> One more thing is that the standard container tools should take care of validation and defaulting.
+17:38:06 <wking> I agree with duglin
+17:38:19 <jlb13> +1 to duglin
+17:38:21 <lk4d4> vishh: standart container tools like docker or like runc? :)
+17:38:22 <wking> vishh: can you define "the standard container tools"?
+17:38:27 <vishh> For example, in the case of linux, OCI should supply a validation and defaulting tool .
+17:38:41 <wking> why not for other OSes?
+17:38:48 <vishh> No. I mean tools officially supported by OCI.
+17:39:01 <lk4d4> vishh: I agree, it would be supercool
+17:39:06 <vishh> Once we move that to runc or docker or something else, it becomes implementation specific.
+17:39:30 <RobDolinMS> next topic?
+17:39:33 <lk4d4> vbatts|work: psst
+17:40:23 <wking> #action everyone to add optional/required comments for fields that are missing them ;)
+17:40:24 <RobDolinMS> #info Everyone should continue reviewing :)
+17:40:43 * wking disconnects the RobDolinMS mind-link
+17:40:50 <RobDolinMS> ;)
+17:40:58 <vbatts|work> #topic vbatts - top-down docs
+17:41:40 <RobDolinMS> #info vbatts|work has been working on this
+17:42:56 <wking> vbatts|work maybe add directories for logically grouping things?  Maybe have a single spec.md?  Expects a PR in the next week or so
+17:43:09 <RobDolinMS> #info vbatts|work hoping to have a PR in the next week or two
+17:43:26 <wking> vbatts|work wants to make it easy to both get a high-level overview and to drill down onto a particular issue
+17:43:50 <wking> #action vbatts|work to continue work on the top-down spec
+17:43:58 <RobDolinMS> @crosbymichael: "in vbatts we trust" ;)
+17:43:58 <collabot> RobDolinMS: Error: "crosbymichael:" is not a valid command.
+17:44:09 <vbatts|work> #topic wking - lifecycle updates
+17:44:12 <RobDolinMS> crosbymichael: "in vbatts we trust" ;)
+17:44:37 <wking> https://github.com/opencontainers/specs/pull/207
+17:45:10 <duglin> coly cow - that one comment has 16 footnotes!  Gotta be close to a record!!
+17:45:23 <vbatts|work> hahahahaha
+17:45:25 * vbatts|work ohmans
+17:47:05 <RobDolinMS> #help people familiar with lifecycle to review wking's PR
+17:47:53 <wking> I'll make any changes that folks need to see to get this landed without getting to deep in low-level issues
+17:48:05 <wking> we can revisit those later after we have a high-level scaffold in place
+17:48:17 <RobDolinMS> #info maintainers should review the PR
+17:48:50 <vbatts|work> #topic virt containers
+17:48:56 <wking> vbatts|work: #topic?
+17:49:27 <wking> https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/gS-nvHPwJQ8
+17:50:26 <RobDolinMS> Thanks wking :)
+17:50:33 <wking> no problem
+17:50:51 <vbatts|work> #topic mrunalp - bundle validation
+17:51:06 <wking> should it go into the spec repo or be external
+17:51:06 <wking> ?
+17:51:09 <wking> mrunalp: ^
+17:52:15 <wking> you can also develop it externally and then merge it in later
+17:53:05 <wking> mrunalp's approach: point at a bundle, launch a well-known process like cat, something else...
+17:53:21 <wking> I don't think we want to rely on having 'cat' inside the bundle
+17:53:50 <wking> what sort of things are we going to be validating for the bundle?
+17:53:57 <wking> can't this just be a static config check?
+17:54:12 <wking> or are we checking to see that the container has valid content in the rootfs?
+17:54:47 <wking> give it a runtime (e.g. runC), generate a bundle using e.g. cat, run the bundle and check the resulting container
+17:54:58 <wking> this sounds more like a runtime-validator, not a bundle-validator
+17:55:39 <wking> vbatts|work: wants standard bundles that print pass/fail after running an internal check, and we can just launch those with the runtime being tested
+17:55:48 <wking> mrunalp: has a working skeleton
+17:56:08 <wking> currently a branch in ocitools
+17:56:34 <wking> https://github.com/mrunalp/ocitools
+17:57:08 <wking> vishh: if I want to know my resource constraints/identity/..., how does the application figure those out
+17:57:27 <wking> mrunalp: currently mounting cgroups in the container, so the container can check there for those configs
+17:57:37 <wking> vishh: do we want to mount the spec inside the container?
+17:57:47 <wking> vishh: is the runtime updatable for a running container?
+17:58:06 <wking> #action vishh to create and issue/mailing-list-thread to discuss further
+17:58:48 <RobDolinMS> Bunch of folks in Mt. View on/around Oct 21st; may coordinate a hacking session.
+17:58:53 <vbatts|work> #topic vbatts - hacking session
+17:59:00 <jlb13> ah, i'll just miss you. i get into sfo 10/24.
+17:59:04 <RobDolinMS> #info Bunch of folks in Mt. View on/around Oct 21st; may coordinate a hacking session.
+17:59:26 <duglin> can you give more details as it gets nailed down so people can make travel plans?
+17:59:42 <RobDolinMS> #action vbatts|work to send more details
+18:00:08 <lk4d4> see you
+18:01:09 <wking> Looks like #195 hasn't landed yet (it's where I looked up the ocitools link).  mrunalp's already LGTMed it, but can another maintainer take a minute to review/merge?  It should be a quick review ;)
+18:01:14 <vbatts|work> #endmeeting

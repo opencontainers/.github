@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">22:05:32</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-11-30 discussion</span>
+<a name="l-2"></a><span class="tm">22:05:32</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Nov 30 22:05:32 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">22:05:32</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">22:05:32</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2016_11_30_discussion'
+<a name="l-5"></a><span class="tm">22:05:37</span><span class="nk"> &lt;wking&gt;</span> I missed the first few minutes...
+<a name="l-6"></a><span class="tm">22:05:48</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec command line API</span>
+<a name="l-7"></a><span class="tm">22:05:54</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/513</span>
+<a name="l-8"></a><span class="tm">22:06:08</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">crosbymichael to comment about socket handling in the PR</span>
+<a name="l-9"></a><span class="tm">22:06:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> other thoughts for the command line API PR?
+<a name="l-10"></a><span class="tm">22:06:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I can't think of anything else that we were missing
+<a name="l-11"></a><span class="tm">22:06:50</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">anchor updates</span>
+<a name="l-12"></a><span class="tm">22:07:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I'm happy to keep going with the Markdown anchors for v1
+<a name="l-13"></a><span class="tm">22:08:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> works for me, any objections?
+<a name="l-14"></a><span class="tm">22:08:26</span><span class="nk"> &lt;wking&gt;</span> Works for me too, as long as I'm not doing the work ;)
+<a name="l-15"></a><span class="tm">22:08:47</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">RobDolinMS to work up PRs for Markdown anchors for the rest of runtime-spec</span>
+<a name="l-16"></a><span class="tm">22:09:09</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime testing feedback</span>
+<a name="l-17"></a><span class="tm">22:09:38</span><span class="nk"> &lt;wking&gt;</span> RobDolinMS if we're getting started from scratch, where should those docs go?  The README?  A wiki?
+<a name="l-18"></a><span class="tm">22:09:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> runtime-tools README is a good place
+<a name="l-19"></a><span class="tm">22:09:57</span><span class="nk"> &lt;wking&gt;</span> +1 to putting the notes in the runtime-tools README
+<a name="l-20"></a><span class="tm">22:10:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stephenrwalli:</span> RobDolinMS and I worked up Ubuntu and Fedora notes already
+<a name="l-21"></a><span class="tm">22:10:30</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">stephenrwalli to PR Fedora notes for runtime-tools</span>
+<a name="l-22"></a><span class="tm">22:10:42</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">RobDolinMS to PR Ubuntu notes for runtime-tools</span>
+<a name="l-23"></a><span class="tm">22:11:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stephenrwalli:</span> we have a dependency on the Go capabilities library which doesn't have an open-source license
+<a name="l-24"></a><span class="tm">22:11:49</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec rc3</span>
+<a name="l-25"></a><span class="tm">22:11:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I posted a vote for this today
+<a name="l-26"></a><span class="tm">22:12:11</span><span class="nk"> &lt;wking&gt;</span> stephenrwalli:
+<a name="l-27"></a><span class="tm">22:13:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stephenrwalli:</span> going back a topic, gocapability is 2-clause BSD: https://github.com/syndtr/gocapability/blob/master/LICENSE
+<a name="l-28"></a><span class="tm">22:14:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> having some sort of notes about naming would be good for 1.0 (even if it's just "naming is not defined")
+<a name="l-29"></a><span class="tm">22:14:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> If we were working on ELF or PDF, do those specs talk about distribution over HTTP
+<a name="l-30"></a><span class="tm">22:14:56</span><span class="nk"> &lt;wking&gt;</span> ^ probably not ;)
+<a name="l-31"></a><span class="tm">22:15:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the image format is based on Docker tech, but...
+<a name="l-32"></a><span class="tm">22:15:31</span><span class="nk"> &lt;wking&gt;</span> [stevvooe dropped]
+<a name="l-33"></a><span class="tm">22:15:39</span><span class="nk"> &lt;stevvooe&gt;</span> reloading
+<a name="l-34"></a><span class="tm">22:16:35</span><span class="nk"> &lt;stevvooe&gt;</span> chrome stopped recognizing my mic
+<a name="l-35"></a><span class="tm">22:16:36</span><span class="nk"> &lt;stevvooe&gt;</span> once sec
+<a name="l-36"></a><span class="tm">22:17:44</span><span class="nk"> &lt;stephenrwalli&gt;</span> <span class="hi">wking:</span> You are completely correct. My apologies, All. 2-Clause BSD. I stand corrected.
+<a name="l-37"></a><span class="tm">22:17:59</span><span class="nk"> &lt;stevvooe&gt;</span> i'll be in seattle as well
+<a name="l-38"></a><span class="tm">22:18:01</span><span class="nk"> &lt;stevvooe&gt;</span> one sec
+<a name="l-39"></a><span class="tm">22:18:05</span><span class="nk"> &lt;mrunalp&gt;</span> stephenrwalli, yep, I checked that as well
+<a name="l-40"></a><span class="tm">22:18:21</span><span class="nk"> &lt;stevvooe&gt;</span> chrome sucks
+<a name="l-41"></a><span class="tm">22:19:05</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">stevvooe:</span> You can direct dial into the meeting from a land line or mobile: 415-968-0849
+<a name="l-42"></a><span class="tm">22:19:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I'm not clear on the index use case
+<a name="l-43"></a><span class="tm">22:20:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> If you have a tar image with an early oci-layout index, you can exit early on missed lookups (without reading the tar file)
+<a name="l-44"></a><span class="tm">22:20:16</span><span class="nk"> &lt;wking&gt;</span> * the whole tar file
+<a name="l-45"></a><span class="tm">22:20:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> also a flat-pack use-case with lots of reference objects (assorted GNOME runtimes, Gedit runtimes, etc., etc.)
+<a name="l-46"></a><span class="tm">22:20:50</span><span class="nk"> &lt;stevvooe&gt;</span> "Due to the size of the call, you have been auto muted to improve call quality."
+<a name="l-47"></a><span class="tm">22:21:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> instead of walking over HTTP you could fetch a single, required file and use the optional index to find your ref list
+<a name="l-48"></a><span class="tm">22:21:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> it's for ref-listing efficiency and for packing descriptor annotations
+<a name="l-49"></a><span class="tm">22:22:36</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/438</span>
+<a name="l-50"></a><span class="tm">22:22:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> what's the role of refs/ if we already have an index?
+<a name="l-51"></a><span class="tm">22:23:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> it does kindof clobber that
+<a name="l-52"></a><span class="tm">22:23:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> the refs/ directory has a named descriptor, whereas the index... all the blobs or just the refs or whatever... more for people who want a single source for fetching what's in the layout
+<a name="l-53"></a><span class="tm">22:24:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> it's painful/impossible to walk refs/ in some cases
+<a name="l-54"></a><span class="tm">22:24:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> so can we pick one?
+<a name="l-55"></a><span class="tm">22:24:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> get rid of refs/ (if we replace it with an index)
+<a name="l-56"></a><span class="tm">22:24:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> refs/ is nice because merging is easy
+<a name="l-57"></a><span class="tm">22:24:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but your point about HTTP fetching is an interesting thing
+<a name="l-58"></a><span class="tm">22:25:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> although it's looking a lot like a manifest list...
+<a name="l-59"></a><span class="tm">22:26:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we should compare this with the Docker safe format too
+<a name="l-60"></a><span class="tm">22:27:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I guess what I'm saying is that this should be a full-blown object (generalizing manifest list) and replacing refs/* with a well-known path
+<a name="l-61"></a><span class="tm">22:27:51</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/blob/master/manifest-list.md
+<a name="l-62"></a><span class="tm">22:28:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'll have to check once I can get to my work station...
+<a name="l-63"></a><span class="tm">22:28:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I see what you're saying, stevvooe
+<a name="l-64"></a><span class="tm">22:28:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if we add annotations as an optional descriptor field, then manifest lists cover this case
+<a name="l-65"></a><span class="tm">22:28:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> and we're replacing refs/* with... a new entry in oci-layout?  Or a refs.json?
+<a name="l-66"></a><span class="tm">22:29:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> that would be like manifest.json in the current Docker format
+<a name="l-67"></a><span class="tm">22:29:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think index.json, because there are no refs (naming would be via annotations)
+<a name="l-68"></a><span class="tm">22:29:37</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/pull/438/files
+<a name="l-69"></a><span class="tm">22:30:02</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">stevvooe to add comments to the PR about a manifest-list approach</span>
+<a name="l-70"></a><span class="tm">22:31:35</span><span class="nk"> &lt;wking&gt;</span> I think we need to keep first class naming for things like 'unpack v1.0'
+<a name="l-71"></a><span class="tm">22:32:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but refs are not reliable, since we don't have verifiable names
+<a name="l-72"></a><span class="tm">22:32:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> image tags have a larger character set, and image names are more than just the tag
+<a name="l-73"></a><span class="tm">22:32:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> doing this by annotation lets applications figure out how they want to handle naming
+<a name="l-74"></a><span class="tm">22:33:11</span><span class="nk"> &lt;wking&gt;</span> Is image-tools unpack just going to be by digest?
+<a name="l-75"></a><span class="tm">22:33:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think there will be tools that let you select a portion of the index by annotation
+<a name="l-76"></a><span class="tm">22:33:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> you can do this without a specified naming scheme, just "unpack the images matching this selector..."
+<a name="l-77"></a><span class="tm">22:34:31</span><span class="nk"> &lt;wking&gt;</span> so something like "unpack com.example.name=v1.0"?
+<a name="l-78"></a><span class="tm">22:34:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the main problem with refs is that there are many namespaces, so you need translations between them
+<a name="l-79"></a><span class="tm">22:35:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if you just declare what it is for each system there's no need to meet in the middle
+<a name="l-80"></a><span class="tm">22:35:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think this is a good change, and I'll add commentary to the PR
+<a name="l-81"></a><span class="tm">22:36:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> this is a big change (but I think it's the right change).  Let's make sure we handle it appropriately
+<a name="l-82"></a><span class="tm">22:37:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> with the vote out for image-spec rc3 and the holidays coming up...
+<a name="l-83"></a><span class="tm">22:37:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> future RCs and 1.0 are probably in mid/late January
+<a name="l-84"></a><span class="tm">22:38:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> there's also in-flight work about integrating image-layout support into Docker
+<a name="l-85"></a><span class="tm">22:38:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the draw-back to image.json is that it's unverifiable
+<a name="l-86"></a><span class="tm">22:38:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> why?
+<a name="l-87"></a><span class="tm">22:39:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> say you get a URL without a hash/verification/signature.  You download, unpack, and don't trust index.json
+<a name="l-88"></a><span class="tm">22:39:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> presumably someone will be hashing/signing the index.json with a side-declaration
+<a name="l-89"></a><span class="tm">22:39:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think this gets back around to defining a framework for signing, and we don't need to address this before 1.0
+<a name="l-90"></a><span class="tm">22:40:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> this is like refs now, where there's no verification unless you have out-of-band signatures
+<a name="l-91"></a><span class="tm">22:40:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> it's easier if it's in one file
+<a name="l-92"></a><span class="tm">22:40:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> there are a bunch of random, open PRs which need attention too
+<a name="l-93"></a><span class="tm">22:41:01</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/pull/451
+<a name="l-94"></a><span class="tm">22:41:11</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Shipping runtime-spec configs</span>
+<a name="l-95"></a><span class="tm">22:41:16</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/451</span>
+<a name="l-96"></a><span class="tm">22:41:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> this is a bad idea
+<a name="l-97"></a><span class="tm">22:41:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> yeah, never do that
+<a name="l-98"></a><span class="tm">22:41:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> it seems like a good idea, but there's so much host-specific stuff
+<a name="l-99"></a><span class="tm">22:42:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> translating from the image-config to the host-config is a great security barrier
+<a name="l-100"></a><span class="tm">22:42:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if we look at the Docker image/host config, there are many fewer image configs
+<a name="l-101"></a><span class="tm">22:42:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the OCI spec split distribution and runtime, but the image config and runtime config should be separate (but translatable
+<a name="l-102"></a><span class="tm">22:43:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> The spec at one point separated host-specific from runtime-specific, but some things are specific to a single machine/run
+<a name="l-103"></a><span class="tm">22:44:05</span><span class="nk"> &lt;wking&gt;</span> I think you can handle this with sanitization
+<a name="l-104"></a><span class="tm">22:44:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> this is like building a salad bowl with a sieve, plugging all the holes
+<a name="l-105"></a><span class="tm">22:44:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if you let things go through and then whitelist/blacklist, it's going to be bad
+<a name="l-106"></a><span class="tm">22:45:16</span><span class="nk"> &lt;wking&gt;</span> are you concerned with people who don't sanitize, or about people who sanitize poorly?
+<a name="l-107"></a><span class="tm">22:45:28</span><span class="nk"> &lt;duglin&gt;</span> YES! XML lives!
+<a name="l-108"></a><span class="tm">22:45:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm concerend that you don't understand the ramifications of this proposal
+<a name="l-109"></a><span class="tm">22:45:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> we need XSLT...
+<a name="l-110"></a><span class="tm">22:45:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we have two specs for this very reason
+<a name="l-111"></a><span class="tm">22:46:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> this is a horrible idea
+<a name="l-112"></a><span class="tm">22:46:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> we were talking about this in San Francisco last year, with hints at memory requests and such in annotations.  But it would be implementation specific
+<a name="l-113"></a><span class="tm">22:47:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> so it would be "your implementation chose to poke a security hole"
+<a name="l-114"></a><span class="tm">22:47:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I think we have a consensus and just need to post a clear reason
+<a name="l-115"></a><span class="tm">22:47:35</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">stevvooe to post a comment explaining why this is a bad idea</span>
+<a name="l-116"></a><span class="tm">22:48:57</span><span class="nk"> &lt;wking&gt;</span> So with runtime specs off the table, I think we need to define how the translation should work in more detail
+<a name="l-117"></a><span class="tm">22:50:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> there aren't many fields to map, so that shouldn't be a problem
+<a name="l-118"></a><span class="tm">22:50:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> command is pretty straightforward.  Entrypoint is always confusing.  Volumes is the only real unknown
+<a name="l-119"></a><span class="tm">22:51:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> Volumes and ExposedPorts are hints to the UX, and not directly actionable
+<a name="l-120"></a><span class="tm">22:51:51</span><span class="nk"> &lt;wking&gt;</span> We might also have to expand the image config to cover other OSes (and VMs?)
+<a name="l-121"></a><span class="tm">22:51:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I'll start with the more clearly scoped stuff first
+<a name="l-122"></a><span class="tm">22:53:25</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-tools maintenance</span>
+<a name="l-123"></a><span class="tm">22:53:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I hit some snags trying to run this
+<a name="l-124"></a><span class="tm">22:53:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> open an issue?
+<a name="l-125"></a><span class="tm">22:53:56</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">RobDolinMS to open an issue about image-tools snage</span>
+<a name="l-126"></a><span class="tm">22:53:58</span><span class="nk"> &lt;wking&gt;</span> *snags
+<a name="l-127"></a><span class="tm">22:54:08</span><span class="nk"> &lt;wking&gt;</span> [vbatts leaves]
+<a name="l-128"></a><span class="tm">22:54:15</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

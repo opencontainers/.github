@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2019-02-13 discussion</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2019-02-13 discussion</h1>
+<span class="details">
+Meeting started by vbatts at 22:02:28 UTC
+(<a href="opencontainers.2019-02-13-22.02.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li>
+<ol type="a">
+  <li><a href=""></a>  <span class="details">(<a
+    href='opencontainers.2019-02-13-22.02.log.html#l-5'>jdolitsky</a>,
+    22:03:18)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">distribution rc0</b> <span class="details">(<a href='opencontainers.2019-02-13-22.02.log.html#l-7'>vbatts</a>, 22:03:49)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">vbatts to tag
+    rc0 thursday, make an rc1 milestone, and let the cadence
+    begin</span> <span class="details">(<a
+    href='opencontainers.2019-02-13-22.02.log.html#l-9'>vbatts</a>,
+    22:06:33)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">merge dongsu's `make test` PR</b> <span class="details">(<a href='opencontainers.2019-02-13-22.02.log.html#l-10'>vbatts</a>, 22:08:07)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">derek to give
+    that a review</span> <span class="details">(<a
+    href='opencontainers.2019-02-13-22.02.log.html#l-11'>vbatts</a>,
+    22:08:20)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">cgroupv2 is on the horizon</b> <span class="details">(<a href='opencontainers.2019-02-13-22.02.log.html#l-12'>vbatts</a>, 22:11:11)</span>
+<br></li>
+<li><b class="TOPIC">(allen sun) CVE disclosure</b> <span class="details">(<a href='opencontainers.2019-02-13-22.02.log.html#l-13'>vbatts</a>, 22:11:45)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/org">https://github.com/opencontainers/org</a>
+    <span class="details">(<a
+    href='opencontainers.2019-02-13-22.02.log.html#l-16'>vbatts</a>,
+    22:14:40)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/org/issues/3">https://github.com/opencontainers/org/issues/3</a>
+    <span class="details">(<a
+    href='opencontainers.2019-02-13-22.02.log.html#l-17'>vbatts</a>,
+    22:20:55)</span></li>
+  <li><a
+    href="https://github.com/kubernetes/sig-release/tree/master/security-release-process-documentation">https://github.com/kubernetes/sig-release/tree/master/security-release-process-documentation</a>
+    <span class="details">(<a
+    href='opencontainers.2019-02-13-22.02.log.html#l-18'>vbatts</a>,
+    22:21:41)</span></li>
+  <li><a
+    href="https://github.com/kata-containers/community/blob/master/VMT/VMT.md">https://github.com/kata-containers/community/blob/master/VMT/VMT.md</a>
+    <span class="details">(<a
+    href='opencontainers.2019-02-13-22.02.log.html#l-19'>vbatts</a>,
+    22:22:18)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">(steve lasker) artifact persistance guidance</b> <span class="details">(<a href='opencontainers.2019-02-13-22.02.log.html#l-20'>vbatts</a>, 22:25:23)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/SteveLasker/RegistryArtifactTypes">https://github.com/SteveLasker/RegistryArtifactTypes</a>
+    <span class="details">(<a
+    href='opencontainers.2019-02-13-22.02.log.html#l-21'>vbatts</a>,
+    22:26:07)</span></li>
+  <li><a
+    href="https://github.com/SteveLasker/RegistryArtifactTypes/blob/master/artifactTypeRequirements.md#Registry-Requirements-of-New-Artifact-Types">https://github.com/SteveLasker/RegistryArtifactTypes/blob/master/artifactTypeRequirements.md#Registry-Requirements-of-New-Artifact-Types</a>
+    <span class="details">(<a
+    href='opencontainers.2019-02-13-22.02.log.html#l-22'>vbatts</a>,
+    22:34:23)</span></li>
+  <li><a
+    href="https://github.com/SteveLasker/RegistryArtifactTypes/blob/master/approaches.md">https://github.com/SteveLasker/RegistryArtifactTypes/blob/master/approaches.md</a>
+    <span class="details">(<a
+    href='opencontainers.2019-02-13-22.02.log.html#l-23'>vbatts</a>,
+    22:34:31)</span></li>
+  <li><a
+    href="https://github.com/SteveLasker/RegistryArtifactTypes/blob/master/mediaTypes.md">https://github.com/SteveLasker/RegistryArtifactTypes/blob/master/mediaTypes.md</a>
+    <span class="details">(<a
+    href='opencontainers.2019-02-13-22.02.log.html#l-24'>vbatts</a>,
+    22:34:40)</span></li>
+  <li><a
+    href="https://cloud-native.slack.com/messages/CG5DGLH32/">https://cloud-native.slack.com/messages/CG5DGLH32/</a>
+    <span class="details">(<a
+    href='opencontainers.2019-02-13-22.02.log.html#l-25'>vbatts</a>,
+    22:48:55)</span></li>
+  <li><a
+    href="https://github.com/SteveLasker/RegistryArtifactTypes/blob/master/artifactTypeRequirements.md#ease-of-support">https://github.com/SteveLasker/RegistryArtifactTypes/blob/master/artifactTypeRequirements.md#ease-of-support</a>
+    <span class="details">(<a
+    href='opencontainers.2019-02-13-22.02.log.html#l-26'>vbatts</a>,
+    22:53:31)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 23:02:37 UTC
+(<a href="opencontainers.2019-02-13-22.02.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>vbatts to tag rc0 thursday, make an rc1 milestone, and let the cadence begin</li>
+  <li>derek to give that a review</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> vbatts <ol>
+    <li>vbatts to tag rc0 thursday, make an rc1 milestone, and let the cadence begin</li>
+  </ol></li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>vbatts (22)</li>
+  <li>collabot` (3)</li>
+  <li>jdolitsky (2)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

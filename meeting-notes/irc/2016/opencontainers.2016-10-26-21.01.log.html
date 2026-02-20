@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:01:39</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-10-26 discussion</span>
+<a name="l-2"></a><span class="tm">21:01:39</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Oct 26 21:01:39 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:01:39</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:01:39</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2016_10_26_discussion'
+<a name="l-5"></a><span class="tm">21:01:47</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp vbatts</span>
+<a name="l-6"></a><span class="tm">21:01:47</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp vbatts wking
+<a name="l-7"></a><span class="tm">21:02:09</span><span class="nk"> &lt;mrunalp&gt;</span> jlb13, hey!
+<a name="l-8"></a><span class="tm">21:02:24</span><span class="nk"> &lt;jlb13&gt;</span> hey there
+<a name="l-9"></a><span class="tm">21:02:28</span><span class="nk"> &lt;philips&gt;</span> <span class="hi">mrunalp:</span> in!
+<a name="l-10"></a><span class="tm">21:02:32</span><span class="nk"> &lt;jlb13&gt;</span> i'm woefully behind on... everything. but, at least present
+<a name="l-11"></a><span class="tm">21:03:34</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image update</span>
+<a name="l-12"></a><span class="tm">21:03:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> the rc2 vote failed due to abstains.  I'll just repost the same vote
+<a name="l-13"></a><span class="tm">21:04:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> there are a few items out for rc3.  I'm not sure if those got completed...
+<a name="l-14"></a><span class="tm">21:04:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I had some stuff about package organization.  I merged wking's PR; do we need to do anything else?
+<a name="l-15"></a><span class="tm">21:04:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> we need to explicitly explain the split to avoid repeating the conversation in the future
+<a name="l-16"></a><span class="tm">21:05:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> there was also discussion about signatures
+<a name="l-17"></a><span class="tm">21:05:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I opened a new issue
+<a name="l-18"></a><span class="tm">21:05:20</span><span class="nk"> &lt;philips&gt;</span> https://github.com/opencontainers/image-spec/issues/400
+<a name="l-19"></a><span class="tm">21:05:22</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/400</span>
+<a name="l-20"></a><span class="tm">21:05:24</span><span class="nk"> &lt;philips&gt;</span> that is the issue
+<a name="l-21"></a><span class="tm">21:05:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I've had this conversation a few times before, and tried to lay out the common blockers and such
+<a name="l-22"></a><span class="tm">21:05:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> otherwise I'll leave it to vbatts and -rc3
+<a name="l-23"></a><span class="tm">21:06:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> this past week I realized that the runtime doesn't have a runtime rc3.  I don't even know if the image-spec has an rc3 milestone
+<a name="l-24"></a><span class="tm">21:06:20</span><span class="nk"> &lt;philips&gt;</span> there is an rc3 milestone https://github.com/opencontainers/image-spec/milestone/10
+<a name="l-25"></a><span class="tm">21:06:23</span><span class="nk"> &lt;philips&gt;</span> for image-space
+<a name="l-26"></a><span class="tm">21:06:25</span><span class="nk"> &lt;philips&gt;</span> for image-spec
+<a name="l-27"></a><span class="tm">21:06:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> we should start sorting issues and PRs into those milestones
+<a name="l-28"></a><span class="tm">21:06:31</span><span class="nk"> &lt;stevvooe&gt;</span> rc3 link for image-spec https://github.com/opencontainers/image-spec/milestone/10
+<a name="l-29"></a><span class="tm">21:06:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> if you want something in those milestones, let us know
+<a name="l-30"></a><span class="tm">21:07:08</span><span class="nk"> &lt;stevvooe&gt;</span> also, opened https://github.com/opencontainers/image-spec/issues/415, on windows layer application
+<a name="l-31"></a><span class="tm">21:07:14</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/milestone/12</span>
+<a name="l-32"></a><span class="tm">21:07:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> stevvooe had wanted a design doc for...
+<a name="l-33"></a><span class="tm">21:08:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I see a lot of scattered PRs, and the high-level discussion gets lost in the weeds of those PRs
+<a name="l-34"></a><span class="tm">21:08:31</span><span class="nk"> &lt;wking&gt;</span> +1 to having a plan :)
+<a name="l-35"></a><span class="tm">21:09:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> it would be helpful to have spec anchors so we can link to MUST/SHOULD/etc. requirements
+<a name="l-36"></a><span class="tm">21:10:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> It would be awesome to have stable URLs for each requirement so validation tools can link you to the rule you're breaking
+<a name="l-37"></a><span class="tm">21:10:39</span><span class="nk"> &lt;RobDolinMS&gt;</span> (IRC only) I believe writing the spec in MarkDown gives us anchors in .MD.  I can check if these get output in the HTML
+<a name="l-38"></a><span class="tm">21:10:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> headers give anchors, but not every sentence
+<a name="l-39"></a><span class="tm">21:11:14</span><span class="nk"> &lt;RobDolinMS&gt;</span> Good point wking
+<a name="l-40"></a><span class="tm">21:11:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> sometimes there are multiple requirements in a single sentence.  Avoiding that might be a style issue
+<a name="l-41"></a><span class="tm">21:11:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we'll also need multiple tests per requirement
+<a name="l-42"></a><span class="tm">21:11:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> agreed
+<a name="l-43"></a><span class="tm">21:12:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> so do we want a tagging format?
+<a name="l-44"></a><span class="tm">21:12:29</span><span class="nk"> &lt;wking&gt;</span> You can dump HTML anchors in wherever you want
+<a name="l-45"></a><span class="tm">21:13:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> we need tests for every MUST, and when validating we should be able to link to the spec for that MUST
+<a name="l-46"></a><span class="tm">21:13:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> Are you saying we say "MUST" where we don't mean MUST in the RFC sense?
+<a name="l-47"></a><span class="tm">21:13:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> no
+<a name="l-48"></a><span class="tm">21:13:39</span><span class="nk"> &lt;stevvooe&gt;</span> something like "&lt;required name="Manifest-20"&gt;&lt;/required&gt;"
+<a name="l-49"></a><span class="tm">21:13:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> and instead of failing hard, we should be printing as many failures as we can find
+<a name="l-50"></a><span class="tm">21:14:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> lets open an issue around this
+<a name="l-51"></a><span class="tm">21:14:06</span><span class="nk"> &lt;RobDolinMS&gt;</span> @vbatts - I'm glad to help with this one
+<a name="l-52"></a><span class="tm">21:14:06</span><span class="nk"> &lt;collabot&gt;</span> <span class="hi">RobDolinMS:</span> Error: "vbatts" is not a valid command.
+<a name="l-53"></a><span class="tm">21:14:15</span><span class="nk"> &lt;RobDolinMS&gt;</span> vbatts - I'm glad to help with this one.
+<a name="l-54"></a><span class="tm">21:14:29</span><span class="nk"> &lt;RobDolinMS&gt;</span> We did an index for https://github.com/microsoft/api-guidelines/ and may be able to borrow from some of this
+<a name="l-55"></a><span class="tm">21:14:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the REST compiler has a list of errors it can output, we can use that for prior art
+<a name="l-56"></a><span class="tm">21:14:46</span><span class="nk"> &lt;stevvooe&gt;</span> s/REST/RUST
+<a name="l-57"></a><span class="tm">21:14:58</span><span class="nk"> &lt;wking&gt;</span> ^thanks
+<a name="l-58"></a><span class="tm">21:15:15</span><span class="nk"> &lt;stevvooe&gt;</span> https://doc.rust-lang.org/error-index.html
+<a name="l-59"></a><span class="tm">21:15:17</span><span class="nk"> &lt;RobDolinMS&gt;</span> Per vbatts: Output should include:
+<a name="l-60"></a><span class="tm">21:15:47</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-tools/issues/16</span>
+<a name="l-61"></a><span class="tm">21:15:51</span><span class="nk"> &lt;RobDolinMS&gt;</span> Test case | JSON snipped tested | reference to relevant spec
+<a name="l-62"></a><span class="tm">21:15:53</span><span class="nk"> &lt;wking&gt;</span> runtime-tools issue about this^^
+<a name="l-63"></a><span class="tm">21:16:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I've been working though tools that will interact with the image spec to kick its tires
+<a name="l-64"></a><span class="tm">21:17:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> the more tire-kicking we can get, the better
+<a name="l-65"></a><span class="tm">21:17:14</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/518/files
+<a name="l-66"></a><span class="tm">21:17:21</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec process.terminal handling</span>
+<a name="l-67"></a><span class="tm">21:17:26</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/518</span>
+<a name="l-68"></a><span class="tm">21:17:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> what if we don't say how /dev/console is setup, but we tie its existence to process.terminal
+<a name="l-69"></a><span class="tm">21:18:36</span><span class="nk"> &lt;wking&gt;</span> I'm fine landing #518 and then opening a separate issue about splitting /dev/console existence from process.terminal
+<a name="l-70"></a><span class="tm">21:18:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> then it just needs another LGTM
+<a name="l-71"></a><span class="tm">21:18:48</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/513
+<a name="l-72"></a><span class="tm">21:18:54</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec command line API</span>
+<a name="l-73"></a><span class="tm">21:18:59</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/513</span>
+<a name="l-74"></a><span class="tm">21:19:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> this looks fine to me.  It needs more review from maintainers
+<a name="l-75"></a><span class="tm">21:20:00</span><span class="nk"> &lt;wking&gt;</span> I'm not aware of any other major issues.  I'd like to land #513 and tune in follow-up PRs
+<a name="l-76"></a><span class="tm">21:20:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> anyone else have thoughts on #513?
+<a name="l-77"></a><span class="tm">21:20:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> any other runtime topics?
+<a name="l-78"></a><span class="tm">21:20:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> in the remaining 20 minutes, vote on the -rc2 email ;).
+<a name="l-79"></a><span class="tm">21:20:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> and review #513 ;)
+<a name="l-80"></a><span class="tm">21:20:53</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

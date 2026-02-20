@@ -1,0 +1,82 @@
+22:02:57 <vbatts|work> #startmeeting 2019-01-16
+22:02:57 <collabot`> Meeting started Wed Jan 16 22:02:57 2019 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:02:57 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:02:57 <collabot`> The meeting name has been set to '2019_01_16'
+22:03:49 <jzelinskie> o/
+22:04:03 <tianon> (at least 19 folks present; our largest call in ages! :D)
+22:04:16 <hogepodge> hi
+22:04:40 <cracra> [caniszczyk, Open Container Initiative] good times! Vincent, I'll get to creating that security-announce@ list later
+22:04:59 <cracra> [caniszczyk, Open Container Initiative] I'm happy to switch to Zoom for meeting recordings if we want to go new school in the future
+22:05:13 <estesp> so the Slack integration is working?
+22:05:32 <vbatts|work> #topic intro
+22:05:49 <vbatts|work> #intro matt farina on registries and objects
+22:06:13 <cracra> [caniszczyk, Open Container Initiative] re: slack integration atm, if you use the OCI Slack it works (https://chat.opencontainers.org/) in the #opencontainers channel there (which does mirror)
+22:06:46 <vbatts|work> mattfarina: app integrations around storing more bundles than just a single application container
+22:07:03 <vbatts|work> helm, app-registry, and now CNAB
+22:07:22 <vbatts|work> the consensus is really that the registry is the common place to store and share those objects
+22:07:30 <vbatts|work> they're all container related
+22:07:41 <vbatts|work> would registries bu possible for this?
+22:07:51 <vbatts|work> two methodologies have come to light
+22:08:28 <vbatts|work> largely folks have said it sounds like the right path, but what should be the correct technical approahc
+22:08:45 <jzelinskie> https://github.com/docker/cnab-to-oci
+22:08:46 <mattfarina> https://github.com/docker/cnab-to-oci/
+22:08:55 <vbatts|work> #link https://github.com/docker/cnab-to-oci
+22:10:05 <vbatts|work> ryan abrams: annotations, objects and OCI indexes
+22:11:06 <mattfarina> example snippet, i think https://www.irccloud.com/pastebin/5cWUiGxI/example%20snippet%2C%20i%20think
+22:11:10 <vbatts|work> what are all the objects included in an index
+22:11:34 <jzelinskie> https://github.com/docker/cnab-to-oci#example
+22:12:05 <jdolitsky> https://github.com/shizhMSFT/oras/blob/master/pkg/oras/push.go#L42
+22:12:08 <jzelinskie> https://github.com/shizhMSFT/oras
+22:12:15 <jzelinskie> too late this time :P
+22:12:19 <vbatts|work> #link https://github.com/shizhMSFT/oras/blob/master/pkg/oras/push.go#L42
+22:12:24 <jzelinskie> https://hackmd.io/Jk2XCLP2S2y8AfdXJdRLrw#Strawman-Proposal
+22:12:25 <vbatts|work> #link https://github.com/shizhMSFT/oras
+22:13:09 <vbatts|work> #link https://hackmd.io/Jk2XCLP2S2y8AfdXJdRLrw#Strawman-Proposal
+22:13:12 <mattfarina> another example https://www.irccloud.com/pastebin/qWqifSf7/
+22:13:15 <vbatts|work> ohman
+22:13:29 <vbatts|work> y'all, use the #link header to register these pretty things
+22:13:31 <vbatts|work> ;-)
+22:17:13 <mattfarina> vbatts|work: thanks... i'm a little rough in remembering my irc meeting commands
+22:18:28 <jdolitsky> oras tested against distribution 2.7 (w/ default config)
+22:22:36 <vbatts|work> mattfarina: we want registries to know the helm mimetypes
+22:22:54 <vbatts|work> without shuffling around additional registries of types
+22:23:16 <vbatts|work> jzelinskie: this core functionality should be in all registries
+22:23:35 <vbatts|work> or extra processing should be fine
+22:23:53 <vbatts|work> but the requirement need not have helm specific logic as a design goal
+22:24:03 <vbatts|work> mattfarina: that makes sense
+22:24:28 <vbatts|work> stevoeoevoeoevoo: yea, registries should know as little as possible
+22:25:57 <vbatts|work> mattfarina: how did we get to where we are with mediaTypes?
+22:26:39 <vbatts|work> ryan abrams: versioned redirection using mime-types
+22:27:24 <vbatts|work> stevveoeoevoeeoo: i think that is a reasonable approach. Concen is about overloading config type, and just create a mediaType for the new config
+22:28:26 <jdolitsky> In cnab-to-oci, every item in "manifests" array has "mediaType": "application/vnd.docker.distribution.manifest.v2+json" correct?
+22:32:38 * vbatts|work back
+22:33:36 <vbatts|work> jzelinskie: switching or this feature ought to be as easy as multi-arch is today
+22:36:15 <jdolitsky> #link https://hackmd.io/Jk2XCLP2S2y8AfdXJdRLrw#Strawman-Proposal
+22:38:53 * vbatts|work thinks this hackmd.io looks neat
+22:40:17 <jdolitsky> yea.. it is great vbatts. you can deploy it in house too: https://github.com/hackmdio/docker-hackmd
+22:40:40 <estesp> nice
+22:40:42 * vbatts|work ohmans
+22:41:49 <vbatts|work> mattfarina: the strawman by jzelinskie looks like a suitable way forward
+22:42:08 <vbatts|work> no neigh-sayers
+22:42:14 * vbatts|work can't spell
+22:42:47 <vbatts|work> how to work out media-types
+22:43:15 <vbatts|work> stevoeoeoveoeoveoeoveo: some of this is just static, but others could be added to the spec
+22:43:36 <jzelinskie> #link https://github.com/opencontainers/image-spec/blob/master/media-types.md
+22:43:43 <jzelinskie> #link https://github.com/opencontainers/image-spec/blob/master/annotations.md
+22:52:04 <vbatts|work> jzelinskie: duality
+22:53:46 <zendril> +1 for search discussions
+22:54:18 <vbatts|work> #action vbatts agenda for next call to talk about search
+22:55:09 <vbatts|work> #topic
+22:55:14 <vbatts|work> #topic other items
+22:55:28 <atlask> Where would be the best place to standardize ui-specific registry-specific metadata
+22:56:44 <jdolitsky> jzelinskie: can you add github issue to oras describing changes needed to get to "strawman" spec?
+22:56:57 <jzelinskie> yup!
+22:57:16 <tianon> yay, congrats to new maintainers! :D
+22:57:50 <cracra> [caniszczyk, Open Container Initiative] friendly reminder there's the OCI TOB election going on, nominations are open until Friday
+22:58:06 <cracra> [caniszczyk, Open Container Initiative] see #link https://github.com/opencontainers/tob/issues/52
+22:58:10 <vbatts|work> cracra: oh right!
+22:59:29 <vbatts|work> #link https://github.com/opencontainers/tob/issues/52
+23:00:07 <vbatts|work> #action jzelinskie to take the strawman to the mailing-list for broader discussion
+23:00:51 <vbatts|work> steveoovoeoeve: there was a proposal for cnab-spec to the tob, that should closed/rolled in
+23:01:42 <jdolitsky> #link https://github.com/opencontainers/distribution-spec/milestone/2
+23:22:16 <vbatts|work> #endmeeting

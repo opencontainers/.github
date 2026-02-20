@@ -1,0 +1,128 @@
+22:04:19 <mrunalp> #startmeeting OCI 1/11
+22:04:19 <collabot> Meeting started Wed Jan 11 22:04:19 2017 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:04:19 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:04:19 <collabot> The meeting name has been set to 'oci_1_11'
+22:04:51 <vbatts> oh crap
+22:05:05 <vbatts> hrm. i'm stuck in a meeting that is running long
+22:05:14 <vbatts> let me try to sneak out
+22:06:18 <mrunalp> stevvooe, not heard from many maintainers
+22:06:26 <mrunalp> many PRs stuck on go-digest
+22:08:07 <wking> mrunalp: chair me?
+22:08:18 <mrunalp> #chair wking
+22:08:18 <collabot> Current chairs: mrunalp wking
+22:08:46 <wking> stevvooe: we should just have the maintainers chime in explicitly for new project proposals
+22:08:56 <wking> mrunalp: anything else on this topic?
+22:09:35 <wking> stevvooe: I need to get the admin items through.  I have some image-spec PRs that are related
+22:09:58 <wking> #link https://github.com/opencontainers/image-spec/pull/486
+22:10:04 <wking> #link https://github.com/opencontainers/image-spec/pull/512
+22:11:07 <wking> stevvooe: if we want to bring things into OCI and this is the experience (bureaucracy) it's not going to happen often
+22:11:13 <wking> stevvooe: we need to make onboarding easier
+22:11:39 <wking> RobDolinMS: do we want to review the PRs to see if they're signed?
+22:11:49 <wking> mrunalp: we'll get to that topic in a bit
+22:12:05 <wking> #topic many minor runtime-spec PRs
+22:12:20 <wking> mrunalp: there are a lot of small PRs, and many of them need to be rebased
+22:12:37 <wking> mrunalp: there are PullApprove issues with some of RobDolinMS's PRs
+22:12:45 <wking> RobDolinMS: I'll get to those tomorrow afternoon
+22:12:57 <wking> mrunalp: let us know if you need help on that.  It may be a PullApprove issue
+22:13:38 <wking> somebody?: Also check that GitHub has your Microsoft email
+22:13:51 <wking> mrunalp: any particular PRs that need resolution?
+22:14:17 <wking> mrunalp: do we want to traige them online?
+22:14:28 <wking> RobDolinMS: I think that's useful to do as a collective
+22:15:16 <wking> crosbymichael: we need to split out the CLI stuff, since they're blocking on each other
+22:15:41 <wking> crosbymichael: we should be able to get a 1.0 without handling the CLI stuff
+22:16:11 <wking> crosbymichael: we need to freeze runtime-spec structs
+22:16:26 <wking> mrunalp: my issue with that would be that there would be no way to validate 1.0 compliance
+22:16:55 <wking> crosbymichael: I don't mean release 1.0 without it.  I mean, finalize the structs and JSON and then come back around to the CLI
+22:17:33 <wking> mrunalp: so maybe send an email today about a feature-freeze on the spec (in a week or two), and then come back to the CLI
+22:18:09 <wking> https://github.com/opencontainers/runtime-spec/pulls?page=1&q=no%3Amilestone+is%3Aopen&utf8=%E2%9C%93
+22:18:50 <wking> crosbymichael: two milestones (one for the spec, and one for the CLI)?
+22:18:56 <wking> mrunalp: the CLI is just the one PR now
+22:19:21 <wking> RobDolinMS: cracra, can you give me privileges to create and assign to milestones
+22:20:03 <wking> mrunalp: I see the shared screen now
+22:20:28 <stevvooe> https://github.com/opencontainers/image-spec/pull/512 at someone's leisure
+22:21:34 <wking> RobDolinMS: newest to oldest, or oldest to newest?
+22:21:40 <wking> mrunalp: newest to oldest
+22:22:05 <wking> #link https://github.com/opencontainers/runtime-spec/pull/647
+22:22:09 <wking> mrunalp: we can make that 1.0
+22:23:29 <wking> I think we want it
+22:23:37 <wking> #link https://github.com/opencontainers/runtime-spec/pull/646
+22:24:30 <wking> mrunalp: added to 1.0
+22:24:47 <wking> #link https://github.com/opencontainers/runtime-spec/pull/635
+22:25:20 <wking> added to 1.0
+22:25:37 <wking> #link https://github.com/opencontainers/runtime-spec/pull/630
+22:25:52 <wking> mrunalp: I don't think this is ready
+22:26:03 <wking> RobDolinMS: 1.1?
+22:26:11 <wking> crosbymichael: this one is weird
+22:26:27 <wking> crosbymichael: it's not cgroups at all
+22:26:33 <wking> crosbymichael: it's more like an rlimit
+22:26:42 <wking> crosbymichael: and this wouldn't be a breaking change if it landed later
+22:27:02 <wking> RobDolinMS: added to 1.1 and pinged the OP about that
+22:27:42 <vbatts> stevvooe: done
+22:27:50 <wking> #link https://github.com/opencontainers/runtime-spec/pull/628
+22:27:54 <wking> crosbymichael: why even do this^
+22:27:59 <dqminh> crosbymichael: because asciidoc rendered better
+22:28:02 <wking> mrunalp: it makes adding anchors and things easier
+22:29:07 <wking> crosbymichael: learning new syntax is a big hurdle
+22:29:27 <wking> stevvooe: seconding that.  Would be good to get what we need from Markdown
+22:29:46 <wking> RobDolinMS: This is a problem in many orgs (e.g. with the W3C).  We should see what they're doing
+22:30:07 <wking> stevvooe: we changed something, which made it easier for a small number of people but then made it difficult for lots of people
+22:30:16 <wking> stevvooe: we don't want to project pain to the rest of the community
+22:30:28 <wking> crosbymichael: all the OCI projects should be using the same tooling
+22:30:44 <wking> #link https://github.com/opencontainers/runtime-spec/pull/620
+22:30:47 <wking> RobDolinMS: mikebrow ?
+22:31:00 <wking> mikebrow: this is ready to go
+22:31:37 <wking> #link https://github.com/opencontainers/runtime-spec/pull/611
+22:32:19 <wking> mrunalp: any strong opinions?
+22:32:46 <wking> RobDolinMS: stevvooe?
+22:32:51 <wking> stevvooe: looking
+22:33:29 <wking> stevvooe: This looks like it's the host-local runtime-config?
+22:33:31 <wking> yes
+22:33:39 <wking> stevvooe: Media types should be controlled by the image spec
+22:34:29 <wking> stevvooe: it doesn't make a whole lot of sense for the runtime config to have a media type
+22:34:43 <wking> this is just "should it have a media type"
+22:35:12 <wking> #link https://github.com/opencontainers/runtime-spec/pull/611#issuecomment-261700992
+22:35:50 <wking> stevvooe: the runtime config is not something you set and don't touch
+22:36:35 <wking> stevvooe: let the triage keep going, and I'll think about this one
+22:37:02 <wking> #link https://github.com/opencontainers/runtime-spec/pull/577
+22:37:15 <wking> RobDolinMS: this is a one-worder
+22:37:33 <wking> needs a rebase
+22:39:01 <wking> #link https://github.com/opencontainers/runtime-spec/pull/570
+22:39:08 <wking> I'll split that out into separate PRs^
+22:39:19 <wking> #link https://github.com/opencontainers/runtime-spec/pull/555
+22:40:18 <wking> RobDolinMS: stevvooe, crosbymichael does legacy-Docker have a preference?
+22:40:32 <wking> stevvooe: If you want host namespaces, don't set the field
+22:40:39 <wking> oops, that was crosbymichael^
+22:40:54 <wking> mrunalp: agreed.  If you don't need new namespaces, don't add the property
+22:41:19 <wking> stevvooe: if you allow nulls you bring in tri-state logic, which can be hard across languages
+22:41:45 <wking> RobDolinMS: so close without merging?  mrunalp, can you do that?
+22:41:48 <wking> mrunalp: ok
+22:42:14 <wking> stevvooe: is the field optional?
+22:42:36 <wking> mrunalp: don't we require a mount namespace?
+22:42:38 <wking> crosbymichael: no
+22:43:16 <wking> It's not marked required in schema/config-linux.json either
+22:43:41 <wking> RobDolinMS: I'm shifting to another meeting.  Ping me if you need me to rebase anything else
+22:43:44 <wking> mrunalp: continue?
+22:43:58 <wking> #link https://github.com/opencontainers/runtime-spec/pull/552
+22:44:27 <wking> mrunalp: assign to vbatts?
+22:44:51 <wking> #link https://github.com/opencontainers/runtime-spec/pull/548
+22:45:10 <wking> crosbymichael: there should be no string pointers, right?  Not ever
+22:45:29 <wking> crosbymichael: strings can be optional, but you don't need pointers in the struct
+22:46:05 <mrunalp> https://github.com/opencontainers/runtime-spec/blob/master/specs-go/config.go#L295
+22:46:08 <stevvooe> https://dave.cheney.net/2013/01/19/what-is-the-zero-value-and-why-is-it-useful
+22:46:54 <wking> mrunalp: so remove the existing string pointers?
+22:47:18 <wking> mrunalp: I can make a PR for that
+22:48:34 <wking> #link https://github.com/opencontainers/runtime-spec/pull/545
+22:48:44 <wking> this may not make sense now that some -1 stuff has landed
+22:48:51 <wking> mrunalp: I'll ping hqhq and we'll see
+22:49:52 <wking> #link https://github.com/opencontainers/runtime-spec/pull/540
+22:50:27 <wking> I still think this is useful.  I'm fine with modifications, but if the spec is against them (and it seems to be), I'd rather have that a generic rule that's not tied to a particular feature set
+22:52:08 <wking> mrunalp: the hostname MUST seems sufficient
+22:52:24 <wking> it is, but then you have to annotate every possible field
+22:53:40 <wking> you could have a spec that let you tweak existing resources
+22:53:56 <wking> stevvooe: the spec could just warn about side-effects (instead of blocking)
+22:54:22 <wking> so close this PR and file a new one to lift the no-tweaking restriction?
+22:55:36 <wking> stevvooe: yeah.  Remove that config-linux.md line
+22:55:50 <wking> and there are other no-tweaking restrictions to lift as well.  I'll file a PR
+22:55:54 <wking> mrunalp: out of time?
+22:55:56 <wking> crosbymichael: yup
+22:56:00 <wking> #endmeeting

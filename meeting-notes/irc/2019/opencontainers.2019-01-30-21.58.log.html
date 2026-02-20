@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:58:33</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2019-01-30 discussion</span>
+<a name="l-2"></a><span class="tm">21:58:33</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Jan 30 21:58:33 2019 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:58:33</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:58:33</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2019_01_30_discussion'
+<a name="l-5"></a><span class="tm">21:59:34</span><span class="nk"> &lt;RenaudWasTaken&gt;</span> @vbatts hello!
+<a name="l-6"></a><span class="tm">21:59:34</span><span class="nk"> &lt;collabot`&gt;</span> <span class="hi">RenaudWasTaken:</span> Error: "vbatts" is not a valid command.
+<a name="l-7"></a><span class="tm">22:00:06</span><span class="nk"> &lt;RenaudWasTaken&gt;</span> <span class="hi">vbatts:</span> looks like he isn't on IRC, should I shoot him an email?
+<a name="l-8"></a><span class="tm">22:02:46</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">RenaudWasTaken:</span> sure thing. he shows up on IRC from time to time
+<a name="l-9"></a><span class="tm">22:04:40</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">distribution-spec RC</span>
+<a name="l-10"></a><span class="tm">22:04:43</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/distribution-spec/milestone/2</span>
+<a name="l-11"></a><span class="tm">22:08:15</span><span class="nk"> &lt;vbatts|work&gt;</span> date was fairly arbitrary, suggested by cra
+<a name="l-12"></a><span class="tm">22:09:19</span><span class="nk"> &lt;zendril&gt;</span> <span class="hi">OT:</span> Is the "OCI Image Spec Weekly Call" deprecated in favor of this "OCI Dev Call"?
+<a name="l-13"></a><span class="tm">22:12:22</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">zendril:</span> oh, yeah. it's basically always been whole of OCI dev call
+<a name="l-14"></a><span class="tm">22:13:04</span><span class="nk"> &lt;estesp&gt;</span> <span class="hi">@vbatts|work:</span> here's the comment from stevvooe: https://github.com/opencontainers/distribution-spec/issues/26#issuecomment-454992064
+<a name="l-15"></a><span class="tm">22:13:05</span><span class="nk"> &lt;collabot`&gt;</span> <span class="hi">estesp:</span> Error: "vbatts|work:" is not a valid command.
+<a name="l-16"></a><span class="tm">22:14:36</span><span class="nk"> &lt;vbatts|work&gt;</span> on the UUID, the language should say something like MAY or SHOULD be UUID like rfc (but is still just a `string`)
+<a name="l-17"></a><span class="tm">22:15:06</span><span class="nk"> &lt;vbatts|work&gt;</span> on the /v2/_ping endpoint, it was largely ust a legacy header for detecting version
+<a name="l-18"></a><span class="tm">22:15:17</span><span class="nk"> &lt;vbatts|work&gt;</span> but for OCI distribution, it ought not be required
+<a name="l-19"></a><span class="tm">22:18:11</span><span class="nk"> &lt;vbatts|work&gt;</span> "magic" headers ought be needed. Particularly for static site use cases.
+<a name="l-20"></a><span class="tm">22:19:45</span><span class="nk"> &lt;vbatts|work&gt;</span> if anything the payload of a file like _ping or version should have structured version (potentially even feature flag listing)
+<a name="l-21"></a><span class="tm">22:20:29</span><span class="nk"> &lt;mikebrow&gt;</span> https://github.com/opencontainers/distribution-spec/issues/26
+<a name="l-22"></a><span class="tm">22:21:33</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/distribution-spec/issues/26</span>
+<a name="l-23"></a><span class="tm">22:26:07</span><span class="nk"> &lt;vbatts|work&gt;</span> ruh roh. Accepts header must be set for ManifestList in order to get an actual list, otherwise you only get the manifest
+<a name="l-24"></a><span class="tm">22:27:26</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/docker/distribution/issues/2395</span>
+<a name="l-25"></a><span class="tm">22:29:03</span><span class="nk"> &lt;vbatts|work&gt;</span> if the name:tag referenced is a manifestlist, then it should always return _that_ object
+<a name="l-26"></a><span class="tm">22:34:24</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">jimmi Z strawman for arbitrary objects</span>
+<a name="l-27"></a><span class="tm">22:34:29</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://groups.google.com/a/opencontainers.org/d/msg/dev/oguystbnnw4/mKJK4IzSDAAJ</span>
+<a name="l-28"></a><span class="tm">22:35:07</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">jimmi:</span> crone's proposal is orthogonal. OCI ought to be flexible enough to allow it.
+<a name="l-29"></a><span class="tm">22:35:56</span><span class="nk"> &lt;vbatts|work&gt;</span> all these mime types, like a Helm or CNAB tarball
+<a name="l-30"></a><span class="tm">22:36:05</span><span class="nk"> &lt;jdolitsky&gt;</span> Current Helm manifest: https://gist.github.com/jdolitsky/99c7364a892c8e350c85314705a9a7c1#chart-manifest
+<a name="l-31"></a><span class="tm">22:36:05</span><span class="nk"> &lt;vbatts|work&gt;</span> (mattfarina ^^)
+<a name="l-32"></a><span class="tm">22:36:14</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://gist.github.com/jdolitsky/99c7364a892c8e350c85314705a9a7c1#chart-manifest</span>
+<a name="l-33"></a><span class="tm">22:41:08</span><span class="nk"> &lt;jdolitsky&gt;</span> in any case I think it makes sense for Helm and CNAB to align on manifest layout
+<a name="l-34"></a><span class="tm">22:41:19</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">jdolitsky:</span> agreed
+<a name="l-35"></a><span class="tm">22:42:47</span><span class="nk"> &lt;estesp&gt;</span> et
+<a name="l-36"></a><span class="tm">22:45:09</span><span class="nk"> &lt;vbatts|work&gt;</span> ohman. search and mimetypes
+<a name="l-37"></a><span class="tm">22:46:26</span><span class="nk"> &lt;vbatts|work&gt;</span> i reckon we're kinda on search API topic now
+<a name="l-38"></a><span class="tm">22:46:32</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">search API</span>
+<a name="l-39"></a><span class="tm">22:46:52</span><span class="nk"> &lt;vbatts|work&gt;</span> the registry ought to be dumb to all the client permutations
+<a name="l-40"></a><span class="tm">22:47:18</span><span class="nk"> &lt;vbatts|work&gt;</span> but clients ought to collate the mimetypes and such, based on what the client supports
+<a name="l-41"></a><span class="tm">22:47:34</span><span class="nk"> &lt;jdolitsky&gt;</span> manifest layout does not matter so much from the perspective of a tool downloading its own content. I think search / common search API is actually why this is important
+<a name="l-42"></a><span class="tm">22:47:50</span><span class="nk"> &lt;vbatts|work&gt;</span> fair
+<a name="l-43"></a><span class="tm">22:48:10</span><span class="nk"> &lt;vbatts|work&gt;</span> mimetypes, but also the annotations on the name:tag
+<a name="l-44"></a><span class="tm">22:48:26</span><span class="nk"> &lt;vbatts|work&gt;</span> dang, possibly even annotations on the descriptor even
+<a name="l-45"></a><span class="tm">22:48:43</span><span class="nk"> &lt;vbatts|work&gt;</span> there ought to be a hierarchy of relevance
+<a name="l-46"></a><span class="tm">22:49:23</span><span class="nk"> &lt;vbatts|work&gt;</span> &lt;name:tag&gt; -&gt; manifest annotation -&gt; descriptor mediaType -&gt; descriptor annotation
+<a name="l-47"></a><span class="tm">22:53:37</span><span class="nk"> &lt;mattfarina_&gt;</span> https://github.com/mattfarina/image-spec/commit/4012edfeaa6114d84875b5d680257debb1f07a90
+<a name="l-48"></a><span class="tm">22:53:59</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/mattfarina/image-spec/commit/4012edfeaa6114d84875b5d680257debb1f07a90</span>
+<a name="l-49"></a><span class="tm">22:56:30</span><span class="nk"> &lt;vbatts|work&gt;</span> how to have structured annotations, and the opaque string formating
+<a name="l-50"></a><span class="tm">22:57:02</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/blob/master/annotations.md</span>
+<a name="l-51"></a><span class="tm">22:58:28</span><span class="nk"> &lt;mikebrow&gt;</span> org.opencontainers.image.description Human-readable description of the software packaged in the image (string)
+<a name="l-52"></a><span class="tm">23:02:12</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">vbatts set up call for next wednesday (Feb 6th)</span>
+<a name="l-53"></a><span class="tm">23:04:52</span><span class="nk"> &lt;tianon&gt;</span> <span class="hi">mikebrow:</span> I really hope you're the last to leave on purpose just to get more of that sweet sweet hold music
+<a name="l-54"></a><span class="tm">23:05:07</span><span class="nk"> &lt;mikebrow&gt;</span> you know it
+<a name="l-55"></a><span class="tm">23:05:07</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">err'body while this call is fresh, please reply on the email for today's agenda the topic you have that didn't get addressed</span>
+<a name="l-56"></a><span class="tm">23:05:33</span><span class="nk"> &lt;vbatts|work&gt;</span> we'll try to group them. For either handling on the mailing list or a github issue/PR
+<a name="l-57"></a><span class="tm">23:05:40</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

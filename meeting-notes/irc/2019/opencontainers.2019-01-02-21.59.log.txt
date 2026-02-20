@@ -1,0 +1,39 @@
+21:59:35 <vbatts> #startmeeting 2019-01-02 discussion
+21:59:35 <collabot`> Meeting started Wed Jan  2 21:59:35 2019 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:59:35 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:59:35 <collabot`> The meeting name has been set to '2019_01_02_discussion'
+22:05:40 <vbatts> #topic runc hooks conundrum
+22:07:43 <vbatts> needs a pow-wow between runc, crio, containerd, and maybe nvidia folks, to have a chat on the way forward to ensure least breakage or best way forward
+22:08:01 <vbatts> #action need pow-wow between runc, crio, containerd, and maybe nvidia folks, to have a chat on the way forward to ensure least breakage or best way forward
+22:09:17 <vbatts> hooks ought to have a version field.
+22:09:42 <vbatts> lack of the version field could mean "initial" version, then have forward marching version
+22:10:05 <vbatts> then an implementation could have their supported hook versions
+22:12:30 <vbatts> #topic distribution-spec
+22:18:27 <vbatts> invite more contribution and maintainers
+22:18:40 <vbatts> 3 is a not-ideal quorum
+22:23:08 <vbatts> #topic oci image v2
+22:23:38 <vbatts> cyphar_: tar is awful, and we've had the ongoing conversation since two years, and it's time we do something about it
+22:25:47 <vbatts> merkle trie chunking of files
+22:29:37 <vbatts> problem of chunking: deduplication is not optimised for on disk checkouts
+22:34:04 <vbatts> cyphar_: has a basic PoC, and is beginning a more complete implementation.
+22:38:22 <vbatts> lasker: has anyone done comparisons on public internet registries vs local lan registries?
+22:49:28 <vbatts> 1/3 up to an order of magnitude savings on registry-side and bandwidth for downloading images
+22:50:03 <vbatts> for ci/cd use-case with 99.9% images built having never been pulled, this could flatten out even further
+22:50:40 <vbatts> there is good argument for chunk based hashing, with the main drawback being the on disk checkout
+22:51:24 <vbatts> where file based hashing, may have the most ideal balance of distribution and on disk deduplication
+22:52:41 <vbatts> the CoW approach may have to change the drivers and how they do snapshotting, but as an initial proof-of-concept doing this image-v2 would be transparent underneath the existing oci image and distribution
+22:53:34 <jdolitsky> https://github.com/shizhMSFT/oras <-
+22:54:00 <jdolitsky> "oras can push/pull any files to/from any registry with OCI image support"
+22:54:08 <vbatts> ++
+22:54:24 <vbatts> #link https://github.com/shizhMSFT/oras
+23:02:27 <vbatts> #topic descriptor metadata
+23:03:50 <vbatts> when introducing a new mediaType/mime-type, some way to determine what that artifact type
+23:04:28 <vbatts> lasker: we need a balance on the mime-types that are supported or not
+23:04:38 <vbatts> like a list of known mime-types
+23:04:57 <vbatts> to avoid the extension hell of the past
+23:05:11 <vbatts> vbatts|work: fair, we're currently in the wild west
+23:05:23 <estesp> sorry; have to drop. lots of good discussion
+23:05:27 <estesp> perfect timing @vbatts :)
+23:05:34 <vbatts> estesp: ha!
+23:14:12 <vbatts> #action ping cracra about adding bridge bot to CNCF #oci channel
+23:15:03 <vbatts> #endmeeting

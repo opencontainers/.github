@@ -1,0 +1,10 @@
+21:03:30 <vbatts[m]> #startmeeting 2018-08-01 call
+21:03:30 <collabot> Meeting started Wed Aug  1 21:03:30 2018 UTC.  The chair is vbatts[m]. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:03:30 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:03:30 <collabot> The meeting name has been set to '2018_08_01_call'
+21:08:53 <cracra> [caniszczyk, Open Container Initiative] #action move meeting to every two weeks to increase cadence
+21:20:00 <vbatts[m]> #topic distribution-spec
+21:20:17 <vbatts[m]> mikebrow: opened some PRs to move it along
+21:20:33 <vbatts[m]> OCI image support merged for docker/distribution registry
+21:21:24 <vbatts[m]> Derek says a new release is on the way. `registry:2` and `registry:latest` will get the update once released.
+21:21:39 <vbatts[m]> #endmeeting

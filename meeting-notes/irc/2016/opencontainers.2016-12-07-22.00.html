@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2016-12-07 discussion</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2016-12-07 discussion</h1>
+<span class="details">
+Meeting started by wking at 22:00:48 UTC
+(<a href="opencontainers.2016-12-07-22.00.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">image-spec news</b> <span class="details">(<a href='opencontainers.2016-12-07-22.00.log.html#l-12'>wking</a>, 22:03:56)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/image-spec/issues/482">https://github.com/opencontainers/image-spec/issues/482</a>
+    <span class="details">(<a
+    href='opencontainers.2016-12-07-22.00.log.html#l-15'>stevvooe</a>,
+    22:04:43)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/issues/482">https://github.com/opencontainers/image-spec/issues/482</a>
+    <span class="details">(<a
+    href='opencontainers.2016-12-07-22.00.log.html#l-16'>wking</a>,
+    22:04:44)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">ChainID backgrond</b> <span class="details">(<a href='opencontainers.2016-12-07-22.00.log.html#l-17'>wking</a>, 22:04:52)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/image-spec/issues/482">https://github.com/opencontainers/image-spec/issues/482</a>
+    <span class="details">(<a
+    href='opencontainers.2016-12-07-22.00.log.html#l-19'>wking</a>,
+    22:05:03)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">runtime-spec command line API</b> <span class="details">(<a href='opencontainers.2016-12-07-22.00.log.html#l-40'>wking</a>, 22:16:20)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runc/pull/1018">https://github.com/opencontainers/runc/pull/1018</a>
+    <span class="details">(<a
+    href='opencontainers.2016-12-07-22.00.log.html#l-42'>wking</a>,
+    22:17:23)</span></li>
+  <li><a
+    href="http://github.com/opencontainers/runtime-spec/pull/508">http://github.com/opencontainers/runtime-spec/pull/508</a>
+    <span class="details">(<a
+    href='opencontainers.2016-12-07-22.00.log.html#l-59'>wking</a>,
+    22:24:48)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">runtime-spec anchor PRs</b> <span class="details">(<a href='opencontainers.2016-12-07-22.00.log.html#l-78'>wking</a>, 22:32:11)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pulls?utf8=%E2%9C%93&amp;q=is%3Aopen%20is%3Apr%20author%3ARobDolinMS%20anchor%20tags">https://github.com/opencontainers/runtime-spec/pulls?utf8=%E2%9C%93&amp;q=is%3Aopen%20is%3Apr%20author%3ARobDolinMS%20anchor%20tags</a>
+    <span class="details">(<a
+    href='opencontainers.2016-12-07-22.00.log.html#l-79'>wking</a>,
+    22:32:33)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">security issues</b> <span class="details">(<a href='opencontainers.2016-12-07-22.00.log.html#l-82'>wking</a>, 22:33:09)</span>
+<br></li>
+<li><b class="TOPIC">image-spec refs / index</b> <span class="details">(<a href='opencontainers.2016-12-07-22.00.log.html#l-85'>wking</a>, 22:33:52)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/438#issuecomment-264035961">https://github.com/opencontainers/image-spec/pull/438#issuecomment-264035961</a>
+    <span class="details">(<a
+    href='opencontainers.2016-12-07-22.00.log.html#l-86'>stevvooe</a>,
+    22:34:05)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/411">https://github.com/opencontainers/image-spec/pull/411</a>
+    <span class="details">(<a
+    href='opencontainers.2016-12-07-22.00.log.html#l-89'>wking</a>,
+    22:34:49)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">philips to
+    file issues for the two mediaType changes needed to resolve the #411
+    discussion</span> <span class="details">(<a
+    href='opencontainers.2016-12-07-22.00.log.html#l-114'>wking</a>,
+    22:43:22)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">runtime-spec anchor PRs again</b> <span class="details">(<a href='opencontainers.2016-12-07-22.00.log.html#l-117'>wking</a>, 22:44:24)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/634">https://github.com/opencontainers/runtime-spec/issues/634</a>
+    <span class="details">(<a
+    href='opencontainers.2016-12-07-22.00.log.html#l-122'>wking</a>,
+    22:45:50)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/635">https://github.com/opencontainers/runtime-spec/issues/635</a>
+    <span class="details">(<a
+    href='opencontainers.2016-12-07-22.00.log.html#l-123'>wking</a>,
+    22:45:53)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/423">https://github.com/opencontainers/image-spec/pull/423</a>
+    <span class="details">(<a
+    href='opencontainers.2016-12-07-22.00.log.html#l-129'>stevvooe</a>,
+    22:47:29)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 22:48:04 UTC
+(<a href="opencontainers.2016-12-07-22.00.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>philips to file issues for the two mediaType changes needed to resolve the #411 discussion</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> philips <ol>
+    <li>philips to file issues for the two mediaType changes needed to resolve the #411 discussion</li>
+  </ol></li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (117)</li>
+  <li>stevvooe (4)</li>
+  <li>collabot` (4)</li>
+  <li>mrunalp (3)</li>
+  <li>cyphar (3)</li>
+  <li>philips (1)</li>
+  <li>RobDolinMS (1)</li>
+  <li>vbatts (0)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

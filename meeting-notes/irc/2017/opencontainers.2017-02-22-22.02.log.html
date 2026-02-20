@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">22:02:53</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-02-22 discussion</span>
+<a name="l-2"></a><span class="tm">22:02:53</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Feb 22 22:02:53 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">22:02:53</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">22:02:53</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2017_02_22_discussion'
+<a name="l-5"></a><span class="tm">22:02:57</span><span class="nk"> &lt;collabot`&gt;</span> <span class="hi">mrunalp:</span> Error: Can't start another meeting, one is in progress.  Use #endmeeting first.
+<a name="l-6"></a><span class="tm">22:02:57</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp vbatts</span>
+<a name="l-7"></a><span class="tm">22:02:57</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: mrunalp vbatts wking
+<a name="l-8"></a><span class="tm">22:03:12</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec issues</span>
+<a name="l-9"></a><span class="tm">22:03:16</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/675
+<a name="l-10"></a><span class="tm">22:03:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> that^ needs only one more LGTM
+<a name="l-11"></a><span class="tm">22:03:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> and for seccomp, revising the format looks good
+<a name="l-12"></a><span class="tm">22:03:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> the other thing is just a nit
+<a name="l-13"></a><span class="tm">22:04:03</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/657
+<a name="l-14"></a><span class="tm">22:04:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I'll ping grantseltzer (he'll be back tomorrow) on the nit
+<a name="l-15"></a><span class="tm">22:04:26</span><span class="nk"> &lt;stevvooe&gt;</span> brt
+<a name="l-16"></a><span class="tm">22:04:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> should we close PRs where we check kernel limits?
+<a name="l-17"></a><span class="tm">22:04:43</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/533
+<a name="l-18"></a><span class="tm">22:04:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I think so, otherwise it's a lot of maintenance overhead to stay current
+<a name="l-19"></a><span class="tm">22:05:00</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/689
+<a name="l-20"></a><span class="tm">22:05:40</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/693</span>
+<a name="l-21"></a><span class="tm">22:05:48</span><span class="nk"> &lt;wking&gt;</span> this sounds like the direction we want to head in^
+<a name="l-22"></a><span class="tm">22:06:29</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/690</span>
+<a name="l-23"></a><span class="tm">22:07:29</span><span class="nk"> &lt;wking&gt;</span> I think you have to document either the valid values, or the kernel API you're punting to
+<a name="l-24"></a><span class="tm">22:07:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> do we have a reference to the kernel's device cgroup in the doc?
+<a name="l-25"></a><span class="tm">22:07:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah, that sounds fine
+<a name="l-26"></a><span class="tm">22:08:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I'll check to see what we have in terms of referencing kernel APIs
+<a name="l-27"></a><span class="tm">22:08:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> anything else for 1.0?
+<a name="l-28"></a><span class="tm">22:08:56</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/issues/692
+<a name="l-29"></a><span class="tm">22:09:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I guess we can use -1 for unlimited?
+<a name="l-30"></a><span class="tm">22:09:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> isn't that what we have now?
+<a name="l-31"></a><span class="tm">22:09:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> yeah, but we'll have to drop the current unsigned types
+<a name="l-32"></a><span class="tm">22:10:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> this is because rlimits are inherited?  So you need a way to unset them?
+<a name="l-33"></a><span class="tm">22:10:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> otherwise there is no way to express "set the rlimit to infinity"
+<a name="l-34"></a><span class="tm">22:10:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> what's the value of infinity?
+<a name="l-35"></a><span class="tm">22:12:57</span><span class="nk"> &lt;wking&gt;</span> they are inherited through fork (says prlimit(2)), so infinity lets you clear limits inherited from the runtime when creating the container process
+<a name="l-36"></a><span class="tm">22:13:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we can use -1 for this in the spec
+<a name="l-37"></a><span class="tm">22:14:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">hqhq:</span> we'll need to pass RLIM_INFINITY to the kernel
+<a name="l-38"></a><span class="tm">22:14:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> yeah, so -1 in JSON and then pass whatever the kernel needs through to it
+<a name="l-39"></a><span class="tm">22:14:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> RLIM_INFINITY may already be defined in the syscall package
+<a name="l-40"></a><span class="tm">22:14:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we can use that in Go^
+<a name="l-41"></a><span class="tm">22:15:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> Go's syscall platform defines that for every platform
+<a name="l-42"></a><span class="tm">22:15:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> what would the JSON look like?
+<a name="l-43"></a><span class="tm">22:15:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> they'd lookup their local RLIM_INFINITY and put that value into the JSON
+<a name="l-44"></a><span class="tm">22:16:00</span><span class="nk"> &lt;wking&gt;</span> ^ that was crosbymichael
+<a name="l-45"></a><span class="tm">22:16:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> or do we define those as strings?
+<a name="l-46"></a><span class="tm">22:17:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah, it's a string
+<a name="l-47"></a><span class="tm">22:17:04</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runc/blob/ed2df2906b7ec5c69897d5539ab85371b8ae7776/rlimit_linux.go
+<a name="l-48"></a><span class="tm">22:18:13</span><span class="nk"> &lt;wking&gt;</span> # define RLIM_INFINITY    (~0UL)
+<a name="l-49"></a><span class="tm">22:18:23</span><span class="nk"> &lt;wking&gt;</span> ^ from uapi/asm-generic/resource.h in the kernel
+<a name="l-50"></a><span class="tm">22:18:50</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/issues/663</span>
+<a name="l-51"></a><span class="tm">22:19:16</span><span class="nk"> &lt;wking&gt;</span> it sounds like the plan is to punt here, but nobody has punted it yet ;)
+<a name="l-52"></a><span class="tm">22:19:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I think it may be worth keeping in the spec, so there's only one place to look to find the container state
+<a name="l-53"></a><span class="tm">22:19:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'm fine either way
+<a name="l-54"></a><span class="tm">22:20:03</span><span class="nk"> &lt;wking&gt;</span> so we're closing the issue?
+<a name="l-55"></a><span class="tm">22:20:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah.  I can live with it
+<a name="l-56"></a><span class="tm">22:20:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> anything else?
+<a name="l-57"></a><span class="tm">22:20:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> crosbymichael, once we cut the final RC, we'll have a cooking period?
+<a name="l-58"></a><span class="tm">22:20:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah.  We'll have to implement it in runC and then see how well runC consumers handle it
+<a name="l-59"></a><span class="tm">22:21:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> so cut a new RC after the issues discussed above, and then a 3 or 4 week cooking period?
+<a name="l-60"></a><span class="tm">22:21:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah
+<a name="l-61"></a><span class="tm">22:21:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> on a related note, I'd like runtime-tools feedback
+<a name="l-62"></a><span class="tm">22:22:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> currently runtime testing creates a busybox rootfs, create a config, launch a container with a test process, and the test process decides if the container matches the config
+<a name="l-63"></a><span class="tm">22:22:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> going forward, we want to do this with multiple configs to cover multiple runtime environments
+<a name="l-64"></a><span class="tm">22:22:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we could have a suite of configs, and maybe different root filesystems
+<a name="l-65"></a><span class="tm">22:23:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> there's another school of thought to do something like HTML validation, where you go through the suite and test each requirement mostly independetly
+<a name="l-66"></a><span class="tm">22:23:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> do we want to be able to map failures back to specific requirements or not?
+<a name="l-67"></a><span class="tm">22:24:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stephenrwalli:</span> it sounds like you're saying two things...  one sounded output specific, and another sounded like a coverage issue
+<a name="l-68"></a><span class="tm">22:24:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stephenrwalli:</span> RobDolinMS and myself have been concerned about output as a means towards the coverage end
+<a name="l-69"></a><span class="tm">22:25:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stephenrwalli:</span> so someone looking at the test results should have a sense of coverage and guidelines for what failed and what we can fix
+<a name="l-70"></a><span class="tm">22:25:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> today if you look at the output, you can see 16 sections that passed
+<a name="l-71"></a><span class="tm">22:25:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> if we go forward with multiple configs, we'll be checking rlimits (or whatever) many, many times
+<a name="l-72"></a><span class="tm">22:25:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> I recommend dumping it out and putting a summary at the end
+<a name="l-73"></a><span class="tm">22:25:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stephenrwalli:</span> I'm a fan of verbose output
+<a name="l-74"></a><span class="tm">22:27:05</span><span class="nk"> &lt;wking&gt;</span> I think TAP harnesses make this easy
+<a name="l-75"></a><span class="tm">22:27:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> with a Go test harness (which is easy to run) we can make the output whatever we want
+<a name="l-76"></a><span class="tm">22:27:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> this is the runtime-tools runtime validation
+<a name="l-77"></a><span class="tm">22:28:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> for aggregation, could you have a generic rootfs that you reuse.  Mount that readonly, and provide your config on stdin, and then push JSON test results out stdout?
+<a name="l-78"></a><span class="tm">22:28:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> then generate a report at the end?
+<a name="l-79"></a><span class="tm">22:28:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> that's what I had in mind, aggregating across all the runs
+<a name="l-80"></a><span class="tm">22:28:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> it will take more work, but it would be possible
+<a name="l-81"></a><span class="tm">22:29:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stephenrwalli:</span> do the runtime-tools instructions cover how newcomers should run this suite?
+<a name="l-82"></a><span class="tm">22:29:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> there's an in-flight PR for that
+<a name="l-83"></a><span class="tm">22:29:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> structured output is easier to use
+<a name="l-84"></a><span class="tm">22:29:56</span><span class="nk"> &lt;stephenrwalli&gt;</span> @mrunalp Do you know the PR?
+<a name="l-85"></a><span class="tm">22:29:56</span><span class="nk"> &lt;collabot`&gt;</span> <span class="hi">stephenrwalli:</span> Error: "mrunalp" is not a valid command.
+<a name="l-86"></a><span class="tm">22:31:01</span><span class="nk"> &lt;stephenrwalli&gt;</span> mrunalp Do you know the PR?
+<a name="l-87"></a><span class="tm">22:31:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> lifecycle tests will have to be separate
+<a name="l-88"></a><span class="tm">22:31:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I think we have three tests: config validation, runtime validation, and lifecycle validation
+<a name="l-89"></a><span class="tm">22:31:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> does anyone have an opinion on testing frameworks?  I don't really mind
+<a name="l-90"></a><span class="tm">22:32:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't mind.  I think the end result should be a report, so callers don't need to know about a particular testing framework
+<a name="l-91"></a><span class="tm">22:32:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> my general recommendation is to not get mired in the output format
+<a name="l-92"></a><span class="tm">22:33:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> you can re-exec Go tests as you see fit in a compiled binary, parse the output, and convert to other types of testing formats
+<a name="l-93"></a><span class="tm">22:33:02</span><span class="nk"> &lt;stephenrwalli&gt;</span> When we’re talking about Go test framework, we aren’t talking Go’s _test work — correct?
+<a name="l-94"></a><span class="tm">22:33:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but the idea is to make test addition very lightweight for existing Go developers
+<a name="l-95"></a><span class="tm">22:33:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stephenrwalli:</span> something that gives us a pass/fail with a count is all I think the certification working group needs
+<a name="l-96"></a><span class="tm">22:33:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stephenrwalli:</span> but it should be easy to re-create the certification experiment on your own
+<a name="l-97"></a><span class="tm">22:34:18 </span><span class="nka">* vbatts</span> <span class="ac">watches from afar for just a moment</span>
+<a name="l-98"></a><span class="tm">22:34:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think Go's testing will avoid lots of bikeshedding over TAP vs. XUnit, vs.
+<a name="l-99"></a><span class="tm">22:34:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we can always convert the output format later if we want
+<a name="l-100"></a><span class="tm">22:35:04</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-tools/pull/326</span>
+<a name="l-101"></a><span class="tm">22:35:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> a testing framework has typically already thought through problems of consumption
+<a name="l-102"></a><span class="tm">22:35:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if we completly roll our own we might get something wrong
+<a name="l-103"></a><span class="tm">22:35:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I think that's it for the runtime
+<a name="l-104"></a><span class="tm">22:35:58</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec issues</span>
+<a name="l-105"></a><span class="tm">22:36:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> without vbatts there's not much to discuss
+<a name="l-106"></a><span class="tm">22:36:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> looks like the rc5 vote passed
+<a name="l-107"></a><span class="tm">22:36:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm in the process of consuming the image-spec now, so I'll be able to provide more feedback soon
+<a name="l-108"></a><span class="tm">22:37:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> cyphar is now an image-tools maintainer, so that project should get polishing soon
+<a name="l-109"></a><span class="tm">22:37:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> does anyone else have specific image topics to discuss?
+<a name="l-110"></a><span class="tm">22:37:29</span><span class="nk"> &lt;vbatts&gt;</span> the vote needs the PR to get LGTM'ed!
+<a name="l-111"></a><span class="tm">22:37:32</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">wking:</span> ^^
+<a name="l-112"></a><span class="tm">22:37:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jbouzane:</span> I don't have anything I wanted to discuss
+<a name="l-113"></a><span class="tm">22:37:49</span><span class="nk"> &lt;vbatts&gt;</span> can someone speak this :-)
+<a name="l-114"></a><span class="tm">22:38:12</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/pull/566
+<a name="l-115"></a><span class="tm">22:39:07</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

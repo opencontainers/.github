@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">22:00:48</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-12-07 discussion</span>
+<a name="l-2"></a><span class="tm">22:00:48</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Dec  7 22:00:48 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">22:00:48</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">22:00:48</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2016_12_07_discussion'
+<a name="l-5"></a><span class="tm">22:01:01</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp philips vbatts</span>
+<a name="l-6"></a><span class="tm">22:01:01</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: mrunalp philips vbatts wking
+<a name="l-7"></a><span class="tm">22:01:40</span><span class="nk"> &lt;philips&gt;</span> <span class="hi">mrunalp:</span> there!
+<a name="l-8"></a><span class="tm">22:01:59</span><span class="nk"> &lt;cyphar&gt;</span> yes
+<a name="l-9"></a><span class="tm">22:02:37</span><span class="nk"> &lt;cyphar&gt;</span> dammit uberconference still doesn't work on my machine
+<a name="l-10"></a><span class="tm">22:02:58</span><span class="nk"> &lt;mrunalp&gt;</span> cyphar, could you dial in?
+<a name="l-11"></a><span class="tm">22:03:14</span><span class="nk"> &lt;cyphar&gt;</span> yup, lemme grab my phone
+<a name="l-12"></a><span class="tm">22:03:56</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec news</span>
+<a name="l-13"></a><span class="tm">22:04:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> we tagged rc3 yesterday with a unanimous vote
+<a name="l-14"></a><span class="tm">22:04:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> still chugging away on rc4
+<a name="l-15"></a><span class="tm">22:04:43</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/issues/482
+<a name="l-16"></a><span class="tm">22:04:44</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/482</span>
+<a name="l-17"></a><span class="tm">22:04:52</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">ChainID backgrond</span>
+<a name="l-18"></a><span class="tm">22:04:57</span><span class="nk"> &lt;wking&gt;</span> * background
+<a name="l-19"></a><span class="tm">22:05:03</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/482</span>
+<a name="l-20"></a><span class="tm">22:05:20</span><span class="nk"> &lt;wking&gt;</span> I want to put an implementation in the spec repo, because it's a little subtle.  Where would that go?
+<a name="l-21"></a><span class="tm">22:05:58</span><span class="nk"> &lt;wking&gt;</span> stevvooe said that^
+<a name="l-22"></a><span class="tm">22:05:59</span><span class="nk"> &lt;mrunalp&gt;</span> wking, isn't everything in image tools a reference impl
+<a name="l-23"></a><span class="tm">22:06:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the chain ID doesn't actually land on disk anywhere, but it is important for security
+<a name="l-24"></a><span class="tm">22:06:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> It is important, and I'd rather not have it be flying around on the image-tools repo
+<a name="l-25"></a><span class="tm">22:07:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> my understanding was that we're keeping it in the OCI to avoid changing Docker configs
+<a name="l-26"></a><span class="tm">22:07:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> it's only used to identify the result of on-disk information, but we don't... something about CAS
+<a name="l-27"></a><span class="tm">22:08:02</span><span class="nk"> &lt;RobDolinMS&gt;</span> (1pm is running over so I'm in the chat, but will join audio soon.)
+<a name="l-28"></a><span class="tm">22:11:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> image-tools has a long way to go before it stabilizes.  I'm concerned about that stability, and want stable, well-known stuff like ChainID in the spec repo
+<a name="l-29"></a><span class="tm">22:11:57</span><span class="nk"> &lt;wking&gt;</span> so does stuff graduate to image-spec when it stabilizes?
+<a name="l-30"></a><span class="tm">22:12:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> no.  The chainID is a stable part of the spec
+<a name="l-31"></a><span class="tm">22:12:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the role of image-tools is not yet stable
+<a name="l-32"></a><span class="tm">22:12:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> image-tools stabilizing doesn't move things in.  But subtle, challenging, or confusing stuff should go into the spec
+<a name="l-33"></a><span class="tm">22:12:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> image-tools should be useful, consumable
+<a name="l-34"></a><span class="tm">22:13:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> put another way, it's perfectly fine to have clarifying code in the spec
+<a name="l-35"></a><span class="tm">22:14:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> code and spec in context is fantastic
+<a name="l-36"></a><span class="tm">22:14:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> people don't just consume DRY information and something pops out
+<a name="l-37"></a><span class="tm">22:15:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jbl13:</span> there is certainly precedence for this sort of thing
+<a name="l-38"></a><span class="tm">22:15:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> it might be pseudocode or a narrative implementation and not Go, but it works.
+<a name="l-39"></a><span class="tm">22:16:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> any other image topics?
+<a name="l-40"></a><span class="tm">22:16:20</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec command line API</span>
+<a name="l-41"></a><span class="tm">22:16:34</span><span class="nk"> &lt;mrunalp&gt;</span> Status of console PR/CLI API.
+<a name="l-42"></a><span class="tm">22:17:23</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runc/pull/1018</span>
+<a name="l-43"></a><span class="tm">22:17:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I was just wondering why it's still a Unix socket on disk
+<a name="l-44"></a><span class="tm">22:17:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I was trying some other approaches (e.g. passing around file descriptors)
+<a name="l-45"></a><span class="tm">22:18:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> but the only way to do that is to keep the FD open when you fork/exec, but that restricts uses
+<a name="l-46"></a><span class="tm">22:18:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> rather than the runtime opening the socket, you have to pass the FD to the runtime parent and then hand that on down
+<a name="l-47"></a><span class="tm">22:18:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> there was another approach [missed some words], but I'm worried that might break
+<a name="l-48"></a><span class="tm">22:19:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> How does it work now?  It gets a path and init opens it
+<a name="l-49"></a><span class="tm">22:19:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I think the way it works now is that the init parent opens it...  I'll have to check...
+<a name="l-50"></a><span class="tm">22:19:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> if the host opens it, you're still passing it down to the init
+<a name="l-51"></a><span class="tm">22:20:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> The connect code is in the main process, but I'm trying to remember how it gets the path...
+<a name="l-52"></a><span class="tm">22:20:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> Ok.  There are two sockets: one inside runC, and the parent passes the console socket through runC's internal socket
+<a name="l-53"></a><span class="tm">22:21:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> it seems weird.  Why not open in the host process and inherit it through?
+<a name="l-54"></a><span class="tm">22:21:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> we need the internal socket for synchronization
+<a name="l-55"></a><span class="tm">22:22:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> the console socket is different
+<a name="l-56"></a><span class="tm">22:23:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> one thought from last week is that the socket is just for a one-time event
+<a name="l-57"></a><span class="tm">22:24:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> you send the master down and then never use this again
+<a name="l-58"></a><span class="tm">22:24:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> we may want to use it for event pushes later.  I was trying to keep that door open
+<a name="l-59"></a><span class="tm">22:24:48</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">http://github.com/opencontainers/runtime-spec/pull/508</span>
+<a name="l-60"></a><span class="tm">22:25:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> and currently logging doesn't work without the console changes, and stuff like that
+<a name="l-61"></a><span class="tm">22:26:52</span><span class="nk"> &lt;wking&gt;</span> I don't think this socket is going to be useful for update, because you won't be able to send anything after you exec the user-specified code
+<a name="l-62"></a><span class="tm">22:27:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> using a filesystem socket pulls in a lot more setup/cleanup/opening code
+<a name="l-63"></a><span class="tm">22:27:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> vs. socketpair()
+<a name="l-64"></a><span class="tm">22:27:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> we can pass via FD, but then you'd need a wrapper for testing
+<a name="l-65"></a><span class="tm">22:27:59</span><span class="nk"> &lt;wking&gt;</span> I have no problem with a wrapper for testing
+<a name="l-66"></a><span class="tm">22:28:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> we can merge the PR as it stands now, and have a 30-line frontend change to switch between filesystem sockets and FDs
+<a name="l-67"></a><span class="tm">22:28:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> the testing change shouldn't be too bad, since [...missed some words...] you'll need a wrapper anyway
+<a name="l-68"></a><span class="tm">22:29:01</span><span class="nk"> &lt;wking&gt;</span> e.g. to collect the container exit code^
+<a name="l-69"></a><span class="tm">22:29:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> you don't have to have a calling process to get the whole flow
+<a name="l-70"></a><span class="tm">22:29:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> if we want to merge it and then land FD passing later (to keep a big rebase down)
+<a name="l-71"></a><span class="tm">22:29:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> whatever is easier for cyphar
+<a name="l-72"></a><span class="tm">22:30:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I think it's merge-able now
+<a name="l-73"></a><span class="tm">22:30:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> and it handles detached and non-detached now?
+<a name="l-74"></a><span class="tm">22:30:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> it uses the same internal communication as before.  The only change is passing the master FD out
+<a name="l-75"></a><span class="tm">22:31:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we can land this, and then file a new PR for the FD route to see how it works
+<a name="l-76"></a><span class="tm">22:31:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> So keep both?  Or maybe take out the path-based approach later?
+<a name="l-77"></a><span class="tm">22:31:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> We'd only keep one approach
+<a name="l-78"></a><span class="tm">22:32:11</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec anchor PRs</span>
+<a name="l-79"></a><span class="tm">22:32:33</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pulls?utf8=%E2%9C%93&amp;q=is%3Aopen%20is%3Apr%20author%3ARobDolinMS%20anchor%20tags</span>
+<a name="l-80"></a><span class="tm">22:32:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> runtime spec maintainers should review and (assuming they don't see any problems) LGTM and merge
+<a name="l-81"></a><span class="tm">22:32:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> thoughts?
+<a name="l-82"></a><span class="tm">22:33:09</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">security issues</span>
+<a name="l-83"></a><span class="tm">22:33:12</span><span class="nk"> &lt;stevvooe&gt;</span> when we have a moment, wanted to update on manifest-list/refs change
+<a name="l-84"></a><span class="tm">22:33:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I think it makes sense to keep this on the list, and not discuss them here
+<a name="l-85"></a><span class="tm">22:33:52</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec refs / index</span>
+<a name="l-86"></a><span class="tm">22:34:05</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/pull/438#issuecomment-264035961
+<a name="l-87"></a><span class="tm">22:34:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we need to work this out before the release, because it's a bigger change
+<a name="l-88"></a><span class="tm">22:34:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> also removing media types from self-describing types
+<a name="l-89"></a><span class="tm">22:34:49</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/411</span>
+<a name="l-90"></a><span class="tm">22:36:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> some of these problems are coming out as we get into implementation
+<a name="l-91"></a><span class="tm">22:36:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> refs are kindof useless, with the limited character space
+<a name="l-92"></a><span class="tm">22:36:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the annotations method is better, but we need a full spec for that (with descriptor and manifest-list changes)
+<a name="l-93"></a><span class="tm">22:36:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if you're auto-detecting, you're probably going down the wrong path
+<a name="l-94"></a><span class="tm">22:37:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> is that clear?
+<a name="l-95"></a><span class="tm">22:37:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> Those are the issues I'm concerned about too
+<a name="l-96"></a><span class="tm">22:37:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> someone should write a TL;DR on the media type front
+<a name="l-97"></a><span class="tm">22:38:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> can we fix the descriptor/peek-inside mediaType overlap first?
+<a name="l-98"></a><span class="tm">22:38:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> that assumes that the media types in the other objects are consistent
+<a name="l-99"></a><span class="tm">22:38:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> you shouldn't be reading random data off the disk and assuming you know it's type
+<a name="l-100"></a><span class="tm">22:38:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> part of that is not embedding the type inside the content
+<a name="l-101"></a><span class="tm">22:39:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> and you might be able to safely refer to it with a number of different types depending on the context
+<a name="l-102"></a><span class="tm">22:39:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I do want to internalize some of the impacts you've seen, cyphar.  But we should be able to do that without peek-inside mediaTypes
+<a name="l-103"></a><span class="tm">22:40:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> mediaType snuck into the config in the fall of 20… [something].  We need to stamp it out before it causes even more issues
+<a name="l-104"></a><span class="tm">22:40:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> it's just going to create security issues
+<a name="l-105"></a><span class="tm">22:40:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I've changed my mind on this since commenting on the issue.
+<a name="l-106"></a><span class="tm">22:41:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I was doing autodetection because wking's CLI tool would just dump the raw blob
+<a name="l-107"></a><span class="tm">22:41:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> but if you stick to descriptors everything is nice
+<a name="l-108"></a><span class="tm">22:41:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> exposing the CAS is weird.  I'm trying to find a better model
+<a name="l-109"></a><span class="tm">22:41:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> Git embeds the type in the blob itself
+<a name="l-110"></a><span class="tm">22:42:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> it's good to here that descriptors worked out for you, cyphar, and I think we want to remove mediaType from everything except descriptors
+<a name="l-111"></a><span class="tm">22:42:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> and we need docs in the spec to explain how people should be handling this
+<a name="l-112"></a><span class="tm">22:42:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> we need an issue to say that the spec doesn't allow for reverse indexing by media type (you can't go from a digest to it's media type)
+<a name="l-113"></a><span class="tm">22:43:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> and we need [something else], but #411 seems like the exact opposite
+<a name="l-114"></a><span class="tm">22:43:22</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">philips to file issues for the two mediaType changes needed to resolve the #411 discussion</span>
+<a name="l-115"></a><span class="tm">22:43:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> and thanks to cyphar for umoci, because the feedback is helping a lot
+<a name="l-116"></a><span class="tm">22:44:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> anything else?
+<a name="l-117"></a><span class="tm">22:44:24</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec anchor PRs again</span>
+<a name="l-118"></a><span class="tm">22:44:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> was there feedback?
+<a name="l-119"></a><span class="tm">22:44:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I pinged them earlier, and there weren't any objections
+<a name="l-120"></a><span class="tm">22:45:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> is there an image-spec version of this?
+<a name="l-121"></a><span class="tm">22:45:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I paused for feedback before pushing forward further
+<a name="l-122"></a><span class="tm">22:45:50</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/issues/634</span>
+<a name="l-123"></a><span class="tm">22:45:53</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/issues/635</span>
+<a name="l-124"></a><span class="tm">22:46:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> ^ this is a good example
+<a name="l-125"></a><span class="tm">22:46:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> this looks good.  And we don't end up with deep section numbering
+<a name="l-126"></a><span class="tm">22:46:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I prefixed these with filenames, so the one-file PDF has unique anchors
+<a name="l-127"></a><span class="tm">22:46:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> And I labeled each entry in bulleted lists
+<a name="l-128"></a><span class="tm">22:47:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> So you can link to the entry instead of linking to the list as a whole
+<a name="l-129"></a><span class="tm">22:47:29</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/pull/423
+<a name="l-130"></a><span class="tm">22:47:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we want to land this^ before doing the anchors for image-spec
+<a name="l-131"></a><span class="tm">22:47:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> anything else?
+<a name="l-132"></a><span class="tm">22:47:54</span><span class="nk"> &lt;wking&gt;</span> np
+<a name="l-133"></a><span class="tm">22:48:04</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

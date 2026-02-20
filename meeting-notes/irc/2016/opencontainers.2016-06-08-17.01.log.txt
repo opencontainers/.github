@@ -1,0 +1,144 @@
+17:01:26 <mrunalp> #startmeeting OCI 6/8
+17:01:26 <collabot`> Meeting started Wed Jun  8 17:01:26 2016 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:01:26 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:01:26 <collabot`> The meeting name has been set to 'oci_6_8'
+17:01:52 <mrunalp> https://github.com/opencontainers/image-spec/issues/87
+17:03:10 <JakeWarner|Work> related: https://github.com/opencontainers/runtime-spec/issues/492
+17:04:29 <wking> philips: the runtime doesn't handle any networking
+17:04:43 <wking> mrunalp: it happens outside the container context on the host
+17:05:02 <wking> stevvooe: so this is happening on the runtime annotations, not the image-spec annotations?
+17:05:05 <wking> mrunalp: yeah
+17:05:17 <mrunalp> #chair wking
+17:05:17 <collabot`> Current chairs: mrunalp wking
+17:05:29 <wking> stevvooe: while runC doesn't implement exposed ports, it is part of the container experience for Docker
+17:05:45 <wking> philips: that is the suggestion, that we add exposed ports to annotations
+17:05:59 <wking> stevvooe: networking is complicated; one annotation is not sufficient
+17:06:13 <wking> philips: this is the first key/value we've encountered
+17:06:22 <wking> stevvooe: what if the rest of the data is more structured?
+17:06:43 <wking> philips: I'm not suggesting we copy all the image-spec stuff in.  This is the one bit that the runtime-spec doesn't already handle
+17:06:54 <wking> philips: we can put JSON blobs into annotations
+17:06:56 <wking> ^yuck ;)
+17:07:18 <wking> philips: ExposedPorts is a single value, which is why I think it should go into annotations
+17:07:43 <wking> duglin: wouldn't it make sense to make it more generic, because there will likely be more things that some runtimes can't handle
+17:07:55 <wking> duglin: can't we copy the whole image config to a known location?
+17:08:16 <wking> philips: that's the discussion we're having.  I'm not opposed to it, but if it's just the one value that seems like overkill
+17:08:41 <wking> Brendan: independent of the image-spec, there will be a need to pass opaque information down to the runtime
+17:09:15 <wking> Brendan: if we copy the whole thing in, folks consuming it have to have a deeper understanding of the image-spec config
+17:09:53 <wking> mrunalp: how do we tell people about semantically-meaningful annotations?
+17:10:12 <wking> Brendan: we have this in Kubernetes, where all annotations use domain-name prefixes
+17:10:48 <wking> stevvooe: classically, are annotations used to configure runtime behavior?  I thought they were for marking orthogonal-to-running information
+17:11:08 <wking> Brendan: they can be used for lighting up experimental features that aren't stable enough for a formal API yet
+17:11:26 <wking> stevvooe: so you're using it as a parameter bag?
+17:11:36 <wking> Brendan: annotations are just meta-information, so it's fine
+17:11:54 <wking> Joe Beda: labels and annotations are distinct in Kubernetes
+17:12:00 <philips> For context here is the spec on annotations in OCI: https://github.com/opencontainers/runtime-spec/blob/master/config.md#annotations
+17:12:09 <duglin> labels vs annotations - its a very fine line
+17:12:14 <wking> Brendan: labels are used for idenfitication, and annotations are used for arbitrary metadata
+17:12:43 <wking> philips: rkt + Kubernetes annotates whether the container runs in a VM or not
+17:13:16 <JakeWarner|Work> philips: Would the "plugins" structure that I suggested here make any sense? https://github.com/opencontainers/runtime-spec/issues/492#issuecomment-224498950
+17:13:16 <wking> stevvooe: so there are two subtly-different things: labels and annotations, but runtime-spec uses annotations for both
+17:13:51 <wking> stevvooe: labelings aren't as binding for core Docker concepts, but they're usually used for plugin features and such
+17:14:11 <wking> mrunalp: originally labels and annotations were proposed as a pair, but annotations covers both cases
+17:14:38 <wking> Brendan: we split them, because we only support querying on labels, and you don't want to index binary blobs
+17:15:01 <wking> vishh: we were not able to implement label selectors in runC, so we just have annotations
+17:15:13 <wking> philips: the runtime spec doesn't have a concept of enumerating running containers
+17:15:37 <wking> Joe Beda: labels as a term of identity starts to bump up against naming and discovery, although that's a bit out of scope for the current discussion
+17:16:04 <wking> philips: all we're talking about is flattening anonymous metadata (ExposedPorts) down into the config
+17:16:21 <wking> Brendan: we don't have structured data in annotations, and I wish we did
+17:16:40 <wking> philips: the general consensus was that folks can flatten the JSON to a string if they want
+17:16:49 <wking> Brendan: but we want to keep it native JSON
+17:17:19 <wking> Brendan: it makes parsing a lot more complicated to keep it a string (e.g. you can validate the whole thing with JSON Schema)
+17:17:38 <wking> crosbymichael: the point of annotations is we aren't acting on them.  Why add structure to opaque data?
+17:17:53 <wking> I say, "why require a string->string map for opaque data" ;)
+17:18:21 <wking> Brendan: when the thing gets created, you want to know that it's valid
+17:18:55 <duglin> proposal: all runtime-unknown image properties get copied into an annotation with a well-defined naming pattern.
+17:19:03 <wking> Brendan: it's not a big deal.  We just wish we had the ability to put structured JSON in annotations
+17:19:28 <wking> crosbymichael: is networking the only thing you see so far?
+17:19:47 <wking> philips: yeah, this is the only thing in Docker's v2 image format that doesn't map directly to a runtime-known field
+17:20:14 <wking> crosbymichael: if we use Docker as an example, it's going to do all of the networking setup, and you don't have to pass this down to the bundle filesystem at all
+17:20:41 <wking> philips: the network-setup code should look at the bundle to find the network namespace.  It should also be looking for ExposedPorts
+17:20:54 <wking> crosbymichael: that can happen in the orchestration layer
+17:21:37 <wking> philips: this is coming out of a desire to have the image -> bundle unpacking be separate from the runtime/network-setup/etc.
+17:21:55 <wking> philips: it could be that nobody is interested in that use case
+17:22:27 <wking> Brendan: there's a difference between having a daemon running and not
+17:24:34 <wking> It's hard to have the image-downloading tool handle network setup on its own
+17:25:00 <wking> mrunalp: even if we're not clear about who handles the networking setup, it's still ok to put the information in annotations
+17:25:12 <wking> Brendan: definitely put in the networking namespace stuff
+17:25:37 <wking> #action philips to PR a discussion of ExposedPorts with assorted use-cases from the meeting discussion
+17:25:51 <wking> #topic image-spec 1.0 procedures
+17:26:16 <wking> philips: to a large degree, concerns are due to unmet expectations from a lack of documentation
+17:26:39 <wking> philips: the TDC (i.e. maintainers) are supposed to "approve" releases (in the charter)
+17:26:46 <wking> philips: but there's no definition of "approve"
+17:27:29 <wking> philips: we need a policy where we talk about "here's what we want to accomplish in the next milestone" or "we want to cut a release", and have rules for maintainers accepting those proposals
+17:27:39 <RobDolinMS> AFAIK, TDC is not necessarily just maintainers
+17:27:43 <wking> stevvooe: the timeline was set by the TOB, but really it should be up to the TDC
+17:27:59 <wking> RobDolinMS: the current charter points to MAINTAINERS for a list of TDC members
+17:28:09 <wking> ^ that is wking talking to RobDolinMS ;)
+17:28:47 <wking> section 5.e of https://www.opencontainers.org/about/governance
+17:29:15 <wking> philips: in none of our projects have we defined the necessary threshold
+17:29:37 <RobDolinMS> wking - There are a number of references to the TDC that may not all be consistent
+17:29:38 <wking> philips: if we document the process, than nobody gets surprised
+17:29:59 <wking> agreed on TDC inconsistency ;)
+17:30:27 <wking> https://github.com/opencontainers/tob/issues/2 would help clarify the TDC definition
+17:30:51 <wking> stevvooe: I'm not sure which forum is correct.  I go to the mailing list, and folks point me at GitHub issues
+17:31:05 <wking> Brendan: I like GitHub issues for multiple technical concerns
+17:31:20 <wking> Brendan: The GitHub milestone for the 1.0 release has been around for months
+17:31:51 <wking> Brendan: I agree that we need to figure out the process and document that.  1.0 means "we're ready", and we want a process to determine if the TDC agrees with that
+17:32:11 <wking> stevvooe: maybe I should have spoken up earlier, but do you not acknowledge the concerns I'm raising
+17:32:33 <wking> Brendan: I think we need to have those discussions, and the issues haven't been filed yet
+17:33:29 <wking> RobDolinMS: I'm encouraged by the open conversation around open image-spec issues
+17:34:34 <wking> RobDolinMS: trying to get a lot of people who spend a portion of their time working on containers, it does take some time to get folks together around a minor release, gather feedback, and post back to the repositories
+17:34:51 <wking> RobDolinMS: so it's good to give folks time to go out and gather that feedback
+17:35:20 <wking> philips: agreed.  And the release policy should set a bar
+17:35:49 <wking> philips: in runtime-spec, we had a 6 month target for 1.0, and now we're a year out, and we're still not sure if we're there or if all the stakeholders are on board
+17:36:56 <wking> mrunalp: so do we wait on this process before 1.0?
+17:37:07 <wking> mrunalp: or do we go ahead with 1.0 as this process is developed?
+17:37:49 <wking> philips: feedback from RobDolinMS is that "a week isn't long enough to review", and the list discussion shows lots of people who aren't all on the same page with respect to the release process
+17:38:06 <wking> philips: so I think we need to pause for a week and change and get a policy in place
+17:38:56 <wking> #action philips to write up a policy proposal for handling release stamping to apply to all OCI projects
+17:39:46 <wking> Brendan: I think there's a distinction between releasing a binary (e.g. runC) and releasing a spec (e.g. runtime-spec)
+17:40:22 <wking> philips: if the procedure is "get maintainer agreement", then the runC maintainers can pick their own threshold
+17:41:48 <wking> RobDolinMS: as you draft the policy, I'd encourage a goal and a minimum.  Or split between major/minor/patch?
+17:42:24 <duglin> giants!  :-)
+17:42:35 <wking> RobDolinMS: I mailed the list with notes about other organizations.  The W3C and IETF may be heavyweight, but we shouldn't be reinventing the wheel
+17:43:03 <wking> #topic ocitools as an OCI Project
+17:43:20 <wking> philips: we just created ocitools, but it hasn't been formally approved by the TOB
+17:43:53 <wking> #link https://github.com/opencontainers/ocitools/issues/83
+17:44:01 <wking> philips: do we just move it back in?
+17:44:22 <wking> philips: if we want it to stay a separate project, we need the TOB to bless it
+17:44:30 <wking> mrunalp: ocitools predates the TOB
+17:44:48 <wking> stevvooe: does this mean that generation and verification stay in the image-spec repository?
+17:45:20 <wking> philips: yeah, I think we want oci-runtime-tool (like the current oci-image-tool) and we close down opencontainers/ocitools
+17:45:43 <wking> stevvooe: I think spec maintainers should be overseeing test-suite development, so I'm in favor to bring them in
+17:46:01 <wking> mrunalp: there's always going to be a lag to adding code (it's more expensive than adding spec language)
+17:46:17 <wking> philips: even though they live in the same repo, we could have them tagged differently
+17:46:29 <wking> please no multiple tags for a single repo^ :p
+17:47:14 <wking> what's the benefit to squashing to a single repo?
+17:47:36 <wking> RobDolinMS: in Microsoft we've had to generate a new build because of a security issue.  Always being able to ship is important
+17:47:49 <wking> RobDolinMS: the offset between the spec and test cases makes me scratch my head
+17:48:10 <wking> RobDolinMS: if we have to cut 1.0.1 to fix a spec security hole, I'd rather not have the tools tying my hands
+17:48:35 <wking> RobDolinMS: I'm not sure what the distinctions are between multiple tag sets in one repo vs. two repos with the same set of maintainers
+17:49:02 <wking> RobDolinMS: we can probably make this a TOB meeting right now ;)
+17:49:20 <RobDolinMS> ^ Not necessarily what I said, but it's possible ;)
+17:49:45 <wking> philips: the main think is practical.  It makes sense to release the JSON Schema with the prose spec.  This avoids a chain of PRs
+17:49:54 <wking> philips: it's nicer to fix everything at once
+17:50:16 <wking> philips: I don't have a strong optinion (although multiple PRs is annoying)
+17:50:31 <wking> mrunalp: another issue is that we want the tools to be able to validate multiple versions, not just the head
+17:50:50 <wking> stevvooe: shouldn't the structure we release in the specs be able to reflect all past versions?
+17:52:07 <wking> mrunalp: for example, we currently switch back and forth between pointers.  Maybe it will be easier after 1.0, but it would have been bad until now
+17:52:23 <wking> RobDolinMS: what if we kept the schema in the spec but put the code in separate repos
+17:52:51 <wking> stevvooe: I think either solution is fine, as long as maintainers are reviewing test code
+17:53:09 <wking> stevvooe: And we want downstream issues to get pushed back up to the spec
+17:53:41 <wking> mrunalp: not all maintainers are interested in the tool
+17:55:41 <wking> the specification should stand on its own (without the test suite informing the interpretation)
+17:56:14 <wking> stevvooe: as a maintainer, I feel a responsibility to transmit the intended meaning, and monitoring the test suite is a good way to double-check the spec language
+17:56:27 <wking> philips: I don't feel like we're any closer to a conclusion
+17:56:48 <wking> RobDolinMS: would it be useful to get TOB approval for optional test repositories for each spec if the TDC wants to
+17:57:09 <wking> RobDolinMS: then it's not a TOB issue, and it's just a question of "what makes the most sense to the spec maintainers"
+17:57:34 <wking> philips: I'm overallocated for one day.  Can another TOB member make that proposal?
+17:58:07 <wking> RobDolinMS: I'm not on the TOB, but I can help draft the proposal (maybe with mrunalp or crosbymichael?) and have John Grossman submit it
+17:58:18 <wking> philips: sounds good
+17:58:22 <wking> philips: I'm happy to review
+17:58:28 <wking> Jason: I'm happy to review too
+17:58:45 <wking> #action RobDolinMS to write up a TOB proposal for optional test repositories
+17:58:56 <wking> #endmeeting

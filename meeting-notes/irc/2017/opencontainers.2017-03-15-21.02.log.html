@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:02:48</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-03-15 discussion</span>
+<a name="l-2"></a><span class="tm">21:02:48</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Mar 15 21:02:48 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:02:48</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:02:48</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2017_03_15_discussion'
+<a name="l-5"></a><span class="tm">21:02:53</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp vbatts</span>
+<a name="l-6"></a><span class="tm">21:02:53</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: mrunalp vbatts wking
+<a name="l-7"></a><span class="tm">21:02:58</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, Can you hear me?
+<a name="l-8"></a><span class="tm">21:03:20</span><span class="nk"> &lt;mrunalp&gt;</span> okay, I'll dial in.
+<a name="l-9"></a><span class="tm">21:03:35</span><span class="nk"> &lt;duglin&gt;</span> I think Michael will just speak for RedHat now  :-)
+<a name="l-10"></a><span class="tm">21:03:39</span><span class="nk"> &lt;wking&gt;</span> [audio trouble with mrunalp]
+<a name="l-11"></a><span class="tm">21:04:28</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image issues</span>
+<a name="l-12"></a><span class="tm">21:05:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we need more design for the image-tools command line API
+<a name="l-13"></a><span class="tm">21:06:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> are you envisioning some particular output there?
+<a name="l-14"></a><span class="tm">21:06:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> right now there is progress in a direction, but we don't know if it is the right direction
+<a name="l-15"></a><span class="tm">21:06:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> for example, is using a logger for command output helpful for users?
+<a name="l-16"></a><span class="tm">21:07:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> there is some usefulness in being able to toggle verbosity
+<a name="l-17"></a><span class="tm">21:07:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> but it's difficult if progress is blocked for a long time waiting on a design
+<a name="l-18"></a><span class="tm">21:07:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but churn without a design isn't great either
+<a name="l-19"></a><span class="tm">21:08:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> one are is the main use-cases for the command line tool
+<a name="l-20"></a><span class="tm">21:08:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> for example, what's the difference between [...] and unpacking?
+<a name="l-21"></a><span class="tm">21:08:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> with time, I can provide examples (and I have posted a few comments along those lines)
+<a name="l-22"></a><span class="tm">21:09:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but we need that "what is the input?  what is the output?" approach more generally
+<a name="l-23"></a><span class="tm">21:10:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> so apart from someone stepping up and doing this in a way that seems suitable...
+<a name="l-24"></a><span class="tm">21:10:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'm not sure what a best next step is
+<a name="l-25"></a><span class="tm">21:10:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm confused, because this plan of what you're planning on doing and why is part of the usual process
+<a name="l-26"></a><span class="tm">21:11:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> open an issue and say "I'm going to do x, y, z" and we'll say "great, go for it"
+<a name="l-27"></a><span class="tm">21:11:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> certification is pushing the tools to cover the MUSTs and SHOULDs in the spec
+<a name="l-28"></a><span class="tm">21:12:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> posting details about what was checked with links to the conditions is what we need, and seems to be what is generally happening
+<a name="l-29"></a><span class="tm">21:13:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> RobDolinMS had posted a burn-down list of MUSTs/SHOULDs which were tested
+<a name="l-30"></a><span class="tm">21:13:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> where is the doc for how the command line API maps to the cert group?
+<a name="l-31"></a><span class="tm">21:13:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I don't have that, but I'm not on the cert group
+<a name="l-32"></a><span class="tm">21:14:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> maybe the work has been done and just hasn't been conveyed well enough?
+<a name="l-33"></a><span class="tm">21:14:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> maybe it's a communication issue, and folks are trying to drive progress
+<a name="l-34"></a><span class="tm">21:14:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> folks need to put forward their designs, and then I can help move that forward
+<a name="l-35"></a><span class="tm">21:15:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but if the response is "here are 4 more PRs", that's not helping with design
+<a name="l-36"></a><span class="tm">21:15:27</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] essentially the CertWG is asking for tooling to help validate the MUST/SHOULDs in the specs (i.e., runtime-tools) https://github.com/opencontainers/runtime-tools/issues/66
+<a name="l-37"></a><span class="tm">21:15:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> that's not wrong.  But it's hard to find a way forward
+<a name="l-38"></a><span class="tm">21:15:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I feel bad for dragging image-tools through the mud, but we have to have standards
+<a name="l-39"></a><span class="tm">21:16:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> so what's the next step that you see?
+<a name="l-40"></a><span class="tm">21:16:25</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-tools/pull/46#issuecomment-265263029
+<a name="l-41"></a><span class="tm">21:16:39</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/467</span>
+<a name="l-42"></a><span class="tm">21:16:56</span><span class="nk"> &lt;wking&gt;</span> ^ #467 has been mentioned as a blocker for the image-tools command-line API before
+<a name="l-43"></a><span class="tm">21:18:02</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/issues/588#issuecomment-285480614
+<a name="l-44"></a><span class="tm">21:18:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> so we're asking folks for examples like those?
+<a name="l-45"></a><span class="tm">21:19:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> yeah.  Speaking in the language of the spec
+<a name="l-46"></a><span class="tm">21:21:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I'd be glad to take a stab at this
+<a name="l-47"></a><span class="tm">21:21:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> that sounds good to me
+<a name="l-48"></a><span class="tm">21:21:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> my request was less grandiose; just focused on image-tools
+<a name="l-49"></a><span class="tm">21:22:27</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-tools/issues/96
+<a name="l-50"></a><span class="tm">21:22:39</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-tools/issues/96#issuecomment-286212355
+<a name="l-51"></a><span class="tm">21:22:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I just want one example of output for a given command, and some discussion of use-cases
+<a name="l-52"></a><span class="tm">21:23:30</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-tools/pull/46#issuecomment-286845711
+<a name="l-53"></a><span class="tm">21:23:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the trigger for this is "let's just merge it to go forward" doesn't help us figure out where we're going to
+<a name="l-54"></a><span class="tm">21:24:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> Is #96 where this discussion should happen, or do we want a new issue for a use-case doc?
+<a name="l-55"></a><span class="tm">21:25:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm fine merging into a single tool, but I think we need to consider the other parts of the API as well
+<a name="l-56"></a><span class="tm">21:25:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> the testing tools are for the cert working group, right?
+<a name="l-57"></a><span class="tm">21:26:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> Yes.  We want 'image-tools validate image ...' to test compliance with the spec
+<a name="l-58"></a><span class="tm">21:26:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we need that on the runtime side as well.  Maybe we need more maintainers in the cert group for communication?
+<a name="l-59"></a><span class="tm">21:27:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I've been trying to attend them, but only making around 1 of each 2
+<a name="l-60"></a><span class="tm">21:27:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> can you send a reminder to the TDC?
+<a name="l-61"></a><span class="tm">21:27:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> Every other Monday at 10am Pacific
+<a name="l-62"></a><span class="tm">21:27:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> can you send a notice to the mailing list?
+<a name="l-63"></a><span class="tm">21:28:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> Forwarding to dev@ right now...
+<a name="l-64"></a><span class="tm">21:28:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> anything else for images?
+<a name="l-65"></a><span class="tm">21:28:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> not now
+<a name="l-66"></a><span class="tm">21:28:46</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/405
+<a name="l-67"></a><span class="tm">21:28:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> is Sam on the call?
+<a name="l-68"></a><span class="tm">21:28:47</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] I also encourage the OCI TDC to explore what is going on here https://github.com/opencontainers/certification (we can do our best to use GitHub to communicate instead of via a call always)
+<a name="l-69"></a><span class="tm">21:28:56</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">VMs in the runtime spec</span>
+<a name="l-70"></a><span class="tm">21:29:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> I'm not sure what's blocking it.  There have been a few review cycles
+<a name="l-71"></a><span class="tm">21:29:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> I think most of the review has been addressed.  There is still a question about structure for the image path
+<a name="l-72"></a><span class="tm">21:30:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> Is that the only blocker, or are there larger structural issues
+<a name="l-73"></a><span class="tm">21:30:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> does this covers Windows as well?
+<a name="l-74"></a><span class="tm">21:30:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> I'm not sure
+<a name="l-75"></a><span class="tm">21:30:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> this is saying where the base disk image, right?
+<a name="l-76"></a><span class="tm">21:30:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> yes, in the guest OS
+<a name="l-77"></a><span class="tm">21:31:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> is it possible to introduce a guest OS image without specifying it in the container config?
+<a name="l-78"></a><span class="tm">21:31:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> and will this work for all VM runtimes?  Windows?  Hypervisors?
+<a name="l-79"></a><span class="tm">21:31:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> I don't know about Windows, but this will work for Hyper (another VM-based runtime using ... and KVM)
+<a name="l-80"></a><span class="tm">21:32:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> They also need an image path
+<a name="l-81"></a><span class="tm">21:32:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> I'm not sure about Windows
+<a name="l-82"></a><span class="tm">21:32:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> on the runtime side, why do these have to go in the config and not go in via command-line options, etc.?
+<a name="l-83"></a><span class="tm">21:33:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> Because it's configurable.  We have configs for the runtime, and you can use different guest kernels for different containers with this change
+<a name="l-84"></a><span class="tm">21:33:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> It's really about the runtime.  The container shouldn't care about the guest OS or kernel
+<a name="l-85"></a><span class="tm">21:34:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> The container image we export in various means from the host to the guest, but it doesn't define the runtime itself
+<a name="l-86"></a><span class="tm">21:34:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> VM-based containers have a runtime like the current runtime spec, but we also need the kernel and image to start the VM
+<a name="l-87"></a><span class="tm">21:35:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> how much of the spec is applicable to VMs?  I can see process, but what about devices, cgroups, namespaces?
+<a name="l-88"></a><span class="tm">21:35:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> You can apply cgroups and namespaces inside the VM
+<a name="l-89"></a><span class="tm">21:35:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> Does it make sense to do that?  Sometimes.
+<a name="l-90"></a><span class="tm">21:36:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> Sometimes the VM is sufficient isolation, but sometimes it might give better security
+<a name="l-91"></a><span class="tm">21:36:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> For example, we don't want to expose the host network namespace inside the VM
+<a name="l-92"></a><span class="tm">21:37:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> There are many ways to export devices through a virtual machine.  PCI passthrough, etc.
+<a name="l-93"></a><span class="tm">21:37:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> what about mounts?
+<a name="l-94"></a><span class="tm">21:37:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> We support that, using [...FS] for exports
+<a name="l-95"></a><span class="tm">21:37:46</span><span class="nk"> &lt;wking&gt;</span> ^ 9pfs
+<a name="l-96"></a><span class="tm">21:37:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> you couldn't use the mount to supply the root filesystem
+<a name="l-97"></a><span class="tm">21:38:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> We also use a 9pfs mount for the root filesystem
+<a name="l-98"></a><span class="tm">21:38:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> so why do you need the image path?
+<a name="l-99"></a><span class="tm">21:38:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> The mount I'm talking about is the container rootfs.  The image path is the guest OS
+<a name="l-100"></a><span class="tm">21:38:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> We're basically creating a container inside the VM
+<a name="l-101"></a><span class="tm">21:38:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> Think about it as yet another volume mount for the VM
+<a name="l-102"></a><span class="tm">21:39:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> So you boot in the image and then chroot into the mounted rootfs?
+<a name="l-103"></a><span class="tm">21:39:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> As an example, sure
+<a name="l-104"></a><span class="tm">21:39:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> The case for having this in the config is that for VM-based containers, this is defining the runtime
+<a name="l-105"></a><span class="tm">21:40:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> the image spec and kernel pass it directly to KVM/Qemu
+<a name="l-106"></a><span class="tm">21:40:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> I don't know of any hypervisor that doesn't need a kernel and image path (unless you're using ... to make the image path optional)
+<a name="l-107"></a><span class="tm">21:41:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> thank you for clarifying
+<a name="l-108"></a><span class="tm">21:41:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> Without this in the spec we need a separate config for the runtime, and we might end up stuck with one kernel and image
+<a name="l-109"></a><span class="tm">21:41:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> Having it in the runtime config gives us more flexibility
+<a name="l-110"></a><span class="tm">21:42:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> my concern about having it in the spec is that you have a container runtime that is entirely honored.  And then a VM case, where maybe 50% of the settings are valid, but the container works anyway
+<a name="l-111"></a><span class="tm">21:43:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> There are some settings that we cannot support, but we can support most settings
+<a name="l-112"></a><span class="tm">21:43:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> Sometimes you might want to block support for policy reasonsr
+<a name="l-113"></a><span class="tm">21:43:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> If it helps, I can come back with a list of unsupportable settings
+<a name="l-114"></a><span class="tm">21:44:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> that would be helpful
+<a name="l-115"></a><span class="tm">21:44:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> and we can add notes to those settings about how they are handled in VMs
+<a name="l-116"></a><span class="tm">21:44:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Sam:</span> I can add that to the PR
+<a name="l-117"></a><span class="tm">21:45:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I've pinged some Windows folks to take a look as well
+<a name="l-118"></a><span class="tm">21:45:19</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-tool</span>
+<a name="l-119"></a><span class="tm">21:45:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> We have a rough roadmap for runtime-tools 1.0.  I'll mail dev@
+<a name="l-120"></a><span class="tm">21:45:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> One big item is the command line API
+<a name="l-121"></a><span class="tm">21:46:08</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-tools/pull/321
+<a name="l-122"></a><span class="tm">21:47:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the JSON Schema can go in a schema/ directory
+<a name="l-123"></a><span class="tm">21:48:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> anything else?
+<a name="l-124"></a><span class="tm">21:48:45</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime rc5 support</span>
+<a name="l-125"></a><span class="tm">21:48:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> where is runC rc5 support?
+<a name="l-126"></a><span class="tm">21:48:59</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runc/pull/1370
+<a name="l-127"></a><span class="tm">21:49:07</span><span class="nk"> &lt;vbatts&gt;</span> FINAL
+<a name="l-128"></a><span class="tm">21:49:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> what do you think crosbymichael ?  Are we ready for a 1.0 vote?
+<a name="l-129"></a><span class="tm">21:49:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> a vote lasts a week
+<a name="l-130"></a><span class="tm">21:49:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'd be more comfortable after the runC PR lands and percolates up the stack
+<a name="l-131"></a><span class="tm">21:50:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> what's the timeline on that cycle?
+<a name="l-132"></a><span class="tm">21:50:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I'd suggest holding off on 1.0 until we've driven down the issues/PRs
+<a name="l-133"></a><span class="tm">21:50:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> there aren't many issues/PRs left
+<a name="l-134"></a><span class="tm">21:51:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> but I agree with crosbymichael that time to cook the runC implementation would be good
+<a name="l-135"></a><span class="tm">21:51:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I think crosbymichael and mrunalp are saying "don't put up the vote, we need more testing" and I think that's good
+<a name="l-136"></a><span class="tm">21:51:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> if we land runC#1370 and cut a runC 1.0.0 rc3, then...
+<a name="l-137"></a><span class="tm">21:52:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> cri-o integration
+<a name="l-138"></a><span class="tm">21:52:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> rkt?
+<a name="l-139"></a><span class="tm">21:52:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we can reach out and ask
+<a name="l-140"></a><span class="tm">21:52:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> a final sanity check would also be good
+<a name="l-141"></a><span class="tm">21:54:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't think we conveyed that rc5 was the last pre-1.0 RC
+<a name="l-142"></a><span class="tm">21:54:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I think we need to get the word out to the wider community for final review
+<a name="l-143"></a><span class="tm">21:54:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> that makes sense
+<a name="l-144"></a><span class="tm">21:54:33</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/issues/726</span>
+<a name="l-145"></a><span class="tm">21:54:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Brett:</span> We can kick off that review if someone wants to send an email
+<a name="l-146"></a><span class="tm">21:56:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> how do we want to organize this?
+<a name="l-147"></a><span class="tm">21:56:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> mrunalp and I can handle runC
+<a name="l-148"></a><span class="tm">21:56:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'll take the lead on Docker
+<a name="l-149"></a><span class="tm">21:56:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> and everybody on the final sanity check with all maintainers signing off
+<a name="l-150"></a><span class="tm">21:56:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> other folks, and the cert team, may also want a final walkthrough
+<a name="l-151"></a><span class="tm">21:57:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I think we want to encourage minor changes in lots of tiny PRs (vs. big batch PRs)
+<a name="l-152"></a><span class="tm">21:57:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> do we want a timeframe?  By next week's meeting?
+<a name="l-153"></a><span class="tm">21:58:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I think we cut rc6 and then start the 30-day member review period
+<a name="l-154"></a><span class="tm">21:59:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> so our final technical reviews by next week, then we cut our take on the 1.0
+<a name="l-155"></a><span class="tm">21:59:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> Walli has been working on compliance testing.  His input would be helpful
+<a name="l-156"></a><span class="tm">22:00:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> For example, problems with implementations that aren't the reference implementation
+<a name="l-157"></a><span class="tm">22:00:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'll get in contact with him today
+<a name="l-158"></a><span class="tm">22:00:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> this will be the speak now or forever hold your peace
+<a name="l-159"></a><span class="tm">22:00:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> sounds like a plan.  Anything else?
+<a name="l-160"></a><span class="tm">22:00:49</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

@@ -1,0 +1,67 @@
+22:00:59 <wking> #startmeeting 2016-11-16 discussion
+22:00:59 <collabot`> Meeting started Wed Nov 16 22:00:59 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:00:59 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:00:59 <collabot`> The meeting name has been set to '2016_11_16_discussion'
+22:01:16 <wking> #chair mrunalp vbatts
+22:01:16 <collabot`> Current chairs: mrunalp vbatts wking
+22:02:35 <mrunalp> crosbymichael, lk4d4, dqminh, cyphar, stevvooe: Joining?
+22:02:37 <mrunalp> vishh, ^
+22:02:47 <stevvooe> yes
+22:04:10 <mrunalp> philips, Triaging PRs
+22:04:20 <wking> #topic image-spec status
+22:04:30 <wking> philips: I'm triaging PRs.  More help would be good
+22:04:44 <wking> philips: why the effort on the PDF/HTML builds?  GitHub has a Markdown browser...
+22:05:31 <wking> RobDolinMS has been pushing for the PDF/HTML builds
+22:06:31 <wking> stephen-walli: Having a coherent document (whatever the format) is good so you can validate the spec without access to the surrounding discussion
+22:06:38 <wking> philips: agreed
+22:07:30 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/628
+22:07:35 <stevvooe> http://maritime.org/doc/tdc/index.htm
+22:08:03 <wking> It's also good to have more granular anchors, although you can achieve that with AsciiDoc or Markdown, it's just a question of which is easier
+22:08:30 <wking> stevvooe: I agree that we need a coherent document, but am not sure that PDF/HTML is important for that
+22:08:44 <mrunalp> http://wking.github.io/opencontainer-runtime-spec/
+22:08:59 <stevvooe> please checkout that link above...
+22:09:07 <wking> stephen-walli: walking the GitHub pages is hard without good anchors.  A good table of contents would help
+22:09:49 <wking> duglin: The recent runtime-spec PR has more clarity around the root document with subsections as a stand-alone doc
+22:10:09 <wking> #link https://github.com/opencontainers/runtime-spec/pull/626
+22:10:58 <wking> stevvooe: the torpedo manual is a great spec.  Just read ti
+22:11:08 <wking> mrunalp: we need anchors for the certification tooling
+22:11:12 <mrunalp> http://wking.github.io/opencontainer-runtime-spec/
+22:11:19 <wking> #link https://github.com/opencontainers/runtime-spec/pull/628
+22:11:50 <duglin> ouch Rob it sounds painful
+22:11:51 <wking> RobDolinMS: As mrunal mentions, we need anchors for the testing
+22:12:01 <wking> RobDolinMS: So for v1 I'd like to see anchors via Markdown
+22:12:12 <wking> #link https://github.com/opencontainers/runtime-spec/pull/614
+22:12:40 <wking> RobDolinMS: I haven't spent a lot of time with the AsciiDoc PR, but we can do the Markdown if we need a shorter step
+22:12:50 <wking> mrunalp: Looking at the PR it doesn't look like a lot of work...
+22:14:11 <wking> https://github.com/wking/opencontainer-runtime-spec/blob/asciidoc/oci-runtime-spec.asc
+22:15:41 <wking> Includes are just links, and cross references between files don't work in the GitHub browser view^
+22:15:42 <mrunalp> stevvooe, use octopress for github as well htmp/pdf
+22:16:38 <wking> philips: then you need Travis pushing compiled releases to gh-pages or some such
+22:16:52 <wking> philips: with JavaScript that sends you to the appropriate version
+22:18:12 <wking> The other option is one giant Markdown file for the spec, since then you don't have to worry about cross-file cross-links
+22:20:17 <wking> RobDolinMS: We should just go with #614, #615, etc. for now, and revisit other options later
+22:21:04 <wking> stephen-walli: I'll look at duglin's work (and the anchor PRs?) and will report back
+22:21:11 <wking> #topic runtime-spec issues
+22:21:22 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/513
+22:21:50 <wking> mrunalp: #626 has already merged, and we've already covered AsciiDoc (#628)
+22:22:03 <wking> mrunalp: any outstanding comments for the command line PR (#513)?
+22:22:07 <wking> mrunalp: cyphar?
+22:22:53 <wking> mrunalp: we need feedback from Garden and on the runC PR
+22:23:05 <wking> The Garden folks commented on #513 this morning
+22:23:16 <wking> #topic PR backlog
+22:23:29 <wking> mrunalp: we have a lot of these.  We need triage and/or review
+22:23:51 <julz_> yeah looks good to us (sorry not on call, but lurking here)
+22:24:07 <wking> stevvooe: we don't want to freeze non-1.0 discussion, but we also should stay focused on the release
+22:25:11 <wking> philips: I agree, but we should probably email dev@ about this too just to make it official
+22:25:58 <wking> stevvooe: I'm not sure what you want to write, but I'm ok with something more official
+22:26:14 <wking> philips: Something about "we'll be moving things to post v1 milestones"
+22:26:30 <wking> RobDolinMS: We already have those milestones, and we can start moving issues
+22:26:56 <wking> #link https://github.com/opencontainers/image-spec/issues/400
+22:27:14 <wking> stevvooe: the goal was to define where signatures fit before 1.0 to avoid painting ourselves into a corner
+22:27:31 <wking> stevvooe: but then it went off into lala land.  So we should focus on 1.0
+22:27:59 <wking> #topic Next week's meeting
+22:28:19 <wking> RobDolinMS: I expect a quiet Wednesday before Thanksgiving.  Should we cancel?
+22:28:22 <wking> mrunalp: yeah
+22:28:24 <wking> stevvooe: yeah
+22:28:32 <wking> #action mrunalp to cancel next week's meeting
+22:28:48 <wking> #endmeeting

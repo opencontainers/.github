@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">17:07:20</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2015-10-14 meeting</span>
+<a name="l-2"></a><span class="tm">17:07:20</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Oct 14 17:07:20 2015 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">17:07:20</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">17:07:20</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2015_10_14_meeting'
+<a name="l-5"></a><span class="tm">17:07:27</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">lifecycle docs</span>
+<a name="l-6"></a><span class="tm">17:07:39</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">mrunalp to create a new lifecycle PR</span>
+<a name="l-7"></a><span class="tm">17:07:44</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp</span>
+<a name="l-8"></a><span class="tm">17:07:44</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp wking
+<a name="l-9"></a><span class="tm">17:08:43</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">checking cgroups from inside the container</span>
+<a name="l-10"></a><span class="tm">17:09:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> do we care about checking this from inside the cgroup for validation?
+<a name="l-11"></a><span class="tm">17:09:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> runC mounts it, but that's not in the spec
+<a name="l-12"></a><span class="tm">17:09:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I think it is in the spec
+<a name="l-13"></a><span class="tm">17:09:50</span><span class="nk"> &lt;wking&gt;</span> ^ maybe that was lk4d4 ;)
+<a name="l-14"></a><span class="tm">17:09:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I think we'd punted it earlier
+<a name="l-15"></a><span class="tm">17:10:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> anyone from OCT?
+<a name="l-16"></a><span class="tm">17:10:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I couldn't use it, can we get a demo?
+<a name="l-17"></a><span class="tm">17:11:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">liangchenye:</span> I think we fixed those issues, does it still not work?
+<a name="l-18"></a><span class="tm">17:12:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">liangchenye:</span> I'd like more details on what sort of demo you're looking for
+<a name="l-19"></a><span class="tm">17:12:35</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">mrunalp to contact liangchenye to setup a demo and check for validation overlap</span>
+<a name="l-20"></a><span class="tm">17:12:44</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Next milestone</span>
+<a name="l-21"></a><span class="tm">17:13:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> no specifics for the next milestone, but wants to start on a long-term roadmap and allocate for milestones from there
+<a name="l-22"></a><span class="tm">17:14:28</span><span class="nk"> &lt;mrunalp&gt;</span> optional/required
+<a name="l-23"></a><span class="tm">17:14:41</span><span class="nk"> &lt;wking&gt;</span> also spec-supplied bindings (e.g. protobuf)
+<a name="l-24"></a><span class="tm">17:15:03</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">mrunalp to post details of a next-week hack-day to the list</span>
+<a name="l-25"></a><span class="tm">17:15:25</span><span class="nk"> &lt;mrunalp&gt;</span> protobuf should be done
+<a name="l-26"></a><span class="tm">17:15:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> land protobuf stuff, get lifecycle landed in the near-ish future
+<a name="l-27"></a><span class="tm">17:16:05</span><span class="nk"> &lt;mrunalp&gt;</span> philips; Lifecycle should be a part of it
+<a name="l-28"></a><span class="tm">17:16:19</span><span class="nk"> &lt;mrunalp&gt;</span> validation tooling
+<a name="l-29"></a><span class="tm">17:17:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> what about updating cgroups, rlimits?
+<a name="l-30"></a><span class="tm">17:17:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> wouldn't be opposed, but not super enthusiastic either
+<a name="l-31"></a><span class="tm">17:17:36</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">vishh to push forward on updating</span>
+<a name="l-32"></a><span class="tm">17:18:28</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">defining standard operations</span>
+<a name="l-33"></a><span class="tm">17:18:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> opened https://github.com/opencontainers/specs/pull/225
+<a name="l-34"></a><span class="tm">17:19:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> wants to move that to a list thread
+<a name="l-35"></a><span class="tm">17:20:24</span><span class="nk"> &lt;duglin&gt;</span> I think they’re related and should be discussed at the same time
+<a name="l-36"></a><span class="tm">17:20:39</span><span class="nk"> &lt;duglin&gt;</span> to me lifecycle and ops are bound together
+<a name="l-37"></a><span class="tm">17:21:44</span><span class="nk"> &lt;wking&gt;</span> I suggest the following order: lifecycle docs, define operations, add an API for those operations
+<a name="l-38"></a><span class="tm">17:21:55</span><span class="nk"> &lt;wking&gt;</span> so this is blocking on mrunalp's lifecycle PR
+<a name="l-39"></a><span class="tm">17:22:23</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Summarizing digest status</span>
+<a name="l-40"></a><span class="tm">17:22:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> stevvooe's continuity approach seems solid
+<a name="l-41"></a><span class="tm">17:23:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> preliminary summary in https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/xo4SQ92aWJ8
+<a name="l-42"></a><span class="tm">17:23:58</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">two- to three-person working groups on milestone items?</span>
+<a name="l-43"></a><span class="tm">17:24:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> proposing this topic
+<a name="l-44"></a><span class="tm">17:24:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> agrees
+<a name="l-45"></a><span class="tm">17:24:23</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">mrunalp to collaborate with crosbymichael on the lifecycle</span>
+<a name="l-46"></a><span class="tm">17:24:32</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">crosbymichael to collaborate with mrunalp on the lifecycle</span>
+<a name="l-47"></a><span class="tm">17:24:45</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">everyone optional/required on the hack-day</span>
+<a name="l-48"></a><span class="tm">17:25:28</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">vbatts to work on protobuf</span>
+<a name="l-49"></a><span class="tm">17:25:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> ^ vbatts will be back Friday
+<a name="l-50"></a><span class="tm">17:25:55</span><span class="nk"> &lt;wking&gt;</span> I'm happy to help vbatts on the protobuf stuff if he's wants assistance
+<a name="l-51"></a><span class="tm">17:26:34</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

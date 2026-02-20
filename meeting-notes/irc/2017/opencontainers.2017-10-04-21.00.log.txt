@@ -1,0 +1,22 @@
+21:00:19 <wking> #startmeeting 2017-10-04 discussion
+21:00:19 <collabot> Meeting started Wed Oct  4 21:00:19 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:00:19 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:00:19 <collabot> The meeting name has been set to '2017_10_04_discussion'
+21:00:41 <wking> #chair mrunalp
+21:00:41 <collabot> Current chairs: mrunalp wking
+21:01:27 <mrunalp> crosbymichael, vbatts|work: Joining?
+21:05:27 <wking> #topic https://github.com/opencontainers/runtime-spec/pull/913
+21:05:34 <wking> (while we wait to see who shows up ;)
+21:06:22 <crosbymichael> here now
+21:08:23 <tianon> link to current topic-under-discussion?
+21:08:28 <tianon> (missed the number)
+21:08:32 <mrunalp> https://github.com/opencontainers/runtime-spec/issues/813
+21:08:37 <tianon> ++ thanks
+21:09:23 <wking> #topic https://github.com/opencontainers/runtime-spec/issues/813
+21:12:30 <mrunalp> https://github.com/opencontainers/runc/pull/1562
+21:12:51 <wking> #topic runC 1.0
+21:13:00 <wking> #link https://github.com/opencontainers/runc/pull/1562
+21:18:30 <wking> #topic any image-spec 1.0 roadmap thoughts?
+21:18:47 <wking> err, image-tools
+21:18:54 <wking> no image-tools maintainers, so no thoughts
+21:18:59 <wking> #endmeeting

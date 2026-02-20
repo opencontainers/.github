@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:03:02</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-09-21 discussion</span>
+<a name="l-2"></a><span class="tm">21:03:02</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Sep 21 21:03:02 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:03:02</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:03:02</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2016_09_21_discussion'
+<a name="l-5"></a><span class="tm">21:03:15</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp vbatts_</span>
+<a name="l-6"></a><span class="tm">21:03:15</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp vbatts_ wking
+<a name="l-7"></a><span class="tm">21:03:29</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/567
+<a name="l-8"></a><span class="tm">21:03:39</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">agressive namespacing</span>
+<a name="l-9"></a><span class="tm">21:04:03</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/567</span>
+<a name="l-10"></a><span class="tm">21:04:33</span><span class="nk"> &lt;wking&gt;</span> jhoward there were conflicts as I was adding Windows support, starting around resources
+<a name="l-11"></a><span class="tm">21:05:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jhoward:</span> if we take the hit now, the migration is painful now, but we're protecting ourselves from future collisions
+<a name="l-12"></a><span class="tm">21:05:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jhoward:</span> the alternative is to have platform files, which has been discussed before
+<a name="l-13"></a><span class="tm">21:05:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jhoward:</span> the spec isn't huge now, so I think per-platform files are overly complicated at the moment
+<a name="l-14"></a><span class="tm">21:06:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> The JSON will look nice because the JSON keys aren't namespaced
+<a name="l-15"></a><span class="tm">21:06:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jhoward:</span> the JSON keys aren't namespaced, but the JSON settings are (because a key is in the 'linux' object, etc.)
+<a name="l-16"></a><span class="tm">21:06:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> everyone please review #567 so we can land it
+<a name="l-17"></a><span class="tm">21:06:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts_:</span> I don't have any particular objections
+<a name="l-18"></a><span class="tm">21:07:13</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/image-tools/issues/25
+<a name="l-19"></a><span class="tm">21:07:36</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec -&gt; runtime-spec configuration translation</span>
+<a name="l-20"></a><span class="tm">21:07:42</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-tools/issues/25</span>
+<a name="l-21"></a><span class="tm">21:08:13</span><span class="nk"> &lt;wking&gt;</span> the discussion is around "should we be doing this at all" and "how do we handle particular fields if we do"
+<a name="l-22"></a><span class="tm">21:11:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts_:</span> there's going to have to be some translation, because the runtime spec isn't portable
+<a name="l-23"></a><span class="tm">21:18:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we had a split before, but we had too few fields that were truly portable
+<a name="l-24"></a><span class="tm">21:19:01</span><span class="nk"> &lt;cyphar&gt;</span> before that: [why don't we just embed the subset of portable fields rather that a translation matrix]
+<a name="l-25"></a><span class="tm">21:21:17</span><span class="nk"> &lt;wking&gt;</span> I'd love to see v{major}.{minor} in the media types
+<a name="l-26"></a><span class="tm">21:21:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts_:</span> to wrap up this one issue.  The decoupling you're suggesting seems to make things a lot more complicated
+<a name="l-27"></a><span class="tm">21:22:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts_:</span> but this is more about being a version mapping, even if there's versioning in the media types...
+<a name="l-28"></a><span class="tm">21:22:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts_:</span> you can store exposed ports in an annototation
+<a name="l-29"></a><span class="tm">21:23:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts_:</span> the GitHub issue (#25) does not convey this topic concisely
+<a name="l-30"></a><span class="tm">21:23:47</span><span class="nk"> &lt;wking&gt;</span> I can submit a PR to help ground my suggestions
+<a name="l-31"></a><span class="tm">21:24:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts_:</span> another problem that folks are struggling with is the conversations get too deep and layered
+<a name="l-32"></a><span class="tm">21:24:38</span><span class="nk"> &lt;wking&gt;</span> A PR will help flatten some of the discussion for folks who aren't interested
+<a name="l-33"></a><span class="tm">21:25:36</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">wking will file runtime-spec and runtime-tools PRs around the localizer/sanitizer approach</span>
+<a name="l-34"></a><span class="tm">21:25:47</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/573
+<a name="l-35"></a><span class="tm">21:25:56</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">Windows support in runtime-spec</span>
+<a name="l-36"></a><span class="tm">21:26:03</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Windows support in runtime-spec</span>
+<a name="l-37"></a><span class="tm">21:26:06</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/573</span>
+<a name="l-38"></a><span class="tm">21:26:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jhoward:</span> this needs more maintainer review
+<a name="l-39"></a><span class="tm">21:26:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I gave it a quick look and it looks fine to me.  I'll give it another pass
+<a name="l-40"></a><span class="tm">21:26:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> other topics?
+<a name="l-41"></a><span class="tm">21:26:49</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">console handling in runC</span>
+<a name="l-42"></a><span class="tm">21:26:53</span><span class="nk"> &lt;cyphar&gt;</span> https://github.com/opencontainers/runc/pull/1018
+<a name="l-43"></a><span class="tm">21:26:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> please review^
+<a name="l-44"></a><span class="tm">21:27:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">dqminh:</span> I'll take a look
+<a name="l-45"></a><span class="tm">21:27:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> vbatts_, anything else for image-spec?
+<a name="l-46"></a><span class="tm">21:27:38</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec 1.0.0-rc1</span>
+<a name="l-47"></a><span class="tm">21:27:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts_:</span> most of the issues are mine, but I'm happy to share
+<a name="l-48"></a><span class="tm">21:28:09</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/milestone/8</span>
+<a name="l-49"></a><span class="tm">21:28:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts_:</span> I've been going through image-spec on paper this week, and it's good to see other folks making the changes I want to see without me having to say anything
+<a name="l-50"></a><span class="tm">21:29:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts_:</span> the volume has gotten a bit overwhelming recently.  It would be good if things stayed more succinct
+<a name="l-51"></a><span class="tm">21:30:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts_:</span> so help is welcome for anyone interested in running 'make docs' and reviewing the output HTML and PDF
+<a name="l-52"></a><span class="tm">21:30:17</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

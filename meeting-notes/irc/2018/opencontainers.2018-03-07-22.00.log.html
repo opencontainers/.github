@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">22:00:26</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2018-03-07 discussion</span>
+<a name="l-2"></a><span class="tm">22:00:26</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Mar  7 22:00:26 2018 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">22:00:26</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">22:00:26</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2018_03_07_discussion'
+<a name="l-5"></a><span class="tm">22:01:03</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">agenda https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/t_UMLjT7-pI</span>
+<a name="l-6"></a><span class="tm">22:02:52</span><span class="nk"> &lt;stevvooe&gt;</span> boo, the number on the meeting invite is wrong
+<a name="l-7"></a><span class="tm">22:04:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> it looks right in https://github.com/opencontainers/runtime-spec/blob/master/meeting.ics
+<a name="l-8"></a><span class="tm">22:05:04</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="hi">wking:</span> not sure where i got this one, but its the wrong number
+<a name="l-9"></a><span class="tm">22:05:23</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec release planning</span>
+<a name="l-10"></a><span class="tm">22:06:51</span><span class="nk"> &lt;wking&gt;</span> There are a number of new features in flight (links in the agenda thread).  Do we want to hold 1.1 until some/all of those go in?  Cut 1.1 sooner, and then 1.2, 1.3, etc. as those land
+<a name="l-11"></a><span class="tm">22:07:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the VM stuff looks close
+<a name="l-12"></a><span class="tm">22:07:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> is there a VM implementation?
+<a name="l-13"></a><span class="tm">22:08:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> we can circle back to the VM PR in a minute
+<a name="l-14"></a><span class="tm">22:08:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> the VM thing is the largest change that would go into a 1.1
+<a name="l-15"></a><span class="tm">22:08:28</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/opencontainers/runtime-spec/milestone/16
+<a name="l-16"></a><span class="tm">22:08:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> we have a 1.0.z stream with one issue
+<a name="l-17"></a><span class="tm">22:08:59</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/opencontainers/runtime-spec/milestone/9
+<a name="l-18"></a><span class="tm">22:09:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> and we have a minor-bump 1.Y.0 milestone
+<a name="l-19"></a><span class="tm">22:10:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> if we already on the 1.1 / 1.Y track, I don't expect to do further 1.0.z work unless absolutely pleaded for
+<a name="l-20"></a><span class="tm">22:11:32</span><span class="nk"> &lt;wking&gt;</span> There may be runtime-tools needs if they want to continue validating 1.0.x once 1.1 is cut.  I'm not sure what their plans are
+<a name="l-21"></a><span class="tm">22:11:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I don't know either.  We can wait on branching for 1.0.x until someone asks for it
+<a name="l-22"></a><span class="tm">22:12:48</span><span class="nk"> &lt;wking&gt;</span> Do we want to wait for the VM stuff to settle, or do we expect to cut 1.1 this month?
+<a name="l-23"></a><span class="tm">22:13:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I don't think we're in such a rush to release this month.  We'd want to wait for more VM feedback
+<a name="l-24"></a><span class="tm">22:13:50</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">RDMA cgroup addition https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/pG_KkmZgeL4</span>
+<a name="l-25"></a><span class="tm">22:15:23</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-tools and certification</span>
+<a name="l-26"></a><span class="tm">22:15:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">albanc:</span> I'm currently getting settled in the code, and have a couple of scope questions.  I'm not sure this is the right channel?
+<a name="l-27"></a><span class="tm">22:16:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> there had been a certification working group; I don't know the status of their meetings
+<a name="l-28"></a><span class="tm">22:16:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> It's currently on hold.  We're working with albanc and folks to clean up the runtime and image tools
+<a name="l-29"></a><span class="tm">22:17:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> The legal and cert sides are 80% there.  We need work on the tooling, which is why we brought in albanc and folks
+<a name="l-30"></a><span class="tm">22:18:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> this forum is a good place for digging into technical verification questions or approaches
+<a name="l-31"></a><span class="tm">22:19:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> I think the plan is for albanc to start using the verification suites against various tools and file issues for anything that comes up
+<a name="l-32"></a><span class="tm">22:19:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> runtime-tools is vendored in a few places, maybe more than image-tools, but the primary usecase is certification
+<a name="l-33"></a><span class="tm">22:20:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">albanc:</span> I don't have specific questions now
+<a name="l-34"></a><span class="tm">22:20:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> Mailing list, IRC, and GitHub are also good places to ask
+<a name="l-35"></a><span class="tm">22:21:00</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">VM containers</span>
+<a name="l-36"></a><span class="tm">22:21:18</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/949</span>
+<a name="l-37"></a><span class="tm">22:22:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">sortiz:</span> This is a reroll based on our experience since #405
+<a name="l-38"></a><span class="tm">22:23:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">sortiz:</span> Most of these are optional so the runtime can hard-code defaults, but it would be very nice for us to have the flexibility to override those defaults
+<a name="l-39"></a><span class="tm">22:24:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I gave it a look over, and was wondering about allowed path formats (qcow, etc.)
+<a name="l-40"></a><span class="tm">22:24:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> We want clarity on the typing of, for example, the image file format
+<a name="l-41"></a><span class="tm">22:25:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> Does the runtime have to know the file format?  Auto-detect it?
+<a name="l-42"></a><span class="tm">22:25:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">sortiz:</span> Yeah, that's a good suggestion
+<a name="l-43"></a><span class="tm">22:26:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I don't know how to make that flexible enough without tracking every image format under the sun
+<a name="l-44"></a><span class="tm">22:26:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">sortiz:</span> The runtime may be able to auto-detect, but that may not be ideal
+<a name="l-45"></a><span class="tm">22:26:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> is this an opaque type?
+<a name="l-46"></a><span class="tm">22:26:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">sortiz:</span> It wouldn't be runtime-specific, it would be a standardized type
+<a name="l-47"></a><span class="tm">22:27:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">sortiz:</span> There are so many formats.  We can enumerate them...
+<a name="l-48"></a><span class="tm">22:27:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the other option would be to have some sort of annotation
+<a name="l-49"></a><span class="tm">22:28:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> is this in use for clear containers and kata containers?
+<a name="l-50"></a><span class="tm">22:28:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">sortiz:</span> yes, we currently use this with a static config file per host
+<a name="l-51"></a><span class="tm">22:29:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">sortiz:</span> We're trying to standardize our existing configuration format
+<a name="l-52"></a><span class="tm">22:31:26</span><span class="nk"> &lt;stevvooe&gt;</span> it can just follow this format: https://github.com/opencontainers/runtime-spec/blob/master/config.md#process
+<a name="l-53"></a><span class="tm">22:34:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> you should copy the existing markdown and Go instead of linking to them
+<a name="l-54"></a><span class="tm">22:34:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we want to be able to extend either without automatically extending the other
+<a name="l-55"></a><span class="tm">22:34:54</span><span class="nk"> &lt;wking&gt;</span> I'd rather stay DRY, but am fine revisiting that if it becomes a problem
+<a name="l-56"></a><span class="tm">22:35:00</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">distribution spec</span>
+<a name="l-57"></a><span class="tm">22:35:16</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">http://github.com/opencontainers/tob/pull/35</span>
+<a name="l-58"></a><span class="tm">22:35:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there's some stuff in here that I think doesn't belong or that might overly limit the maintainers once it happens
+<a name="l-59"></a><span class="tm">22:35:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there's also stuff about tags and multi-image-indexes that sounds made up
+<a name="l-60"></a><span class="tm">22:35:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> as far as the timeline, I'm on board with that
+<a name="l-61"></a><span class="tm">22:36:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> the only other thing, and I don't remember how this last settled, but the /v2/_catalog API
+<a name="l-62"></a><span class="tm">22:36:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I've heard that its still an important way to index a registry, but maybe you don't want to include it
+<a name="l-63"></a><span class="tm">22:37:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> whatever people find useful.  Classically I've seen /v2/_catalog as an internal endpoint.  And I've heard complaints of the pagination design
+<a name="l-64"></a><span class="tm">22:37:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> in practice, each registry implementation seems to provide their own way, because different pagination works with different systems
+<a name="l-65"></a><span class="tm">22:38:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> you don't need /v2/_catalog for image push/pull, but the applications you're talking about are important applications
+<a name="l-66"></a><span class="tm">22:38:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> hub implements pagination in a way that works for them, Amazon implements pagination in a way that works for them.
+<a name="l-67"></a><span class="tm">22:39:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> to be honest, I don't think this belongs in the proposal and should be left up to the maintainers
+<a name="l-68"></a><span class="tm">22:39:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think it's out of scope, but am not completely sure
+<a name="l-69"></a><span class="tm">22:42:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the image-spec is scoped to push/pull
+<a name="l-70"></a><span class="tm">22:42:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if we expand this too much, it's going to be hard to get distribution shipped
+<a name="l-71"></a><span class="tm">22:44:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> What do we want to do about the provisional maintainers?
+<a name="l-72"></a><span class="tm">22:44:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm not sure.
+<a name="l-73"></a><span class="tm">22:44:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> So keep it simple for now?  You can add more folks once you're established
+<a name="l-74"></a><span class="tm">22:45:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> three is pretty exciting
+<a name="l-75"></a><span class="tm">22:45:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> ideally we'd have enough to have a decent, but not inconvenient, quorum
+<a name="l-76"></a><span class="tm">22:45:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> ideally five to seven people.  But I don't know who to pick from that list.  Condorcet vote?
+<a name="l-77"></a><span class="tm">22:46:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> Do you want to block the proposal on that, or deal with it after the proposal goes through?
+<a name="l-78"></a><span class="tm">22:46:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think we shouldn't block the vote.
+<a name="l-79"></a><span class="tm">22:47:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cracra:</span> If there are no objections to a Monday vote, I'll try to have crosbymichael put the vote out then
+<a name="l-80"></a><span class="tm">22:48:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I volunteer to be a Chief Maintainer that doesn't wield the power
+<a name="l-81"></a><span class="tm">22:49:54</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

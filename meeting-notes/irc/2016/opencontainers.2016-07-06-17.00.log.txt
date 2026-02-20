@@ -1,0 +1,90 @@
+17:00:42 <vbatts|work> #startmeeting 2016-07-06 discussion
+17:00:42 <collabot`> Meeting started Wed Jul  6 17:00:42 2016 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:00:42 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:00:42 <collabot`> The meeting name has been set to '2016_07_06_discussion'
+17:00:45 <duglin> in
+17:00:47 <dqminh> mrunalp: oops sorry i cant join today. not having a stable network :(
+17:00:55 <mrunalp> dqminh, No problem
+17:01:25 <wking> vbatts|work: chair me?
+17:01:32 <wking> mrunalp: any image-spec items?
+17:01:46 <duglin> possible topic:  https://github.com/opencontainers/image-spec/pull/164
+17:02:01 <wking> philips: I was on vacation yesterday.  stevvooe sent an email about Docker v2.2 yesterday, but I haven't read it
+17:02:16 <wking> philips: there was an open vote (v0.3.0) and it just closed
+17:02:38 <wking> philips: first pass through the vote went pretty well
+17:03:08 <wking> #link https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/FoYcImNQg4c
+17:03:22 <wking> discussion of the procedure used in that vote:
+17:03:24 <wking> #link https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/ik3MIDWq4Us
+17:03:37 <stevvooe> my mic is struggling
+17:04:44 <vbatts|work> #chair wking
+17:04:44 <collabot`> Current chairs: vbatts|work wking
+17:05:39 <wking> #topic runtime-spec command line API specification
+17:06:01 <wking> #link https://github.com/opencontainers/runtime-spec/pull/511
+17:06:08 <wking> #link https://github.com/wking/oci-command-line-api
+17:06:24 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/510
+17:06:40 <wking> #action wking to submit an oci-command-line-api PR to runtime-spec
+17:07:04 <wking> #topic limit extensions to annotations
+17:07:09 <wking> #link https://github.com/opencontainers/runtime-spec/pull/510
+17:07:16 <wking> #link https://github.com/opencontainers/image-spec/pull/164
+17:07:30 <wking> mrunalp: maybe add text about reserving opencontainers.org
+17:09:01 <wking> why are we claiming space inside annotations?
+17:09:40 <wking> vbatts|work: you can do whatever you want inside annotations, but we're reserving opencontainers.org
+17:10:06 <wking> duglin: one example would be an experimental feature
+17:10:49 <wking> stevvooe: so this is for testing features that we intend to eventually move into specified, top-level fields?
+17:11:03 <wking> vbatts|work: I'm not sure that they will all eventually move out of annotations
+17:11:52 <vbatts|work> arg
+17:11:58 <vbatts|work> my mic is not unmuting
+17:12:03 <wking> so this is sort of like the kernel's staging, where some things graduate to the top level, but some just linger in staging forever
+17:12:13 <wking> duglin: what's the harm in reserving namespace
+17:12:15 <mikebrow> it's just reserving a name space, one of infinity
+17:12:33 <wking> stevvooe: no harm in reserving it, I'm just not clear on the need / workflow around it
+17:12:41 <wking> +1^
+17:13:02 <wking> mrunalp: thinks the experimental feature workflow is useful
+17:13:27 <wking> duglin: also for adding new features without changing the schema
+17:13:28 <mikebrow> it tells people when they see an annotation whether it's a known annotation or not within the oci group
+17:13:45 <wking> duglin's new-feature workflow doesn't sound good to me ;)
+17:14:19 <wking> stevvooe: Browsers have vendor extensions that eventually graduate to the top level, but that fragments experimanal features
+17:14:30 <wking> stevvooe: claiming space in annotations seems like it's building in fragmentations
+17:14:35 <duglin> just seems odd to me that we’re allowing everyone except ourselves to add annotations
+17:14:53 <duglin> e.g. perhaps runc adds one
+17:15:02 <mikebrow> don't see all annotations as fragmentation
+17:15:10 <wking> but we have the unique ability to coin new top-level settings^^
+17:15:19 <wking> vbatts|work: claiming space is just hedging against fragmenting, we may not end up using it
+17:15:54 <wking> #link http://tools.ietf.org/html/rfc6648
+17:16:07 <wking> ^ suggesting not namespacing experimental features to make stabilizing them easier
+17:16:40 <mikebrow> ^ suggest discussing experimental features in PRS
+17:17:26 <wking> discussing experimental features in PRs sounds good to me
+17:18:01 <wking> vbatts|work: we've discussed additional nuances for platforms (flavors of arm, etc.)
+17:18:15 <wking> vbatts|work: that may be too much for platform, but useful enough for an annotation
+17:18:36 <wking> I think "too much for platform?" is not something we want to be arging over ;)
+17:18:39 <wking> *arguing
+17:18:46 <wking> if it's useful for someone, put it in platform ;
+17:20:01 <wking> duglin: what do we do with unspecified top level properties?  Should the runtime ignore?  Error out?
+17:20:12 <mikebrow> it's useful to know that space is reserved for future use, should a use be discovered and agreed upon at some future point in time...
+17:20:46 <wking> mrunalp: I think we should error out, because we don't want to silently ignore something that the user expects to be acted on
+17:21:14 <wking> vbatts|work: this has come up in the past, and the consensus is to ignore it
+17:21:28 <wking> stevvooe: from experience, ignoring is the right way to go (otherwise ignoring is hard)
+17:21:43 <wking> duglin: that's where I started, but I'm worried about folks using that for top-level extensions
+17:22:01 <wking> vbatts|work: who cares?  They can go in annotations if they don't want to get stomped on
+17:22:23 <wking> vbatts|work: but if they want to go with top-level settings (and risk getting stomped on), then they are free to do that
+17:22:46 <wking> julz_: I want it to be explicit about whether we do or don't allow it, but I don't really care which way it goes
+17:23:10 <wking> stevvooe: we're recently adding foreign-layer support in Docker (we hope to get it into OCI soon)
+17:23:21 <wking> stevvooe: we can add it transparently knowing that old clients will ignore it
+17:23:57 <wking> julz_: my very slight hesitation is that if we add a security field, say "this image needs seccomp", then we don't have a way of knowing if it would be ignored
+17:24:40 <wking> julz_: maybe this is a breaking change, and we can handle it in versioning
+17:24:48 <wking> you could also bump the minor version
+17:25:22 <wking> julz_: there was some conversation at the face-to-face about what ociVersion ment (min or max?)
+17:25:47 <wking> duglin: the image-spec only has "2", not a SemVer version
+17:27:52 <wking> we need to clarify that 1.1 runtimes will error on a 1.2 spec
+17:28:02 <RobDolinMS> ^ Should this be updated to SemVer or was this a carry-over from starting from Docker and important for compatibility ?
+17:28:22 <wking> #sction duglin to file a separate PR about version compat
+17:28:40 <RobDolinMS> ^ Typo?
+17:28:58 <wking> RobDolinMS?
+17:29:13 <RobDolinMS> #ACTION duglin to file a separate PR about version compat
+17:29:26 <wking> ah, thanks ;)
+17:29:33 <RobDolinMS> :)
+17:31:04 <duglin> day off??
+17:31:05 <wking> #topic Do we reset votes after changes to the proposal?
+17:31:21 <wking> #link https://groups.google.com/a/opencontainers.org/d/msg/dev/ik3MIDWq4Us/UIZgqXo7CQAJ
+17:31:58 <wking> #action philips to sent a new email
+17:32:03 <wking> maybe a new thread^
+17:32:12 <wking> #endmeeting

@@ -1,0 +1,305 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: OCI weekly meeting 5/18</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: OCI weekly meeting 5/18</h1>
+<span class="details">
+Meeting started by mrunalp at 17:01:23 UTC
+(<a href="opencontainers.2016-05-18-17.01.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">create/start split</b> <span class="details">(<a href='opencontainers.2016-05-18-17.01.log.html#l-8'>wking</a>, 17:02:40)</span>
+<br></li>
+<li><b class="TOPIC">https://github.com/opencontainers/ocitools/issues/66</b> <span class="details">(<a href='opencontainers.2016-05-18-17.01.log.html#l-18'>mrunalp</a>, 17:06:07)</span>
+<ol type="a">
+  <li><span class="INFO">We will expect some additional PRs re: Windows
+    Containers early next week</span> <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-19'>RobDolinMS</a>,
+    17:06:08)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">Maintainers
+    should take a look at the aforementioned PR and check if
+    MUST/REQUIRED, SHOULD/RECOMMENDED, and MAY/OPTIONAL are
+    accurate</span> <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-23'>RobDolinMS</a>,
+    17:07:50)</span></li>
+  <li><span class="INFO">Mrunal suggests meeting next week and doing
+    this</span> <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-27'>RobDolinMS</a>,
+    17:08:48)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/436">https://github.com/opencontainers/runtime-spec/pull/436</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-28'>mrunalp</a>,
+    17:09:28)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">remove solaris from full config</b> <span class="details">(<a href='opencontainers.2016-05-18-17.01.log.html#l-29'>wking</a>, 17:09:37)</span>
+<br></li>
+<li><b class="TOPIC">no mount nesting on Windows</b> <span class="details">(<a href='opencontainers.2016-05-18-17.01.log.html#l-31'>wking</a>, 17:10:21)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/433">https://github.com/opencontainers/runtime-spec/pull/433</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-33'>wking</a>,
+    17:10:41)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/432">https://github.com/opencontainers/runtime-spec/pull/432</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-34'>mrunalp</a>,
+    17:10:43)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">fstab-options are Linux-specific</b> <span class="details">(<a href='opencontainers.2016-05-18-17.01.log.html#l-36'>wking</a>, 17:11:08)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/432">https://github.com/opencontainers/runtime-spec/pull/432</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-37'>wking</a>,
+    17:11:13)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">RobDolinMS to
+    update PR #432</span> <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-42'>RobDolinMS</a>,
+    17:13:24)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/427">https://github.com/opencontainers/runtime-spec/pull/427</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-43'>mrunalp</a>,
+    17:13:25)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">optional hooks</b> <span class="details">(<a href='opencontainers.2016-05-18-17.01.log.html#l-44'>wking</a>, 17:13:31)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/427">https://github.com/opencontainers/runtime-spec/pull/427</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-45'>wking</a>,
+    17:13:36)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">wking will
+    reroll #427 with that wording</span> <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-57'>wking</a>,
+    17:19:21)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/423">https://github.com/opencontainers/runtime-spec/pull/423</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-58'>mrunalp</a>,
+    17:19:32)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">dropping the "bundle" word</b> <span class="details">(<a href='opencontainers.2016-05-18-17.01.log.html#l-59'>wking</a>, 17:20:59)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/423">https://github.com/opencontainers/runtime-spec/pull/423</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-60'>wking</a>,
+    17:21:05)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/389">https://github.com/opencontainers/runtime-spec/issues/389</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-61'>wking</a>,
+    17:22:34)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">everyone
+    discuss the PR ;)</span> <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-75'>wking</a>,
+    17:29:17)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/418">https://github.com/opencontainers/runtime-spec/pull/418</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-76'>mrunalp</a>,
+    17:29:28)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">allow 'start' to not validate the config.json</b> <span class="details">(<a href='opencontainers.2016-05-18-17.01.log.html#l-77'>wking</a>, 17:29:42)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/418">https://github.com/opencontainers/runtime-spec/pull/418</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-78'>wking</a>,
+    17:29:48)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/412">https://github.com/opencontainers/runtime-spec/pull/412</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-81'>mrunalp</a>,
+    17:31:17)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">explicit container namespaces for uid</b> <span class="details">(<a href='opencontainers.2016-05-18-17.01.log.html#l-82'>wking</a>, 17:31:23)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/403">https://github.com/opencontainers/runtime-spec/pull/403</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-84'>mrunalp</a>,
+    17:32:27)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">capitalize MUST</b> <span class="details">(<a href='opencontainers.2016-05-18-17.01.log.html#l-85'>wking</a>, 17:32:49)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/403">https://github.com/opencontainers/runtime-spec/pull/403</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-86'>wking</a>,
+    17:32:54)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/397/files">https://github.com/opencontainers/runtime-spec/pull/397/files</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-87'>mrunalp</a>,
+    17:33:06)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">RobDolinMS to
+    reroll #403 to get wording updates</span> <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-88'>wking</a>,
+    17:33:10)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">cgroup namespaces</b> <span class="details">(<a href='opencontainers.2016-05-18-17.01.log.html#l-89'>wking</a>, 17:33:22)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/397">https://github.com/opencontainers/runtime-spec/pull/397</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-90'>wking</a>,
+    17:33:28)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">VM configuration updates</b> <span class="details">(<a href='opencontainers.2016-05-18-17.01.log.html#l-92'>wking</a>, 17:33:52)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/405">https://github.com/opencontainers/runtime-spec/pull/405</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-93'>wking</a>,
+    17:33:59)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">anush_ to
+    namespace VM-specific settings in #405</span> <span
+    class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-105'>wking</a>,
+    17:42:18)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">maintainers
+    to review, LGTM, and/or merge #405 after the reroll</span> <span
+    class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-106'>wking</a>,
+    17:42:40)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">repo organization</b> <span class="details">(<a href='opencontainers.2016-05-18-17.01.log.html#l-107'>wking</a>, 17:42:51)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/tob/issues/2">https://github.com/opencontainers/tob/issues/2</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-118'>wking</a>,
+    17:46:00)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/tob/issues/11">https://github.com/opencontainers/tob/issues/11</a>
+    <span class="details">(<a
+    href='opencontainers.2016-05-18-17.01.log.html#l-119'>wking</a>,
+    17:46:27)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 17:48:27 UTC
+(<a href="opencontainers.2016-05-18-17.01.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>Maintainers should take a look at the aforementioned PR and check if MUST/REQUIRED, SHOULD/RECOMMENDED, and MAY/OPTIONAL are accurate</li>
+  <li>RobDolinMS to update PR #432</li>
+  <li>wking will reroll #427 with that wording</li>
+  <li>everyone discuss the PR ;)</li>
+  <li>RobDolinMS to reroll #403 to get wording updates</li>
+  <li>anush_ to namespace VM-specific settings in #405</li>
+  <li>maintainers to review, LGTM, and/or merge #405 after the reroll</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> anush_ <ol>
+    <li>anush_ to namespace VM-specific settings in #405</li>
+  </ol></li>
+  <li> RobDolinMS <ol>
+    <li>RobDolinMS to update PR #432</li>
+    <li>RobDolinMS to reroll #403 to get wording updates</li>
+  </ol></li>
+  <li> wking <ol>
+    <li>wking will reroll #427 with that wording</li>
+  </ol></li>
+  <li><b>UNASSIGNED</b><ol>
+    <li>Maintainers should take a look at the aforementioned PR and check if MUST/REQUIRED, SHOULD/RECOMMENDED, and MAY/OPTIONAL are accurate</li>
+    <li>everyone discuss the PR ;)</li>
+    <li>maintainers to review, LGTM, and/or merge #405 after the reroll</li>
+  </ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (101)</li>
+  <li>mrunalp (11)</li>
+  <li>RobDolinMS (4)</li>
+  <li>collabot` (4)</li>
+  <li>anush_ (2)</li>
+  <li>JakeWarner|Work (1)</li>
+  <li>julz_ (1)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

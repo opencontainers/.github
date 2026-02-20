@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">18:01:15</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-03-02 discussion</span>
+<a name="l-2"></a><span class="tm">18:01:15</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed Mar  2 18:01:15 2016 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">18:01:15</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">18:01:15</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2016_03_02_discussion'
+<a name="l-5"></a><span class="tm">18:01:40</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chairs </span><span class="cmdline">RobDolinMS wking</span>
+<a name="l-6"></a><span class="tm">18:01:45</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chair </span><span class="cmdline">RobDolinMS wking</span>
+<a name="l-7"></a><span class="tm">18:01:45</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: RobDolinMS vbatts wking
+<a name="l-8"></a><span class="tm">18:01:59</span><span class="nk"> &lt;anuthan&gt;</span> <span class="hi">mrunal:</span> you are not audible
+<a name="l-9"></a><span class="tm">18:02:11</span><span class="nk"> &lt;anuthan&gt;</span> mrunalp ^^
+<a name="l-10"></a><span class="tm">18:02:28</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">To abstract exec, or not?</span>
+<a name="l-11"></a><span class="tm">18:03:05 </span><span class="nka">* vbatts</span> <span class="ac">looks for the link</span>
+<a name="l-12"></a><span class="tm">18:03:53</span><span class="nk"> &lt;mrunalp&gt;</span> https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/COlUEJsOIIc
+<a name="l-13"></a><span class="tm">18:04:29</span><span class="nk"> &lt;RobDolinMS&gt;</span> Three options:
+<a name="l-14"></a><span class="tm">18:04:31</span><span class="nk"> &lt;RobDolinMS&gt;</span> 1) Remove
+<a name="l-15"></a><span class="tm">18:04:35</span><span class="nk"> &lt;RobDolinMS&gt;</span> 2) Let runtime extend
+<a name="l-16"></a><span class="tm">18:05:09</span><span class="nk"> &lt;RobDolinMS&gt;</span> 3) process.json takes precedence over config.json
+<a name="l-17"></a><span class="tm">18:05:52</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/COlUEJsOIIc</span>
+<a name="l-18"></a><span class="tm">18:06:38</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> Main use case is making exec privileged so you can debug
+<a name="l-19"></a><span class="tm">18:09:11</span><span class="nk"> &lt;RobDolinMS&gt;</span> Mike Brown: could we have an option for the container to override the property?
+<a name="l-20"></a><span class="tm">18:11:44</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> Go with the most commonly used options and runtimes can potentially go beyond
+<a name="l-21"></a><span class="tm">18:12:17</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vishnu:</span> Do we have a specific proposal?
+<a name="l-22"></a><span class="tm">18:12:44</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Crosby:</span> As we're adding runc functionality to Docker, this came-up
+<a name="l-23"></a><span class="tm">18:13:22</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vishnu:</span> Would it be useful to have something tangible to discuss?
+<a name="l-24"></a><span class="tm">18:13:35</span><span class="nk"> &lt;RobDolinMS&gt;</span> Michael C: I could draft something
+<a name="l-25"></a><span class="tm">18:14:01</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#ACTION </span><span class="cmdline">CrosbyMichael to prepare PR</span>
+<a name="l-26"></a><span class="tm">18:14:16</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Next Milestone</span>
+<a name="l-27"></a><span class="tm">18:14:40</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/pulls?q=is%3Aopen+is%3Apr+milestone%3Av0.4.0</span>
+<a name="l-28"></a><span class="tm">18:14:54</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/specs/pull/276
+<a name="l-29"></a><span class="tm">18:18:14</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vincent:</span> Will target for v0.4 (3/9)
+<a name="l-30"></a><span class="tm">18:19:49</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> There is also tooling that needs to be updated.
+<a name="l-31"></a><span class="tm">18:20:15</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Crosby:</span> It would be nice to get spec repo stable so runc and tools can catch-up
+<a name="l-32"></a><span class="tm">18:20:37</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Doug:</span> What is the status of create and start?
+<a name="l-33"></a><span class="tm">18:20:42</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vishnu:</span> I'll get to it this week
+<a name="l-34"></a><span class="tm">18:23:53</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Labels</span>
+<a name="l-35"></a><span class="tm">18:24:14</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Crosby:</span> What is the difference between annotations and labels?
+<a name="l-36"></a><span class="tm">18:24:34</span><span class="nk"> &lt;RobDolinMS&gt;</span> One use case is distinguishing user container, system container, etc.
+<a name="l-37"></a><span class="tm">18:25:17</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vishnu:</span> If defined, labels; if arbitrary metadata, annotations
+<a name="l-38"></a><span class="tm">18:25:28</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vishnu:</span> Maybe we need a seperate PR to add labels?
+<a name="l-39"></a><span class="tm">18:25:47</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> I'm OK adding it, but concerned it doesn't get mis-used
+<a name="l-40"></a><span class="tm">18:26:28</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vincent:</span> People need some place to store arbitrary MetaData
+<a name="l-41"></a><span class="tm">18:28:27</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vishnu:</span> Runtimes could use labels for grouping
+<a name="l-42"></a><span class="tm">18:28:49</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vishnu:</span> may need to have some format around this instead of letting them be arbitrary strings
+<a name="l-43"></a><span class="tm">18:29:33 </span><span class="nka">* RobDolinMS</span> <span class="ac">Vishh to propose PRs</span>
+<a name="l-44"></a><span class="tm">18:29:41</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#ACTION: </span><span class="cmdline">Vishh to propose PRs</span>
+<a name="l-45"></a><span class="tm">18:31:42</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Brandon:</span> Please include examples
+<a name="l-46"></a><span class="tm">18:33:08</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> Looks like we're done for today
+<a name="l-47"></a><span class="tm">18:33:35</span><span class="nk"> &lt;mrunalp&gt;</span> RobDolinMS, Thanks for the notes, as always :)
+<a name="l-48"></a><span class="tm">18:34:54</span><span class="nk"> &lt;mrunalp&gt;</span> vbatts, endmeeting?
+<a name="l-49"></a><span class="tm">18:35:52</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2016-10-19 discussion</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2016-10-19 discussion</h1>
+<span class="details">
+Meeting started by wking at 21:00:57 UTC
+(<a href="opencontainers.2016-10-19-21.00.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/591">https://github.com/opencontainers/runtime-spec/pull/591</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-19-21.00.log.html#l-7'>mrunalp</a>,
+    21:03:43)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">Allowing read-only containers: require mount destinations</b> <span class="details">(<a href='opencontainers.2016-10-19-21.00.log.html#l-8'>wking</a>, 21:04:04)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/591">https://github.com/opencontainers/runtime-spec/pull/591</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-19-21.00.log.html#l-9'>wking</a>,
+    21:04:10)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runc/pull/1125">https://github.com/opencontainers/runc/pull/1125</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-19-21.00.log.html#l-16'>wking</a>,
+    21:05:25)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/513">https://github.com/opencontainers/runtime-spec/pull/513</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-19-21.00.log.html#l-18'>mrunalp</a>,
+    21:06:01)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">stdio container setup</b> <span class="details">(<a href='opencontainers.2016-10-19-21.00.log.html#l-21'>wking</a>, 21:08:40)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/513">https://github.com/opencontainers/runtime-spec/pull/513</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-19-21.00.log.html#l-22'>wking</a>,
+    21:08:46)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">runtime-tools maintainers</b> <span class="details">(<a href='opencontainers.2016-10-19-21.00.log.html#l-35'>wking</a>, 21:23:24)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-tools/pull/249">https://github.com/opencontainers/runtime-tools/pull/249</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-19-21.00.log.html#l-36'>mrunalp</a>,
+    21:23:25)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">image-spec vote for rc2</b> <span class="details">(<a href='opencontainers.2016-10-19-21.00.log.html#l-38'>wking</a>, 21:24:33)</span>
+<ol type="a">
+  <li><a
+    href="https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/eurcUUQRLRs">https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/eurcUUQRLRs</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-19-21.00.log.html#l-40'>wking</a>,
+    21:24:52)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/issues/314">https://github.com/opencontainers/image-spec/issues/314</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-19-21.00.log.html#l-42'>wking</a>,
+    21:25:18)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/issues/22#issuecomment-254605473">https://github.com/opencontainers/image-spec/issues/22#issuecomment-254605473</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-19-21.00.log.html#l-48'>stevvooe</a>,
+    21:27:08)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">image signing</b> <span class="details">(<a href='opencontainers.2016-10-19-21.00.log.html#l-49'>wking</a>, 21:27:13)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/image-spec/issues/22">https://github.com/opencontainers/image-spec/issues/22</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-19-21.00.log.html#l-50'>wking</a>,
+    21:27:22)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">stevvooe to
+    file a 1.0 condition framing the signature approach</span> <span
+    class="details">(<a
+    href='opencontainers.2016-10-19-21.00.log.html#l-61'>wking</a>,
+    21:31:58)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">image-spec conformance language</b> <span class="details">(<a href='opencontainers.2016-10-19-21.00.log.html#l-65'>wking</a>, 21:33:17)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/381">https://github.com/opencontainers/image-spec/pull/381</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-19-21.00.log.html#l-68'>wking</a>,
+    21:33:42)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">philips to
+    file a comment about cleaning up the existing manifest-list
+    language</span> <span class="details">(<a
+    href='opencontainers.2016-10-19-21.00.log.html#l-80'>wking</a>,
+    21:40:30)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">KubeCon face to face</b> <span class="details">(<a href='opencontainers.2016-10-19-21.00.log.html#l-82'>wking</a>, 21:40:44)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">RobDolinMS to
+    email the list about a KubeCon face-to-face</span> <span
+    class="details">(<a
+    href='opencontainers.2016-10-19-21.00.log.html#l-87'>wking</a>,
+    21:41:21)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 21:41:48 UTC
+(<a href="opencontainers.2016-10-19-21.00.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>stevvooe to file a 1.0 condition framing the signature approach</li>
+  <li>philips to file a comment about cleaning up the existing manifest-list language</li>
+  <li>RobDolinMS to email the list about a KubeCon face-to-face</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> philips <ol>
+    <li>philips to file a comment about cleaning up the existing manifest-list language</li>
+  </ol></li>
+  <li> stevvooe <ol>
+    <li>stevvooe to file a 1.0 condition framing the signature approach</li>
+  </ol></li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (71)</li>
+  <li>mrunalp (11)</li>
+  <li>collabot (4)</li>
+  <li>philips (1)</li>
+  <li>stevvooe (1)</li>
+  <li>vbatts (0)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

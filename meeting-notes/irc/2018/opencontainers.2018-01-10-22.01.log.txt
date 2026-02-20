@@ -1,0 +1,71 @@
+22:01:55 <wking> #startmeeting 2018-01-10 discussion
+22:01:55 <collabot> Meeting started Wed Jan 10 22:01:55 2018 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:01:55 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:01:55 <collabot> The meeting name has been set to '2018_01_10_discussion'
+22:02:34 <wking> mrunalp, vbatts, stevvooe, tianon, crosbymichael, etc.?
+22:03:16 <cracra> [caniszczyk, Open Container Initiative] only major issue I'd like to bring up is OCI TOB election nomination schedule: https://github.com/opencontainers/tob/issues/33
+22:03:20 <vbatts|work> oh man
+22:03:30 <stevvooe> hey
+22:03:35 <vbatts|work> i'll dial in once i'm in the car
+22:03:38 <vbatts|work> :-\
+22:21:22 <wking> #action wking to file a comment with a link to this log and a call for mrunalp and crosbymichael to weigh in
+22:21:38 <wking> vbatts|work: other topics?
+22:21:44 <wking> #topic distribution API
+22:22:13 <wking> vbatts|work: not much progress last week.  I began drafting an email covering the KubeCon notes
+22:22:37 <cracra> [caniszczyk, Open Container Initiative] here's a relevant github issue for distribution spec discussion: https://github.com/opencontainers/tob/issues/34
+22:22:42 <wking> vbatts|work: we want to bring over the distribution API into OCI
+22:22:49 <cracra> [caniszczyk, Open Container Initiative] here's the gdoc vincent mentioned https://docs.google.com/document/d/15y0SBrrDFIEM7pnU-Oe3Y6pq-eTZfo0mk-k33cS2hR4/edit#heading=h.kmkpd9i5mwli
+22:23:07 <wking> vbatts|work: I expect we want to get it circulated for discussion/TOB-vote in the next week or so
+22:23:32 <wking> vbatts|work: but this is somewhat complicated by the TOB vote.  There's no real reason to wait on the initial document
+22:23:51 <wking> vbatts|work: but if discussion takes too long, we might need to start the discussion over with the new TOB
+22:24:18 <wking> vbatts|work: I was thinking to not wait
+22:24:24 <wking> stevvooe: I was thinking we would wait
+22:24:34 <wking> stevvooe: when does the new TOB come online?
+22:24:40 <wking> cracra: January 29th
+22:24:48 <wking> vbatts|work: all the voting before then?
+22:25:10 <wking> cracra: nominations finish next Thursday.  Votes close on the 26th, and the change happens on the 29th
+22:25:18 <wking> vbatts|work: is there an overlap period?
+22:25:28 <wking> cracra: I think votes stop counting when your term is up
+22:25:40 <wking> cracra: so if the vote comes in before the 29th it counts
+22:26:11 <wking> I think it would be clearer to have a vote that did not span the 29th
+22:26:33 <wking> cracra: this project doesn't seem as complex as some of our previous ones
+22:26:56 <wking> cracra: the formal process requires a TOB pull request and formally asking the TOB for a vote
+22:27:27 <wking> vbatts|work: I think it's fine to proceed, and we'll figure out when the vote falls later
+22:27:47 <wking> cracra: a finallized proposal by the 19th would allow plenty of time for a vote
+22:28:12 <wking> stevvooe: I'd prefer to wait for the new TOB instead of pushing it through
+22:28:30 <wking> cracra: that's fine.  I think we can start working on the proposal and see when it's ready
+22:28:52 <wking> stevvooe: I don't think the active TOB will affect the proposal
+22:29:13 <wking> cracra: I'll take that as an action item that everyone will collaborate on that Google Doc
+22:29:17 <wking> vbatts|work: sounds good
+22:30:07 <wking> #topic open PR for VMs in runtime-spec
+22:30:23 <cracra> [caniszczyk, Open Container Initiative] !link distribution spec https://github.com/opencontainers/tob/issues/33
+22:30:23 <wking> #link https://github.com/opencontainers/runtime-spec/pull/405
+22:30:37 <cracra> [caniszczyk, Open Container Initiative] #link distribution spec https://github.com/opencontainers/tob/issues/33
+22:30:43 <wking> vbatts|work: to my memory, this was punted to see how thin-VM containers shake out
+22:30:48 <cracra> [caniszczyk, Open Container Initiative] i'm such a meetbot noob
+22:31:28 <wking> vbatts|work: I think now we are at the point where thin-VM containers are clearer
+22:31:33 <wking> stevvooe: do we know what's missing?
+22:31:53 <wking> vbatts|work: we may need to start the discussion over because things may have changed since the previous discussion
+22:32:02 <wking> stevvooe: the runtime-spec PR seemed pretty minimal
+22:32:32 <wking> vbatts|work: runV can support multiple backends, so what is the minimum viable set of properties for thin-VM runtimes?
+22:33:11 <wking> vbatts|work: I have nothing else right now
+22:34:24 <wking> stevvooe: there was some discussion of JSON Schema on the mailing list...
+22:34:30 <wking> stevvooe: but we can all just leave...
+22:34:51 <wking> #topic JSON Schema
+22:35:24 <wking> stevvooe: I just keep running into bugs.  I'm not sure if it's JSON Schema or gojsonschema.  But when I went to modify it, it took me half a day to add a field
+22:35:32 <wking> stevvooe: in containerd we've had to add our own validation
+22:35:59 <wking> vbatts|work: I don't know what ripping it out would...
+22:36:18 <wking> stevvooe: It's currently causing the runc build to fail, because runc doesn't pin gojsonschema
+22:36:25 <wking> vbatts|work: so this is a Golang issue?
+22:37:12 <wking> stevvooe: I'm concerned that folks will feel the JSON Schema covers the spec, because it's only really covering a subset
+22:37:41 <wking> #link https://github.com/opencontainers/runc/issues/1680
+22:38:29 <wking> stevvooe: I agree with the compact-ness sentiment, and I'm a huge fan of protobuf and similar for schema declaration
+22:38:35 <wking> stevvooe: but JSON Schema reminds me of XML
+22:38:41 <wking> vbatts|work: XML was better at this
+22:38:48 <wking> stevvooe: XML was way better at this
+22:39:07 <wking> #link https://github.com/opencontainers/runtime-spec/pull/945
+22:39:36 <wking> vbatts|work: I think we already have docs saying the Markdown is normative, and the JSON Schema is informative
+22:39:53 <wking> #link https://github.com/opencontainers/image-spec/pull/739
+22:40:32 <wking> #link https://github.com/opencontainers/runtime-spec/blame/v1.0.1/config.md#L6
+22:40:41 <wking> ^ current runtime-spec example showing that the JSON Schema is informative
+22:41:17 <wking> #endmeeting

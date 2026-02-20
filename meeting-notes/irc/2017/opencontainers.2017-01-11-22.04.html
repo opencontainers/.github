@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: OCI 1/11</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: OCI 1/11</h1>
+<span class="details">
+Meeting started by mrunalp at 22:04:19 UTC
+(<a href="opencontainers.2017-01-11-22.04.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/486">https://github.com/opencontainers/image-spec/pull/486</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-16'>wking</a>,
+    22:09:58)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/512">https://github.com/opencontainers/image-spec/pull/512</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-17'>wking</a>,
+    22:10:04)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">many minor runtime-spec PRs</b> <span class="details">(<a href='opencontainers.2017-01-11-22.04.log.html#l-22'>wking</a>, 22:12:05)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pulls?page=1&amp;q=no%3Amilestone+is%3Aopen&amp;utf8=%E2%9C%93">https://github.com/opencontainers/runtime-spec/pulls?page=1&amp;q=no%3Amilestone+is%3Aopen&amp;utf8=%E2%9C%93</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-37'>wking</a>,
+    22:18:09)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/512">https://github.com/opencontainers/image-spec/pull/512</a>
+    at someone's leisure <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-42'>stevvooe</a>,
+    22:20:28)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/647">https://github.com/opencontainers/runtime-spec/pull/647</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-45'>wking</a>,
+    22:22:05)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/646">https://github.com/opencontainers/runtime-spec/pull/646</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-48'>wking</a>,
+    22:23:37)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/635">https://github.com/opencontainers/runtime-spec/pull/635</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-50'>wking</a>,
+    22:24:47)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/630">https://github.com/opencontainers/runtime-spec/pull/630</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-52'>wking</a>,
+    22:25:37)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/628">https://github.com/opencontainers/runtime-spec/pull/628</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-61'>wking</a>,
+    22:27:50)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/620">https://github.com/opencontainers/runtime-spec/pull/620</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-71'>wking</a>,
+    22:30:44)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/611">https://github.com/opencontainers/runtime-spec/pull/611</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-74'>wking</a>,
+    22:31:37)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/611#issuecomment-261700992">https://github.com/opencontainers/runtime-spec/pull/611#issuecomment-261700992</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-83'>wking</a>,
+    22:35:12)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/577">https://github.com/opencontainers/runtime-spec/pull/577</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-86'>wking</a>,
+    22:37:02)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/570">https://github.com/opencontainers/runtime-spec/pull/570</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-89'>wking</a>,
+    22:39:01)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/555">https://github.com/opencontainers/runtime-spec/pull/555</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-91'>wking</a>,
+    22:39:19)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/552">https://github.com/opencontainers/runtime-spec/pull/552</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-105'>wking</a>,
+    22:43:58)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/548">https://github.com/opencontainers/runtime-spec/pull/548</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-107'>wking</a>,
+    22:44:51)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/blob/master/specs-go/config.go#L295">https://github.com/opencontainers/runtime-spec/blob/master/specs-go/config.go#L295</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-110'>mrunalp</a>,
+    22:46:05)</span></li>
+  <li><a
+    href="https://dave.cheney.net/2013/01/19/what-is-the-zero-value-and-why-is-it-useful">https://dave.cheney.net/2013/01/19/what-is-the-zero-value-and-why-is-it-useful</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-111'>stevvooe</a>,
+    22:46:08)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/545">https://github.com/opencontainers/runtime-spec/pull/545</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-114'>wking</a>,
+    22:48:34)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/540">https://github.com/opencontainers/runtime-spec/pull/540</a>
+    <span class="details">(<a
+    href='opencontainers.2017-01-11-22.04.log.html#l-117'>wking</a>,
+    22:49:52)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 22:56:00 UTC
+(<a href="opencontainers.2017-01-11-22.04.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>(none)</li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (112)</li>
+  <li>mrunalp (5)</li>
+  <li>vbatts (4)</li>
+  <li>collabot (4)</li>
+  <li>stevvooe (2)</li>
+  <li>dqminh (1)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

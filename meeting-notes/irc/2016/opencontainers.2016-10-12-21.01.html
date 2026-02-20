@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2016-10-12 discussion</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2016-10-12 discussion</h1>
+<span class="details">
+Meeting started by wking at 21:01:02 UTC
+(<a href="opencontainers.2016-10-12-21.01.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">support for VMs</b> <span class="details">(<a href='opencontainers.2016-10-12-21.01.log.html#l-10'>wking</a>, 21:02:32)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/405">https://github.com/opencontainers/runtime-spec/pull/405</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-12-21.01.log.html#l-11'>wking</a>,
+    21:02:49)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/513">https://github.com/opencontainers/runtime-spec/pull/513</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-12-21.01.log.html#l-42'>wking</a>,
+    21:18:36)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/518">https://github.com/opencontainers/runtime-spec/pull/518</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-12-21.01.log.html#l-43'>wking</a>,
+    21:18:41)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">image-spec overview</b> <span class="details">(<a href='opencontainers.2016-10-12-21.01.log.html#l-45'>wking</a>, 21:20:19)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/337">https://github.com/opencontainers/image-spec/pull/337</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-12-21.01.log.html#l-55'>wking</a>,
+    21:23:25)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">stevvooe to
+    propose a package structure around the image repo split</span> <span
+    class="details">(<a
+    href='opencontainers.2016-10-12-21.01.log.html#l-82'>wking</a>,
+    21:36:48)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">annotations for image config</b> <span class="details">(<a href='opencontainers.2016-10-12-21.01.log.html#l-111'>wking</a>, 21:45:24)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/371">https://github.com/opencontainers/image-spec/pull/371</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-12-21.01.log.html#l-112'>wking</a>,
+    21:45:36)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/372">https://github.com/opencontainers/image-spec/pull/372</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-12-21.01.log.html#l-113'>wking</a>,
+    21:45:41)</span></li>
+  <li><a
+    href="https://github.com/docker/docker/blob/master/image/spec/v1.2.md">https://github.com/docker/docker/blob/master/image/spec/v1.2.md</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-12-21.01.log.html#l-120'>vbatts|work</a>,
+    21:48:12)</span></li>
+  <li><a
+    href="https://github.com/docker/docker/blob/master/api/types/container/config.go">https://github.com/docker/docker/blob/master/api/types/container/config.go</a>
+    <span class="details">(<a
+    href='opencontainers.2016-10-12-21.01.log.html#l-121'>stevvooe</a>,
+    21:49:41)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 22:00:56 UTC
+(<a href="opencontainers.2016-10-12-21.01.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>stevvooe to propose a package structure around the image repo split</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> stevvooe <ol>
+    <li>stevvooe to propose a package structure around the image repo split</li>
+  </ol></li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (151)</li>
+  <li>collabot (4)</li>
+  <li>stevvooe (3)</li>
+  <li>vbatts|work (1)</li>
+  <li>cyphar (1)</li>
+  <li>mrunalp (0)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

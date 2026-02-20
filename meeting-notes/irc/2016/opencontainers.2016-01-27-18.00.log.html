@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">18:00:47</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2015-01-27 discussion</span>
+<a name="l-2"></a><span class="tm">18:00:47</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Jan 27 18:00:47 2016 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">18:00:47</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">18:00:47</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2015_01_27_discussion'
+<a name="l-5"></a><span class="tm">18:00:52</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-6"></a><span class="tm">18:00:52</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: vbatts|work wking
+<a name="l-7"></a><span class="tm">18:01:24</span><span class="nk"> &lt;tianon&gt;</span> (someone have the latest video link?  the 1771332256 seems to be 404 again D: )
+<a name="l-8"></a><span class="tm">18:02:17</span><span class="nk"> &lt;jlb13&gt;</span> should be the same as ever, tianon
+<a name="l-9"></a><span class="tm">18:02:46</span><span class="nk"> &lt;jlb13&gt;</span> i'm in the call, can't sort out how to see the actual number. but it's saved in my phone, and is up and running
+<a name="l-10"></a><span class="tm">18:02:54</span><span class="nk"> &lt;tianon&gt;</span> doh, now it works
+<a name="l-11"></a><span class="tm">18:02:59</span><span class="nk"> &lt;jlb13&gt;</span> cool
+<a name="l-12"></a><span class="tm">18:03:48</span><span class="nk"> &lt;duglin&gt;</span> echo echo
+<a name="l-13"></a><span class="tm">18:04:22</span><span class="nk"> &lt;duglin&gt;</span> yup
+<a name="l-14"></a><span class="tm">18:04:27</span><span class="nk"> &lt;RobDolinMS&gt;</span> Good day :)
+<a name="l-15"></a><span class="tm">18:04:48</span><span class="nk"> &lt;mikebrow&gt;</span> fist bump
+<a name="l-16"></a><span class="tm">18:05:24</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#action </span><span class="cmdline">duglin rebase ops PR</span>
+<a name="l-17"></a><span class="tm">18:06:22</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/pull/225#issuecomment-172633075</span>
+<a name="l-18"></a><span class="tm">18:07:33</span><span class="nk"> &lt;jlb13&gt;</span> whoa. that was more like echo(echo(echo))).
+<a name="l-19"></a><span class="tm">18:08:03</span><span class="nk"> &lt;jlb13&gt;</span> bah. parser fail.
+<a name="l-20"></a><span class="tm">18:08:29</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Present: anuthan, crosbymichael, duglin, jlb13, Liangchenye, Mike Brown (mikebrow), Mrunal Patel (mrunal), RobDolinMS, tianon, wking, Vishnu Kannan (vishh)</span>
+<a name="l-21"></a><span class="tm">18:08:45</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Doug:</span> I agree with Michael, ...
+<a name="l-22"></a><span class="tm">18:08:57</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Doug:</span> Whether someone else can see is up to the environment
+<a name="l-23"></a><span class="tm">18:09:33</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Crosby:</span> The spec should at least say, if you create a container you should be able to get state.
+<a name="l-24"></a><span class="tm">18:09:37</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Jesse:</span> Agree
+<a name="l-25"></a><span class="tm">18:09:53</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Jesse:</span> leave delegated user and superuser as optional
+<a name="l-26"></a><span class="tm">18:10:18</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Trevor:</span> What if I'm running a virtual host and launch nested continers using the same runtime?
+<a name="l-27"></a><span class="tm">18:10:24</span><span class="nk"> &lt;mikebrow&gt;</span> I don't think we should recurse
+<a name="l-28"></a><span class="tm">18:10:31</span><span class="nk"> &lt;mikebrow&gt;</span> into the children
+<a name="l-29"></a><span class="tm">18:10:38</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Present: Guest (vbatts)</span>
+<a name="l-30"></a><span class="tm">18:11:12</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Doug:</span> This isn't just about querying state, it's about other operations
+<a name="l-31"></a><span class="tm">18:11:53</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Jesse:</span> I would not be opposed to different operations having different credentials
+<a name="l-32"></a><span class="tm">18:12:03</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Crosby:</span> There are many ways to do auth;
+<a name="l-33"></a><span class="tm">18:12:14</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Crosby:</span> If you create it, you can get it.
+<a name="l-34"></a><span class="tm">18:12:52</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Crosby:</span> If a runtime is smart and can act on nested containters (or some sort of pod level) that's great, but not required
+<a name="l-35"></a><span class="tm">18:13:12</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Jesse:</span> What about multi-tenancy
+<a name="l-36"></a><span class="tm">18:13:57</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Trevor:</span> Sounds like we're closer than the current PR text
+<a name="l-37"></a><span class="tm">18:14:30</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">when are pre-start hooks executed?</span>
+<a name="l-38"></a><span class="tm">18:15:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> possible security concerns
+<a name="l-39"></a><span class="tm">18:15:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunal:</span> we may need pre- and post-mount hooks to work around any pivot-roots
+<a name="l-40"></a><span class="tm">18:15:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> for more specific, "right before the process is jailed within the rootfs, run the pre-start hooks"
+<a name="l-41"></a><span class="tm">18:16:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunal:</span> after the configured mounts, but before the pivot
+<a name="l-42"></a><span class="tm">18:17:19</span><span class="nk"> &lt;wking&gt;</span> what about not having a pivot?
+<a name="l-43"></a><span class="tm">18:17:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> what's the point without a pivot?  You're probably on your own with unspecified behavior if you don't pivot
+<a name="l-44"></a><span class="tm">18:17:52</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Crosby:</span> as the user, you get the same functionality out
+<a name="l-45"></a><span class="tm">18:18:14</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vish:</span> but the spec wouldn't restrict?
+<a name="l-46"></a><span class="tm">18:18:19</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> right
+<a name="l-47"></a><span class="tm">18:18:34</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mruanl:</span> Crosby's proposal would cover most use cases
+<a name="l-48"></a><span class="tm">18:18:45</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Trevor:</span> Could someone talk about why it couldn't be further
+<a name="l-49"></a><span class="tm">18:18:59</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> You would have already established some settings
+<a name="l-50"></a><span class="tm">18:19:32</span><span class="nk"> &lt;duglin&gt;</span> yea !  split start &amp; create   :-)
+<a name="l-51"></a><span class="tm">18:19:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> this would be easier without hooks
+<a name="l-52"></a><span class="tm">18:19:39</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vish:</span> What if hooks were handled outside?
+<a name="l-53"></a><span class="tm">18:19:55</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> It would not cover pre-mount and post-mount
+<a name="l-54"></a><span class="tm">18:20:11</span><span class="nk"> &lt;wking&gt;</span> also for adding the container process to cgroups
+<a name="l-55"></a><span class="tm">18:20:20</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vish:</span> Can you write-up some examples?
+<a name="l-56"></a><span class="tm">18:20:57</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Crosby:</span> If we want hooks to only be on the house side, the hooks would have to know how to do (set?) and (nest?)
+<a name="l-57"></a><span class="tm">18:21:21</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> that's how it is in runc right now
+<a name="l-58"></a><span class="tm">18:21:30</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> it gives the most flexibility
+<a name="l-59"></a><span class="tm">18:21:44</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> Example: having hooks write before and after container mounts are done
+<a name="l-60"></a><span class="tm">18:22:20</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> After the pivot, you don't have access to the host mounts
+<a name="l-61"></a><span class="tm">18:22:50</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vish:</span> Can we come-up with an example case that doesn't work?
+<a name="l-62"></a><span class="tm">18:22:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> wants a case where mount propogation wouldn't work
+<a name="l-63"></a><span class="tm">18:23:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> the less we do, the more flexible the whole design will be
+<a name="l-64"></a><span class="tm">18:23:15</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#Action: </span><span class="cmdline">Mrunal post example case that doesn't work</span>
+<a name="l-65"></a><span class="tm">18:23:41</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vish:</span> Hooks are awesome, we're just going to make it awesomeer
+<a name="l-66"></a><span class="tm">18:24:01</span><span class="nk"> &lt;RobDolinMS&gt;</span> ( ^ one line summary of the meeting :) )
+<a name="l-67"></a><span class="tm">18:24:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> instead of adding more hooks, just make a sandbox and let the user do whatever they want to the sandbox before launching a process in the sandbox
+<a name="l-68"></a><span class="tm">18:24:40</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">JSON Schema validation</span>
+<a name="l-69"></a><span class="tm">18:24:41</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">JSON Schema</span>
+<a name="l-70"></a><span class="tm">18:24:58</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/specs/pull/313</span>
+<a name="l-71"></a><span class="tm">18:25:01</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vincent:</span> It's getting closer
+<a name="l-72"></a><span class="tm">18:26:02</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vincent:</span> It's pretty good; interger ranges can be specified
+<a name="l-73"></a><span class="tm">18:26:31</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vincent:</span> I have not seen tooling on generating a sample JSON document from a schema
+<a name="l-74"></a><span class="tm">18:27:02</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vincent:</span> Could be built into OCI validation tooling
+<a name="l-75"></a><span class="tm">18:27:40</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vincent:</span> Could be self-versioned or could have schema that validates the released version
+<a name="l-76"></a><span class="tm">18:28:00</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> How well does it handle the optional fields?
+<a name="l-77"></a><span class="tm">18:28:11</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vincent:</span> Pointers are a challenge
+<a name="l-78"></a><span class="tm">18:28:58</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vincent:</span> Everything is implied optional; can add to indicate required
+<a name="l-79"></a><span class="tm">18:29:36</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vincent:</span> The Linux field in the config file references out to a LinuxSchema.json
+<a name="l-80"></a><span class="tm">18:30:05</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vincent:</span> May be a bit complex to have some fields required and some not based on different platforms
+<a name="l-81"></a><span class="tm">18:30:21</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> I'll take a look from a runc perspective
+<a name="l-82"></a><span class="tm">18:31:05</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Trevor:</span> There are lots of validators, if one doesn't work, we can replace
+<a name="l-83"></a><span class="tm">18:31:37</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vish:</span> Are you using Swaggr?
+<a name="l-84"></a><span class="tm">18:31:49</span><span class="nk"> &lt;duglin&gt;</span> aka wsdl  :-)
+<a name="l-85"></a><span class="tm">18:32:06</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://openapis.org/</span>
+<a name="l-86"></a><span class="tm">18:32:25</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vincent:</span> It's largely a forward dialect of JSON Schema
+<a name="l-87"></a><span class="tm">18:32:37</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vincent:</span> There is additional markup to accomodate XML and YAML
+<a name="l-88"></a><span class="tm">18:33:54</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Vincent:</span> Moving to OAI / Swagger is not blocked by starting with JSON Schema
+<a name="l-89"></a><span class="tm">18:34:26</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#action </span><span class="cmdline">Vincent to continue iterating</span>
+<a name="l-90"></a><span class="tm">18:34:33</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Create and Start</span>
+<a name="l-91"></a><span class="tm">18:34:48</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Doug has a PR and would like someone to take a look</span>
+<a name="l-92"></a><span class="tm">18:34:57</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#action </span><span class="cmdline">vishh to take a look at PR</span>
+<a name="l-93"></a><span class="tm">18:35:07</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Issues for v0.4</span>
+<a name="l-94"></a><span class="tm">18:35:25</span><span class="nk"> &lt;duglin&gt;</span> vishh the PR is on runc
+<a name="l-95"></a><span class="tm">18:35:31</span><span class="nk"> &lt;vishh&gt;</span> ack
+<a name="l-96"></a><span class="tm">18:35:51</span><span class="nk"> &lt;RobDolinMS&gt;</span> Call for "release captain"
+<a name="l-97"></a><span class="tm">18:36:02</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#action </span><span class="cmdline">Mrunal will start a thread about v0.4 issues</span>
+<a name="l-98"></a><span class="tm">18:36:18</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#EndMeeting</span><span class="cmdline"></span>
+<a name="l-99"></a><span class="tm">18:36:43</span><span class="nk"> &lt;mikebrow&gt;</span> Post meeting chat discussion… https://github.com/opencontainers/runc/pull/507
+<a name="l-100"></a><span class="tm">18:36:43</span><span class="nk"> &lt;mikebrow&gt;</span> Should the runc list command be true to the stored state on disk or should it refresh state on those containers
+<a name="l-101"></a><span class="tm">18:36:43</span><span class="nk"> &lt;mikebrow&gt;</span> to make sure check the state at the point of reporting it  is correct. Then if refresh is the choice we pick
+<a name="l-102"></a><span class="tm">18:36:45</span><span class="nk"> &lt;mikebrow&gt;</span> should we report or have the option of reporting the differences?
+<a name="l-103"></a><span class="tm">18:37:16</span><span class="nk"> &lt;crosbymichael&gt;</span> <span class="hi">mikebrow:</span> just go by what the container.State() returns
+<a name="l-104"></a><span class="tm">18:37:25</span><span class="nk"> &lt;crosbymichael&gt;</span> if changes are needed we will make them to that api
+<a name="l-105"></a><span class="tm">18:37:27</span><span class="nk"> &lt;crosbymichael&gt;</span> not in runc
+<a name="l-106"></a><span class="tm">18:37:44</span><span class="nk"> &lt;RobDolinMS&gt;</span> (Did we have MeetBot running for the minutes? )
+<a name="l-107"></a><span class="tm">18:37:46</span><span class="nk"> &lt;mikebrow&gt;</span> makes sense
+<a name="l-108"></a><span class="tm">18:38:16</span><span class="nk"> &lt;mikebrow&gt;</span> Thx @crosbymichael
+<a name="l-109"></a><span class="tm">18:38:25</span><span class="nk"> &lt;tianon&gt;</span> <span class="hi">RobDolinMS:</span> yeah, although I don't think you were ever added as #chair
+<a name="l-110"></a><span class="tm">18:38:37</span><span class="nk"> &lt;tianon&gt;</span> ping vbatts|work
+<a name="l-111"></a><span class="tm">18:38:43</span><span class="nk"> &lt;tianon&gt;</span> (to end the meeting)
+<a name="l-112"></a><span class="tm">18:39:03</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

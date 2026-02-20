@@ -1,0 +1,37 @@
+14:59:54 <vbatts> #startmeeting 2017-04-12 discussion
+14:59:54 <collabot> Meeting started Wed Apr 12 14:59:54 2017 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+14:59:54 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+14:59:54 <collabot> The meeting name has been set to '2017_04_12_discussion'
+15:00:13 <vbatts> it may be a lonely meeting today
+15:04:40 <tianon> vbatts: you don't need to be lonely, we're here for you
+15:05:07 <mrunalp> :)
+15:05:59 <vbatts> #topic status of runtime
+15:06:18 <vbatts> mrunalp: blocking pr on runtime-tools is merged
+15:06:58 <vbatts> mrunalp: crio will be rebased today
+15:07:23 <vbatts> need to get a checkpoint of docker rebase on latest runc ( crosbymichael / stevvooe )
+15:09:49 <vbatts> tianon: sayz it's had some time, let's get the vote up
+15:10:44 <vbatts> #action vbatts put up the vote for runtime-spec v1.0.0
+15:11:00 <tianon> "if we find something super egregious, worst case we 2.0" O:)
+15:11:31 <vbatts> tianon: or a 1.1
+15:11:45 <tianon> yeah ++++
+15:11:54 <vbatts> mrunalp: clean up the spec
+15:13:20 <vbatts> #topic image-spec status
+15:13:24 <vbatts> #link https://github.com/opencontainers/image-spec/milestone/13
+15:18:33 <jonboulle> me: nothing looks like breaking changes, just need sufficient maintainer involvement to move some of these forward
+15:20:11 <vbatts> would nss lookups be a breaking change to be added post 1.0
+15:21:30 <vbatts> AKAIK, IAM related things have been indefinitely deferred
+15:26:52 <vbatts> #link https://github.com/opencontainers/image-spec/pull/636
+15:26:59 <vbatts> #link https://github.com/opencontainers/image-spec/pull/636
+15:27:16 <vbatts> #link https://github.com/opencontainers/image-spec/issues/599
+15:27:41 <jonboulle> first link duplicated
+15:27:53 <vbatts> #link https://github.com/opencontainers/image-spec/pull/635
+15:30:09 <jonboulle> (think my positions are explicated on all those, really not sure how to make progress)
+15:32:50 <cracra> [dug, Open Container Initiative] did OCI agree to adopt label-schema?
+15:33:10 <vbatts> cracra: https://github.com/opencontainers/image-spec/pull/635
+15:36:47 <vbatts> might be a potential conversation to adopt/merge the label-schema conventions, sans the docker/rkt ones, with OCI annotations
+15:42:31 <jonboulle> @glestaris https://github.com/opencontainers/image-spec/pull/636#issuecomment-292184836
+15:42:31 <collabot> jonboulle: Error: "glestaris" is not a valid command.
+15:42:51 <glestaris> Thanks @jonboulle
+15:48:19 <mikebrow> http://label-schema.org/rc1/
+15:57:27 <cracra> [dug, Open Container Initiative] dug: I’d prefer if we owned the core labels
+16:02:42 <vbatts> #endmeeting

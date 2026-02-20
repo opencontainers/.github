@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:03:27</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-07-20 discussion</span>
+<a name="l-2"></a><span class="tm">21:03:27</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Jul 20 21:03:27 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:03:27</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:03:27</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2016_07_20_discussion'
+<a name="l-5"></a><span class="tm">21:03:35</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec 0.4.0</span>
+<a name="l-6"></a><span class="tm">21:03:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I've moved the whiteout docs onto the 0.4.0 milestone, let me know if anyone has problems with that
+<a name="l-7"></a><span class="tm">21:04:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> There is an open PR about limiting integers to int64, but I'm not sure what the current status of that is
+<a name="l-8"></a><span class="tm">21:04:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there hasn't been more discussion about naming or signing.  Are we punting those?
+<a name="l-9"></a><span class="tm">21:05:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'm not sure what the int64 hangup was
+<a name="l-10"></a><span class="tm">21:05:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I thought naming/signing was getting pushed into an optional layer.  We wanted the ability to add it later without breaking things
+<a name="l-11"></a><span class="tm">21:05:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> do we need an action item to sketch naming/signing in broad strokes so we can talk about forward compat?
+<a name="l-12"></a><span class="tm">21:06:20</span><span class="nk"> &lt;stevvooe&gt;</span> i said "do we need to define the shape of naming/signing?"
+<a name="l-13"></a><span class="tm">21:06:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> scopio (wking: maybe a typo?) has some of this in place, we should look at that to frame the discussion
+<a name="l-14"></a><span class="tm">21:06:26</span><span class="nk"> &lt;stevvooe&gt;</span> :)
+<a name="l-15"></a><span class="tm">21:06:32</span><span class="nk"> &lt;mrunalp&gt;</span> skopeo
+<a name="l-16"></a><span class="tm">21:07:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> do we tackle this after we have an image layout in Docker?
+<a name="l-17"></a><span class="tm">21:08:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I don't know.  You could parallelize them with blob/refs with signature information...
+<a name="l-18"></a><span class="tm">21:09:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the spec is missing parts, but we probably want Docker save/load to the image layout in a branch somewhere
+<a name="l-19"></a><span class="tm">21:09:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> Docker save/load mock up sounds good
+<a name="l-20"></a><span class="tm">21:09:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there's a containers/image that has some work in progress?
+<a name="l-21"></a><span class="tm">21:09:45</span><span class="nk"> &lt;cyphar&gt;</span> <span class="hi">url:</span> https://github.com/containers/image
+<a name="l-22"></a><span class="tm">21:10:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> that's part of skopeo a tool that can pull from Docker / OCI / etc. and lay things out for runC
+<a name="l-23"></a><span class="tm">21:10:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> if there is support for that in Docker as well, that would be good for compatability
+<a name="l-24"></a><span class="tm">21:10:25</span><span class="nk"> &lt;mrunalp&gt;</span> It is a library that was pulled out of skopeo
+<a name="l-25"></a><span class="tm">21:10:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> should we take this offline?
+<a name="l-26"></a><span class="tm">21:10:40</span><span class="nk"> &lt;mrunalp&gt;</span> skopeo is a utility built on top of that library
+<a name="l-27"></a><span class="tm">21:11:06</span><span class="nk"> &lt;wking&gt;</span> thanks mrunalp / stevvooe for correcting me when I get things wrong ;)
+<a name="l-28"></a><span class="tm">21:11:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> other image-spec topics?
+<a name="l-29"></a><span class="tm">21:12:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'd like to get type-export landed, but there's some pushback there
+<a name="l-30"></a><span class="tm">21:13:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> if anyone has spare cycles, ping us with things you want in 0.4.0
+<a name="l-31"></a><span class="tm">21:13:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> otherwise stevvooe and I will assign as we see fit
+<a name="l-32"></a><span class="tm">21:13:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I arbitrarily put it on the 27th
+<a name="l-33"></a><span class="tm">21:13:58</span><span class="nk"> &lt;RobDolinMS&gt;</span> Appreciate all of the work you're doing vbatts for managing release mechanics
+<a name="l-34"></a><span class="tm">21:13:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> comment on an issue you want in 0.4.0 if you don't have permissions to assign it yourself
+<a name="l-35"></a><span class="tm">21:14:02</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/513/files
+<a name="l-36"></a><span class="tm">21:14:09</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec command line API</span>
+<a name="l-37"></a><span class="tm">21:14:23</span><span class="nk"> &lt;wking&gt;</span> https://github.com/opencontainers/runtime-spec/pull/511
+<a name="l-38"></a><span class="tm">21:14:29</span><span class="nk"> &lt;wking&gt;</span> https://github.com/opencontainers/runtime-spec/pull/513
+<a name="l-39"></a><span class="tm">21:15:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> --console in runC works by having the runtime-caller creating a virtual terminal, and --console is for passing the slave end into runC
+<a name="l-40"></a><span class="tm">21:15:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> but that has some namespace issues, so we might change that at some point
+<a name="l-41"></a><span class="tm">21:15:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> but we need an ability for the caller to tell runC which console to use
+<a name="l-42"></a><span class="tm">21:17:50</span><span class="nk"> &lt;wking&gt;</span> why do you need --console instead of duping the slave over the standard streams before launching runC
+<a name="l-43"></a><span class="tm">21:18:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I'm not sure.  We do dup over the slave bits, but we don't do it the way you describe
+<a name="l-44"></a><span class="tm">21:18:49</span><span class="nk"> &lt;wking&gt;</span> I was talking about ccon's handling, and didn't transcribe myself, but it's written up here: https://github.com/wking/ccon/tree/v0.4.0#terminal
+<a name="l-45"></a><span class="tm">21:19:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the pair could be created inside the container
+<a name="l-46"></a><span class="tm">21:19:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> this is why tty's don't work in runC exec
+<a name="l-47"></a><span class="tm">21:20:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> so when we create this, we setns on the mount namespace, open the terminal, and then..?
+<a name="l-48"></a><span class="tm">21:20:21</span><span class="nk"> &lt;duglin&gt;</span> did anyone get  a chance to review my PR:  https://github.com/opencontainers/runtime-spec/pull/511  ?
+<a name="l-49"></a><span class="tm">21:21:32</span><span class="nk"> &lt;mikebrow&gt;</span> runc run -d --console /dev/pts/ptmx test_busybox
+<a name="l-50"></a><span class="tm">21:21:37</span><span class="nk"> &lt;mikebrow&gt;</span> ^ works
+<a name="l-51"></a><span class="tm">21:21:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> it could potentially be done by the caller
+<a name="l-52"></a><span class="tm">21:22:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> we need an API for the caller to get the master
+<a name="l-53"></a><span class="tm">21:22:30</span><span class="nk"> &lt;cyphar&gt;</span> (both libcontainer and the runC runner)
+<a name="l-54"></a><span class="tm">21:23:06</span><span class="nk"> &lt;wking&gt;</span> Daniel Dao: We don't want the container to interrupt the I/O
+<a name="l-55"></a><span class="tm">21:23:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> the '--console UNIX_SOCKET' approach might work (with runC pushing the master into that socket)
+<a name="l-56"></a><span class="tm">21:24:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> where do we have this discussion?
+<a name="l-57"></a><span class="tm">21:24:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we'll need this specified for compliance testing in ocitools
+<a name="l-58"></a><span class="tm">21:24:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> the spec is pretty sparse around process.terminal anyway
+<a name="l-59"></a><span class="tm">21:24:46</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/518
+<a name="l-60"></a><span class="tm">21:24:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> lets get something working in runC and then come back and figure out how to put it into the command-line spec
+<a name="l-61"></a><span class="tm">21:26:29</span><span class="nk"> &lt;wking&gt;</span> I think we should focus on the container view in config.md, and just say "standard streams will be a terminal if you set process.terminal".  We can talk about the command line API later
+<a name="l-62"></a><span class="tm">21:26:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> we'll need clarity around the command-line API soon
+<a name="l-63"></a><span class="tm">21:27:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> how much longer do we think this should take?
+<a name="l-64"></a><span class="tm">21:28:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> what's the harm with supporting both approaches now?
+<a name="l-65"></a><span class="tm">21:28:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> runtime-callers and testers won't know which is ok if we don't specify one
+<a name="l-66"></a><span class="tm">21:29:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> what about --pid-file vs. state?
+<a name="l-67"></a><span class="tm">21:29:51</span><span class="nk"> &lt;wking&gt;</span> https://github.com/opencontainers/runtime-spec/pull/513#issuecomment-232857404
+<a name="l-68"></a><span class="tm">21:29:58</span><span class="nk"> &lt;wking&gt;</span> ^ my "why do we have a --pid-file?"
+<a name="l-69"></a><span class="tm">21:30:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> it's a standard way for interfacing with systemd, etc.
+<a name="l-70"></a><span class="tm">21:31:21</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">wking will reroll #513 to add --pid-file</span>
+<a name="l-71"></a><span class="tm">21:32:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> how do we test without 'run' in the spec?  Who holds the streams open?
+<a name="l-72"></a><span class="tm">21:32:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the caller handles that and exit-code collection.  I'll add support to ocitools
+<a name="l-73"></a><span class="tm">21:32:38</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">cyphar to look at --console vs. the command line spec in the next week or so</span>
+<a name="l-74"></a><span class="tm">21:34:58</span><span class="nk"> &lt;wking&gt;</span> what about 'version'?  Do we drop it?
+<a name="l-75"></a><span class="tm">21:35:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I don't think we need it for interop
+<a name="l-76"></a><span class="tm">21:36:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> any runtime is going to have some way to do that.  Do we need to agree on the API?
+<a name="l-77"></a><span class="tm">21:40:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> -b is probably going to be popular, so we may want to require it be portable
+<a name="l-78"></a><span class="tm">21:41:13</span><span class="nk"> &lt;wking&gt;</span> we can always add it later; it's hard to pull it out later (and I don't expect many folks will be typing this out by hand)
+<a name="l-79"></a><span class="tm">21:41:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> agrees to punt on -b
+<a name="l-80"></a><span class="tm">21:41:22</span><span class="nk"> &lt;cyphar&gt;</span> &gt;&gt; ^ works
+<a name="l-81"></a><span class="tm">21:41:37</span><span class="nk"> &lt;cyphar&gt;</span> the command: runc run -d --console /dev/pts/ptmx test_busybox
+<a name="l-82"></a><span class="tm">21:41:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> other topics?
+<a name="l-83"></a><span class="tm">21:41:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> any other blockers for 1.0?
+<a name="l-84"></a><span class="tm">21:42:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> nothing off the top of my head
+<a name="l-85"></a><span class="tm">21:42:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> figuring out the console will help ocitools tie up some loose ends
+<a name="l-86"></a><span class="tm">21:42:38</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

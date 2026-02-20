@@ -1,0 +1,81 @@
+22:00:26 <wking> #startmeeting 2018-03-07 discussion
+22:00:26 <collabot`> Meeting started Wed Mar  7 22:00:26 2018 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:00:26 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:00:26 <collabot`> The meeting name has been set to '2018_03_07_discussion'
+22:01:03 <wking> #link agenda https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/t_UMLjT7-pI
+22:02:52 <stevvooe> boo, the number on the meeting invite is wrong
+22:04:27 <wking> stevvooe: it looks right in https://github.com/opencontainers/runtime-spec/blob/master/meeting.ics
+22:05:04 <stevvooe> wking: not sure where i got this one, but its the wrong number
+22:05:23 <wking> #topic runtime-spec release planning
+22:06:51 <wking> There are a number of new features in flight (links in the agenda thread).  Do we want to hold 1.1 until some/all of those go in?  Cut 1.1 sooner, and then 1.2, 1.3, etc. as those land
+22:07:51 <wking> mrunalp: the VM stuff looks close
+22:07:57 <wking> stevvooe: is there a VM implementation?
+22:08:07 <wking> vbatts|work: we can circle back to the VM PR in a minute
+22:08:28 <wking> vbatts|work: the VM thing is the largest change that would go into a 1.1
+22:08:28 <vbatts|work> https://github.com/opencontainers/runtime-spec/milestone/16
+22:08:46 <wking> vbatts|work: we have a 1.0.z stream with one issue
+22:08:59 <vbatts|work> https://github.com/opencontainers/runtime-spec/milestone/9
+22:09:31 <wking> vbatts|work: and we have a minor-bump 1.Y.0 milestone
+22:10:10 <wking> vbatts|work: if we already on the 1.1 / 1.Y track, I don't expect to do further 1.0.z work unless absolutely pleaded for
+22:11:32 <wking> There may be runtime-tools needs if they want to continue validating 1.0.x once 1.1 is cut.  I'm not sure what their plans are
+22:11:46 <wking> vbatts|work: I don't know either.  We can wait on branching for 1.0.x until someone asks for it
+22:12:48 <wking> Do we want to wait for the VM stuff to settle, or do we expect to cut 1.1 this month?
+22:13:12 <wking> vbatts|work: I don't think we're in such a rush to release this month.  We'd want to wait for more VM feedback
+22:13:50 <wking> #link RDMA cgroup addition https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/pG_KkmZgeL4
+22:15:23 <wking> #topic runtime-tools and certification
+22:15:50 <wking> albanc: I'm currently getting settled in the code, and have a couple of scope questions.  I'm not sure this is the right channel?
+22:16:09 <wking> vbatts|work: there had been a certification working group; I don't know the status of their meetings
+22:16:40 <wking> cracra: It's currently on hold.  We're working with albanc and folks to clean up the runtime and image tools
+22:17:16 <wking> cracra: The legal and cert sides are 80% there.  We need work on the tooling, which is why we brought in albanc and folks
+22:18:20 <wking> vbatts|work: this forum is a good place for digging into technical verification questions or approaches
+22:19:06 <wking> cracra: I think the plan is for albanc to start using the verification suites against various tools and file issues for anything that comes up
+22:19:38 <wking> vbatts|work: runtime-tools is vendored in a few places, maybe more than image-tools, but the primary usecase is certification
+22:20:11 <wking> albanc: I don't have specific questions now
+22:20:29 <wking> cracra: Mailing list, IRC, and GitHub are also good places to ask
+22:21:00 <wking> #topic VM containers
+22:21:18 <wking> #link https://github.com/opencontainers/runtime-spec/pull/949
+22:22:51 <wking> sortiz: This is a reroll based on our experience since #405
+22:23:17 <wking> sortiz: Most of these are optional so the runtime can hard-code defaults, but it would be very nice for us to have the flexibility to override those defaults
+22:24:26 <wking> vbatts|work: I gave it a look over, and was wondering about allowed path formats (qcow, etc.)
+22:24:55 <wking> vbatts|work: We want clarity on the typing of, for example, the image file format
+22:25:14 <wking> vbatts|work: Does the runtime have to know the file format?  Auto-detect it?
+22:25:45 <wking> sortiz: Yeah, that's a good suggestion
+22:26:00 <wking> vbatts|work: I don't know how to make that flexible enough without tracking every image format under the sun
+22:26:14 <wking> sortiz: The runtime may be able to auto-detect, but that may not be ideal
+22:26:23 <wking> stevvooe: is this an opaque type?
+22:26:38 <wking> sortiz: It wouldn't be runtime-specific, it would be a standardized type
+22:27:47 <wking> sortiz: There are so many formats.  We can enumerate them...
+22:27:59 <wking> stevvooe: the other option would be to have some sort of annotation
+22:28:20 <wking> vbatts|work: is this in use for clear containers and kata containers?
+22:28:32 <wking> sortiz: yes, we currently use this with a static config file per host
+22:29:00 <wking> sortiz: We're trying to standardize our existing configuration format
+22:31:26 <stevvooe> it can just follow this format: https://github.com/opencontainers/runtime-spec/blob/master/config.md#process
+22:34:27 <wking> crosbymichael: you should copy the existing markdown and Go instead of linking to them
+22:34:39 <wking> crosbymichael: we want to be able to extend either without automatically extending the other
+22:34:54 <wking> I'd rather stay DRY, but am fine revisiting that if it becomes a problem
+22:35:00 <wking> #topic distribution spec
+22:35:16 <wking> #link http://github.com/opencontainers/tob/pull/35
+22:35:35 <wking> stevvooe: there's some stuff in here that I think doesn't belong or that might overly limit the maintainers once it happens
+22:35:48 <wking> stevvooe: there's also stuff about tags and multi-image-indexes that sounds made up
+22:35:56 <wking> stevvooe: as far as the timeline, I'm on board with that
+22:36:17 <wking> vbatts|work: the only other thing, and I don't remember how this last settled, but the /v2/_catalog API
+22:36:39 <wking> vbatts|work: I've heard that its still an important way to index a registry, but maybe you don't want to include it
+22:37:17 <wking> stevvooe: whatever people find useful.  Classically I've seen /v2/_catalog as an internal endpoint.  And I've heard complaints of the pagination design
+22:37:42 <wking> stevvooe: in practice, each registry implementation seems to provide their own way, because different pagination works with different systems
+22:38:11 <wking> stevvooe: you don't need /v2/_catalog for image push/pull, but the applications you're talking about are important applications
+22:38:53 <wking> stevvooe: hub implements pagination in a way that works for them, Amazon implements pagination in a way that works for them.
+22:39:10 <wking> stevvooe: to be honest, I don't think this belongs in the proposal and should be left up to the maintainers
+22:39:20 <wking> stevvooe: I think it's out of scope, but am not completely sure
+22:42:13 <wking> stevvooe: the image-spec is scoped to push/pull
+22:42:35 <wking> stevvooe: if we expand this too much, it's going to be hard to get distribution shipped
+22:44:11 <wking> cracra: What do we want to do about the provisional maintainers?
+22:44:36 <wking> stevvooe: I'm not sure.
+22:44:54 <wking> cracra: So keep it simple for now?  You can add more folks once you're established
+22:45:07 <wking> vbatts|work: three is pretty exciting
+22:45:27 <wking> vbatts|work: ideally we'd have enough to have a decent, but not inconvenient, quorum
+22:45:50 <wking> vbatts|work: ideally five to seven people.  But I don't know who to pick from that list.  Condorcet vote?
+22:46:21 <wking> cracra: Do you want to block the proposal on that, or deal with it after the proposal goes through?
+22:46:43 <wking> stevvooe: I think we shouldn't block the vote.
+22:47:28 <wking> cracra: If there are no objections to a Monday vote, I'll try to have crosbymichael put the vote out then
+22:48:06 <wking> stevvooe: I volunteer to be a Chief Maintainer that doesn't wield the power
+22:49:54 <wking> #endmeeting

@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2019-01-30 discussion</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2019-01-30 discussion</h1>
+<span class="details">
+Meeting started by vbatts|work at 21:58:33 UTC
+(<a href="opencontainers.2019-01-30-21.58.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">distribution-spec RC</b> <span class="details">(<a href='opencontainers.2019-01-30-21.58.log.html#l-9'>vbatts|work</a>, 22:04:40)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/distribution-spec/milestone/2">https://github.com/opencontainers/distribution-spec/milestone/2</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-30-21.58.log.html#l-10'>vbatts|work</a>,
+    22:04:43)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/distribution-spec/issues/26">https://github.com/opencontainers/distribution-spec/issues/26</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-30-21.58.log.html#l-21'>mikebrow</a>,
+    22:20:29)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/distribution-spec/issues/26">https://github.com/opencontainers/distribution-spec/issues/26</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-30-21.58.log.html#l-22'>vbatts|work</a>,
+    22:21:33)</span></li>
+  <li><a
+    href="https://github.com/docker/distribution/issues/2395">https://github.com/docker/distribution/issues/2395</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-30-21.58.log.html#l-24'>vbatts|work</a>,
+    22:27:26)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">jimmi Z strawman for arbitrary objects</b> <span class="details">(<a href='opencontainers.2019-01-30-21.58.log.html#l-26'>vbatts|work</a>, 22:34:24)</span>
+<ol type="a">
+  <li><a
+    href="https://groups.google.com/a/opencontainers.org/d/msg/dev/oguystbnnw4/mKJK4IzSDAAJ">https://groups.google.com/a/opencontainers.org/d/msg/dev/oguystbnnw4/mKJK4IzSDAAJ</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-30-21.58.log.html#l-27'>vbatts|work</a>,
+    22:34:29)</span></li>
+  <li><a
+    href="https://gist.github.com/jdolitsky/99c7364a892c8e350c85314705a9a7c1#chart-manifest">https://gist.github.com/jdolitsky/99c7364a892c8e350c85314705a9a7c1#chart-manifest</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-30-21.58.log.html#l-32'>vbatts|work</a>,
+    22:36:14)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">search API</b> <span class="details">(<a href='opencontainers.2019-01-30-21.58.log.html#l-38'>vbatts|work</a>, 22:46:32)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/mattfarina/image-spec/commit/4012edfeaa6114d84875b5d680257debb1f07a90">https://github.com/mattfarina/image-spec/commit/4012edfeaa6114d84875b5d680257debb1f07a90</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-30-21.58.log.html#l-47'>mattfarina_</a>,
+    22:53:37)</span></li>
+  <li><a
+    href="https://github.com/mattfarina/image-spec/commit/4012edfeaa6114d84875b5d680257debb1f07a90">https://github.com/mattfarina/image-spec/commit/4012edfeaa6114d84875b5d680257debb1f07a90</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-30-21.58.log.html#l-48'>vbatts|work</a>,
+    22:53:59)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/blob/master/annotations.md">https://github.com/opencontainers/image-spec/blob/master/annotations.md</a>
+    <span class="details">(<a
+    href='opencontainers.2019-01-30-21.58.log.html#l-50'>vbatts|work</a>,
+    22:57:02)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">vbatts set up
+    call for next wednesday (Feb 6th)</span> <span class="details">(<a
+    href='opencontainers.2019-01-30-21.58.log.html#l-52'>vbatts|work</a>,
+    23:02:12)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">err'body
+    while this call is fresh, please reply on the email for today's
+    agenda the topic you have that didn't get addressed</span> <span
+    class="details">(<a
+    href='opencontainers.2019-01-30-21.58.log.html#l-55'>vbatts|work</a>,
+    23:05:07)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 23:05:40 UTC
+(<a href="opencontainers.2019-01-30-21.58.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>vbatts set up call for next wednesday (Feb 6th)</li>
+  <li>err'body while this call is fresh, please reply on the email for today's agenda the topic you have that didn't get addressed</li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>vbatts|work (39)</li>
+  <li>collabot` (5)</li>
+  <li>mikebrow (3)</li>
+  <li>jdolitsky (3)</li>
+  <li>estesp (2)</li>
+  <li>RenaudWasTaken (2)</li>
+  <li>tianon (1)</li>
+  <li>mattfarina_ (1)</li>
+  <li>zendril (1)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

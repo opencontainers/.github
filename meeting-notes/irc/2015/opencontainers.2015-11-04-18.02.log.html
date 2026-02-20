@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">18:02:59</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2015-11-04 meeting</span>
+<a name="l-2"></a><span class="tm">18:02:59</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Nov  4 18:02:59 2015 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">18:02:59</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">18:02:59</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2015_11_04_meeting'
+<a name="l-5"></a><span class="tm">18:03:15</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp, crosbymichael</span>
+<a name="l-6"></a><span class="tm">18:03:15</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: crosbymichael mrunalp wking
+<a name="l-7"></a><span class="tm">18:03:23</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Roadmap procedure</span>
+<a name="l-8"></a><span class="tm">18:03:58</span><span class="nk"> &lt;wking&gt;</span> crosbymichael we'll merge the roadmap and have follow up PRs adjusting associated people and per-topic discussion locations
+<a name="l-9"></a><span class="tm">18:04:13</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Container actions</span>
+<a name="l-10"></a><span class="tm">18:04:57</span><span class="nk"> &lt;wking&gt;</span> mrunalp wants to merge an action PR and then improve it in follow-up PRs
+<a name="l-11"></a><span class="tm">18:05:17</span><span class="nk"> &lt;wking&gt;</span> ^ is the PR we're talking about: https://github.com/opencontainers/specs/pull/231 ?
+<a name="l-12"></a><span class="tm">18:05:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> is concerned about merging a fluxy spec
+<a name="l-13"></a><span class="tm">18:05:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> has added a note to that effect, but wants open more targetted PRs
+<a name="l-14"></a><span class="tm">18:06:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> doesn't want folks to start implementing it too early
+<a name="l-15"></a><span class="tm">18:06:24</span><span class="nk"> &lt;wking&gt;</span> we can also PR against in-flight branches
+<a name="l-16"></a><span class="tm">18:06:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we need to get momentum back up, and that's part of what the roadmap should help with
+<a name="l-17"></a><span class="tm">18:07:24</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">How to specify "don't touch my cgroups"</span>
+<a name="l-18"></a><span class="tm">18:08:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> runC gets a current cgroup and nests itself inside.  You can specify cgroup options in a parent cgroup and it will honor them (e.g. 1 GB mem in a parent overrules 2 GB set by runC)
+<a name="l-19"></a><span class="tm">18:08:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> but what about not specifying a container cgroup at all (just use the hosts)
+<a name="l-20"></a><span class="tm">18:09:04</span><span class="nk"> &lt;wking&gt;</span> related issue: https://github.com/opencontainers/specs/pull/237
+<a name="l-21"></a><span class="tm">18:09:18</span><span class="nk"> &lt;wking&gt;</span> related sub-thread: https://groups.google.com/a/opencontainers.org/forum/#!msg/dev/qWHoKs8Fsrk/c9mv6qXtDAAJ
+<a name="l-22"></a><span class="tm">18:09:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> how to do this with unprivileged callers?  I had to disable cgroups completely to get that working
+<a name="l-23"></a><span class="tm">18:10:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> maybe this just needs more thought, no action items now
+<a name="l-24"></a><span class="tm">18:10:25</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">How can we accelerate progress</span>
+<a name="l-25"></a><span class="tm">18:10:34</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">RobDolinMS</span>
+<a name="l-26"></a><span class="tm">18:10:34</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: RobDolinMS crosbymichael mrunalp wking
+<a name="l-27"></a><span class="tm">18:10:42</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">How can we accelerate progress</span>
+<a name="l-28"></a><span class="tm">18:10:54</span><span class="nk"> &lt;RobDolinMS&gt;</span> (Thanks wking :)  )
+<a name="l-29"></a><span class="tm">18:10:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> poor scoping is limiting momentum
+<a name="l-30"></a><span class="tm">18:11:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> are we trying to satisfy the end-user case?
+<a name="l-31"></a><span class="tm">18:11:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> charter almost finalized last week (just one thing still fluxy)
+<a name="l-32"></a><span class="tm">18:11:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> new charter has better scoping
+<a name="l-33"></a><span class="tm">18:12:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> final signatures maybe around Thanksgiving
+<a name="l-34"></a><span class="tm">18:12:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> last thing maybe IP policy?
+<a name="l-35"></a><span class="tm">18:12:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> IP policy is resolved in the latest draft
+<a name="l-36"></a><span class="tm">18:12:45</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">OCI Tools</span>
+<a name="l-37"></a><span class="tm">18:13:06</span><span class="nk"> &lt;wking&gt;</span> https://github.com/mrunalp/ocitools
+<a name="l-38"></a><span class="tm">18:13:11</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Mrunal has a tool that he wants to share and wondering where to put it</span>
+<a name="l-39"></a><span class="tm">18:13:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> asks for folks to kick the tires and decide if we want it in opencontainers/specs or not
+<a name="l-40"></a><span class="tm">18:13:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> it's a runtime-validation tool (does the runtime respect opencontainers/specs)
+<a name="l-41"></a><span class="tm">18:14:10</span><span class="nk"> &lt;vishh&gt;</span> +1 for a separate repo, may be under opencontainers
+<a name="l-42"></a><span class="tm">18:14:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> keep it separate until it stabilizes
+<a name="l-43"></a><span class="tm">18:14:23</span><span class="nk"> &lt;wking&gt;</span> +1 to vish, separate repo in opencontainers
+<a name="l-44"></a><span class="tm">18:14:54</span><span class="nk"> &lt;wking&gt;</span> for now, mrunalp will keep working on it locally.  Will revisit in a month
+<a name="l-45"></a><span class="tm">18:15:04</span><span class="nk"> &lt;wking&gt;</span> But contribution to mrunalp/ocitools is welcome
+<a name="l-46"></a><span class="tm">18:15:12</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Mrunal will post to the list</span>
+<a name="l-47"></a><span class="tm">18:15:37</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Roadmap PR</span>
+<a name="l-48"></a><span class="tm">18:15:50</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">we just need one more LGTM and then it's a go to merge</span>
+<a name="l-49"></a><span class="tm">18:16:05</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#info </span><span class="cmdline">the first topic in this meeting also relevant here</span>
+<a name="l-50"></a><span class="tm">18:16:26</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="topic">#topic </span><span class="topicline">Splitting Create() and Start() into unique actions</span>
+<a name="l-51"></a><span class="tm">18:16:26</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">splitting create from start</span>
+<a name="l-52"></a><span class="tm">18:16:40</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Doug Davis sent email about this on Thu, 10/29</span>
+<a name="l-53"></a><span class="tm">18:17:05</span><span class="nk"> &lt;wking&gt;</span> ^ email at https://groups.google.com/a/opencontainers.org/d/msg/dev/qWHoKs8Fsrk/GmdaZ2TtDAAJ
+<a name="l-54"></a><span class="tm">18:17:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> that creates everything but the PID namespace, and leaves that to the 'start' step
+<a name="l-55"></a><span class="tm">18:17:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we try to keep the spec lifecycle generic (not get into OS details)
+<a name="l-56"></a><span class="tm">18:18:00</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#info </span><span class="cmdline">Mrunal suggests making sure the PR generic and not get into OS-specific details</span>
+<a name="l-57"></a><span class="tm">18:18:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> maybe drill down for per-OS cases, or maybe not
+<a name="l-58"></a><span class="tm">18:18:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">me:</span> that makes interop between runtimes difficult
+<a name="l-59"></a><span class="tm">18:18:24</span><span class="nk"> &lt;wking&gt;</span> ^ if we leave details unspecified
+<a name="l-60"></a><span class="tm">18:18:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> echos that via audio ;)
+<a name="l-61"></a><span class="tm">18:19:19</span><span class="nk"> &lt;duglin&gt;</span> https://groups.google.com/a/opencontainers.org/forum/#!search/duglin|sort:date/dev/qWHoKs8Fsrk/GmdaZ2TtDAAJ
+<a name="l-62"></a><span class="tm">18:19:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Guest:</span> hooks are unclear when there aren't low-level details about containers
+<a name="l-63"></a><span class="tm">18:19:50</span><span class="nk"> &lt;estesp&gt;</span> Guest? that was lk4d4 :)
+<a name="l-64"></a><span class="tm">18:19:55</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="hi">Mrunal:</span> suggests having a POC to start
+<a name="l-65"></a><span class="tm">18:20:06</span><span class="nk"> &lt;tianon&gt;</span> <span class="hi">estesp:</span> he's joined the bluejeans as "Guest" haha
+<a name="l-66"></a><span class="tm">18:20:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> maybe we do need more discussion about this and talking about implementations
+<a name="l-67"></a><span class="tm">18:20:16</span><span class="nk"> &lt;estesp&gt;</span> honored guest, then :)
+<a name="l-68"></a><span class="tm">18:20:23</span><span class="nk"> &lt;wking&gt;</span> and once we see what works, we can propose a separation with more details (if it makes sense)
+<a name="l-69"></a><span class="tm">18:22:02</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">Scheduling two weeks from now</span>
+<a name="l-70"></a><span class="tm">18:22:08</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Scheduling two weeks from now</span>
+<a name="l-71"></a><span class="tm">18:22:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> what about Docker-con EU
+<a name="l-72"></a><span class="tm">18:22:22</span><span class="nk"> &lt;vishh&gt;</span> I'm here as well.
+<a name="l-73"></a><span class="tm">18:22:39</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">mrunalp to mail the list and see if anyone needs a time adjustment</span>
+<a name="l-74"></a><span class="tm">18:22:42</span><span class="nk"> &lt;duglin&gt;</span> slackers!  :-)  Phil and I will be thre
+<a name="l-75"></a><span class="tm">18:22:43</span><span class="nk"> &lt;duglin&gt;</span> ere
+<a name="l-76"></a><span class="tm">18:22:45</span><span class="nk"> &lt;duglin&gt;</span> there
+<a name="l-77"></a><span class="tm">18:22:46</span><span class="nk"> &lt;RobDolinMS&gt;</span> Many folks on this call are NOT attending DockerCon EU
+<a name="l-78"></a><span class="tm">18:23:26</span><span class="nk"> &lt;wking&gt;</span> crosbymichael, mrunalp: would be nice to get to 1.0 by the end of the year
+<a name="l-79"></a><span class="tm">18:23:35</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

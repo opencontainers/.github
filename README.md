@@ -48,7 +48,7 @@ We currently use [HackMD][hackmd] to pre-announce agenda items, record attendanc
 
 - last archive - current: [HackMD][hackmd]
 - 2019-03-06 - last archive: [HackMD Archives](./meeting-notes/)
-- 2015-10-07 - 2019-03-20: [ircbot minutes][minutes]
+- 2015-10-07 - 2019-03-20: [ircbot minutes](./meeting-notes/irc) ([external mirror][minutes])
 - 2015-07-22 - 2015-09-30: [wiki-minutes][runtime-wiki]
 
 ### Mailing List

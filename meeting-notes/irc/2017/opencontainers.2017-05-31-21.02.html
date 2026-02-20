@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2017-05-31 discussion</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2017-05-31 discussion</h1>
+<span class="details">
+Meeting started by wking at 21:02:07 UTC
+(<a href="opencontainers.2017-05-31-21.02.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">annotations: restrict character set of ref.name values</b> <span class="details">(<a href='opencontainers.2017-05-31-21.02.log.html#l-5'>wking</a>, 21:03:43)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/671">https://github.com/opencontainers/image-spec/pull/671</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-31-21.02.log.html#l-6'>wking</a>,
+    21:03:48)</span></li>
+  <li><a
+    href="https://www.w3.org/TR/REC-xml/#sec-notation">https://www.w3.org/TR/REC-xml/#sec-notation</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-31-21.02.log.html#l-7'>wking</a>,
+    21:05:22)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pulls">https://github.com/opencontainers/image-spec/pulls</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-31-21.02.log.html#l-10'>vbatts|work</a>,
+    21:12:06)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">open image-spec pulls</b> <span class="details">(<a href='opencontainers.2017-05-31-21.02.log.html#l-11'>wking</a>, 21:12:26)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pulls">https://github.com/opencontainers/image-spec/pulls</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-31-21.02.log.html#l-12'>wking</a>,
+    21:12:32)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/492">https://github.com/opencontainers/image-spec/pull/492</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-31-21.02.log.html#l-14'>wking</a>,
+    21:13:08)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/690">https://github.com/opencontainers/image-spec/pull/690</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-31-21.02.log.html#l-18'>vbatts|work</a>,
+    21:14:10)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/690">https://github.com/opencontainers/image-spec/pull/690</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-31-21.02.log.html#l-20'>wking</a>,
+    21:14:18)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">stevvooe to
+    comment on #690 about not specifying v5</span> <span
+    class="details">(<a
+    href='opencontainers.2017-05-31-21.02.log.html#l-25'>wking</a>,
+    21:15:26)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/image-spec/pull/652">https://github.com/opencontainers/image-spec/pull/652</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-31-21.02.log.html#l-33'>wking</a>,
+    21:18:03)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pulls">https://github.com/opencontainers/runtime-spec/pulls</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-31-21.02.log.html#l-35'>vbatts|work</a>,
+    21:18:35)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">runtime-spe pull requests</b> <span class="details">(<a href='opencontainers.2017-05-31-21.02.log.html#l-36'>wking</a>, 21:18:46)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pulls">https://github.com/opencontainers/runtime-spec/pulls</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-31-21.02.log.html#l-37'>wking</a>,
+    21:18:53)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/labels/v1.NEXT-maybe">https://github.com/opencontainers/runtime-spec/labels/v1.NEXT-maybe</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-31-21.02.log.html#l-40'>wking</a>,
+    21:20:18)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/milestone/15">https://github.com/opencontainers/runtime-spec/milestone/15</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-31-21.02.log.html#l-45'>vbatts|work</a>,
+    21:21:45)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/831">https://github.com/opencontainers/runtime-spec/issues/831</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-31-21.02.log.html#l-78'>wking</a>,
+    21:34:01)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/829">https://github.com/opencontainers/runtime-spec/pull/829</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-31-21.02.log.html#l-104'>wking</a>,
+    21:57:04)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">wking to
+    triage his prs</span> <span class="details">(<a
+    href='opencontainers.2017-05-31-21.02.log.html#l-109'>vbatts|work</a>,
+    22:02:59)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/milestone/7">https://github.com/opencontainers/runtime-spec/milestone/7</a>
+    <span class="details">(<a
+    href='opencontainers.2017-05-31-21.02.log.html#l-110'>vbatts|work</a>,
+    22:04:35)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">vbatts|work
+    to mail dev@ about the freeze</span> <span class="details">(<a
+    href='opencontainers.2017-05-31-21.02.log.html#l-113'>wking</a>,
+    22:05:40)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 22:07:30 UTC
+(<a href="opencontainers.2017-05-31-21.02.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>stevvooe to comment on #690 about not specifying v5</li>
+  <li>wking to triage his prs</li>
+  <li>vbatts|work to mail dev@ about the freeze</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> vbatts|work <ol>
+    <li>vbatts|work to mail dev@ about the freeze</li>
+  </ol></li>
+  <li> wking <ol>
+    <li>wking to triage his prs</li>
+  </ol></li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (104)</li>
+  <li>vbatts|work (9)</li>
+  <li>collabot` (3)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

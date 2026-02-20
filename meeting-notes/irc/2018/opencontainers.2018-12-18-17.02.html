@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2018-12-18 distribution spec walkthrough</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2018-12-18 distribution spec walkthrough</h1>
+<span class="details">
+Meeting started by vbatts|work at 17:02:14 UTC
+(<a href="opencontainers.2018-12-18-17.02.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">intro and intention</b> <span class="details">(<a href='opencontainers.2018-12-18-17.02.log.html#l-5'>vbatts|work</a>, 17:02:43)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/distribution-spec/issues/24">https://github.com/opencontainers/distribution-spec/issues/24</a>
+    <span class="details">(<a
+    href='opencontainers.2018-12-18-17.02.log.html#l-6'>vbatts|work</a>,
+    17:02:55)</span></li>
+  <li><a
+    href="https://github.com/kinvolk/ocicert/">https://github.com/kinvolk/ocicert/</a>
+    <span class="details">(<a
+    href='opencontainers.2018-12-18-17.02.log.html#l-7'>vbatts|work</a>,
+    17:03:25)</span></li>
+  <li><a
+    href="https://github.com/docker/distribution/tree/master/registry/handlers">https://github.com/docker/distribution/tree/master/registry/handlers</a>
+    <span class="details">(<a
+    href='opencontainers.2018-12-18-17.02.log.html#l-9'>jzelinskie</a>,
+    17:13:27)</span></li>
+  <li><a
+    href="https://github.com/docker/distribution/blob/master/registry/handlers/api_test.go">https://github.com/docker/distribution/blob/master/registry/handlers/api_test.go</a>
+    <span class="details">(<a
+    href='opencontainers.2018-12-18-17.02.log.html#l-10'>jzelinskie</a>,
+    17:13:30)</span></li>
+  <li><a
+    href="https://github.com/docker/distribution/blob/master/registry/api/v2/descriptors.go">https://github.com/docker/distribution/blob/master/registry/api/v2/descriptors.go</a>
+    <span class="details">(<a
+    href='opencontainers.2018-12-18-17.02.log.html#l-12'>jzelinskie</a>,
+    17:15:26)</span></li>
+  <li><a
+    href="https://docs.docker.com/engine/security/trust/content_trust/">https://docs.docker.com/engine/security/trust/content_trust/</a>
+    <span class="details">(<a
+    href='opencontainers.2018-12-18-17.02.log.html#l-15'>sangy</a>,
+    17:20:57)</span></li>
+  <li><a
+    href="https://github.com/docker/docker-credential-helpers">https://github.com/docker/docker-credential-helpers</a>
+    <span class="details">(<a
+    href='opencontainers.2018-12-18-17.02.log.html#l-39'>vbatts|work</a>,
+    17:35:40)</span></li>
+  <li><a
+    href="https://medium.com/@calavera/stop-saving-credential-tokens-in-text-files-65e840a237bb">https://medium.com/@calavera/stop-saving-credential-tokens-in-text-files-65e840a237bb</a>
+    <span class="details">(<a
+    href='opencontainers.2018-12-18-17.02.log.html#l-43'>estesp</a>,
+    17:36:27)</span></li>
+  <li><a
+    href="https://github.com/calavera/docker-credential-helpers">https://github.com/calavera/docker-credential-helpers</a>
+    <span class="details">(<a
+    href='opencontainers.2018-12-18-17.02.log.html#l-44'>vbatts|work</a>,
+    17:36:39)</span></li>
+  <li><a
+    href="https://medium.com/@calavera/stop-saving-credential-tokens-in-text-files-65e840a237bb">https://medium.com/@calavera/stop-saving-credential-tokens-in-text-files-65e840a237bb</a>
+    <span class="details">(<a
+    href='opencontainers.2018-12-18-17.02.log.html#l-45'>vbatts|work</a>,
+    17:36:45)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">look to
+    cargo-cult from a basis of
+    github.com/docker/distribution/blob/master/registry/api/v2/descriptors.go
+    github.com/docker/distribution/blob/master/registry/handlers/api_test.go</span>
+    <span class="details">(<a
+    href='opencontainers.2018-12-18-17.02.log.html#l-46'>vbatts|work</a>,
+    17:42:05)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">basic helper
+    to use an opaque blob for authentication token to test 'rw-test'
+    with</span> <span class="details">(<a
+    href='opencontainers.2018-12-18-17.02.log.html#l-47'>vbatts|work</a>,
+    17:43:13)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">merge the
+    ocicert repo into the distribution-spec/ repo</span> <span
+    class="details">(<a
+    href='opencontainers.2018-12-18-17.02.log.html#l-48'>vbatts|work</a>,
+    17:44:58)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 18:02:43 UTC
+(<a href="opencontainers.2018-12-18-17.02.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>look to cargo-cult from a basis of github.com/docker/distribution/blob/master/registry/api/v2/descriptors.go github.com/docker/distribution/blob/master/registry/handlers/api_test.go</li>
+  <li>basic helper to use an opaque blob for authentication token to test 'rw-test' with</li>
+  <li>merge the ocicert repo into the distribution-spec/ repo</li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>vbatts|work (22)</li>
+  <li>sangy (9)</li>
+  <li>estesp (6)</li>
+  <li>jzelinskie (5)</li>
+  <li>mikebrow (3)</li>
+  <li>collabot` (3)</li>
+  <li>dongsu (3)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

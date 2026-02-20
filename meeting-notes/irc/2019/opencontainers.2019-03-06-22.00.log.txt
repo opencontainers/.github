@@ -1,0 +1,31 @@
+22:00:53 <estesp> #startmeeting OCI Weekly Dev Call
+22:00:53 <collabot> Meeting started Wed Mar  6 22:00:53 2019 UTC.  The chair is estesp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:00:53 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:00:53 <collabot> The meeting name has been set to 'oci_weekly_dev_call'
+22:07:53 <estesp> #topic potentially have a better shared mechanism to collaborate on agenda + actions/notes
+22:09:31 <estesp> atlas: potential to use org repo to store content/weekly discussion
+22:10:55 <estesp> vanessa: shared doc during call lets people follow and focus
+22:12:12 <estesp> atlas: obvious pros/cons to various methods
+22:13:19 <estesp> vbatts: inline commenting in shared doc during call is good; but can be transcribed to markdown as summary for later (did I get that right?)
+22:13:59 <estesp> atlas: try Google Docs next week (vanessa: or this week!)
+22:15:31 <estesp> lasker: how about hackmd.io? like shared Google docs, but saves in markdown
+22:16:26 <estesp> #link https://hackmd.io/El8Dd2xrTlCaCG59ns5cwg
+22:18:37 <estesp> #topic cgroup v2
+22:19:01 <estesp> #link https://github.com/opencontainers/runtime-spec/issues/1002
+22:19:59 <estesp> vbatts: looking more imminent; Ubuntu already has unified mount; Fedora 2? possibly switching
+22:24:48 <estesp> #topic distribution spec v1
+22:25:48 <estesp> atlas: removing references to docker v2 schema 1 is mostly done
+22:26:15 <estesp> #link https://github.com/opencontainers/distribution-spec/milestone/3
+22:26:52 <estesp> atlas: vbatts: discussing vendor specific strings in headers
+22:26:59 <estesp> #link https://github.com/opencontainers/distribution-spec/issues/26
+22:35:57 <estesp> vbatts adding issue #39 to the milestone
+22:36:01 <estesp> #link https://github.com/opencontainers/distribution-spec/pull/39
+22:37:43 <estesp> #topic moving common content to the org project
+22:38:01 <estesp> vbatts: code of conduct and security disclosure are already moved thanks to Vanessa
+22:38:46 <estesp> #link https://github.com/opencontainers/org
+22:40:43 <estesp> vanessa: discussing the intro content PR and deploying it to a github pages site
+22:46:23 <estesp> #topic catalog/listing capabilities of registries
+22:49:25 <estesp> lasker, vbatts, atlas discussing potential for a proposal in this area
+22:49:43 <estesp> vbatts: need a proposal for a way forward on issue #22
+22:49:48 <estesp> #link https://github.com/opencontainers/distribution-spec/issues/22
+22:59:31 <estesp> #endmeeting

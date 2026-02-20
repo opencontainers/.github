@@ -1,0 +1,155 @@
+18:01:28 <vbatts> #startmeeting 2015-12-2 discussion
+18:01:28 <collabot> Meeting started Wed Dec  2 18:01:28 2015 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+18:01:28 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+18:01:28 <collabot> The meeting name has been set to '2015_12_2_discussion'
+18:02:06 <mrunalp> crosbymichael: lk4d4: dqminh: philips: tianon: Joining?
+18:02:30 <duglin> I’m at the airport so going to try to keep talking to a minimum
+18:02:39 <mrunalp> duglin: okay, no worries
+18:03:43 <mrunalp> #topic state location
+18:04:02 <wking> https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/q6TYqVZOcX8
+18:04:16 <wking> #info List thread: https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/q6TYqVZOcX8
+18:05:30 <wking> #info Command line API thread: https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/BIxya5eSNLo
+18:07:29 <duglin> IMO it all comes down to what level of interop we’re supposed to define - if none then our value decreases
+18:10:17 <wking> jlb13 and vbatts suggesting a command-line API (or whatever, could be REST) spec associated with a lifecycle spec
+18:10:56 <wking> vbatts prefers REST to a command-line API spec
+18:11:10 <duglin> we could do a rest api but then are we really signing up to define an entire http server?
+18:11:22 <wking> julz concerned about performance over REST
+18:11:33 <wking> I'm not sure how terminal-binding would work over REST
+18:11:40 <lk4d4> I think sh <-> http mapping is pretty straightforward
+18:12:22 <mrunalp> lk4d4: yeah, agree
+18:12:40 <duglin> if we don’t do a REST APIs and we don’t do a cmd, what other option is there? All I can think of is the filesystem like we do today
+18:13:03 <lk4d4> so, I think "actions" discussion is more valuable for spec :)
+18:13:13 <wking> mrunalp: provide the minimal command-line API for testing, and then you're free to provide other APIs as you see fit
+18:13:19 <duglin> lk4d4: sure but how are those actions exposed?
+18:13:54 <vbatts> #chairs mrunalp wking RobDolinMS
+18:13:58 <vbatts> #chair mrunalp wking RobDolinMS
+18:13:58 <collabot> Current chairs: RobDolinMS mrunalp vbatts wking
+18:14:00 <lk4d4> duglin: whatever way you desire I think, but if you want to be replaceable with runc - you have no choice :)
+18:14:12 <mrunalp> duglin: Yeah, it is abstract but testing needs more concrete inputs
+18:14:21 <wking> mrunalp: maybe base command-line API work on duglin's actions: https://github.com/opencontainers/specs/pull/225
+18:14:43 <mikebrow> abstract spec with a compliant implementation example
+18:15:02 <mrunalp> mikebrow: That is runc in a way but others just have to copy it
+18:15:29 <duglin> not sure I understand what “minimal cmd-line API for testing” really is because it sure sounds like we’re defining a cmd line just trying to avoid calling it that.
+18:15:54 <lk4d4> duglin: I agree :)
+18:16:01 <lk4d4> it's cli or not
+18:16:05 <duglin> yup
+18:16:10 <julz> ^ yup
+18:16:14 <wking> duglin: "minimal" just means, "your runtime can add additional stuff if you want, but you must support at least this command-line API"
+18:16:25 <wking> your additional stuff doesn't need to be CLI
+18:16:34 <julz> yes, maybe with some sort of way of saying it's a vendor option?
+18:16:39 <duglin> perhaps we should list the options here:  1) filesystem,  2) rest  3) cmd line  4) nothing and just define abstract action.  Anything else?
+18:17:00 <wking> duglin: I think this discussion is more general, not just about /run/opencontainer/containers
+18:17:00 <duglin> although 1 may still need 2 or 3
+18:17:20 <duglin> 1 is just for sharing state, not necessarily actions
+18:17:25 <wking> yeah
+18:17:51 <duglin> so for actions,  rest  vs   cmd line,  is there anything else?
+18:18:39 <lk4d4> gRpc, whatever :)
+18:18:42 <lk4d4> a lot of options
+18:18:57 <duglin> but ones we want to consider
+18:19:09 <lk4d4> but I think actions is just keyword + config, which can be mapped to any scheme
+18:19:50 <lk4d4> I like cmdline better
+18:19:57 <mrunalp> lk4d4: you are suggesting something like for e.g. <runtime> action <json_describing_action>
+18:20:00 <mrunalp> ?
+18:20:08 <mrunalp> A simple cmdline like runc isn't bad
+18:20:14 <lk4d4> yes
+18:20:32 <lk4d4> I think just nature of spec is supposing local execution rather than "remote"
+18:20:49 <lk4d4> so, cli more natural :)
+18:21:01 <duglin> so back to state, do we want to have a “query” type of action?
+18:21:01 <mrunalp> lk4d4: Agree
+18:21:11 <mrunalp> REST could be added on top if one wants
+18:21:13 <julz> lk4d4: xactly, yeah
+18:21:16 <duglin> and then leave state management up to the impl?
+18:21:18 <jlb13> yep, sure
+18:21:19 <lk4d4> if there will be cases for it
+18:21:31 <julz> I think yeah, but I'd prefer just query, not list, personally
+18:21:32 <wking> #link https://gist.github.com/wking/1d69118ba8b750f85bfc
+18:21:40 <julz> I think getting in to listing is probably higher level, personally
+18:21:40 <mikebrow> "query" and "push"?
+18:21:50 <wking> ^ my WIP based on julz initial work for the command line API
+18:22:17 <jlb13> i agree duglin, i was thinking mgmt would be an upper layer concern
+18:22:23 <RobDolinMS> mrunal: We should have a CL runtime state
+18:22:47 <RobDolinMS> doug: Is this a query action that returns data or where to go find it?
+18:23:04 <mrunalp> I think returining the data in defined json form would be good
+18:23:13 <lk4d4> definitely
+18:23:20 <duglin> yea, location of data isn’t ideal to me - just return the data
+18:23:54 <duglin> of course we may need to deal with notifications at some point but I think that can be thought of after we define query
+18:24:22 <mikebrow> kk query option
+18:24:45 <duglin> I’m still hearing conflicting statements on the phone.
+18:25:05 <duglin> we don’t need to talk about priv. if “query” returns state
+18:25:14 <RobDolinMS> Jesse: There's a higher-level question here: how much of multiple instance state management will the CLI be responsible for?
+18:25:58 <julz> jesse: strongly agree with that, runc should be 1:1 with a container, to me
+18:26:11 <duglin> if it blocks then it seems we must support a 2nd instance of the exe being able to share state with the 1st.
+18:26:17 <wking> yeah, I'm in favor of not handling state management in OCI
+18:26:29 <wking> higher level can always plug it in via hooks
+18:26:43 <lk4d4> wking: what is management?
+18:26:45 <duglin> I’d prefer to leave this as an impl detail - as long as “some exe” can return state of a container I asked for then that’s enough.
+18:26:58 <lk4d4> duglin: that was my thoughts too
+18:27:16 <duglin> but I do think “query” needs to return “list of containers” because if 3rd party tool comes in late then it needs ot know what’s already running.
+18:27:25 <wking> lk4d4: duglin points out that a 'func state --id <container-id>' command would have to get information from another func process
+18:27:31 <mikebrow> Agree, 1:1 minimum requirement
+18:27:33 <dqminh> so for tools like cadvisor, how will it discover applications in the system if we pun this to upper layer ?
+18:27:35 <mrunalp> duglin: lk4d4: Yeah agree on that
+18:27:51 <wking> passing that information between func processes is "state management" (or whatever, happy to use other terminology"
+18:28:48 <julz> dqminh: imo that's a problem for a higher level spec/tool
+18:28:56 <wking> jlb13: runtime implementation is much simpler if we punt state management to a higher layer
+18:29:07 <duglin> leaving to the higher level leaves me wondering how we find out what’s running? If we say “ask the higher level” then the point of interop will be at that level not OCI
+18:29:24 <mrunalp> duglin: docker starts runc wiht --id and stores it in a list
+18:29:24 <wking> duglin: yeah, or put your own hooks in to keep track
+18:29:36 <mikebrow> punt at the spec level but we can still implement a simple management example in runc
+18:29:37 <mrunalp> It can then use that id to interact with that container
+18:29:39 <mikebrow> ?
+18:29:40 <lk4d4> wking: I don't think it will be easy
+18:29:54 <lk4d4> what if you reconnecting to existing runc processes?
+18:29:58 <julz> right, docker/cloudfoundry/kube etc. can all support a list command and just pass it to cadvisor, I don'
+18:30:05 <julz> t think it's a huge deal if that isn't specified
+18:30:19 <julz> but wherever it's specified shouldn't be oci, to me
+18:30:22 <lk4d4> yeah, list is okay
+18:30:26 <jlb13> yeah, that's how we do it with docker - docker manages its container instances, which are created/started/stopped by runz
+18:30:27 <wking> lk4d4: I posted the content for emulating /runc/ in https://groups.google.com/a/opencontainers.org/d/msg/dev/q6TYqVZOcX8/GQs0zkRHBwAJ
+18:30:34 <vbatts> so tying https://github.com/opencontainers/specs/blob/master/ROADMAP.md#define-standard-container-actions and https://github.com/opencontainers/specs/blob/master/ROADMAP.md#full-lifecycle-hooks together?
+18:30:36 <wking> * emulating /run/opencontainer
+18:30:42 <lk4d4> like oci state $(oci list)
+18:30:50 <julz> 'cos at the end of the day, all of those high level tools will have to have a way to list anyway, and I doubt any of them want to delegate that down
+18:31:04 <jlb13> right.
+18:31:47 <lk4d4> my personal opinion is that list crucial if we have no standard state storage
+18:32:02 <duglin> not sure how do to “list containers” with hooks
+18:32:44 <lk4d4> there is no way
+18:32:50 <mikebrow> a registry hook
+18:33:04 <duglin> wking: but how do we get interop on “list” ?
+18:33:08 <lk4d4> what if my "registry" app crashed badly?
+18:33:13 <duglin> if each hook stores it differently
+18:33:20 <lk4d4> only tool can be source of truth
+18:33:28 <mikebrow> registry could be a file
+18:33:44 <wking> duglin: why do you need interop on list?
+18:33:45 <lk4d4> hehe
+18:34:00 <RobDolinMS> #topic Updates on Roadmap
+18:34:02 <lk4d4> yeah, files exactly what we want to avoid with dropping standard way of storing
+18:34:03 <duglin> so some 3rd party tool can know what to monitor
+18:34:24 <wking> duglin: you can tell the 3rd party tools what to monitor (so push to them, instead of having them poll)
+18:34:27 <mikebrow> eggzactly
+18:34:38 <RobDolinMS> mrunal: Lifecycle PR is close to being ready to merge
+18:34:50 <RobDolinMS> mrunal: OCI Tools coming along nicely
+18:34:51 <duglin> right, so the interop point becomes with the higher level not OCI
+18:35:01 <wking> #link https://github.com/opencontainers/specs/pull/231
+18:35:10 <duglin> if all interactions end up going thru the higher tool why do I need interop on OCI’s cmd line
+18:35:30 <wking> "keeping a list of containers" is not "all interactions" ;)
+18:35:38 <julz> I think interop almost has to be higher level, like what if I want to cadvisor only files owned by a certain user? are we going to get in to filtering and other things?
+18:35:44 <RobDolinMS> mrunal: we have some agreement, who will work on this?
+18:35:47 <julz> files->containers
+18:35:51 <lk4d4> I agree with Doug here
+18:35:51 <RobDolinMS> Doug: I'll work with Trevor
+18:35:55 <RobDolinMS> Jesse: I'm in to help too
+18:36:00 <wking> #action duglin work on command-line API
+18:36:02 <lk4d4> oci tool always will have containers list
+18:36:06 <wking> #action wking work on command-line API
+18:36:19 <lk4d4> and it will be definitely more precise than any other list
+18:36:21 <wking> #action jlb13 work on command-line API
+18:36:21 <mikebrow> I think the idea was just to have a few helper examples of higher level management implementations to make oci useful without one of the higher level tools
+18:36:37 <mikebrow> samples
+18:36:53 <RobDolinMS> Vincent: What's the point of adding multiple owners?
+18:36:57 <julz> if you want an OCI wrapper that gives you a list of containers that seems very easy to build on top of a defined standardised command line
+18:37:06 <julz> without the command line having to pick up the ability to manage that state
+18:37:24 <julz> no need even for hooks, just wrap the binary you call
+18:38:33 <RobDolinMS> Vincent: Ideal to have one owner and additional participants
+18:38:41 <RobDolinMS> Vishnu: I"m just back from travel
+18:39:20 <RobDolinMS> #endmeeting

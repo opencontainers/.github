@@ -1,0 +1,32 @@
+18:04:15 <mrunalp> #startmeeting OCI discussion
+18:04:15 <collabot`> Meeting started Wed Nov 18 18:04:15 2015 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+18:04:15 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+18:04:15 <collabot`> The meeting name has been set to 'oci_discussion'
+18:04:24 <RobDolinMS> #topic Welcome / Agenda
+18:04:37 <RobDolinMS> #topic Update on Lifecycle
+18:04:47 <RobDolinMS> #info Mrunal got a bunch of comments
+18:04:50 <RobDolinMS> #topic OCI Tools
+18:04:58 <RobDolinMS> #info Mrunal has merged a bunch of PRs
+18:05:16 <RobDolinMS> #info Planning to re-visit next month if it should be moved under OpenContainer
+18:05:54 <RobDolinMS> Abin: Will it have additional commands for inspection / visibility
+18:06:12 <RobDolinMS> Mrunal: Not sure if this is needed
+18:06:22 <RobDolinMS> Brandon: Also hesitant
+18:06:40 <RobDolinMS> Liangchenye: Do we need to talk about scope of OCI Tools?
+18:06:56 <RobDolinMS> Mrunal: We can add support for test cases and team can build on top of that
+18:07:27 <RobDolinMS> (Goes to fetch power cord)
+18:08:40 <RobDolinMS> (Back)
+18:09:11 <mrunalp> philips to create a new PR for optional/required
+18:09:39 <RobDolinMS> #info: Present on the call: Abin, Brandon, Jason, Liangchenye, Mike Brown, Mrunal, Rob Dolin, Zenlin
+18:09:48 <RobDolinMS> #topic Protobufs
+18:09:59 <RobDolinMS> #info Jason sent an email
+18:10:25 <RobDolinMS> #info Jason is catching-up on mailing list feedback and working on additional write-ups and c
+18:10:53 <RobDolinMS> #info Jason expects to do a write-up on bundle filesystem metadata in the next few days
+18:11:19 <RobDolinMS> Ex: File modes. ACLs, etc.
+18:11:40 <RobDolinMS> #topic Testing
+18:12:55 <RobDolinMS> #info Liangchenye is doing testing of various runtimes
+18:13:33 <philips> Liangchenye tested under rkt
+18:13:54 <RobDolinMS> #info Liangchenye reports the current test cases work with rkt
+18:14:42 <mrunalp> https://github.com/huawei-openlab/oct ?
+18:14:46 <liangchenye> yes
+18:15:23 <RobDolinMS> Mrunal suggests Brandon  checks-out
+18:15:33 <mrunalp> #endmeeting

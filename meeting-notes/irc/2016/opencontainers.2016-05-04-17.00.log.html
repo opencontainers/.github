@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">17:00:47</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-05-04 discussion</span>
+<a name="l-2"></a><span class="tm">17:00:47</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Wed May  4 17:00:47 2016 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">17:00:47</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">17:00:47</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2016_05_04_discussion'
+<a name="l-5"></a><span class="tm">17:03:02</span><span class="nk"> &lt;vbatts&gt;</span> <span class="hi">wking:</span> was that you?
+<a name="l-6"></a><span class="tm">17:03:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> #chair me?
+<a name="l-7"></a><span class="tm">17:03:16</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-8"></a><span class="tm">17:03:16</span><span class="nk"> &lt;collabot`&gt;</span> Current chairs: vbatts wking
+<a name="l-9"></a><span class="tm">17:03:28</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">reviewing open PRs</span>
+<a name="l-10"></a><span class="tm">17:03:40</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/411
+<a name="l-11"></a><span class="tm">17:04:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> what's left to do here?
+<a name="l-12"></a><span class="tm">17:04:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Abhijeeth:</span> nothing that I know of
+<a name="l-13"></a><span class="tm">17:04:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> are we ok with hyphenated keys instead of camelCase?
+<a name="l-14"></a><span class="tm">17:05:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">Abhijeeth:</span> we want to keep the names the same, because they've been that way for a very long time
+<a name="l-15"></a><span class="tm">17:05:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">anuthan_work:</span> is Abhijeeth
+<a name="l-16"></a><span class="tm">17:06:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> it's good to have both spec consistency and consistency with the OS.  For Linux, most keys are runtime-specific, and don't map directly to the runtime (which gives you a bit of indirection to protect from kernel churn)
+<a name="l-17"></a><span class="tm">17:08:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> We'll take whatever the advice is.  For Solaris users, it's easier not to change.  But it doesn't take a rocket scientist to map between hyphens and camelCase
+<a name="l-18"></a><span class="tm">17:08:24</span><span class="nk"> &lt;wking&gt;</span> we were assuming it was platform specific and that nobody would care, but we're ok switching
+<a name="l-19"></a><span class="tm">17:08:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> also, feel free to decode in the comments
+<a name="l-20"></a><span class="tm">17:09:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> probably not worth it, since it's not a big leap.
+<a name="l-21"></a><span class="tm">17:09:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">jlb13:</span> we're not super passionate about this (lots of internal bikeshedding, we started with camelCase, we'll just take it back inside and blame it on the OCI)
+<a name="l-22"></a><span class="tm">17:10:03</span><span class="nk"> &lt;vbatts&gt;</span> https://github.com/opencontainers/runtime-spec/milestones
+<a name="l-23"></a><span class="tm">17:10:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> do we want to cut 0.6?
+<a name="l-24"></a><span class="tm">17:10:20</span><span class="nk"> &lt;philips&gt;</span> gah no one can hear me
+<a name="l-25"></a><span class="tm">17:10:32</span><span class="nk"> &lt;philips&gt;</span> I do want to discuss solaris + networking for a sec
+<a name="l-26"></a><span class="tm">17:10:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> no date or issues on the current 0.6 milestone
+<a name="l-27"></a><span class="tm">17:11:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> there's also a 1.0-rc that's parked as well
+<a name="l-28"></a><span class="tm">17:12:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> going back to Solaris, is networking tied to the container lifecycle (it's not for Linux)
+<a name="l-29"></a><span class="tm">17:12:12</span><span class="nk"> &lt;wking&gt;</span> And adding subnet configurations and such is a first for this spec
+<a name="l-30"></a><span class="tm">17:12:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">anuthan_work:</span> it is, because we put it up at setup time and tear it down when the container dies
+<a name="l-31"></a><span class="tm">17:12:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> is the lifecycle tied to a particular process?
+<a name="l-32"></a><span class="tm">17:13:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">anuthan_work:</span> no.  There's a daemon which takes care of the container and maintains it's state
+<a name="l-33"></a><span class="tm">17:13:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> so essentially an init process that owns the lifecycle.  Do you talk to that process to, say, launch a second process inside the container?
+<a name="l-34"></a><span class="tm">17:13:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">anuthan_work:</span> we have a separate mechanism (through the kernel) to add processes
+<a name="l-35"></a><span class="tm">17:14:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> probably worth adding a note to say that the network needs to be setup for the first process in a container, so it's clear to non-Solaris folks that that's a requirement
+<a name="l-36"></a><span class="tm">17:14:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> the lifecycle of the networking + process, or a link to the upstream docs, or something
+<a name="l-37"></a><span class="tm">17:14:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">anuthan_work:</span> we can do that
+<a name="l-38"></a><span class="tm">17:15:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> anything else for Solaris
+<a name="l-39"></a><span class="tm">17:15:05</span><span class="nk"> &lt;wking&gt;</span> ?
+<a name="l-40"></a><span class="tm">17:15:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I tagged #411 for 0.6.0
+<a name="l-41"></a><span class="tm">17:15:32</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/417
+<a name="l-42"></a><span class="tm">17:16:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> in the past we suggested explicitness instead of specifying defauls
+<a name="l-43"></a><span class="tm">17:16:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> is that still the case?  If so, we can close this
+<a name="l-44"></a><span class="tm">17:16:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> in the spec it says uid is required anyway
+<a name="l-45"></a><span class="tm">17:16:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> yeah, it should be required
+<a name="l-46"></a><span class="tm">17:17:13</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/415
+<a name="l-47"></a><span class="tm">17:18:02</span><span class="nk"> &lt;wking&gt;</span> I have to step out for one sec ;)
+<a name="l-48"></a><span class="tm">17:18:25</span><span class="nk"> &lt;duglin&gt;</span> lgtm
+<a name="l-49"></a><span class="tm">17:19:06</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/405
+<a name="l-50"></a><span class="tm">17:19:56</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/397
+<a name="l-51"></a><span class="tm">17:19:56</span><span class="nk"> &lt;wking&gt;</span> I'm back
+<a name="l-52"></a><span class="tm">17:20:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> what about the cgroups namespace PR
+<a name="l-53"></a><span class="tm">17:20:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> probably worth waiting for the first stable release
+<a name="l-54"></a><span class="tm">17:20:24</span><span class="nk"> &lt;wking&gt;</span> * kernel release
+<a name="l-55"></a><span class="tm">17:20:42</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/412/files
+<a name="l-56"></a><span class="tm">17:22:57</span><span class="nk"> &lt;mikebrow_&gt;</span> lolz
+<a name="l-57"></a><span class="tm">17:23:14</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/384
+<a name="l-58"></a><span class="tm">17:23:21</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">wking to reroll #412 with more clarification</span>
+<a name="l-59"></a><span class="tm">17:24:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I tabled that after last week's confusing discussion
+<a name="l-60"></a><span class="tm">17:25:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> my understanding after last week was that we needed external changes first before pushing stuff into the repo
+<a name="l-61"></a><span class="tm">17:27:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I thought last week there was talk about pushing changes into ocitools?
+<a name="l-62"></a><span class="tm">17:27:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> avoiding hooks is still a good thing to do
+<a name="l-63"></a><span class="tm">17:28:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> it doesn't need to pull in bind mounts
+<a name="l-64"></a><span class="tm">17:28:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I don't want to drag in post-stop hooks here
+<a name="l-65"></a><span class="tm">17:28:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> agreed
+<a name="l-66"></a><span class="tm">17:28:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> it depends on whether we want to capture a majority of use cases or be a thin kernel wrapper
+<a name="l-67"></a><span class="tm">17:29:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> we want portable post-stop hooks
+<a name="l-68"></a><span class="tm">17:29:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> to make progress, it seems like we want to split create/start
+<a name="l-69"></a><span class="tm">17:29:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> some things are ugly to achieve via the current hooks
+<a name="l-70"></a><span class="tm">17:30:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> you can make your namespaces ahead of time
+<a name="l-71"></a><span class="tm">17:30:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> yes for the network (which may pull in user namespaces).
+<a name="l-72"></a><span class="tm">17:31:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> there's currently no network config in the spec anyway
+<a name="l-73"></a><span class="tm">17:31:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> yeah, and I think that's good.  I'd just rather invert control and allow the caller to control the current-hook functionality directly (instead of calling by proxy through the runtime)
+<a name="l-74"></a><span class="tm">17:32:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> we should admit that this is a spec for orchestrators, and it's easier for an orchestrator to drive tools directly (vs. through hooks)
+<a name="l-75"></a><span class="tm">17:33:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> and there's no reason to drop the current 'run' (or whatever) that bundles all of this together and keeps hooks
+<a name="l-76"></a><span class="tm">17:33:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> and that's what the PR has now
+<a name="l-77"></a><span class="tm">17:33:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I'm ok with doing that
+<a name="l-78"></a><span class="tm">17:34:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> turning it around, any objections?
+<a name="l-79"></a><span class="tm">17:34:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> no objections yet.  I have questions about the implementation, but I guess that's in runC
+<a name="l-80"></a><span class="tm">17:35:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> lets not land the spec until we know it's possible
+<a name="l-81"></a><span class="tm">17:35:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> so we all agree that we want to land this in a runC branch
+<a name="l-82"></a><span class="tm">17:36:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I'd like a list of use cases
+<a name="l-83"></a><span class="tm">17:36:26</span><span class="nk"> &lt;wking&gt;</span> I'd posted some in my 3-proposal comparison^
+<a name="l-84"></a><span class="tm">17:36:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> by 1.0?
+<a name="l-85"></a><span class="tm">17:36:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> yes please
+<a name="l-86"></a><span class="tm">17:37:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> can we get a high-level description of what's going on in the runC PR?
+<a name="l-87"></a><span class="tm">17:37:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> who does what, when?
+<a name="l-88"></a><span class="tm">17:38:11</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">duglin to write a high level explanation</span>
+<a name="l-89"></a><span class="tm">17:39:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> although the current runC PR doesn't have start-time PID creation
+<a name="l-90"></a><span class="tm">17:40:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> this is getting into the 'exec' conversation
+<a name="l-91"></a><span class="tm">17:40:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> 'exec' is one word with many use cases, but for post-stop it's very clear
+<a name="l-92"></a><span class="tm">17:41:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I understand that splitting stop/delete lets you put in post-stop hooks
+<a name="l-93"></a><span class="tm">17:41:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> but the sub-container approach to pinning namespaces is similar to 'exec'
+<a name="l-94"></a><span class="tm">17:41:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I think sub-containers are fragile and expose too many low-level details
+<a name="l-95"></a><span class="tm">17:42:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> so I think we want to continue exploring post-stop hooks and/or a stop/delete split
+<a name="l-96"></a><span class="tm">17:42:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> it would be sad to invent a second way of doing things just because we moved 'exec' from the spec
+<a name="l-97"></a><span class="tm">17:42:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> if sub-containers are fragile, that's a big problem in its own right
+<a name="l-98"></a><span class="tm">17:43:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I think it was right to pull it out of the spec, because using config.json to do exec-like things is good
+<a name="l-99"></a><span class="tm">17:43:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> but pulling it out and ignoring those use cases is not good
+<a name="l-100"></a><span class="tm">17:43:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> there's no agreement on what's in the sandbox or what's getting joined.  But we should make it easy to join the sandbox parts you want
+<a name="l-101"></a><span class="tm">17:44:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I think you're conflating runC with other implementations (e.g. a long-running init process)
+<a name="l-102"></a><span class="tm">17:44:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> if you look at it from a semantic level, the 'exec' use case is very different from hooks
+<a name="l-103"></a><span class="tm">17:44:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> thinking about it that way is another reason to hesitate about hooks.  Solaris folks have a daemon, can they do bind-mount-like preservation?
+<a name="l-104"></a><span class="tm">17:45:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> we don't have much non-Linux information, maybe focus on that?
+<a name="l-105"></a><span class="tm">17:45:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> yeah, and we know sub-containers work there
+<a name="l-106"></a><span class="tm">17:45:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> maybe a generic utility that talks over a socket to your process, and you don't need a single binary
+<a name="l-107"></a><span class="tm">17:45:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> pushing everything up into higher levels defeats the purpose of the spec
+<a name="l-108"></a><span class="tm">17:46:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I don't think I'm saying that.  I'm saying we should have an expressive spec that makes sub-containers easy
+<a name="l-109"></a><span class="tm">17:46:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> once you have that, you can pin namespaces with sub-containers, so why add a separate namespace-binding requirement?
+<a name="l-110"></a><span class="tm">17:46:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I'd rather think about portable post-stop hooks, and then move on to consider exec
+<a name="l-111"></a><span class="tm">17:47:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I agree with the distraction, and they're kind of orthogonal
+<a name="l-112"></a><span class="tm">17:47:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we can make them optional
+<a name="l-113"></a><span class="tm">17:47:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">wking:</span> are you still a compliant runtime if you don't support post-stop hooks
+<a name="l-114"></a><span class="tm">17:48:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I mean optional in the config
+<a name="l-115"></a><span class="tm">17:48:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> the fundamental problem I've had with post-stop hooks is that it's hard to opt out
+<a name="l-116"></a><span class="tm">17:49:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> maybe you'd only require an explicit 'destroy' if the config had post-stop hooks
+<a name="l-117"></a><span class="tm">17:49:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> but if the foundational layer can split stop and delete, you can just immediately invoke delete after stop
+<a name="l-118"></a><span class="tm">17:51:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> the PR for the spec side of this splits create/start (with a merged 'run').  And you have a single 'delete' if that's what you want
+<a name="l-119"></a><span class="tm">17:51:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> but it still requires you to call 'delete'
+<a name="l-120"></a><span class="tm">17:52:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> now namespaces just clean up themselves (with kernel reaping)
+<a name="l-121"></a><span class="tm">17:52:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> you could do that with a flag...
+<a name="l-122"></a><span class="tm">17:52:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> that was what mrunalp was saying.  You'd have to set it up at create-time, and that's fine
+<a name="l-123"></a><span class="tm">17:53:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> but in order to pin a namespace, you need to know what namespaces you want to pin
+<a name="l-124"></a><span class="tm">17:53:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> that's the same "what namespaces?" issue we have with 'exec'
+<a name="l-125"></a><span class="tm">17:53:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">julz_:</span> I certainly think experimenting is fine, but having two spec ways to do one thing seems like a shame
+<a name="l-126"></a><span class="tm">17:54:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> so if I go back to the spec PR and add a "PID 1 kills everything" flag, which opts you out of the stop/delete split
+<a name="l-127"></a><span class="tm">17:54:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> I'd rather get agreement on the spec PR first, because I don't want to write code that gets thrown out for doing the wrong thing
+<a name="l-128"></a><span class="tm">17:54:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> sounds good to me
+<a name="l-129"></a><span class="tm">17:55:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> forward progress is good
+<a name="l-130"></a><span class="tm">17:55:21</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">duglin to reroll create/start to make for-delete namespace pinning optional</span>
+<a name="l-131"></a><span class="tm">17:55:34</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">DockerCon face-to-face?</span>
+<a name="l-132"></a><span class="tm">17:55:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> some things are easier to resolve face to face
+<a name="l-133"></a><span class="tm">17:56:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I'll be there
+<a name="l-134"></a><span class="tm">17:56:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I hadn't planned to go, but I can make a meeting
+<a name="l-135"></a><span class="tm">17:56:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'll be there
+<a name="l-136"></a><span class="tm">17:56:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> a couple hours is probably fine
+<a name="l-137"></a><span class="tm">17:57:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I was going to poll for an image meeting in June
+<a name="l-138"></a><span class="tm">17:57:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> images have more international folks, and some aren't on this call
+<a name="l-139"></a><span class="tm">17:57:26</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">duglin to look for a half-day room</span>
+<a name="l-140"></a><span class="tm">17:57:48</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">splitting create/start</span>
+<a name="l-141"></a><span class="tm">17:58:00</span><span class="nk"> &lt;wking&gt;</span> are these in 1.0? 0.6?
+<a name="l-142"></a><span class="tm">17:58:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> it sounds like there is too much in the air
+<a name="l-143"></a><span class="tm">17:58:10</span><span class="nk"> &lt;philips&gt;</span> byes!
+<a name="l-144"></a><span class="tm">17:58:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> ok, punt for now
+<a name="l-145"></a><span class="tm">17:58:18</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

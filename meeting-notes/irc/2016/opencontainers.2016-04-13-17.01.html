@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2016-04-13 discussion</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2016-04-13 discussion</h1>
+<span class="details">
+Meeting started by vbatts at 17:01:28 UTC
+(<a href="opencontainers.2016-04-13-17.01.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/384/files">https://github.com/opencontainers/runtime-spec/pull/384/files</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-13-17.01.log.html#l-6'>mrunalp</a>,
+    17:02:16)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">split create and start</b> <span class="details">(<a href='opencontainers.2016-04-13-17.01.log.html#l-7'>vbatts</a>, 17:02:46)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/384">https://github.com/opencontainers/runtime-spec/pull/384</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-13-17.01.log.html#l-9'>vbatts</a>,
+    17:03:00)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">duglin to
+    modify #384 to restore the combined command</span> <span
+    class="details">(<a
+    href='opencontainers.2016-04-13-17.01.log.html#l-26'>wking</a>,
+    17:06:43)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">stop/kill/delete</b> <span class="details">(<a href='opencontainers.2016-04-13-17.01.log.html#l-36'>wking</a>, 17:08:55)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/356">https://github.com/opencontainers/runtime-spec/issues/356</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-13-17.01.log.html#l-37'>mrunalp</a>,
+    17:08:57)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/356">https://github.com/opencontainers/runtime-spec/issues/356</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-13-17.01.log.html#l-39'>vbatts</a>,
+    17:09:25)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">wking to mail
+    RobDolinMS with POSIX signal docs</span> <span class="details">(<a
+    href='opencontainers.2016-04-13-17.01.log.html#l-51'>wking</a>,
+    17:16:57)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">RobDolinMS to
+    check with Windows container folks about supporting a signal-style
+    approach</span> <span class="details">(<a
+    href='opencontainers.2016-04-13-17.01.log.html#l-52'>wking</a>,
+    17:17:15)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">mikebrow to
+    submit a PR sketching out the signal-style approach</span> <span
+    class="details">(<a
+    href='opencontainers.2016-04-13-17.01.log.html#l-53'>wking</a>,
+    17:17:25)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/371">https://github.com/opencontainers/runtime-spec/pull/371</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-13-17.01.log.html#l-55'>mrunalp</a>,
+    17:17:34)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">vbatts to
+    write up a PR about the media-type approach</span> <span
+    class="details">(<a
+    href='opencontainers.2016-04-13-17.01.log.html#l-66'>wking</a>,
+    17:24:03)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/345">https://github.com/opencontainers/runtime-spec/issues/345</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-13-17.01.log.html#l-69'>mrunalp</a>,
+    17:25:11)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">remove exec from spec</b> <span class="details">(<a href='opencontainers.2016-04-13-17.01.log.html#l-73'>vbatts</a>, 17:25:37)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/issues/345">https://github.com/opencontainers/runtime-spec/issues/345</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-13-17.01.log.html#l-74'>vbatts</a>,
+    17:25:44)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">vishh to post
+    a PR removing exec</span> <span class="details">(<a
+    href='opencontainers.2016-04-13-17.01.log.html#l-79'>wking</a>,
+    17:26:14)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">PR review</b> <span class="details">(<a href='opencontainers.2016-04-13-17.01.log.html#l-80'>mrunalp</a>, 17:26:59)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/270">https://github.com/opencontainers/runtime-spec/pull/270</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-13-17.01.log.html#l-82'>mrunalp</a>,
+    17:27:36)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">vishh to
+    update character restrictions to match kernel limits</span> <span
+    class="details">(<a
+    href='opencontainers.2016-04-13-17.01.log.html#l-90'>wking</a>,
+    17:32:15)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/348">https://github.com/opencontainers/runtime-spec/pull/348</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-13-17.01.log.html#l-91'>mrunalp</a>,
+    17:32:19)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/366">https://github.com/opencontainers/runtime-spec/pull/366</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-13-17.01.log.html#l-93'>mrunalp</a>,
+    17:33:26)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/runtime-spec/pull/360">https://github.com/opencontainers/runtime-spec/pull/360</a>
+    <span class="details">(<a
+    href='opencontainers.2016-04-13-17.01.log.html#l-95'>mrunalp</a>,
+    17:35:22)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 17:38:00 UTC
+(<a href="opencontainers.2016-04-13-17.01.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>duglin to modify #384 to restore the combined command</li>
+  <li>wking to mail RobDolinMS with POSIX signal docs</li>
+  <li>RobDolinMS to check with Windows container folks about supporting a signal-style approach</li>
+  <li>mikebrow to submit a PR sketching out the signal-style approach</li>
+  <li>vbatts to write up a PR about the media-type approach</li>
+  <li>vishh to post a PR removing exec</li>
+  <li>vishh to update character restrictions to match kernel limits</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> duglin <ol>
+    <li>duglin to modify #384 to restore the combined command</li>
+  </ol></li>
+  <li> mikebrow <ol>
+    <li>mikebrow to submit a PR sketching out the signal-style approach</li>
+  </ol></li>
+  <li> RobDolinMS <ol>
+    <li>wking to mail RobDolinMS with POSIX signal docs</li>
+    <li>RobDolinMS to check with Windows container folks about supporting a signal-style approach</li>
+  </ol></li>
+  <li> vbatts <ol>
+    <li>vbatts to write up a PR about the media-type approach</li>
+  </ol></li>
+  <li> vishh <ol>
+    <li>vishh to post a PR removing exec</li>
+    <li>vishh to update character restrictions to match kernel limits</li>
+  </ol></li>
+  <li> wking <ol>
+    <li>wking to mail RobDolinMS with POSIX signal docs</li>
+  </ol></li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (54)</li>
+  <li>mrunalp (14)</li>
+  <li>vbatts (11)</li>
+  <li>JakeWarner|Work (6)</li>
+  <li>collabot (6)</li>
+  <li>mikebrow (3)</li>
+  <li>vishh (2)</li>
+  <li>duglin (1)</li>
+  <li>RobDolinMS (0)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

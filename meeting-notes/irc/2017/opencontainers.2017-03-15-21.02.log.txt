@@ -1,0 +1,160 @@
+21:02:48 <wking> #startmeeting 2017-03-15 discussion
+21:02:48 <collabot`> Meeting started Wed Mar 15 21:02:48 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:02:48 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:02:48 <collabot`> The meeting name has been set to '2017_03_15_discussion'
+21:02:53 <wking> #chair mrunalp vbatts
+21:02:53 <collabot`> Current chairs: mrunalp vbatts wking
+21:02:58 <mrunalp> vbatts, Can you hear me?
+21:03:20 <mrunalp> okay, I'll dial in.
+21:03:35 <duglin> I think Michael will just speak for RedHat now  :-)
+21:03:39 <wking> [audio trouble with mrunalp]
+21:04:28 <wking> #topic image issues
+21:05:30 <wking> stevvooe: we need more design for the image-tools command line API
+21:06:13 <wking> vbatts: are you envisioning some particular output there?
+21:06:35 <wking> stevvooe: right now there is progress in a direction, but we don't know if it is the right direction
+21:06:48 <wking> stevvooe: for example, is using a logger for command output helpful for users?
+21:07:10 <wking> vbatts: there is some usefulness in being able to toggle verbosity
+21:07:24 <wking> vbatts: but it's difficult if progress is blocked for a long time waiting on a design
+21:07:39 <wking> stevvooe: but churn without a design isn't great either
+21:08:15 <wking> stevvooe: one are is the main use-cases for the command line tool
+21:08:34 <wking> stevvooe: for example, what's the difference between [...] and unpacking?
+21:08:57 <wking> stevvooe: with time, I can provide examples (and I have posted a few comments along those lines)
+21:09:23 <wking> stevvooe: but we need that "what is the input?  what is the output?" approach more generally
+21:10:17 <wking> vbatts: so apart from someone stepping up and doing this in a way that seems suitable...
+21:10:23 <wking> vbatts: I'm not sure what a best next step is
+21:10:48 <wking> stevvooe: I'm confused, because this plan of what you're planning on doing and why is part of the usual process
+21:11:05 <wking> stevvooe: open an issue and say "I'm going to do x, y, z" and we'll say "great, go for it"
+21:11:25 <wking> vbatts: certification is pushing the tools to cover the MUSTs and SHOULDs in the spec
+21:12:08 <wking> vbatts: posting details about what was checked with links to the conditions is what we need, and seems to be what is generally happening
+21:13:08 <wking> vbatts: RobDolinMS had posted a burn-down list of MUSTs/SHOULDs which were tested
+21:13:18 <wking> stevvooe: where is the doc for how the command line API maps to the cert group?
+21:13:30 <wking> vbatts: I don't have that, but I'm not on the cert group
+21:14:07 <wking> vbatts: maybe the work has been done and just hasn't been conveyed well enough?
+21:14:35 <wking> vbatts: maybe it's a communication issue, and folks are trying to drive progress
+21:14:51 <wking> stevvooe: folks need to put forward their designs, and then I can help move that forward
+21:15:07 <wking> stevvooe: but if the response is "here are 4 more PRs", that's not helping with design
+21:15:27 <cracra> [caniszczyk, Open Container Initiative] essentially the CertWG is asking for tooling to help validate the MUST/SHOULDs in the specs (i.e., runtime-tools) https://github.com/opencontainers/runtime-tools/issues/66
+21:15:29 <wking> vbatts: that's not wrong.  But it's hard to find a way forward
+21:15:54 <wking> stevvooe: I feel bad for dragging image-tools through the mud, but we have to have standards
+21:16:00 <wking> vbatts: so what's the next step that you see?
+21:16:25 <stevvooe> https://github.com/opencontainers/image-tools/pull/46#issuecomment-265263029
+21:16:39 <wking> #link https://github.com/opencontainers/image-spec/issues/467
+21:16:56 <wking> ^ #467 has been mentioned as a blocker for the image-tools command-line API before
+21:18:02 <stevvooe> https://github.com/opencontainers/image-spec/issues/588#issuecomment-285480614
+21:18:53 <wking> vbatts: so we're asking folks for examples like those?
+21:19:08 <wking> stevvooe: yeah.  Speaking in the language of the spec
+21:21:15 <wking> RobDolinMS: I'd be glad to take a stab at this
+21:21:32 <wking> vbatts: that sounds good to me
+21:21:51 <wking> stevvooe: my request was less grandiose; just focused on image-tools
+21:22:27 <stevvooe> https://github.com/opencontainers/image-tools/issues/96
+21:22:39 <stevvooe> https://github.com/opencontainers/image-tools/issues/96#issuecomment-286212355
+21:22:43 <wking> stevvooe: I just want one example of output for a given command, and some discussion of use-cases
+21:23:30 <stevvooe> https://github.com/opencontainers/image-tools/pull/46#issuecomment-286845711
+21:23:52 <wking> stevvooe: the trigger for this is "let's just merge it to go forward" doesn't help us figure out where we're going to
+21:24:54 <wking> RobDolinMS: Is #96 where this discussion should happen, or do we want a new issue for a use-case doc?
+21:25:23 <wking> stevvooe: I'm fine merging into a single tool, but I think we need to consider the other parts of the API as well
+21:25:43 <wking> crosbymichael: the testing tools are for the cert working group, right?
+21:26:08 <wking> RobDolinMS: Yes.  We want 'image-tools validate image ...' to test compliance with the spec
+21:26:27 <wking> crosbymichael: we need that on the runtime side as well.  Maybe we need more maintainers in the cert group for communication?
+21:27:05 <wking> mrunalp: I've been trying to attend them, but only making around 1 of each 2
+21:27:13 <wking> crosbymichael: can you send a reminder to the TDC?
+21:27:28 <wking> RobDolinMS: Every other Monday at 10am Pacific
+21:27:38 <wking> crosbymichael: can you send a notice to the mailing list?
+21:28:08 <wking> RobDolinMS: Forwarding to dev@ right now...
+21:28:32 <wking> mrunalp: anything else for images?
+21:28:34 <wking> vbatts: not now
+21:28:46 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/405
+21:28:47 <wking> mrunalp: is Sam on the call?
+21:28:47 <cracra> [caniszczyk, Open Container Initiative] I also encourage the OCI TDC to explore what is going on here https://github.com/opencontainers/certification (we can do our best to use GitHub to communicate instead of via a call always)
+21:28:56 <wking> #topic VMs in the runtime spec
+21:29:28 <wking> Sam: I'm not sure what's blocking it.  There have been a few review cycles
+21:29:48 <wking> Sam: I think most of the review has been addressed.  There is still a question about structure for the image path
+21:30:02 <wking> Sam: Is that the only blocker, or are there larger structural issues
+21:30:08 <wking> mrunalp: does this covers Windows as well?
+21:30:14 <wking> Sam: I'm not sure
+21:30:52 <wking> stevvooe: this is saying where the base disk image, right?
+21:30:58 <wking> Sam: yes, in the guest OS
+21:31:16 <wking> stevvooe: is it possible to introduce a guest OS image without specifying it in the container config?
+21:31:31 <wking> stevvooe: and will this work for all VM runtimes?  Windows?  Hypervisors?
+21:31:55 <wking> Sam: I don't know about Windows, but this will work for Hyper (another VM-based runtime using ... and KVM)
+21:32:03 <wking> Sam: They also need an image path
+21:32:08 <wking> Sam: I'm not sure about Windows
+21:32:45 <wking> crosbymichael: on the runtime side, why do these have to go in the config and not go in via command-line options, etc.?
+21:33:12 <wking> Sam: Because it's configurable.  We have configs for the runtime, and you can use different guest kernels for different containers with this change
+21:33:43 <wking> Sam: It's really about the runtime.  The container shouldn't care about the guest OS or kernel
+21:34:15 <wking> Sam: The container image we export in various means from the host to the guest, but it doesn't define the runtime itself
+21:34:46 <wking> Sam: VM-based containers have a runtime like the current runtime spec, but we also need the kernel and image to start the VM
+21:35:11 <wking> crosbymichael: how much of the spec is applicable to VMs?  I can see process, but what about devices, cgroups, namespaces?
+21:35:20 <wking> Sam: You can apply cgroups and namespaces inside the VM
+21:35:57 <wking> Sam: Does it make sense to do that?  Sometimes.
+21:36:20 <wking> Sam: Sometimes the VM is sufficient isolation, but sometimes it might give better security
+21:36:39 <wking> Sam: For example, we don't want to expose the host network namespace inside the VM
+21:37:02 <wking> Sam: There are many ways to export devices through a virtual machine.  PCI passthrough, etc.
+21:37:08 <wking> stevvooe: what about mounts?
+21:37:21 <wking> Sam: We support that, using [...FS] for exports
+21:37:46 <wking> ^ 9pfs
+21:37:54 <wking> stevvooe: you couldn't use the mount to supply the root filesystem
+21:38:03 <wking> Sam: We also use a 9pfs mount for the root filesystem
+21:38:11 <wking> stevvooe: so why do you need the image path?
+21:38:26 <wking> Sam: The mount I'm talking about is the container rootfs.  The image path is the guest OS
+21:38:40 <wking> Sam: We're basically creating a container inside the VM
+21:38:56 <wking> Sam: Think about it as yet another volume mount for the VM
+21:39:26 <wking> stevvooe: So you boot in the image and then chroot into the mounted rootfs?
+21:39:30 <wking> Sam: As an example, sure
+21:39:58 <wking> Sam: The case for having this in the config is that for VM-based containers, this is defining the runtime
+21:40:24 <wking> Sam: the image spec and kernel pass it directly to KVM/Qemu
+21:40:58 <wking> Sam: I don't know of any hypervisor that doesn't need a kernel and image path (unless you're using ... to make the image path optional)
+21:41:12 <wking> stevvooe: thank you for clarifying
+21:41:39 <wking> Sam: Without this in the spec we need a separate config for the runtime, and we might end up stuck with one kernel and image
+21:41:53 <wking> Sam: Having it in the runtime config gives us more flexibility
+21:42:42 <wking> crosbymichael: my concern about having it in the spec is that you have a container runtime that is entirely honored.  And then a VM case, where maybe 50% of the settings are valid, but the container works anyway
+21:43:21 <wking> Sam: There are some settings that we cannot support, but we can support most settings
+21:43:38 <wking> Sam: Sometimes you might want to block support for policy reasonsr
+21:43:57 <wking> Sam: If it helps, I can come back with a list of unsupportable settings
+21:44:02 <wking> mrunalp: that would be helpful
+21:44:20 <wking> mrunalp: and we can add notes to those settings about how they are handled in VMs
+21:44:27 <wking> Sam: I can add that to the PR
+21:45:14 <wking> RobDolinMS: I've pinged some Windows folks to take a look as well
+21:45:19 <wking> #topic runtime-tool
+21:45:42 <wking> mrunalp: We have a rough roadmap for runtime-tools 1.0.  I'll mail dev@
+21:45:57 <wking> mrunalp: One big item is the command line API
+21:46:08 <mrunalp> https://github.com/opencontainers/runtime-tools/pull/321
+21:47:41 <wking> mrunalp: the JSON Schema can go in a schema/ directory
+21:48:00 <wking> mrunalp: anything else?
+21:48:45 <wking> #topic runtime rc5 support
+21:48:53 <wking> vbatts|work: where is runC rc5 support?
+21:48:59 <mrunalp> https://github.com/opencontainers/runc/pull/1370
+21:49:07 <vbatts> FINAL
+21:49:09 <wking> mrunalp: what do you think crosbymichael ?  Are we ready for a 1.0 vote?
+21:49:34 <wking> vbatts|work: a vote lasts a week
+21:49:53 <wking> crosbymichael: I'd be more comfortable after the runC PR lands and percolates up the stack
+21:50:12 <wking> vbatts|work: what's the timeline on that cycle?
+21:50:45 <wking> RobDolinMS: I'd suggest holding off on 1.0 until we've driven down the issues/PRs
+21:50:57 <wking> mrunalp: there aren't many issues/PRs left
+21:51:13 <wking> mrunalp: but I agree with crosbymichael that time to cook the runC implementation would be good
+21:51:37 <wking> RobDolinMS: I think crosbymichael and mrunalp are saying "don't put up the vote, we need more testing" and I think that's good
+21:51:54 <wking> vbatts|work: if we land runC#1370 and cut a runC 1.0.0 rc3, then...
+21:52:01 <wking> crosbymichael: cri-o integration
+21:52:08 <wking> RobDolinMS: rkt?
+21:52:13 <wking> mrunalp: we can reach out and ask
+21:52:59 <wking> crosbymichael: a final sanity check would also be good
+21:54:04 <wking> crosbymichael: I don't think we conveyed that rc5 was the last pre-1.0 RC
+21:54:17 <wking> crosbymichael: I think we need to get the word out to the wider community for final review
+21:54:22 <wking> mrunalp: that makes sense
+21:54:33 <vbatts> #link https://github.com/opencontainers/runtime-spec/issues/726
+21:54:57 <wking> Brett: We can kick off that review if someone wants to send an email
+21:56:08 <wking> vbatts|work: how do we want to organize this?
+21:56:16 <wking> crosbymichael: mrunalp and I can handle runC
+21:56:20 <wking> crosbymichael: I'll take the lead on Docker
+21:56:32 <wking> crosbymichael: and everybody on the final sanity check with all maintainers signing off
+21:56:48 <wking> crosbymichael: other folks, and the cert team, may also want a final walkthrough
+21:57:08 <wking> RobDolinMS: I think we want to encourage minor changes in lots of tiny PRs (vs. big batch PRs)
+21:57:49 <wking> crosbymichael: do we want a timeframe?  By next week's meeting?
+21:58:48 <wking> RobDolinMS: I think we cut rc6 and then start the 30-day member review period
+21:59:19 <wking> crosbymichael: so our final technical reviews by next week, then we cut our take on the 1.0
+21:59:48 <wking> RobDolinMS: Walli has been working on compliance testing.  His input would be helpful
+22:00:09 <wking> RobDolinMS: For example, problems with implementations that aren't the reference implementation
+22:00:18 <wking> crosbymichael: I'll get in contact with him today
+22:00:31 <wking> crosbymichael: this will be the speak now or forever hold your peace
+22:00:44 <wking> mrunalp: sounds like a plan.  Anything else?
+22:00:49 <wking> #endmeeting

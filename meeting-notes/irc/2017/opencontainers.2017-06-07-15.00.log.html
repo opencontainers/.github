@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">15:00:09</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-06-07 discussion</span>
+<a name="l-2"></a><span class="tm">15:00:09</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Jun  7 15:00:09 2017 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">15:00:09</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">15:00:09</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2017_06_07_discussion'
+<a name="l-5"></a><span class="tm">15:01:34</span><span class="nk"> &lt;estesp&gt;</span> apologies for not being on the call; this is my favorite meeting time, but today's slot was stolen by an internal meeting today
+<a name="l-6"></a><span class="tm">15:02:20</span><span class="nk"> &lt;tianon&gt;</span> &lt;3@estesp; I'll be on shortly -- had some mic/comp troubles this morning
+<a name="l-7"></a><span class="tm">15:05:07</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/milestone/7</span>
+<a name="l-8"></a><span class="tm">15:08:31</span><span class="nk"> &lt;vbatts|work&gt;</span> this ^^ is the working set of prs. Anything not on this list is likely ignored or closed, until 1.0.0 is out
+<a name="l-9"></a><span class="tm">15:10:43</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec</span>
+<a name="l-10"></a><span class="tm">15:10:48</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pulls</span>
+<a name="l-11"></a><span class="tm">15:12:36</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/671</span>
+<a name="l-12"></a><span class="tm">15:15:20</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/504</span>
+<a name="l-13"></a><span class="tm">15:15:36</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/issues/687
+<a name="l-14"></a><span class="tm">15:15:41</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/687</span>
+<a name="l-15"></a><span class="tm">15:19:56</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">stevvooe:</span> to remove the concept of data volumes from the OCI spec. it is just an injected mount point.
+<a name="l-16"></a><span class="tm">15:22:04</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">stevvooe PR for #687</span>
+<a name="l-17"></a><span class="tm">15:22:43</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">stevvooe PR for #692 consistent generic grammar</span>
+<a name="l-18"></a><span class="tm">15:24:33</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/690</span>
+<a name="l-19"></a><span class="tm">15:26:18</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/issues/872</span>
+<a name="l-20"></a><span class="tm">15:31:39</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://docs.google.com/document/d/1zgRBe9rpvogFEotmhxqpjrPdeaIDaIfD0ox-wvwe6nI/edit</span>
+<a name="l-21"></a><span class="tm">15:32:24</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://golang.org/src/go/build/syslist.go</span>
+<a name="l-22"></a><span class="tm">15:32:54</span><span class="nk"> &lt;stevvooe&gt;</span> arm64ilp32 would be arm64p32
+<a name="l-23"></a><span class="tm">15:33:38</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://groups.google.com/a/opencontainers.org/forum/m/#!topic/dev/Eht-i5UbUvo</span>
+<a name="l-24"></a><span class="tm">15:38:55</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#stopmeeting</span><span class="cmdline"></span>
+<a name="l-25"></a><span class="tm">15:39:00</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

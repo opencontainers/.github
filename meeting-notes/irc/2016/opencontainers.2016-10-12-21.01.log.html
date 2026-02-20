@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:01:02</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-10-12 discussion</span>
+<a name="l-2"></a><span class="tm">21:01:02</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Oct 12 21:01:02 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:01:02</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:01:02</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2016_10_12_discussion'
+<a name="l-5"></a><span class="tm">21:01:10</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="hi">vbatts|work:</span> in the context of OCI, i don't see how this conversation is relevant
+<a name="l-6"></a><span class="tm">21:01:12</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp vbatts|work</span>
+<a name="l-7"></a><span class="tm">21:01:12</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: mrunalp vbatts|work wking
+<a name="l-8"></a><span class="tm">21:01:32 </span><span class="nka">* cyphar</span> <span class="ac">can't be on the call, since I'm just about to head out.</span>
+<a name="l-9"></a><span class="tm">21:01:59</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="hi">vbatts|work:</span> you tagged a 1.0-rc1, so I just don't see what we can get by continuing to rexamine long-standing design decisions
+<a name="l-10"></a><span class="tm">21:02:32</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">support for VMs</span>
+<a name="l-11"></a><span class="tm">21:02:49</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/405</span>
+<a name="l-12"></a><span class="tm">21:03:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> update after Europe face-to-face: https://github.com/opencontainers/runtime-spec/pull/405#issuecomment-251420271
+<a name="l-13"></a><span class="tm">21:04:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> do we have a quorum on the call?
+<a name="l-14"></a><span class="tm">21:04:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> it turns out our phone numbers in the READMEs are wrong.  I'll file fixes
+<a name="l-15"></a><span class="tm">21:05:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> so is #405 now targetting 1.0?
+<a name="l-16"></a><span class="tm">21:06:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I'm having bad call quality, will reconnect shortly
+<a name="l-17"></a><span class="tm">21:07:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> the runtime spec is effectively what is being run, not necessarily the state.
+<a name="l-18"></a><span class="tm">21:07:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> Runtime-specific details like paths to namespaces
+<a name="l-19"></a><span class="tm">21:08:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> The top-level VM-config object could live side by side with a Linux object (or a Solaris object, or a Windows object)
+<a name="l-20"></a><span class="tm">21:08:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> Now that we have a clear split between runtime and image, there didn't seem to be as many objections to landing this in runtime-spec
+<a name="l-21"></a><span class="tm">21:09:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> There was concern about how path-to-kernel works in Windows and hypervisor-specific settings
+<a name="l-22"></a><span class="tm">21:09:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> That feedback was cool, but not very helpful
+<a name="l-23"></a><span class="tm">21:09:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> the folks that are interested in VM configuration may not want to wait for Windows involvement, since historically they have been somewhat last-minute
+<a name="l-24"></a><span class="tm">21:10:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> if anyone else has hesitations on the VM additions, please weigh  in on #405
+<a name="l-25"></a><span class="tm">21:10:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> the goal is to get something generic enough that it can be reused by Microsoft in the future
+<a name="l-26"></a><span class="tm">21:10:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> can the VM settings and Linux settings coexist?
+<a name="l-27"></a><span class="tm">21:11:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> the discussion didn't go that far.
+<a name="l-28"></a><span class="tm">21:11:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> you could say, by virtue of it being in a VM, maybe you could say a namespace had been unshared so you might not have to use kernel features to do further namespacing
+<a name="l-29"></a><span class="tm">21:12:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> those would be good notes to document in a VM PR
+<a name="l-30"></a><span class="tm">21:12:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I'll add a comment
+<a name="l-31"></a><span class="tm">21:12:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> memory quotas and CPU shares could be set at the hypervisor level
+<a name="l-32"></a><span class="tm">21:14:16</span><span class="nk"> &lt;wking&gt;</span> This sounds like it's moving towards generic settings vs. the current settings that are (for Linux) very tightly bound to cgroups
+<a name="l-33"></a><span class="tm">21:14:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I don't think we should go that far right now
+<a name="l-34"></a><span class="tm">21:14:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> We can clarify how this should be handled without adding a new, generic resource-control layer
+<a name="l-35"></a><span class="tm">21:15:52</span><span class="nk"> &lt;wking&gt;</span> I'm not sure we can allow folks to skip cgroups setups (etc.) if we don't get a generic resource-control layer, but I agree that I'm not excited about defining that generic layer
+<a name="l-36"></a><span class="tm">21:15:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> is this part of 1.0?
+<a name="l-37"></a><span class="tm">21:16:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> without this it will be hard for Intel to hit a 1.0 that doesn't have unspecified behavior
+<a name="l-38"></a><span class="tm">21:17:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> but I don't see blockers other than the resource-control wording
+<a name="l-39"></a><span class="tm">21:17:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> any other runtime topics?
+<a name="l-40"></a><span class="tm">21:18:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> what's going on with the runtime backlog?
+<a name="l-41"></a><span class="tm">21:18:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we're thinking the console stuff will land by the end of the month, but they're big changes
+<a name="l-42"></a><span class="tm">21:18:36</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/513</span>
+<a name="l-43"></a><span class="tm">21:18:41</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/518</span>
+<a name="l-44"></a><span class="tm">21:19:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> anything else from runtime-spec or runtime-tools?
+<a name="l-45"></a><span class="tm">21:20:19</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec overview</span>
+<a name="l-46"></a><span class="tm">21:20:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> we cut 1.0.0-rc.1 last week
+<a name="l-47"></a><span class="tm">21:20:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> there's been a bit more activity in image-spec with a number of open PRs
+<a name="l-48"></a><span class="tm">21:20:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I'm personally behind on image changes since last Thursday
+<a name="l-49"></a><span class="tm">21:21:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> but we're hoping to plow through that soon
+<a name="l-50"></a><span class="tm">21:21:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I think we should do an rc2.  There have been a few minor fixes in the last week and half
+<a name="l-51"></a><span class="tm">21:21:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I don't think any of the open PRs are super-critical
+<a name="l-52"></a><span class="tm">21:22:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> The only major thing is figuring out how to manage the image-spec / image-tools split
+<a name="l-53"></a><span class="tm">21:22:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> Like the runtime-spec, basic structs should be in image-spec, and a lot of (but not all of) the validation should be in image-tools
+<a name="l-54"></a><span class="tm">21:23:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> image-spec should never import from image-tools; it should keep the JSON Schema and enough for basic validation locally
+<a name="l-55"></a><span class="tm">21:23:25</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/337</span>
+<a name="l-56"></a><span class="tm">21:23:33</span><span class="nk"> &lt;wking&gt;</span> stevvooe (I think): How do we decide what validation is in image-spec and what is not?
+<a name="l-57"></a><span class="tm">21:23:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I think it's just the JSON Schema and enough tooling to validate the spec's JSON examples
+<a name="l-58"></a><span class="tm">21:24:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> Are we going to continue with JSON Schema, because I don't see a lot of benefit in practice and it's complicated
+<a name="l-59"></a><span class="tm">21:24:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I don't see what JSON Schema gives us
+<a name="l-60"></a><span class="tm">21:26:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I've had a number of problems with our existing JSON Schema
+<a name="l-61"></a><span class="tm">21:26:44</span><span class="nk"> &lt;wking&gt;</span> Can you file issues for those^?
+<a name="l-62"></a><span class="tm">21:27:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> if you have an unkown field, it doesn't fail
+<a name="l-63"></a><span class="tm">21:27:34</span><span class="nk"> &lt;wking&gt;</span> That's^ an explicit design decision
+<a name="l-64"></a><span class="tm">21:27:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> but it might be an accident
+<a name="l-65"></a><span class="tm">21:28:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> The Go libraries are pretty good, but JSON Schema on the whole sucks
+<a name="l-66"></a><span class="tm">21:28:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I'm fine with getting rid of it so long as we have some unit testing on that level
+<a name="l-67"></a><span class="tm">21:29:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> mis-typing can be solved with a strict mode (or a pedantic mode?) during unit tests
+<a name="l-68"></a><span class="tm">21:29:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I'm not against what you're saying stevvooe, but I'm not sure there's a better option
+<a name="l-69"></a><span class="tm">21:32:28</span><span class="nk"> &lt;wking&gt;</span> I think replacing JSON Schema with a pure-Go approach is possible, but would be a lot wordier.  I guess we'll see if there's a PR implementing the switch
+<a name="l-70"></a><span class="tm">21:32:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> Getting back to the repo split...
+<a name="l-71"></a><span class="tm">21:32:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think shallow validation belongs in the spec repo, and anything that relies on CAS blobs belongs in the tools repo
+<a name="l-72"></a><span class="tm">21:33:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> for instance, validating an image-layout would be in tools, but validating a single JSON object would be in specs
+<a name="l-73"></a><span class="tm">21:34:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> validating a tarball would be in tools
+<a name="l-74"></a><span class="tm">21:34:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> just JSON objects?
+<a name="l-75"></a><span class="tm">21:34:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> yeah, I guess
+<a name="l-76"></a><span class="tm">21:34:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> It's not exactly the right distinction
+<a name="l-77"></a><span class="tm">21:34:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> so what needs to be done?
+<a name="l-78"></a><span class="tm">21:35:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> what about #337?
+<a name="l-79"></a><span class="tm">21:35:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there are several packages: schema, image, and specs-go
+<a name="l-80"></a><span class="tm">21:36:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> maybe I propose a package structure and we can submit PRs to the right places?
+<a name="l-81"></a><span class="tm">21:36:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> you want to open a tracker issue?
+<a name="l-82"></a><span class="tm">21:36:48</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">stevvooe to propose a package structure around the image repo split</span>
+<a name="l-83"></a><span class="tm">21:36:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> that sounds good
+<a name="l-84"></a><span class="tm">21:37:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> maybe a refactor of schema and specs-go and then drop cmd
+<a name="l-85"></a><span class="tm">21:37:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we somewhat need to do this at the same time so we don't lose functionality
+<a name="l-86"></a><span class="tm">21:37:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> how did logger get in validate?
+<a name="l-87"></a><span class="tm">21:38:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> maybe we can pick up #337?
+<a name="l-88"></a><span class="tm">21:38:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> if you see a layout, describe that.  And we'll compare with what's landed in image-tools
+<a name="l-89"></a><span class="tm">21:38:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> anything else?
+<a name="l-90"></a><span class="tm">21:39:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I'm mulling on compression instability and DiffIDs, but it hasn't crystalized yet
+<a name="l-91"></a><span class="tm">21:39:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> what are your concerns?
+<a name="l-92"></a><span class="tm">21:39:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I don't like relying on a particular gzip compression
+<a name="l-93"></a><span class="tm">21:39:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> you should be able to say "this is the object, regardless of how it's compressed"
+<a name="l-94"></a><span class="tm">21:40:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I don't think we've ever made the guarantee of an object regardless of compression
+<a name="l-95"></a><span class="tm">21:40:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> from the start they've been opaque blobs
+<a name="l-96"></a><span class="tm">21:40:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> integrating with CAS systems, we've been trying to round-trip unpack/repack
+<a name="l-97"></a><span class="tm">21:41:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> and you can do some stuff with round-tripping.
+<a name="l-98"></a><span class="tm">21:41:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but if you teach your CAS engine about compression, it's a step down the slippery slope
+<a name="l-99"></a><span class="tm">21:41:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> finding a line of "how much introspection should the CAS engine have" is difficult
+<a name="l-100"></a><span class="tm">21:42:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if you say "I can compress this 20 times and get 20 different blobs", you have to store 20 blobs and a bunch of lookup tuples
+<a name="l-101"></a><span class="tm">21:42:22</span><span class="nk"> &lt;wking&gt;</span> or maybe one blob and a bunch of lookup tuples^
+<a name="l-102"></a><span class="tm">21:42:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> what you want is one-way artifact creation, and then you don't need to worry about hash stability
+<a name="l-103"></a><span class="tm">21:42:42</span><span class="nk"> &lt;wking&gt;</span> +1 to that^
+<a name="l-104"></a><span class="tm">21:42:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I don't have a good way to describe why I'm not comfortable with it
+<a name="l-105"></a><span class="tm">21:43:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> it seems like it's based on incompletly-defined assumptions
+<a name="l-106"></a><span class="tm">21:43:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> even if we require a particular RFC for gzip compression the bytes are still implementation-specific
+<a name="l-107"></a><span class="tm">21:43:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but you can say the same thing about tar and JSON
+<a name="l-108"></a><span class="tm">21:44:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> canonical JSON is kind of a myth.  You can have a number of JSON serializations for the same semantic JSON content
+<a name="l-109"></a><span class="tm">21:44:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> this is the problem with bi-directional tasks.  gzip is just one source of variation
+<a name="l-110"></a><span class="tm">21:44:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I have the same round-trip concerns, but...
+<a name="l-111"></a><span class="tm">21:45:24</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">annotations for image config</span>
+<a name="l-112"></a><span class="tm">21:45:36</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/371</span>
+<a name="l-113"></a><span class="tm">21:45:41</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/372</span>
+<a name="l-114"></a><span class="tm">21:46:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> there are labels in the Docker code, but nobody has specified them anywhere
+<a name="l-115"></a><span class="tm">21:46:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> stevvooe, do you know why they aren't specified?  Should we file a PR against Docker?
+<a name="l-116"></a><span class="tm">21:46:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> where do we allow annotations now?
+<a name="l-117"></a><span class="tm">21:47:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> several places in runtime-spec.  In image-spec, currently just for manifests and manifest lists
+<a name="l-118"></a><span class="tm">21:47:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> they make a lot more sense at the config level...
+<a name="l-119"></a><span class="tm">21:48:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think they are defined inside the config (in Docker)
+<a name="l-120"></a><span class="tm">21:48:12</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/docker/docker/blob/master/image/spec/v1.2.md
+<a name="l-121"></a><span class="tm">21:49:41</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/docker/docker/blob/master/api/types/container/config.go
+<a name="l-122"></a><span class="tm">21:49:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there are labels in the config.  I'm not sure why they aren't in the spec.  Probably just an omission
+<a name="l-123"></a><span class="tm">21:50:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I don't know if we actually serialize any of these fields
+<a name="l-124"></a><span class="tm">21:50:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> from a high-level perspective, you don't want to put labels in an image
+<a name="l-125"></a><span class="tm">21:50:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> they could be runtime labels which don't make sense to distribute
+<a name="l-126"></a><span class="tm">21:50:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> the labels are there, they aren't just runtime labels
+<a name="l-127"></a><span class="tm">21:51:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm not a huge fan of putting labels down at this level.  It's another source of hash instability
+<a name="l-128"></a><span class="tm">21:51:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> especially if they're inherited from the running container, since you might mix runtime and image concepts
+<a name="l-129"></a><span class="tm">21:51:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> I think folks are using these on images
+<a name="l-130"></a><span class="tm">21:51:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> how do I label an image?
+<a name="l-131"></a><span class="tm">21:52:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I don't think this is very well thought-out
+<a name="l-132"></a><span class="tm">21:52:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> the conversation that lead to this was folks wanted to see the same stuff in the OCI that they were using in Docker
+<a name="l-133"></a><span class="tm">21:52:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> when you put a label on an image it becomes a new image
+<a name="l-134"></a><span class="tm">21:52:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> that's fine
+<a name="l-135"></a><span class="tm">21:53:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> you don't have to add labels after the fact
+<a name="l-136"></a><span class="tm">21:53:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> you can add labels when you build it and then sign what you get
+<a name="l-137"></a><span class="tm">21:53:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I don't want to look at it from a Dockerfile perspective
+<a name="l-138"></a><span class="tm">21:53:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if you look at a Dockerfile as what happens between image changes...  Are Dockerfiles the only way to set these?
+<a name="l-139"></a><span class="tm">21:53:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> you may be able to set these through 'docker commit'...
+<a name="l-140"></a><span class="tm">21:54:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I don't see anything for that
+<a name="l-141"></a><span class="tm">21:54:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> you shouldn't be able to label a container and have that label become part of the image
+<a name="l-142"></a><span class="tm">21:54:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> so run a container, label it, and 'docker commit'.  Hopefully those labels don't show up in the image
+<a name="l-143"></a><span class="tm">21:54:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> you'd want to do it at commit time
+<a name="l-144"></a><span class="tm">21:54:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> yeah
+<a name="l-145"></a><span class="tm">21:55:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> well...
+<a name="l-146"></a><span class="tm">21:55:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> imagine you're using the container labels to do access control.  You don't want those labels to give surprise access-control to a new container launched from the image
+<a name="l-147"></a><span class="tm">21:56:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> that might just be a poor workflow, and we still want to support the config-label field
+<a name="l-148"></a><span class="tm">21:56:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> links to projects, docs, Git commits.  All that is safe and being distributed in config labels now
+<a name="l-149"></a><span class="tm">21:56:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> what about annotations vs. labels?
+<a name="l-150"></a><span class="tm">21:56:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> that's just naming
+<a name="l-151"></a><span class="tm">21:57:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> there was "metadata" originally in Docker, but OCI has settled on "annotations"
+<a name="l-152"></a><span class="tm">21:58:20</span><span class="nk"> &lt;wking&gt;</span> runtime-spec and image-spec don't really care what goes into the current annotation fields (it's a mostly-opaque string-&gt;string mapping)
+<a name="l-153"></a><span class="tm">21:58:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> "Labels" would be backwards-compatible, but "annotations" fits exiting OCI naming
+<a name="l-154"></a><span class="tm">21:59:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm really concerned that there's not a clear path to put labels on an image
+<a name="l-155"></a><span class="tm">21:59:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there's the danger of picking up runtime labels.  And we have to figure out if these are inherited by child images
+<a name="l-156"></a><span class="tm">21:59:52</span><span class="nk"> &lt;wking&gt;</span> inhertance is a build-time issue that image-spec doesn't have to care about
+<a name="l-157"></a><span class="tm">22:00:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> if you add new labels, you want a new checksum
+<a name="l-158"></a><span class="tm">22:00:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'll take a peek and try and understand what Docker's doing
+<a name="l-159"></a><span class="tm">22:00:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts|work:</span> everyone review backlog items!
+<a name="l-160"></a><span class="tm">22:00:56</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

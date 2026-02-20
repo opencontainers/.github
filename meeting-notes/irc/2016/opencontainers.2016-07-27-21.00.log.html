@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:00:59</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-07-27 discussion</span>
+<a name="l-2"></a><span class="tm">21:00:59</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Jul 27 21:00:59 2016 UTC.  The chair is vbatts. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:00:59</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:00:59</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2016_07_27_discussion'
+<a name="l-5"></a><span class="tm">21:01:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> chair me?
+<a name="l-6"></a><span class="tm">21:01:23</span><span class="nk"> &lt;vbatts&gt;</span> ah yeah
+<a name="l-7"></a><span class="tm">21:01:27</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#chair </span><span class="cmdline">wking</span>
+<a name="l-8"></a><span class="tm">21:01:27</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: vbatts wking
+<a name="l-9"></a><span class="tm">21:01:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> asks for an email with a link to the IRC log about a console problem, but he's still not clear on the details
+<a name="l-10"></a><span class="tm">21:01:50</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">console handling in runtime implementations</span>
+<a name="l-11"></a><span class="tm">21:02:08</span><span class="nk"> &lt;cyphar&gt;</span> <span class="hi">correction:</span> it's an lxc issue that I was discussing and aksed how they did it
+<a name="l-12"></a><span class="tm">21:02:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the last time I checked they were doing something different from runC
+<a name="l-13"></a><span class="tm">21:02:17</span><span class="nk"> &lt;wking&gt;</span> thanks cyphar
+<a name="l-14"></a><span class="tm">21:02:30</span><span class="nk"> &lt;cyphar&gt;</span> and apparently they had issues with opening the console inside the container
+<a name="l-15"></a><span class="tm">21:02:43</span><span class="nk"> &lt;cyphar&gt;</span> but I don't have the irc log right now, so not sure at the moment
+<a name="l-16"></a><span class="tm">21:02:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> is crosbymichael around?
+<a name="l-17"></a><span class="tm">21:03:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> maybe we should start with image-spec?
+<a name="l-18"></a><span class="tm">21:03:11</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">image-spec 0.4.0</span>
+<a name="l-19"></a><span class="tm">21:03:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I think we're good here?  What still has to happen?
+<a name="l-20"></a><span class="tm">21:03:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> stevvooe has updated the whiteout PR
+<a name="l-21"></a><span class="tm">21:03:42</span><span class="nk"> &lt;mrunalp&gt;</span> wking, I said that they were doing it similar to libcontainer ;)
+<a name="l-22"></a><span class="tm">21:03:50</span><span class="nk"> &lt;wking&gt;</span> ah, thanks :p
+<a name="l-23"></a><span class="tm">21:03:55</span><span class="nk"> &lt;mrunalp&gt;</span> pty pair is opened outside
+<a name="l-24"></a><span class="tm">21:04:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> there are some AUFS nitpicks, but otherwise it looks good to me
+<a name="l-25"></a><span class="tm">21:04:06</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/pull/171
+<a name="l-26"></a><span class="tm">21:04:15</span><span class="nk"> &lt;philips&gt;</span> https://github.com/opencontainers/image-spec/issues?utf8=%E2%9C%93&amp;q=milestone%3Av0.4.0
+<a name="l-27"></a><span class="tm">21:04:33</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I'm confused by "generate ... but accept both" wording
+<a name="l-28"></a><span class="tm">21:05:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> it could be more concicisly atomized, but there are two whiteout styles
+<a name="l-29"></a><span class="tm">21:05:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> to my knowledge, only AUFS handles the opaque file format
+<a name="l-30"></a><span class="tm">21:05:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the point is that we want to accept opaque files, but we want to favor the whiteout version
+<a name="l-31"></a><span class="tm">21:05:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> makes sense
+<a name="l-32"></a><span class="tm">21:05:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> if there are wording issues, make suggestions in the PR
+<a name="l-33"></a><span class="tm">21:06:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> other news in image-spec land: good to see more tooling around image-layout and conversions
+<a name="l-34"></a><span class="tm">21:07:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> stevvooe, you were going to reach out to some Docker folks?
+<a name="l-35"></a><span class="tm">21:07:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> you'd mentioned a --format flag for save/load; I'm not sure about our next steps on compatiblity with Docker import/export
+<a name="l-36"></a><span class="tm">21:07:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> any help would be appreciated, but suggest changes to docker save/load
+<a name="l-37"></a><span class="tm">21:08:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> it sounds like rkt also has an implementation
+<a name="l-38"></a><span class="tm">21:08:22</span><span class="nk"> &lt;wking&gt;</span> https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/Am7byGvLCUQ
+<a name="l-39"></a><span class="tm">21:08:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I was planning on road-mapping it for 10.13, but feel free to submit PRs
+<a name="l-40"></a><span class="tm">21:08:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'm not aware of any work in progress on that
+<a name="l-41"></a><span class="tm">21:09:15</span><span class="nk"> &lt;wking&gt;</span> https://github.com/cyphar/oboci
+<a name="l-42"></a><span class="tm">21:09:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I want to point ^ at a directory and get some layers, but couldn't find anything convenient
+<a name="l-43"></a><span class="tm">21:09:33</span><span class="nk"> &lt;cyphar&gt;</span> https://github.com/opencontainers/image-spec/pull/159
+<a name="l-44"></a><span class="tm">21:10:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> There were some footnotes in your email, but maybe it was missing a link?
+<a name="l-45"></a><span class="tm">21:10:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> any thoughts on image-spec#159?
+<a name="l-46"></a><span class="tm">21:13:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> no particular opinion yet, but I need more time for review
+<a name="l-47"></a><span class="tm">21:13:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> and we're talking about it because it needs more review?
+<a name="l-48"></a><span class="tm">21:13:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> my concern is that it's too naive
+<a name="l-49"></a><span class="tm">21:13:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> (the API)
+<a name="l-50"></a><span class="tm">21:13:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> we started close to that with docker/distribution, but that's now more complex
+<a name="l-51"></a><span class="tm">21:14:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> distribution and camlistore have good APIs
+<a name="l-52"></a><span class="tm">21:14:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> but if we agree that the interfaces aren't final, this is probably fine
+<a name="l-53"></a><span class="tm">21:15:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> so maybe add a caveat about the interfaces not being stable
+<a name="l-54"></a><span class="tm">21:15:14</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">wking to update image-spec#159 with an unstable caveat</span>
+<a name="l-55"></a><span class="tm">21:15:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> stepping back.  cyphar, how is oboci related to image-spec#159?
+<a name="l-56"></a><span class="tm">21:16:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> dependant is probably too strong, but containers/images has an API oriented at skopeo, so it's not concerned with creating new images
+<a name="l-57"></a><span class="tm">21:16:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> it's useful for translating between formats, but there's not a convenient "create a new layer" library
+<a name="l-58"></a><span class="tm">21:16:38</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/containers/image</span>
+<a name="l-59"></a><span class="tm">21:16:45</span><span class="nk"> &lt;philips&gt;</span> left a note https://github.com/opencontainers/image-spec/pull/159#discussion_r72525379
+<a name="l-60"></a><span class="tm">21:17:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I'm not wild about implementing all of that in oboci.  We all benefit from shared tooling
+<a name="l-61"></a><span class="tm">21:17:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> who maintains the library is a separate issue, but I think we want it
+<a name="l-62"></a><span class="tm">21:17:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> you're saying we need a libcontainer like runC's in image-spec?
+<a name="l-63"></a><span class="tm">21:17:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> that may be too far, but we need a library somewhere
+<a name="l-64"></a><span class="tm">21:18:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> the tricky thing there is that the library (or whatever) needs to handle lots of formats, and we don't want Docker v1, etc. in an opencontainers tool
+<a name="l-65"></a><span class="tm">21:18:51</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> do we have that requirement for testing?
+<a name="l-66"></a><span class="tm">21:19:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> for Docker v2.2 and image-spec, but not for all the other things
+<a name="l-67"></a><span class="tm">21:19:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I think we want an omni library inside of rkt, but I don't think we'd import and OCI-only library
+<a name="l-68"></a><span class="tm">21:19:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I'm not saying pull containers/image into OCI; I'm saying we're missing something for creation
+<a name="l-69"></a><span class="tm">21:20:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> if the goal is to prevent fragmentation, why is containers/image not part of the OCI?
+<a name="l-70"></a><span class="tm">21:20:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> defining a Go-type interface is useful (for reporting media types and returning an OCI stream or something)
+<a name="l-71"></a><span class="tm">21:20:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I think defining an interface would be good, and I get the image-creation issue
+<a name="l-72"></a><span class="tm">21:21:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> we can go to the TOB and suggest a Go interface for creation
+<a name="l-73"></a><span class="tm">21:21:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> does it need that level of input?
+<a name="l-74"></a><span class="tm">21:21:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> we need to clear up this sort of thing and ocitool.  Having a TOB meeting to clean all that up would be good
+<a name="l-75"></a><span class="tm">21:21:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I don't disagree, but, yeah...
+<a name="l-76"></a><span class="tm">21:22:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> we can also just seed it in oci-image-tool
+<a name="l-77"></a><span class="tm">21:22:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I was thinking of adding this to the validation tool with a public Go interface
+<a name="l-78"></a><span class="tm">21:22:44</span><span class="nk"> &lt;wking&gt;</span> how is this different from Descriptors?
+<a name="l-79"></a><span class="tm">21:22:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> this is a framework for handling differnt media types
+<a name="l-80"></a><span class="tm">21:24:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think the way forward is to iterate on oci-image-tool's internal library
+<a name="l-81"></a><span class="tm">21:24:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> and eventually we can pull off the "unstable" caveat and pull it out into its own project
+<a name="l-82"></a><span class="tm">21:24:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> sounds good
+<a name="l-83"></a><span class="tm">21:24:37</span><span class="nk"> &lt;wking&gt;</span> ^ switch the last two author
+<a name="l-84"></a><span class="tm">21:24:44</span><span class="nk"> &lt;cyphar&gt;</span> ;)
+<a name="l-85"></a><span class="tm">21:24:53</span><span class="nk"> &lt;stevvooe&gt;</span> s/stevvooe/philips/ and s/philips/stevvooe -&gt; same result
+<a name="l-86"></a><span class="tm">21:24:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> that's it for image-spec
+<a name="l-87"></a><span class="tm">21:25:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> we could clarify 1.0-specific things in the milestones to get a burn list or whatever
+<a name="l-88"></a><span class="tm">21:25:34</span><span class="nk"> &lt;vbatts&gt;</span> https://github.com/opencontainers/image-spec/milestone/3
+<a name="l-89"></a><span class="tm">21:25:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> do we need more trackers so the 1.0 milestone reflects our plans?
+<a name="l-90"></a><span class="tm">21:26:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I look at this as a backlog for our next release, which may become a 0.5.0
+<a name="l-91"></a><span class="tm">21:27:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> anyone have burning issues?
+<a name="l-92"></a><span class="tm">21:27:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> are there post-1.0 items to move back?  Like a plan for signing/naming?
+<a name="l-93"></a><span class="tm">21:27:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I think where we're at with naming is that it's tied with being able to transport something
+<a name="l-94"></a><span class="tm">21:28:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> signing is a bit more nebulous.  Where does the signature go?  Ideally it's an external object, but then how do you find it?
+<a name="l-95"></a><span class="tm">21:28:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> how does skopeo handle naming/signing
+<a name="l-96"></a><span class="tm">21:28:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> I'll have to defer to Milslav on that now
+<a name="l-97"></a><span class="tm">21:28:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> There's a detached GnuPG signature, but I'm not sure how it's transported
+<a name="l-98"></a><span class="tm">21:29:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> where to people put detached metadata like that?
+<a name="l-99"></a><span class="tm">21:29:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> and if you detach it, now you have to determine what is signed
+<a name="l-100"></a><span class="tm">21:29:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> if you have an external "here's my signature", you can't put the sig hash in the object itself
+<a name="l-101"></a><span class="tm">21:30:09</span><span class="nk"> &lt;wking&gt;</span> https://github.com/opencontainers/image-spec/issues/176
+<a name="l-102"></a><span class="tm">21:30:24</span><span class="nk"> &lt;wking&gt;</span> ^ signed name-assertion CAS objects
+<a name="l-103"></a><span class="tm">21:30:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> ELF sections have well-known names that reference various parts of the data
+<a name="l-104"></a><span class="tm">21:30:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> as refs?
+<a name="l-105"></a><span class="tm">21:31:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I'm not sure, but something like that
+<a name="l-106"></a><span class="tm">21:31:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> the main thing is that I want some idea of what naming will look like in an image-layout
+<a name="l-107"></a><span class="tm">21:31:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> folks expect docker save/load to include naming and verification
+<a name="l-108"></a><span class="tm">21:32:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> TUF / rpm / aci have pre-existing approaches
+<a name="l-109"></a><span class="tm">21:32:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> rpm is more convoluted than that
+<a name="l-110"></a><span class="tm">21:32:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> rpm is effectively a binary key/value store with a signature inside one of those key/value pairs
+<a name="l-111"></a><span class="tm">21:33:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> so signing the rpm (or sets of rpms) adjusts the rpms itself
+<a name="l-112"></a><span class="tm">21:33:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I didn't know that they embedded signatures; has it always been like that?
+<a name="l-113"></a><span class="tm">21:33:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> rpm archives sign top-level metadata (like TUF) and there are signatures in the rpm itself
+<a name="l-114"></a><span class="tm">21:33:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> and it's been that way for a while
+<a name="l-115"></a><span class="tm">21:33:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> in TUF it's completely separate from the image
+<a name="l-116"></a><span class="tm">21:34:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> at the end of the day, TUF looks like yum
+<a name="l-117"></a><span class="tm">21:34:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> there might be a pointer back?
+<a name="l-118"></a><span class="tm">21:34:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> the image says "my public sigs may be found at {location}"
+<a name="l-119"></a><span class="tm">21:34:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I dunno, but it needs to be thought through
+<a name="l-120"></a><span class="tm">21:35:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> I think we're still missing models for what we're doing
+<a name="l-121"></a><span class="tm">21:35:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> we still haven't solved the transportable, out-of-band verification
+<a name="l-122"></a><span class="tm">21:35:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> so for triage, I think we should leave this to post 1.0
+<a name="l-123"></a><span class="tm">21:35:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> does anyone know where crosbymichael is?
+<a name="l-124"></a><span class="tm">21:36:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> next steps: vbatts or I can send a mail about getting to the end of 0.4 and calling for 1.0 issues
+<a name="l-125"></a><span class="tm">21:37:09</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">philips:</span> last call for image-spec?
+<a name="l-126"></a><span class="tm">21:37:21</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">console handling and the command-line API</span>
+<a name="l-127"></a><span class="tm">21:37:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> cyphar can you give an update?
+<a name="l-128"></a><span class="tm">21:38:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> after the container has been created, you open the pseudoterminal pair in the container
+<a name="l-129"></a><span class="tm">21:38:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> where should the master file descriptor go?
+<a name="l-130"></a><span class="tm">21:38:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> you can have --socket UNIX_SOCKET and use cmsg to send the master back out
+<a name="l-131"></a><span class="tm">21:39:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> the other solution is to store it in the state JSON, but then someone has to hold it open until the caller opens it
+<a name="l-132"></a><span class="tm">21:39:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> with the socket approach, the higher level of the socket can get the master, and then the container can close it's copy of the master
+<a name="l-133"></a><span class="tm">21:40:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> there's no current way for us to handle duping /dev/null over descriptors, but we don't support that at the moment
+<a name="l-134"></a><span class="tm">21:40:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> do we want to support /dev/null duping?
+<a name="l-135"></a><span class="tm">21:40:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> if we open /dev/ptmx inside the container, do we require the spec to have certain mounts?
+<a name="l-136"></a><span class="tm">21:40:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> you'll have to have a /dev/ptmx mount
+<a name="l-137"></a><span class="tm">21:41:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> or if opening the console fails, do we error out?
+<a name="l-138"></a><span class="tm">21:42:04</span><span class="nk"> &lt;wking&gt;</span> I think we already require those dev bits: https://github.com/opencontainers/runtime-spec/blob/v1.0.0-rc1/config-linux.md#default-file-systems https://github.com/opencontainers/runtime-spec/blob/v1.0.0-rc1/config-linux.md#default-devices
+<a name="l-139"></a><span class="tm">21:42:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> this will all be done inside the container, but with --console this doesn't happen in the container unless you bind mount the path somewhere inside the container
+<a name="l-140"></a><span class="tm">21:44:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> my concern is can we land this in runC?  Is this delaying 1.0?
+<a name="l-141"></a><span class="tm">21:44:11</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> can we land --console for now?
+<a name="l-142"></a><span class="tm">21:44:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> crosbymichael, thoughts?
+<a name="l-143"></a><span class="tm">21:44:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> not really
+<a name="l-144"></a><span class="tm">21:44:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> can we land #513 without mentioning this flag
+<a name="l-145"></a><span class="tm">21:44:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> you need a working implementation
+<a name="l-146"></a><span class="tm">21:46:16</span><span class="nk"> &lt;wking&gt;</span> Currently #513 doesn't talk about --console or --socket or whatever
+<a name="l-147"></a><span class="tm">21:46:45</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> you could also handle the socket with a JSON payload [wking: or something, I didn't quite catch this]
+<a name="l-148"></a><span class="tm">21:46:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we need to land something before 1.0
+<a name="l-149"></a><span class="tm">21:47:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> right now it's pretty vague
+<a name="l-150"></a><span class="tm">21:47:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I'm not sure what process.terminal means
+<a name="l-151"></a><span class="tm">21:48:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I can help with the new approach.  cyphar, let me know
+<a name="l-152"></a><span class="tm">21:49:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> if we land runtime-spec#513, I think we still need adjustments around some MUST wording
+<a name="l-153"></a><span class="tm">21:49:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> the current MUST for standard streams inheriting makes --console illegal
+<a name="l-154"></a><span class="tm">21:49:58</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> I'd like that language to be at least supportive of future changes
+<a name="l-155"></a><span class="tm">21:50:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> the current spec is so set in stone, or whatever you want to call it, that it doesn't make sense without TTY stuff
+<a name="l-156"></a><span class="tm">21:50:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> quit rushing PRs in when they don't cover everything
+<a name="l-157"></a><span class="tm">21:51:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> we're not punting on terminal, the current wording is blocking terminal
+<a name="l-158"></a><span class="tm">21:52:25</span><span class="nk"> &lt;cyphar&gt;</span> https://github.com/opencontainers/runtime-spec/pull/513/files#diff-0c1e5a5baa5649945697a530e09acbf5R35
+<a name="l-159"></a><span class="tm">21:53:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> I don't think the current process.terminal is ambiguous
+<a name="l-160"></a><span class="tm">21:54:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> from last week, false means don't do anything special
+<a name="l-161"></a><span class="tm">21:54:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> true means the container's standard streams will be attached to a terminal
+<a name="l-162"></a><span class="tm">21:54:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> There's a lot that has to happen beside attaching the slave, you also need to bind /dev/console, etc.
+<a name="l-163"></a><span class="tm">21:56:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I can upgrade the open process.terminal with this information
+<a name="l-164"></a><span class="tm">21:56:20</span><span class="nk"> &lt;wking&gt;</span> https://github.com/opencontainers/runtime-spec/pull/518
+<a name="l-165"></a><span class="tm">21:56:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> LXC had some problems with this, where you could exec into a container and start writing commands to the initial process
+<a name="l-166"></a><span class="tm">21:57:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> you have to allocate a new TTY on Linux
+<a name="l-167"></a><span class="tm">21:57:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> if we want a Unix socket so we can open a container inside the mount namespace
+<a name="l-168"></a><span class="tm">21:58:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> There's also netlink and pipes in runC
+<a name="l-169"></a><span class="tm">21:59:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">cyphar:</span> this fits into the ongoing nsenter reroll I'm currently working on
+<a name="l-170"></a><span class="tm">21:59:33</span><span class="nk"> &lt;cyphar&gt;</span> https://github.com/opencontainers/runc/pull/950 &lt;&lt; refactoring of nsenter
+<a name="l-171"></a><span class="tm">21:59:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> Maybe land the nsenter refactoring first, and then things like this would be easy
+<a name="l-172"></a><span class="tm">21:59:56</span><span class="nk"> &lt;philips&gt;</span> I have to drop. Bye everyone!
+<a name="l-173"></a><span class="tm">22:00:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> As long as we're blocked the order doesn't really matter.  But I'll update #518 and then we can update #513
+<a name="l-174"></a><span class="tm">22:00:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> And cyphar and I will work on getting the runC implementation in
+<a name="l-175"></a><span class="tm">22:01:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> anything else?
+<a name="l-176"></a><span class="tm">22:01:10</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#end_meeting</span><span class="cmdline"></span>
+<a name="l-177"></a><span class="tm">22:01:14</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#end-meeting</span><span class="cmdline"></span>
+<a name="l-178"></a><span class="tm">22:01:26</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

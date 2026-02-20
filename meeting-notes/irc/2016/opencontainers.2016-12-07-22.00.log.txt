@@ -1,0 +1,133 @@
+22:00:48 <wking> #startmeeting 2016-12-07 discussion
+22:00:48 <collabot`> Meeting started Wed Dec  7 22:00:48 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:00:48 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:00:48 <collabot`> The meeting name has been set to '2016_12_07_discussion'
+22:01:01 <wking> #chair mrunalp philips vbatts
+22:01:01 <collabot`> Current chairs: mrunalp philips vbatts wking
+22:01:40 <philips> mrunalp: there!
+22:01:59 <cyphar> yes
+22:02:37 <cyphar> dammit uberconference still doesn't work on my machine
+22:02:58 <mrunalp> cyphar, could you dial in?
+22:03:14 <cyphar> yup, lemme grab my phone
+22:03:56 <wking> #topic image-spec news
+22:04:07 <wking> philips: we tagged rc3 yesterday with a unanimous vote
+22:04:13 <wking> philips: still chugging away on rc4
+22:04:43 <stevvooe> https://github.com/opencontainers/image-spec/issues/482
+22:04:44 <wking> #link https://github.com/opencontainers/image-spec/issues/482
+22:04:52 <wking> #topic ChainID backgrond
+22:04:57 <wking> * background
+22:05:03 <wking> #link https://github.com/opencontainers/image-spec/issues/482
+22:05:20 <wking> I want to put an implementation in the spec repo, because it's a little subtle.  Where would that go?
+22:05:58 <wking> stevvooe said that^
+22:05:59 <mrunalp> wking, isn't everything in image tools a reference impl
+22:06:31 <wking> stevvooe: the chain ID doesn't actually land on disk anywhere, but it is important for security
+22:06:46 <wking> stevvooe: It is important, and I'd rather not have it be flying around on the image-tools repo
+22:07:14 <wking> cyphar: my understanding was that we're keeping it in the OCI to avoid changing Docker configs
+22:07:38 <wking> stevvooe: it's only used to identify the result of on-disk information, but we don't... something about CAS
+22:08:02 <RobDolinMS> (1pm is running over so I'm in the chat, but will join audio soon.)
+22:11:05 <wking> stevvooe: image-tools has a long way to go before it stabilizes.  I'm concerned about that stability, and want stable, well-known stuff like ChainID in the spec repo
+22:11:57 <wking> so does stuff graduate to image-spec when it stabilizes?
+22:12:07 <wking> stevvooe: no.  The chainID is a stable part of the spec
+22:12:14 <wking> stevvooe: the role of image-tools is not yet stable
+22:12:36 <wking> stevvooe: image-tools stabilizing doesn't move things in.  But subtle, challenging, or confusing stuff should go into the spec
+22:12:49 <wking> stevvooe: image-tools should be useful, consumable
+22:13:20 <wking> jlb13: put another way, it's perfectly fine to have clarifying code in the spec
+22:14:03 <wking> stevvooe: code and spec in context is fantastic
+22:14:23 <wking> stevvooe: people don't just consume DRY information and something pops out
+22:15:03 <wking> jbl13: there is certainly precedence for this sort of thing
+22:15:25 <wking> jlb13: it might be pseudocode or a narrative implementation and not Go, but it works.
+22:16:04 <wking> mrunalp: any other image topics?
+22:16:20 <wking> #topic runtime-spec command line API
+22:16:34 <mrunalp> Status of console PR/CLI API.
+22:17:23 <wking> #link https://github.com/opencontainers/runc/pull/1018
+22:17:40 <wking> crosbymichael: I was just wondering why it's still a Unix socket on disk
+22:17:54 <wking> cyphar: I was trying some other approaches (e.g. passing around file descriptors)
+22:18:12 <wking> cyphar: but the only way to do that is to keep the FD open when you fork/exec, but that restricts uses
+22:18:36 <wking> cyphar: rather than the runtime opening the socket, you have to pass the FD to the runtime parent and then hand that on down
+22:18:55 <wking> cyphar: there was another approach [missed some words], but I'm worried that might break
+22:19:06 <wking> crosbymichael: How does it work now?  It gets a path and init opens it
+22:19:37 <wking> cyphar: I think the way it works now is that the init parent opens it...  I'll have to check...
+22:19:48 <wking> crosbymichael: if the host opens it, you're still passing it down to the init
+22:20:09 <wking> cyphar: The connect code is in the main process, but I'm trying to remember how it gets the path...
+22:20:52 <wking> cyphar: Ok.  There are two sockets: one inside runC, and the parent passes the console socket through runC's internal socket
+22:21:29 <wking> crosbymichael: it seems weird.  Why not open in the host process and inherit it through?
+22:21:52 <wking> cyphar: we need the internal socket for synchronization
+22:22:00 <wking> cyphar: the console socket is different
+22:23:49 <wking> mrunalp: one thought from last week is that the socket is just for a one-time event
+22:24:08 <wking> crosbymichael: you send the master down and then never use this again
+22:24:26 <wking> cyphar: we may want to use it for event pushes later.  I was trying to keep that door open
+22:24:48 <wking> #link http://github.com/opencontainers/runtime-spec/pull/508
+22:25:02 <wking> cyphar: and currently logging doesn't work without the console changes, and stuff like that
+22:26:52 <wking> I don't think this socket is going to be useful for update, because you won't be able to send anything after you exec the user-specified code
+22:27:09 <wking> crosbymichael: using a filesystem socket pulls in a lot more setup/cleanup/opening code
+22:27:18 <wking> crosbymichael: vs. socketpair()
+22:27:48 <wking> cyphar: we can pass via FD, but then you'd need a wrapper for testing
+22:27:59 <wking> I have no problem with a wrapper for testing
+22:28:27 <wking> cyphar: we can merge the PR as it stands now, and have a 30-line frontend change to switch between filesystem sockets and FDs
+22:28:50 <wking> crosbymichael: the testing change shouldn't be too bad, since [...missed some words...] you'll need a wrapper anyway
+22:29:01 <wking> e.g. to collect the container exit code^
+22:29:19 <wking> crosbymichael: you don't have to have a calling process to get the whole flow
+22:29:49 <wking> crosbymichael: if we want to merge it and then land FD passing later (to keep a big rebase down)
+22:29:56 <wking> mrunalp: whatever is easier for cyphar
+22:30:04 <wking> cyphar: I think it's merge-able now
+22:30:21 <wking> crosbymichael: and it handles detached and non-detached now?
+22:30:56 <wking> cyphar: it uses the same internal communication as before.  The only change is passing the master FD out
+22:31:19 <wking> crosbymichael: we can land this, and then file a new PR for the FD route to see how it works
+22:31:49 <wking> mikebrow: So keep both?  Or maybe take out the path-based approach later?
+22:31:57 <wking> crosbymichael: We'd only keep one approach
+22:32:11 <wking> #topic runtime-spec anchor PRs
+22:32:33 <wking> #link https://github.com/opencontainers/runtime-spec/pulls?utf8=%E2%9C%93&q=is%3Aopen%20is%3Apr%20author%3ARobDolinMS%20anchor%20tags
+22:32:53 <wking> mrunalp: runtime spec maintainers should review and (assuming they don't see any problems) LGTM and merge
+22:32:56 <wking> mrunalp: thoughts?
+22:33:09 <wking> #topic security issues
+22:33:12 <stevvooe> when we have a moment, wanted to update on manifest-list/refs change
+22:33:22 <wking> mrunalp: I think it makes sense to keep this on the list, and not discuss them here
+22:33:52 <wking> #topic image-spec refs / index
+22:34:05 <stevvooe> https://github.com/opencontainers/image-spec/pull/438#issuecomment-264035961
+22:34:27 <wking> stevvooe: we need to work this out before the release, because it's a bigger change
+22:34:36 <wking> stevvooe: also removing media types from self-describing types
+22:34:49 <wking> #link https://github.com/opencontainers/image-spec/pull/411
+22:36:13 <wking> stevvooe: some of these problems are coming out as we get into implementation
+22:36:23 <wking> stevvooe: refs are kindof useless, with the limited character space
+22:36:50 <wking> stevvooe: the annotations method is better, but we need a full spec for that (with descriptor and manifest-list changes)
+22:36:59 <wking> stevvooe: if you're auto-detecting, you're probably going down the wrong path
+22:37:02 <wking> stevvooe: is that clear?
+22:37:21 <wking> philips: Those are the issues I'm concerned about too
+22:37:43 <wking> philips: someone should write a TL;DR on the media type front
+22:38:04 <wking> cyphar: can we fix the descriptor/peek-inside mediaType overlap first?
+22:38:26 <wking> stevvooe: that assumes that the media types in the other objects are consistent
+22:38:40 <wking> stevvooe: you shouldn't be reading random data off the disk and assuming you know it's type
+22:38:52 <wking> stevvooe: part of that is not embedding the type inside the content
+22:39:07 <wking> stevvooe: and you might be able to safely refer to it with a number of different types depending on the context
+22:39:38 <wking> stevvooe: I do want to internalize some of the impacts you've seen, cyphar.  But we should be able to do that without peek-inside mediaTypes
+22:40:05 <wking> stevvooe: mediaType snuck into the config in the fall of 20… [something].  We need to stamp it out before it causes even more issues
+22:40:18 <wking> stevvooe: it's just going to create security issues
+22:40:38 <wking> cyphar: I've changed my mind on this since commenting on the issue.
+22:41:04 <wking> cyphar: I was doing autodetection because wking's CLI tool would just dump the raw blob
+22:41:16 <wking> cyphar: but if you stick to descriptors everything is nice
+22:41:29 <wking> stevvooe: exposing the CAS is weird.  I'm trying to find a better model
+22:41:38 <wking> stevvooe: Git embeds the type in the blob itself
+22:42:05 <wking> stevvooe: it's good to here that descriptors worked out for you, cyphar, and I think we want to remove mediaType from everything except descriptors
+22:42:18 <wking> stevvooe: and we need docs in the spec to explain how people should be handling this
+22:42:44 <wking> philips: we need an issue to say that the spec doesn't allow for reverse indexing by media type (you can't go from a digest to it's media type)
+22:43:01 <wking> philips: and we need [something else], but #411 seems like the exact opposite
+22:43:22 <wking> #action philips to file issues for the two mediaType changes needed to resolve the #411 discussion
+22:43:55 <wking> stevvooe: and thanks to cyphar for umoci, because the feedback is helping a lot
+22:44:08 <wking> mrunalp: anything else?
+22:44:24 <wking> #topic runtime-spec anchor PRs again
+22:44:32 <wking> RobDolinMS: was there feedback?
+22:44:42 <wking> mrunalp: I pinged them earlier, and there weren't any objections
+22:45:21 <wking> stevvooe: is there an image-spec version of this?
+22:45:38 <wking> RobDolinMS: I paused for feedback before pushing forward further
+22:45:50 <wking> #link https://github.com/opencontainers/runtime-spec/issues/634
+22:45:53 <wking> #link https://github.com/opencontainers/runtime-spec/issues/635
+22:46:00 <wking> RobDolinMS: ^ this is a good example
+22:46:13 <wking> stevvooe: this looks good.  And we don't end up with deep section numbering
+22:46:34 <wking> RobDolinMS: I prefixed these with filenames, so the one-file PDF has unique anchors
+22:46:47 <wking> RobDolinMS: And I labeled each entry in bulleted lists
+22:47:26 <wking> RobDolinMS: So you can link to the entry instead of linking to the list as a whole
+22:47:29 <stevvooe> https://github.com/opencontainers/image-spec/pull/423
+22:47:44 <wking> stevvooe: we want to land this^ before doing the anchors for image-spec
+22:47:47 <wking> mrunalp: anything else?
+22:47:54 <wking> np
+22:48:04 <wking> #endmeeting

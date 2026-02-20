@@ -1,0 +1,106 @@
+21:01:48 <mrunalp> #startmeeting OCI 8/3
+21:01:48 <collabot> Meeting started Wed Aug  3 21:01:48 2016 UTC.  The chair is mrunalp. Information about MeetBot at http://wiki.debian.org/MeetBot.
+21:01:48 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+21:01:48 <collabot> The meeting name has been set to 'oci_8_3'
+21:01:53 <mrunalp> #chairs wking
+21:02:21 <wking> #topic Updates for runtime terminal/console handling
+21:02:35 <wking> cyphar: I haven't had a change to do much this week
+21:02:51 <wking> cyphar: I've been playing around with a C version, and that's all fine
+21:03:10 <wking> cyphar: the complicated part for runC is that we need a libcontainer interface that makes sense and then make runC use it
+21:03:28 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/518
+21:03:41 <wking> cyphar: the general idea makes sense, it will just take some time to get the library interface worked out
+21:04:41 <wking> cyphar: the /dev/console thing is important because a lot of programs open a console via /dev/console
+21:04:46 <wking> cyphar: tmux and screen and such
+21:05:36 <wking> I'm not sure why tmux cares about /dev/console...
+21:06:01 <wking> cyphar: tmux cares because the standard streams only works if the terminal session survives
+21:06:19 <wking> cyphar: if you want to make sure that it always work, then you have to use /dev/console
+21:07:07 <wking> cyphar: the controlling TTY is more about your standard streams.  It is different from /dev/console
+21:07:18 <wking> mrunalp: anything else on that?
+21:07:23 <wking> mrunalp: any other runtime topics?
+21:08:18 <wking> What do we want to do with hooks?
+21:08:32 <wking> mrunalp: at the DockerCon face-to-face we decided to drop them.  Any objections?
+21:08:43 <wking> mrunalp: I don't want to drop them, but I lost that argument at DockerCon
+21:09:06 <wking> mikebrow_: Are we still waiting for console for the command-line API?
+21:09:22 <wking> I think we're still waiting
+21:09:31 <wking> mrunalp: we can also merge #513 with a TODO
+21:10:23 <wking> What about separate repository vs. runtime-spec for #513?
+21:11:09 <wking> mrunalp: without an API, how do you compliance test?
+21:12:15 <wking> I agree that you need both an API and the current runtime-spec, I just don't think that means it needs to be part of the same repository
+21:12:52 <wking> With a single repository, there was concern about implementations that are compliant with some portions of runtime-spec but not the whole spec
+21:13:06 <wking> (I think partial compliance is fine, but there was concern about it)
+21:13:28 <wking> mikebrow_: #513 isn't the current runC API
+21:13:49 <wking> mrunalp: other than the console stuff, what's contentious?  Are you saying spec out the whole runC API?
+21:14:13 <wking> mikebrow_: currently there are a number of runtimes that are interoperable at the bundle/config level, and not at the API level
+21:14:23 <wking> mrunalp: the goal of #513 is to solve that issue
+21:15:12 <wking> What do I link for the compliance certification folks?
+21:15:49 <wking> #action mrunalp ask about a certification homepage at the next compliance meeting (in a week or two)
+21:16:02 <wking> mikebrow_: to confirm, this stays in runtime-spec but as a separate doc?
+21:16:27 <wking> mikebrow_: is it a child spec?
+21:16:53 <wking> I don't think defining sub-specs is useful
+21:17:07 <wking> mrunalp: I think we should leave partial complaince to the certification working group
+21:17:50 <wking> steven.walli: You'll need very explicit language in the spec about subsections for compliance
+21:18:07 <wking> steven.walli: I'm hearing that you might be conditionally compliant, but it's not in the standard
+21:18:24 <wking> mikebrow_: the MUST language isn't "well maybe"
+21:19:42 <wking> It's hard to be all or nothing with Windows/Linux/Solaris all in one spec
+21:20:19 <wking> stephen.walli: It's a lot easier with conformance wording in the spec, and have the compliance folks just enforce those rules
+21:20:35 <wking> sephen.walli: If there are options, that should be very explicit in the spec
+21:22:41 <wking> So I think we want wording to mark out spec subsections (e.g. Linux-only stuff).
+21:23:11 <wking> We've been struggling with wording for that in #513.  Do we want to handle that in a separate PR, or should it be part of #513?
+21:23:25 <wking> vishh: there will also be certifiable sub-sections within a give platform
+21:23:39 <wking> mikebrow_: so I think we need per-sentence opt-outs for every MUST
+21:23:59 <wking> philips: we could have opt-outs for each platform-specific section
+21:24:27 <wking> #action mrunalp to start working on spec subsection wording
+21:24:42 <wking> mikebrow_: you might be able to use bracketed footnotes to preserve readability
+21:25:19 <wking> I'll wait on #513 until mrunalp has floated a pattern for subspec'ing
+21:25:56 <wking> #topic image-spec Go meta linting
+21:26:17 <wking> vbatts: great tool, but it's pushing strange restrictions on code doing directory permissions
+21:26:31 <wking> vbatts: please help if you are familiar with the tool
+21:27:08 <wking> #topic whiteout description
+21:27:14 <wking> https://github.com/opencontainers/image-spec/issues/179
+21:28:06 <wking> vbatts: ordering not mattering in the tar archives
+21:28:24 <wking> https://github.com/opencontainers/image-spec/pull/171
+21:28:37 <wking> vbatts: the ordering is not intuitive, and we're still trying to figure out how to handle it
+21:28:46 <wking> vbatts: we're glad to hear comments
+21:29:06 <wking> philips: what does this have to do with tar files?  I thought this was AUFS + opaque files
+21:29:38 <wking> vbatts: it is AUFS, but if you're reading the tar to process it, you're supposed to apply whiteouts before the other stuff, regardless of where the whiteouts are in the tar file
+21:29:49 <vbatts> https://github.com/opencontainers/image-spec/pull/171#discussion_r73021516
+21:30:25 <wking> vbatts: so applying a diff, you'll have to take two passes, one for whiteouts, and the second for everything else
+21:31:33 <wking> philips: we can probably implement a fairly straightforward algorithm for this
+21:31:58 <wking> philips: with a list of visited dentries, where if you hit a whiteout you remove the target and re-apply
+21:32:21 <wking> philips: I think the spec is technically correct, but we need an implementer note (e.g. scan twice, or use some fancy algorithm)
+21:32:36 <wking> vbatts: I'd rather not have to be fancy or use two passes
+21:33:27 <wking> vbatts: if someone put a whiteout at the end of the tar, you're still back to two passes
+21:33:42 <wking> vbatts: are there prior implementations?  It doesn't seem right
+21:33:55 <wking> philips: so we're blocked on you getting confidence?
+21:34:35 <wking> vbatts: does it seem ok to others that the order doesn't matter?  Feedback welcome on the thread
+21:34:54 <wking> philips: looking for prior art, I'll ask the rkt image extraction folks
+21:35:03 <wking> philips: and then look for the Docker implementation?
+21:35:54 <wking> #topic image-spec 1.0.0
+21:36:11 <wking> https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/3xiHKjDSvCc
+21:36:17 <wking> vbatts: looking for more feedback here
+21:36:33 <wking> philips: I know there are a number of implementations in progress, but I'll reply on the thread
+21:36:39 <wking> vbatts: any other topics for image-spec?
+21:36:50 <wking> philips: where is the runtime-spec vs. it's 1.0?
+21:37:01 <wking> mrunalp: we're waiting for the CLI (#513)
+21:37:06 <wking> philips: is there a target for that?
+21:37:20 <wking> mrunalp: consoles are still up in the air.  Hopefully fast after we figure that out
+21:37:36 <wking> philips: has anyone else tried to use the release process yet?
+21:38:03 <wking> cyphar: runC has been on 1.0.0-rc1 for a while.  We should either restart the count, or do something else...
+21:38:26 <wking> mrunalp: we can cut an -rc2
+21:38:46 <wking> philips: I don't think crosbymichael is on the line?
+21:39:04 <crosbymichael> i am
+21:39:06 <wking> mrunalp: we can discuss this offline
+21:39:20 <wking> crosbymichael: was I muted the whole time?
+21:39:22 <wking> philips: yes
+21:39:34 <dqminh> x)
+21:39:56 <wking> crosbymichael: I don't think it's too different from -rc1.  We just need to underline what's the same
+21:40:45 <wking> you can mute/unmute with ** if you've dialed in
+21:40:55 <wking> #endmeeting
+21:41:01 <cyphar> wking: don't you mean "underlying" is still the same
+21:41:14 <cyphar> his point was that there isn't a difference on the interface
+21:41:21 <cyphar> even though we've done a lot of internal work
+21:41:27 <mrunalp> yep
+21:41:29 <wking> ah, ok
+21:41:56 <wking> good thing I can never remember how to end the meeting ;)
+21:42:03 <wking> #endmeeting
+21:42:17 <mrunalp> #endmeeting

@@ -1,0 +1,172 @@
+17:03:02 <wking> #startmeeting 2016-05-11 discussion
+17:03:02 <collabot`> Meeting started Wed May 11 17:03:02 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+17:03:02 <collabot`> Useful Commands: #action #agreed #help #info #idea #link #topic.
+17:03:02 <collabot`> The meeting name has been set to '2016_05_11_discussion'
+17:03:23 <wking> #chair mrunalp
+17:03:23 <collabot`> Current chairs: mrunalp wking
+17:03:35 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/384
+17:03:38 <wking> #topic create/start split
+17:03:46 <wking> duglin: this just needs reviews
+17:04:14 <wking> mrunalp: autoremove might make more sense as a runtime option, because it might not apply to other implementations
+17:04:42 <wking> duglin: maybe the runtime should be responsible for populating part of the config.json?
+17:04:54 <wking> mrunalp: I was thinking of not putting it in the spec and making it a runC option
+17:05:35 <wking> duglin: for example, you would say: runc create --autoremove PATH ID
+17:05:44 <wking> mrunalp: yeah, I'm just putting that up for discussion
+17:06:00 <wking> duglin: I don't really care, but I'm not sure where you draw the line once you open that door
+17:06:14 <wking> crosbymichael: it shouldn't be in the config
+17:07:23 <JakeWarner> Why not part of the config?
+17:07:37 <wking> duglin: I can see this if you consider the config a portable thing.  But I see the config as "what you need to run the container", whether or not it's portable
+17:08:01 <wking> julz_: I think hooks also fall under this runtime-option, not-in-the-config position
+17:08:10 <JakeWarner> (sorry, don't have a mic)
+17:08:38 <wking> mrunalp: do you mean that different Linux implementations can handle the idling container process in different ways?
+17:08:51 <wking> duglin: you have to implement it, but the mechanism is optional
+17:09:17 <wking> mrunalp: but we need to make sure hooks can be written in a portable manner, so some of the implementation has to be standardized
+17:09:32 <wking> duglin: agreed, but I don't want the wording to be too perscriptive
+17:09:57 <JakeWarner> ty wking
+17:10:14 <wking> duglin: config.json is supposed to be portable
+17:10:58 <JakeWarner> It scares me for the sake of the future to not have an atomic config for runtime
+17:11:16 <wking> mrunalp: the other argument is that this is a lifecycle option, and the same config can have different lifecycles
+17:11:33 <JakeWarner> Like, wouldn't some containers by nature ask to be autoremove?
+17:11:59 <JakeWarner> If we introduce —autoremove as a flag, what other flags will there be in the future?
+17:12:21 <wking> duglin: what's the rationale for whether something is in config.json vs. a command-line option?
+17:12:36 <wking> mrunalp: good question.  In this case, it feels like it doesn't belong in the config
+17:13:30 <wking> duglin: we were moving down the "everything the runtime needs goes into the config" path, and the runtime option isn't following that approach
+17:13:59 <wking> julz_: as an orchestrator, autoremove is important from a cleanup perspective.  I'd rather not have to inspect the container to figure out whether I need to clean it up
+17:14:27 <wking> duglin: I think someone *does* have to look at the config, e.g. "are they asking for too much memory".  Why is autoremove different from that?
+17:15:28 <JakeWarner> maybe we do need a runtime.json again. I like the idea of being able to pull down a config.json and never have to take a look at it but then also have the runtime.json that allows me as an orchestrator to specify what needs to happen
+17:15:48 <wking> vishh: do we have to worry about this now?  Can we punt and talk about autoremove later?
+17:16:15 <wking> mrunalp: can we go with a runtime option now, and then talk about it again later if we have portability issue
+17:16:42 <wking> duglin: I'm ok with it this time, but I don't want to set a precedent to have a portable vs. non-portable discussion all over again
+17:16:58 <wking> duglin: I don't want an annoying overlay process
+17:17:07 <JakeWarner> i'd agree with duglin there
+17:17:14 <wking> me too
+17:17:46 <wking> duglin: how would portability-time changes work with extensions?
+17:18:06 <wking> julz_: analogy: I think --autoremove is an operation
+17:18:31 <wking> julz_: create-with-pinning vs. create-without-pinning
+17:18:39 <wking> julz_: but I don't want the user to be able to make that call
+17:18:46 <wking> duglin: but what about memory options?
+17:19:22 <wking> julz_: changing memory limits changes the container.  This is the exact same container, just started with/without pinning.  The container doesn't care whether those namespaces are pinned
+17:19:39 <JakeWarner> I think the config.json would be treated as immutable — it'd come with the container and you wouldn't need to tweak it. It's specific to the container. The runtime.json would be things you'd like to customize about actually running the container
+17:20:05 <wking> JakeWarner: problem with that^ is if a user has a malicious hook or some such
+17:20:22 <JakeWarner> wking: but if hook is part of orchestration
+17:20:26 <JakeWarner> wouldn't that be in runtime.json?
+17:20:38 <wking> but removing hooks and such is a job for the runtime-caller, not a job for the runtime itself
+17:20:46 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/412/files
+17:20:53 <wking> defining which bits are part of "orchestration" is a slippery slope ;)
+17:21:05 <JakeWarner> lol true true.
+17:21:11 <wking> #topic Explicit container namespace for uid, gid
+17:21:18 <wking> #url https://github.com/opencontainers/runtime-spec/pull/412
+17:24:23 <wking> mrunalp: the glossary docs don't seem super clear to me.  I don't have suggestions now, but will take another look after the call
+17:24:41 <wking> #topic post-stop hooks
+17:24:45 <mrunalp> https://github.com/opencontainers/runtime-spec/pull/395
+17:24:50 <wking> url https://github.com/opencontainers/runtime-spec/pull/395
+17:24:53 <wking> #url https://github.com/opencontainers/runtime-spec/pull/395
+17:25:02 <wking> mrunalp: duglin, is this getting rolled into #384?
+17:25:09 <JakeWarner> I was under the belief that hooks would go away with 384
+17:25:12 <JakeWarner> as well
+17:25:20 <wking> duglin: I think post-stop hooks are gone after #384
+17:25:37 <wking> I thought so too, which is why we were adding autoremove^
+17:26:02 <wking> but the all-in-one operation will still need hooks
+17:26:06 <wking> mrunalp: ^
+17:26:23 <wking> duglin: I was under the impression that folks who need hooks would not use 'run'
+17:26:42 <wking> mrunalp: there are users of hooks today that will not need the split
+17:26:56 <JakeWarner> I'm not sure I agree with that
+17:27:02 <JakeWarner> if we haven't hit 1.0 yet
+17:27:04 <wking> mrunalp: we don't want to change the all-in-one command because of this split
+17:27:22 <wking> vishh: if the new model supports all the hook use cases, why keep them as a first-class items?
+17:27:33 <wking> mrunalp: why force people to change?
+17:27:51 <wking> vishh: we can have ocitools map the 'run' workflow into the new workflow
+17:29:36 <wking> duglin: it's not so much "the usecase isn't valid" as "there's a simpler bottom layer"
+17:29:50 <wking> vbatts|work: runc could support this on top of create/start/stop/delete
+17:30:03 <JakeWarner> Maybe the hooks only come into play if someone specifies 'run' vs 'create/start' ?
+17:30:13 <wking> mrunalp: but the previous approach was to keep the old 'run', and now folks want to delete it
+17:30:24 <wking> julz_: not "delete it", maybe "not specify it"
+17:30:49 <wking> mrunalp: the old approach was "we'll add the new approach", not "we'll also remove the proven-today workflow"
+17:31:01 <JakeWarner> I'd agree with julz_
+17:31:04 <wking> julz_: I'm not suggesting removing it from runC, but I don't think we need it in the spec
+17:31:23 <wking> julz_: if we put it in 1.0 and it turns out that it's not necessary, we're stuck supporting it forever
+17:31:37 <wking> duglin: I don't like having multiple ways to do the same thing in the spec
+17:31:44 <JakeWarner> Maybe we support hooks up until RunC 1.0? Deprecate it
+17:32:15 <wking> vishh: create/start/stop/delete is a clean base layer.  Combining that to build in hooks sounds like a layer on top
+17:32:28 <wking> vishh: as julz_ said, runtimes are free to support this
+17:32:54 <wking> mrunalp: but you can do everything you do now with hooks?  Why not drop create/start?
+17:33:09 <wking> vishh: because with create/start you don't need binary hooks, although they are still possible
+17:33:27 <wking> mrunalp: I acknowledge that, but don't like throwing out workflows that are used in production
+17:33:49 <JakeWarner> I had attached a usecase to the PR regarding how removing the hooks benefits the CaaS I'm working on: https://github.com/opencontainers/runtime-spec/pull/384#issuecomment-218347771
+17:33:51 <wking> vishh: It's ok to say "until this is proven, we won't make the switch"
+17:34:32 <wking> mrunalp: if you want access to your host mount namespace, there's a problem with create/start.
+17:34:44 <wking> #action mrunalp to comment on #384 about host mount namespace access
+17:34:54 <wking> vishh: so punt until we understand all the use cases
+17:35:18 <wking> mrunalp: yeah.  And I don't like dropping the current all-in-one approach.  But that can be visited later
+17:36:59 <wking> mrunalp: implementers have a choice between all-in-one (like it is now), or to use create/start/...
+17:37:09 <wking> duglin: I want to understand use-cases that aren't supported by the split
+17:37:38 <wking> mrunalp: mount namespace issue: before a pivot, you have access to the host mount namespace until the pivot
+17:38:16 <wking> crosbymichael: there's a time in the lifecycle where we're in the container mount namespace before the pivot
+17:38:28 <wking> that's when you bind mount from the host into the container
+17:38:43 <wking> crosbymichael: then you pivot and it locks the mount namespace into the new root
+17:39:07 <wking> mrunalp: the current hooks get called before the pivot happens
+17:39:33 <wking> vishh: why not handle the bind mounts through the config?
+17:39:56 <wking> vishh: if the config doesn't require mount ordering, we should fix that
+17:40:17 <wking> I think the current spec already requires config-specified mounts happen in order
+17:40:32 <wking> mrunalp: previously we had to make the container privileged, but with hooks we don't need to
+17:40:43 <wking> vishh: but you can achieve this by modifying the config...
+17:41:01 <wking> mrunalp: but it's a good feature for the runtime-caller to modify the mount namespace
+17:41:13 <wking> vishh: but you can inspect the command via the config.  Why do you need hooks?
+17:41:31 <wking> mrunalp: this is something that you don't want users to specify every time that should happen automatically
+17:41:44 <wking> mrunalp: you can see "the user is trying to run systemd, so I want to setup these mounts..."
+17:41:53 <mikebrow> what's the difference between a custom edit of the config vs a custom tool on a hook?
+17:41:56 <wking> vishh: that sounds like a runtime-caller concern
+17:42:16 <wking> mrunalp: yeah, we could do that with some command line options, but now we get it easily with a hook
+17:42:37 <wking> vishh: I don't see why we need spec support for this, when you could put in a higher wrapper that does this
+17:42:52 <JakeWarner> I agree with vishh
+17:42:55 <wking> vishh: there are use cases that we don't want to support in the spec, and you need hook-like things for that
+17:43:32 <wking> crosbymichael: hooks aren't for specific use-cases anyway.  They're lifecycle-extention points where you can do anything
+17:43:57 <wking> crosbymichael: we've been talking about the same 1% use cases for two months, and aren't getting anything done
+17:44:20 <wking> crosbymichael: the config is the I/O for a container.  If you want to do more stuff, make your own runtime that does create/start today
+17:44:47 <wking> crosbymichael: there's no reason to put that in the spec.
+17:47:07 <JakeWarner> (relevant again: https://github.com/opencontainers/runtime-spec/pull/384#issuecomment-218347771)
+17:47:16 <wking> crosbymichael: if networking is not in the spec, then it's a higher-level decision to set that up
+17:47:39 <wking> crosbymichael: orchestrators will have their own runtimes, so they can call their network-setup script however they want
+17:47:47 <wking> crosbymichael: it's not something that needs to be exposed to the users
+17:48:19 <wking> ^ in response to me asking "when to I call my network-setup code if we don't specify either hooks or create/start?"
+17:48:51 <wking> duglin: to me it comes down to interop.  If we go with crosbymichael's really low level, then that really limits interop between runtimes
+17:49:26 <wking> crosbymichael: there's not interop anyway with the create/start split, because there's too much flexibility (whether you pin namespaces or not, etc.)
+17:49:51 <wking> julz_: I think this is the exact reason that we want create/start *or* an all-in-one, and not "the runtime can do whatever it wants"
+17:50:12 <wking> crosbymichael: right now the contract is, "I give you the config and the root filesystem, please make a container"
+17:50:43 <mikebrow> ^ pick one...
+17:51:04 <wking> julz_: I still think we need to pick one basic layer which covers everyone, and folks can put 99% solutions on top of that
+17:51:26 <wking> dqminh_: we can achieve the same things by having the upper layer create namespaces ahead of time
+17:52:53 <wking> crosbymichael: for all these use cases, you can setup the namespaces ahead of time.  But people don't want to write all that
+17:53:08 <JakeWarner> The thing I like about the create/start split is that I don't have to call another binary to make changes
+17:53:18 <wking> julz_: what's the point of a spec if I have to rewrite the runtime?
+17:54:05 <wking> julz_: if we can make everyone happy, why not do that?
+17:55:19 <wking> crosbymichael: create/start is a 1% use case that is the orchestrator's problem
+17:55:43 <JakeWarner> I disagree with that :\
+17:56:03 <wking> julz_: if you buy that argument, why have hooks?  Just fork the runtime
+17:56:16 <wking> crosbymichael: because hooks are a small change that adds the most flexibility
+17:57:30 <wking> crosbymichael: even if it does pause during create, the runtime is still jumping in and out of container namespaces
+17:57:46 <JakeWarner> Completely agree with julz_
+17:57:55 <JakeWarner> (though super applicable to my use case)
+17:57:57 <wking> julz_: but the orchestrator can keep the hook-like-things in memory and doesn't have to write hooks to disk
+17:57:57 <JakeWarner> …so biased.
+17:58:18 <wking> crosbymichael: hooks live on tmpfs, and can talk to the orchestrator as they run
+17:58:39 <wking> this does not sound appealing to me^ ;)
+17:58:50 <JakeWarner> wking: which?
+17:59:12 <wking> hooks in a tmpfs talking to the orchestrator over sockets ;)
+17:59:19 <JakeWarner> yeah
+17:59:25 <wking> crosbymichael: hooks are a minimal change to the current orchestrators
+18:00:13 <wking> julz_: there's a danger to doing the expedient thing in a spec, because once we cut 1.0 we're stuck with it
+18:00:44 <wking> RobDolinMS: we're at 11
+18:00:54 <wking> RobDolinMS: can julz_ write up his approach?
+18:01:15 <wking> julz_: it's just duglin's #384.  We still need an implementation PR in runC, but the spec side is there and waiting for comments
+18:01:34 <JakeWarner> I'd agree with that action (384)
+18:01:40 <wking> RobDolinMS: so the action is "everyone review #384 so we can make an up/down decision on this next week"?
+18:01:43 <wking> julz_: yeah
+18:02:11 <wking> RobDolinMS: I don't know that we need to wait for a quorum, but it would be good to move forward on this
+18:02:35 <wking> #topic dockercon meetup
+18:02:41 <RobDolinMS> Actually, I think we SHOULD wait for quorum as we have a few folks missing
+18:02:44 <wking> duglin: we're meeting Wednesday from 9 to 12.  Not sure where yet
+18:02:49 <JakeWarner> I'll meet you all there! :D
+18:02:59 <RobDolinMS> Thanks Doug!
+18:03:00 <wking> RoDolinMS, ah, sorry.  Quorum sounds good to me too ;)
+18:03:13 <wking> #endmeeting

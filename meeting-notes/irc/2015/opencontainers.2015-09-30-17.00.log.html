@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">17:00:15</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2015-09-30 discussion</span>
+<a name="l-2"></a><span class="tm">17:00:15</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Sep 30 17:00:15 2015 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">17:00:15</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">17:00:15</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2015_09_30_discussion'
+<a name="l-5"></a><span class="tm">17:01:43</span><span class="nk"> &lt;vbatts|work&gt;</span> video is https://bluejeans.com/1771332256/
+<a name="l-6"></a><span class="tm">17:01:48</span><span class="nk"> &lt;vbatts|work&gt;</span> notes at https://docs.google.com/document/d/16Z7I6NS15iuFeYlrEvBxPlsQvmnUf6wzq7tbt2QFN7Q/edit?usp=sharing
+<a name="l-7"></a><span class="tm">17:01:59</span><span class="nk"> &lt;mrunalp&gt;</span> <span class="hi">crosbymichael:</span> vishh: Joining?
+<a name="l-8"></a><span class="tm">17:02:14</span><span class="nk"> &lt;crosbymichael&gt;</span> sorry, i maybe a little late
+<a name="l-9"></a><span class="tm">17:02:19</span><span class="nk"> &lt;mrunalp&gt;</span> okay no worries
+<a name="l-10"></a><span class="tm">17:04:36</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">#topic</span>
+<a name="l-11"></a><span class="tm">17:04:41</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">vbatts - top down spec</span>
+<a name="l-12"></a><span class="tm">17:06:31</span><span class="nk"> &lt;wking&gt;</span> work on more links: https://github.com/opencontainers/specs/pull/176
+<a name="l-13"></a><span class="tm">17:06:47</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">vbatts more work on the overview</span>
+<a name="l-14"></a><span class="tm">17:06:53</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">protobuf transition</span>
+<a name="l-15"></a><span class="tm">17:07:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">benefits:</span> generate bindings in many languages
+<a name="l-16"></a><span class="tm">17:08:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">drawbacks:</span> hard to map some things into proto2.  Proto3 fixes those, but it's still in beta.
+<a name="l-17"></a><span class="tm">17:08:12</span><span class="nk"> &lt;wking&gt;</span> https://github.com/opencontainers/specs/pull/185
+<a name="l-18"></a><span class="tm">17:09:03</span><span class="nk"> &lt;wking&gt;</span> initial tooling work in https://github.com/vbatts/specs/tree/protobuf3 , but it doesn't translate the *.proto syntax to proto3
+<a name="l-19"></a><span class="tm">17:09:27</span><span class="nk"> &lt;wking&gt;</span> some further work in a few directions: https://github.com/vbatts/specs/pulls
+<a name="l-20"></a><span class="tm">17:09:37</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/vbatts/specs/pull/1
+<a name="l-21"></a><span class="tm">17:10:25</span><span class="nk"> &lt;wking&gt;</span> ^ investigating per-platform user extensions in proto2, but there are problems with JSON rendering
+<a name="l-22"></a><span class="tm">17:10:34</span><span class="nk"> &lt;wking&gt;</span> XXX_extensions   map[int32]proto.Extension `json:"-"`
+<a name="l-23"></a><span class="tm">17:14:27</span><span class="nk"> &lt;wking&gt;</span> are there other approaches?  vishh says extensions are it in proto2
+<a name="l-24"></a><span class="tm">17:15:00</span><span class="nk"> &lt;wking&gt;</span> extensions also allow others to extend our fields
+<a name="l-25"></a><span class="tm">17:15:46</span><span class="nk"> &lt;wking&gt;</span> if we can figure out how to marshal / unmarshal extensions in proto2, that would be a reasonable way forward
+<a name="l-26"></a><span class="tm">17:17:10</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">Carry the hypervisor discussion on to the mailing-list and next week’s</span>
+<a name="l-27"></a><span class="tm">17:18:39</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">duglin:</span> regard https://github.com/opencontainers/specs/blob/master/principles.md#5-industrial-grade-delivery
+<a name="l-28"></a><span class="tm">17:18:43</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">duglin:</span> not really
+<a name="l-29"></a><span class="tm">17:18:49</span><span class="nk"> &lt;duglin&gt;</span> per https://github.com/opencontainers/specs/blob/master/bundle.md does a bundle start and include the dir containing the config files+rootfs, or is the bundle the contents of the dir (configFile+rootfs) ?
+<a name="l-30"></a><span class="tm">17:18:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">xu:</span> can use existing specs and bump pod model up to higher-level tooling
+<a name="l-31"></a><span class="tm">17:19:15</span><span class="nk"> &lt;duglin&gt;</span> <span class="hi">vbatts|work:</span> yea, going to open a PR to clarify some of this - its not as crisp as it should be in places.
+<a name="l-32"></a><span class="tm">17:19:22</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">jojy_mesos:</span> https://github.com/vbatts/specs/pull/3
+<a name="l-33"></a><span class="tm">17:19:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">rob:</span> two Windows container models: Windows server containers and hypervisor containers
+<a name="l-34"></a><span class="tm">17:19:57</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">duglin:</span> cool. Keep in mind leaning on the mission and spirit of the current charter
+<a name="l-35"></a><span class="tm">17:20:06</span><span class="nk"> &lt;jojy_mesos&gt;</span> great. thanks vincent!
+<a name="l-36"></a><span class="tm">17:20:27</span><span class="nk"> &lt;duglin&gt;</span> yes that’s part of what I want to fix - remove stuff not in the charter and only talk about stuff we’ve implemented - leaving the in/out scope questions for the charter folks
+<a name="l-37"></a><span class="tm">17:20:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">justincormack:</span> asks for docs on hyperv models
+<a name="l-38"></a><span class="tm">17:20:39</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">rob will send docs to the list</span>
+<a name="l-39"></a><span class="tm">17:20:40</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">jojy_mesos:</span> you can see the current iteration here https://github.com/opencontainers/specs/pull/185
+<a name="l-40"></a><span class="tm">17:20:44</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">jojy_mesos:</span> `make cpp`
+<a name="l-41"></a><span class="tm">17:21:07</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">brandon - summarize discussion on bundle identity</span>
+<a name="l-42"></a><span class="tm">17:21:14</span><span class="nk"> &lt;jojy_mesos&gt;</span> great! will try it
+<a name="l-43"></a><span class="tm">17:21:38</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">he's drafting right now</span>
+<a name="l-44"></a><span class="tm">17:22:02</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">mrunal - review oct patterns of environment and/or write an initial environment validation tool, to be run as a bundle.</span>
+<a name="l-45"></a><span class="tm">17:22:49</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="topic">#topic </span><span class="topicline">clarifying docs</span>
+<a name="l-46"></a><span class="tm">17:25:27</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> wants clarity on https://github.com/opencontainers/specs/blob/master/principles.md#5-industrial-grade-delivery
+<a name="l-47"></a><span class="tm">17:25:35</span><span class="nk"> &lt;wking&gt;</span> everyone agrees the bundle should be deliverable
+<a name="l-48"></a><span class="tm">17:25:51</span><span class="nk"> &lt;wking&gt;</span> there's disagreement about whether delivery itself is in scope ;)
+<a name="l-49"></a><span class="tm">17:26:54</span><span class="nk"> &lt;wking&gt;</span> further discussion in PRs against the principles language
+<a name="l-50"></a><span class="tm">17:27:06</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">duglin to open a PR to clarify principles</span>
+<a name="l-51"></a><span class="tm">17:27:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">rob:</span> what's the workflow about principles?  Are these things that devs can edit without going through the charter?
+<a name="l-52"></a><span class="tm">17:27:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> changes to the principles aren't pushed to the charter
+<a name="l-53"></a><span class="tm">17:28:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vbatts:</span> no PRs against opencontainers/web
+<a name="l-54"></a><span class="tm">17:28:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> principles should be consistent with the charter and scoped by the charter
+<a name="l-55"></a><span class="tm">17:29:03</span><span class="nk"> &lt;wking&gt;</span> but inside those constraints we can change principle wording
+<a name="l-56"></a><span class="tm">17:29:56</span><span class="nk"> &lt;duglin&gt;</span> or email mike dolan
+<a name="l-57"></a><span class="tm">17:30:01</span><span class="nk"> &lt;wking&gt;</span> ^ that works for me
+<a name="l-58"></a><span class="tm">17:30:19</span><span class="nk"> &lt;duglin&gt;</span> he has the pen and is leading the discussions
+<a name="l-59"></a><span class="tm">17:30:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">rob:</span> push through a collegue at your company, if you don't have one push to Mike Dolan?
+<a name="l-60"></a><span class="tm">17:31:44</span><span class="nk"> &lt;duglin&gt;</span> mdolan@linuxfoundation.org
+<a name="l-61"></a><span class="tm">17:32:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> what is a bundle?
+<a name="l-62"></a><span class="tm">17:35:54</span><span class="nk"> &lt;RobDolinMS&gt;</span> Now at my desk :)
+<a name="l-63"></a><span class="tm">17:36:18</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">duglin - clarity around bundle root</span>
+<a name="l-64"></a><span class="tm">17:36:19</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">duglin will PR clarified language</span>
+<a name="l-65"></a><span class="tm">17:36:35</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#action </span><span class="cmdline">doug to review and open PR for clarity</span>
+<a name="l-66"></a><span class="tm">17:36:39</span><span class="nk"> &lt;vbatts&gt;</span> haha
+<a name="l-67"></a><span class="tm">17:36:59</span><span class="nk"> &lt;vbatts&gt;</span> <span class="topic">#topic </span><span class="topicline">wking - lifecycle</span>
+<a name="l-68"></a><span class="tm">17:37:09</span><span class="nk"> &lt;wking&gt;</span> https://groups.google.com/a/opencontainers.org/d/msg/dev/frUXLljXy8Y/_sg-BidnAwAJ
+<a name="l-69"></a><span class="tm">17:37:17</span><span class="nk"> &lt;wking&gt;</span> ^ my most recent attempt to summarize this
+<a name="l-70"></a><span class="tm">17:39:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> there's existing language around hooks, do we need more?
+<a name="l-71"></a><span class="tm">17:39:36</span><span class="nk"> &lt;wking&gt;</span> I think we do to clarify the execution environment and exactly when these hooks are triggered
+<a name="l-72"></a><span class="tm">17:40:13</span><span class="nk"> &lt;RobDolinMS&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://groups.google.com/a/opencontainers.org/d/msg/dev/frUXLljXy8Y/_sg-BidnAwAJ wking's most recent attempt to summarize</span>
+<a name="l-73"></a><span class="tm">17:41:40</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">xu:</span> can you create a new container in an existing namespace?
+<a name="l-74"></a><span class="tm">17:41:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> yes, with cgroupsPath
+<a name="l-75"></a><span class="tm">17:41:52</span><span class="nk"> &lt;wking&gt;</span> and namespace paths
+<a name="l-76"></a><span class="tm">17:44:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> pre-start hooks are called after creating or joining (not skipped for the joining case)
+<a name="l-77"></a><span class="tm">17:44:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">xu:</span> makes sense
+<a name="l-78"></a><span class="tm">17:44:55</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">wking to PR the lifecycle docs</span>
+<a name="l-79"></a><span class="tm">17:45:30</span><span class="nk"> &lt;vbatts&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span>
+<a name="l-80"></a><span class="tm">17:45:55</span><span class="nk"> &lt;vbatts|work&gt;</span> ...
+<a name="l-81"></a><span class="tm">17:45:57</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

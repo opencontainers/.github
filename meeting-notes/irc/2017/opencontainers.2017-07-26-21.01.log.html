@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:01:08</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-07-26 discussion</span>
+<a name="l-2"></a><span class="tm">21:01:08</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Jul 26 21:01:08 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:01:08</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:01:08</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2017_07_26_discussion'
+<a name="l-5"></a><span class="tm">21:02:33</span><span class="nk"> &lt;wking&gt;</span> david-lyle is in UberConference with me, but that's it at the moment
+<a name="l-6"></a><span class="tm">21:02:48</span><span class="nk"> &lt;wking&gt;</span> I'll cancel the meeting if we don't get a maintainer in the next 3 minutes
+<a name="l-7"></a><span class="tm">21:04:28</span><span class="nk"> &lt;stevvooe&gt;</span> does he have questions?
+<a name="l-8"></a><span class="tm">21:04:34</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="hi">wking:</span> ^
+<a name="l-9"></a><span class="tm">21:04:54</span><span class="nk"> &lt;david-lyle&gt;</span> stevvooe, no questions
+<a name="l-10"></a><span class="tm">21:04:58</span><span class="nk"> &lt;stevvooe&gt;</span> if he does, I can pop on
+<a name="l-11"></a><span class="tm">21:04:59</span><span class="nk"> &lt;wking&gt;</span> nope, everyone's muted
+<a name="l-12"></a><span class="tm">21:05:18</span><span class="nk"> &lt;wking&gt;</span> mikebrow and walli are also there and muted
+<a name="l-13"></a><span class="tm">21:06:18</span><span class="nk"> &lt;mikebrow&gt;</span> :-)
+<a name="l-14"></a><span class="tm">21:06:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">walli:</span> I have concerns about the test suite structure in runtime-tools
+<a name="l-15"></a><span class="tm">21:06:55</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="hi">mikebrow:</span> you got any thing?
+<a name="l-16"></a><span class="tm">21:06:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">walli:</span> I'd like to know the best way to engage with that
+<a name="l-17"></a><span class="tm">21:06:59</span><span class="nk"> &lt;stevvooe&gt;</span> ok
+<a name="l-18"></a><span class="tm">21:07:04</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-tools structure</span>
+<a name="l-19"></a><span class="tm">21:07:13</span><span class="nk"> &lt;stevvooe&gt;</span> i'll be on in a few then
+<a name="l-20"></a><span class="tm">21:07:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">walli:</span> some of this is based on 6-month-old issues that are light on discussion
+<a name="l-21"></a><span class="tm">21:07:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> can you give an example of your issues
+<a name="l-22"></a><span class="tm">21:07:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">walli:</span> it's hard to tie the test back to the runtime spec
+<a name="l-23"></a><span class="tm">21:08:06</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-tools/pull/354</span>
+<a name="l-24"></a><span class="tm">21:08:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">walli:</span> there seems to be an implicit assumption that we'll be testing runC (written in Go)
+<a name="l-25"></a><span class="tm">21:09:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">walli:</span> Also, RobDolinMS asked for a README covering the theory of certification
+<a name="l-26"></a><span class="tm">21:09:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> I don't think runtime-tools would be against fixes if you're volunteering
+<a name="l-27"></a><span class="tm">21:09:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">walli:</span> I am volunteering, I'm not sure if I should start with issues or on dev@
+<a name="l-28"></a><span class="tm">21:10:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> I think it makes more sense to start with issues for smaller things
+<a name="l-29"></a><span class="tm">21:11:23</span><span class="nk"> &lt;wking&gt;</span> I think that the plan is to use Go to scaffold the test harness, but that the runtimes would be invoked from the command line
+<a name="l-30"></a><span class="tm">21:12:06</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-tools/pull/321</span>
+<a name="l-31"></a><span class="tm">21:12:12</span><span class="nk"> &lt;wking&gt;</span> ^ still in flight command line API
+<a name="l-32"></a><span class="tm">21:12:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">walli:</span> so I'll go ahead and file issues for things I think are still missing
+<a name="l-33"></a><span class="tm">21:13:43</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">Git branching</span>
+<a name="l-34"></a><span class="tm">21:13:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> I was here to discuss this, but we may want to wait for more maintainers
+<a name="l-35"></a><span class="tm">21:14:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> I think it's complex vs. simple.  We have a lot of maintainers, but not much time for the release process
+<a name="l-36"></a><span class="tm">21:14:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> And "do we want a lot of extant versions out there?"
+<a name="l-37"></a><span class="tm">21:15:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> for runtime-spec, that might be fine.  But for image-spec, having a lot of versions may hurt users and fragment the industry
+<a name="l-38"></a><span class="tm">21:15:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> so basically single branch for now?
+<a name="l-39"></a><span class="tm">21:15:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mikebrow:</span> until we hit a major/breaking change?
+<a name="l-40"></a><span class="tm">21:16:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> I think we can go that way, and we can backport important patches and create a new major branch when we're planning for the next major release
+<a name="l-41"></a><span class="tm">21:16:30</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">stevvooe:</span> you can also see this in action in docker/distribution
+<a name="l-42"></a><span class="tm">21:17:18</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/docker/distribution/releases</span>
+<a name="l-43"></a><span class="tm">21:18:46</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

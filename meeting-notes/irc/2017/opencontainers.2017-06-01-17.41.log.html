@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">17:41:06</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-06-01 runtime-spec PR review</span>
+<a name="l-2"></a><span class="tm">17:41:06</span><span class="nk"> &lt;collabot`&gt;</span> Meeting started Thu Jun  1 17:41:06 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">17:41:06</span><span class="nk"> &lt;collabot`&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">17:41:06</span><span class="nk"> &lt;collabot`&gt;</span> The meeting name has been set to '2017_06_01_runtime_spec_pr_review'
+<a name="l-5"></a><span class="tm">17:41:14</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">863</span>
+<a name="l-6"></a><span class="tm">17:43:10</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">http://www.open-std.org/jtc1/sc22/wg14/www/C99RationaleV5.10.pdf#page=18</span>
+<a name="l-7"></a><span class="tm">17:44:34</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">wking to change "unspecified" -&gt;</span>
+<a name="l-8"></a><span class="tm">17:44:39</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">wking to change "unspecified" -&gt; "ignored"</span>
+<a name="l-9"></a><span class="tm">17:44:52</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">862</span>
+<a name="l-10"></a><span class="tm">17:46:35</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">860</span>
+<a name="l-11"></a><span class="tm">17:47:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I think we should be consistent one way or the other (using cgroup-specified names or not)
+<a name="l-12"></a><span class="tm">17:47:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I think this change is good
+<a name="l-13"></a><span class="tm">17:48:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> because memory and the other ones don't do this
+<a name="l-14"></a><span class="tm">17:48:20</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">858</span>
+<a name="l-15"></a><span class="tm">17:49:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> in the end, we'll probably want to delete all these references
+<a name="l-16"></a><span class="tm">17:49:25</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">854</span>
+<a name="l-17"></a><span class="tm">17:52:01</span><span class="nk"> &lt;wking&gt;</span> He's following the pattern for process.user.uid (not a property on Windows) and process.capabilities (once we get back to having it not be a Windows property)
+<a name="l-18"></a><span class="tm">17:52:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> so we are ok following that approach
+<a name="l-19"></a><span class="tm">17:52:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I'll ask for a rebase
+<a name="l-20"></a><span class="tm">17:52:19</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">852</span>
+<a name="l-21"></a><span class="tm">17:53:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I think we may want to remove the example on line 34
+<a name="l-22"></a><span class="tm">17:53:42</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">wking to remove the retrieved-resource example line</span>
+<a name="l-23"></a><span class="tm">17:53:55</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">851</span>
+<a name="l-24"></a><span class="tm">17:54:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> needs a rebase
+<a name="l-25"></a><span class="tm">17:54:32</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">850</span>
+<a name="l-26"></a><span class="tm">17:56:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't know what to do with the platform
+<a name="l-27"></a><span class="tm">17:56:21</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> mark it 1.0 and defer to the call?
+<a name="l-28"></a><span class="tm">17:56:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah
+<a name="l-29"></a><span class="tm">17:56:27</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">847</span>
+<a name="l-30"></a><span class="tm">17:57:44</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">844</span>
+<a name="l-31"></a><span class="tm">17:59:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we haven't talked about optional runtime compilation flags
+<a name="l-32"></a><span class="tm">17:59:22</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> if you compile a runtime without support for something, how should the runtime handle those properties?
+<a name="l-33"></a><span class="tm">17:59:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> this is different from the underlying platform not supporting the property
+<a name="l-34"></a><span class="tm">18:00:04</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> especially with SELinux modes.  The runtime may support it but not enforce it
+<a name="l-35"></a><span class="tm">18:00:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> so close it?
+<a name="l-36"></a><span class="tm">18:00:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah, it's probably better to leave it as is
+<a name="l-37"></a><span class="tm">18:00:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I'll close it
+<a name="l-38"></a><span class="tm">18:00:55</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">841</span>
+<a name="l-39"></a><span class="tm">18:02:03</span><span class="nk"> &lt;wking&gt;</span> I talked with vbatts|work about this and #746 yesterday.  He was going to file a comment about it, but hasn't let
+<a name="l-40"></a><span class="tm">18:04:43</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we should require values and not have defaults
+<a name="l-41"></a><span class="tm">18:05:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> what do you think, mrunalp.  Defaults or explicit?
+<a name="l-42"></a><span class="tm">18:06:07</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I agree we should not have defaults
+<a name="l-43"></a><span class="tm">18:06:27</span><span class="nk"> &lt;wking&gt;</span> Do we want to talk about devices.allow and devices.deny?
+<a name="l-44"></a><span class="tm">18:06:52</span><span class="nk"> &lt;wking&gt;</span> crosbymichael (ealier): you can use -1 in the JSON to mean '*'
+<a name="l-45"></a><span class="tm">18:07:34</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">crosbymichael to file a replacement PR removing the wildcards (and maybe talkinb about devices.allow and devices.deny?)</span>
+<a name="l-46"></a><span class="tm">18:07:38</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">840</span>
+<a name="l-47"></a><span class="tm">18:09:15</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">838</span>
+<a name="l-48"></a><span class="tm">18:12:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I just asked John Howard to review it
+<a name="l-49"></a><span class="tm">18:12:06</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic</span><span class="topicline">835</span>
+<a name="l-50"></a><span class="tm">18:12:08</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">835</span>
+<a name="l-51"></a><span class="tm">18:13:10</span><span class="nk"> &lt;wking&gt;</span> POSIX rlimits are a separate commit, so I'm happy to spin them out into their own PR if you'd like
+<a name="l-52"></a><span class="tm">18:13:52</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> It's bad to call it Linux-and-Solaris, because that will cause future issues if someone adds BSD
+<a name="l-53"></a><span class="tm">18:14:37</span><span class="nk"> &lt;wking&gt;</span> I'm fine using POSIX.  Should I update process.user.uid too?  That was the pattern I was following
+<a name="l-54"></a><span class="tm">18:15:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> it makes sense to talk about POSIX
+<a name="l-55"></a><span class="tm">18:15:56</span><span class="nk"> &lt;wking&gt;</span> should I update the platform list to say that 'linux' and 'solaris' fall under POSIX?
+<a name="l-56"></a><span class="tm">18:16:03</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> should we have a 'posix' platform tag?
+<a name="l-57"></a><span class="tm">18:16:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't think that Go tags work that way
+<a name="l-58"></a><span class="tm">18:16:24</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> POSIX is basically "not-windows"
+<a name="l-59"></a><span class="tm">18:17:02</span><span class="nk"> &lt;wking&gt;</span> So I'll adjust the other parts, and leave any platform-level POSIX mapping to you ;)
+<a name="l-60"></a><span class="tm">18:17:19</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we can start with the other parts for now.  It's pretty clear to the spec audience what POSIX is
+<a name="l-61"></a><span class="tm">18:17:50</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">wking to consolidate the Markdown around POSIX</span>
+<a name="l-62"></a><span class="tm">18:18:10</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">crosbymichael to comment around POSIX consolidation</span>
+<a name="l-63"></a><span class="tm">18:18:19</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">834</span>
+<a name="l-64"></a><span class="tm">18:18:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I added a comment a while back trying to outline the possibilities
+<a name="l-65"></a><span class="tm">18:18:42</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/834#issuecomment-302579003</span>
+<a name="l-66"></a><span class="tm">18:19:49</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> the new wording sounds more straightforward to me
+<a name="l-67"></a><span class="tm">18:26:15</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">mrunalp:</span> what do you want me to start closing? :-D
+<a name="l-68"></a><span class="tm">18:36:56</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">mrunalp too take out line 188 in #834 and add some comment about what cgroups must be joinsd</span>
+<a name="l-69"></a><span class="tm">18:37:26</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">829</span>
+<a name="l-70"></a><span class="tm">18:37:38</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> line 113 looks good if you can split it out
+<a name="l-71"></a><span class="tm">18:38:40</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#action </span><span class="cmdline">wking to split out the MAY from #829</span>
+<a name="l-72"></a><span class="tm">18:38:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> it's about decoupling the spec from implementaitons
+<a name="l-73"></a><span class="tm">18:41:43</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-tools/pull/354</span>
+<a name="l-74"></a><span class="tm">18:49:30</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">825</span>
+<a name="l-75"></a><span class="tm">18:49:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I asked him to rebase
+<a name="l-76"></a><span class="tm">18:49:41</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">811</span>
+<a name="l-77"></a><span class="tm">18:49:47</span><span class="nk"> &lt;wking&gt;</span> I LGTMed it
+<a name="l-78"></a><span class="tm">18:50:02</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">735</span>
+<a name="l-79"></a><span class="tm">18:50:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> needs one more LGTM
+<a name="l-80"></a><span class="tm">18:50:11</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">809</span>
+<a name="l-81"></a><span class="tm">18:53:34</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'll ask for a rebase
+<a name="l-82"></a><span class="tm">18:54:05</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">680</span>
+<a name="l-83"></a><span class="tm">18:54:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't know
+<a name="l-84"></a><span class="tm">18:57:12</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> you can ignore properties that aren't defined for your platform, and don't want to error out (that is more burden on the runtime)
+<a name="l-85"></a><span class="tm">18:57:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah
+<a name="l-86"></a><span class="tm">18:58:38</span><span class="nk"> &lt;wking&gt;</span> do we want a new line for properties that are only defined for other platforms?
+<a name="l-87"></a><span class="tm">18:58:42</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I think that would be more confusing
+<a name="l-88"></a><span class="tm">18:58:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> this seems ok, but I'd like to get tianon's opinion
+<a name="l-89"></a><span class="tm">19:00:13</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> don't submit any more PRs until we're down to 5 open PRs
+<a name="l-90"></a><span class="tm">19:02:42</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">18:16:15</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-05-12 image-spec</span>
+<a name="l-2"></a><span class="tm">18:16:15</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Fri May 12 18:16:15 2017 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">18:16:15</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">18:16:15</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2017_05_12_image_spec'
+<a name="l-5"></a><span class="tm">18:17:52</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/issues/588</span>
+<a name="l-6"></a><span class="tm">18:18:08</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">stevvooe to comment on #588 from dockercon and close it</span>
+<a name="l-7"></a><span class="tm">18:18:47</span><span class="nk"> &lt;stevvooe&gt;</span> https://github.com/opencontainers/image-spec/pull/673
+<a name="l-8"></a><span class="tm">18:18:59</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/672</span>
+<a name="l-9"></a><span class="tm">18:19:13</span><span class="nk"> &lt;jwendell&gt;</span> hey guys, I'm trying to build containers/image (go build ./...) and I'm getting errors about missing packages... do I have to run something before go build? (like for updating vendors?)
+<a name="l-10"></a><span class="tm">18:21:00</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">jwendell:</span> perhaps runcom can help
+<a name="l-11"></a><span class="tm">18:21:06</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/492</span>
+<a name="l-12"></a><span class="tm">18:24:01</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/cyphar/image-spec/blob/c352aeff65ddc007ba30d7fe7250e4b2e393a9e3/conversion.md</span>
+<a name="l-13"></a><span class="tm">18:29:25</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/492/files#diff-8aafbe2c3690162540381b8cdb157112R40</span>
+<a name="l-14"></a><span class="tm">18:33:31</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/651</span>
+<a name="l-15"></a><span class="tm">18:33:39</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/652</span>
+<a name="l-16"></a><span class="tm">18:34:49</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/666</span>
+<a name="l-17"></a><span class="tm">18:39:15</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/668</span>
+<a name="l-18"></a><span class="tm">18:41:10</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/671</span>
+<a name="l-19"></a><span class="tm">18:43:40</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/containerd/containerd/blob/master/reference/reference.go#L20</span>
+<a name="l-20"></a><span class="tm">18:44:25</span><span class="nk"> &lt;jwendell&gt;</span> vbatts|work, runcom fixed that, thanks
+<a name="l-21"></a><span class="tm">18:47:09</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">jwendell:</span> cool
+<a name="l-22"></a><span class="tm">18:49:36</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/668 &lt;- rebased</span>
+<a name="l-23"></a><span class="tm">18:53:39</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/667</span>
+<a name="l-24"></a><span class="tm">18:55:21</span><span class="nk"> &lt;vbatts|work&gt;</span> https://github.com/opencontainers/go-digest/pull/34
+<a name="l-25"></a><span class="tm">18:55:31</span><span class="nk"> &lt;vbatts|work&gt;</span> k
+<a name="l-26"></a><span class="tm">18:55:47</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/665</span>
+<a name="l-27"></a><span class="tm">18:57:05</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/665#discussion_r115630725</span>
+<a name="l-28"></a><span class="tm">19:06:55</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

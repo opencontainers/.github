@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2015-12-16 discussion</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2015-12-16 discussion</h1>
+<span class="details">
+Meeting started by wking at 18:00:26 UTC
+(<a href="opencontainers.2015-12-16-18.00.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li><b class="TOPIC">0.2.0 pull requests</b> <span class="details">(<a href='opencontainers.2015-12-16-18.00.log.html#l-10'>wking</a>, 18:03:24)</span>
+<br></li>
+<li><b class="TOPIC">face-to-face meeting</b> <span class="details">(<a href='opencontainers.2015-12-16-18.00.log.html#l-20'>wking</a>, 18:05:47)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">duglin to
+    mail the list with ideas/times</span> <span class="details">(<a
+    href='opencontainers.2015-12-16-18.00.log.html#l-21'>wking</a>,
+    18:05:57)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">focus for the next milestone</b> <span class="details">(<a href='opencontainers.2015-12-16-18.00.log.html#l-24'>wking</a>, 18:06:56)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">vishh to open
+    an issue with thoughts on container ID</span> <span
+    class="details">(<a
+    href='opencontainers.2015-12-16-18.00.log.html#l-33'>wking</a>,
+    18:09:31)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">punt on protobuf</b> <span class="details">(<a href='opencontainers.2015-12-16-18.00.log.html#l-38'>wking</a>, 18:10:43)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/specs/pull/135">https://github.com/opencontainers/specs/pull/135</a>
+    <span class="details">(<a
+    href='opencontainers.2015-12-16-18.00.log.html#l-42'>mrunalp</a>,
+    18:12:45)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">handling users</b> <span class="details">(<a href='opencontainers.2015-12-16-18.00.log.html#l-45'>wking</a>, 18:13:13)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/specs/pull/191">https://github.com/opencontainers/specs/pull/191</a>
+    <span class="details">(<a
+    href='opencontainers.2015-12-16-18.00.log.html#l-46'>mrunalp</a>,
+    18:13:25)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">back to cross-platform JSON parsing in Go</b> <span class="details">(<a href='opencontainers.2015-12-16-18.00.log.html#l-48'>wking</a>, 18:14:49)</span>
+<br></li>
+<li><b class="TOPIC">cgroup parent config (like Docker)</b> <span class="details">(<a href='opencontainers.2015-12-16-18.00.log.html#l-55'>wking</a>, 18:18:03)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">vishh to open
+    a PR with his approach</span> <span class="details">(<a
+    href='opencontainers.2015-12-16-18.00.log.html#l-62'>wking</a>,
+    18:21:35)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">defining a tar format</b> <span class="details">(<a href='opencontainers.2015-12-16-18.00.log.html#l-64'>wking</a>, 18:22:23)</span>
+<br></li>
+<li><b class="TOPIC">0.3.0 procedure</b> <span class="details">(<a href='opencontainers.2015-12-16-18.00.log.html#l-69'>wking</a>, 18:24:14)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">mrunalp open
+    a 0.3.0 milestone listing these topics with a soft deadline</span>
+    <span class="details">(<a
+    href='opencontainers.2015-12-16-18.00.log.html#l-70'>wking</a>,
+    18:24:33)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">Next meeting</b> <span class="details">(<a href='opencontainers.2015-12-16-18.00.log.html#l-71'>RobDolinMS</a>, 18:24:45)</span>
+<ol type="a">
+  <li><i class="itemtype">AGREED</i>: <span class="AGREED">Cancel next
+    two weeks</span> <span class="details">(<a
+    href='opencontainers.2015-12-16-18.00.log.html#l-72'>RobDolinMS</a>,
+    18:24:53)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">mrunalp to
+    mail the list about that^</span> <span class="details">(<a
+    href='opencontainers.2015-12-16-18.00.log.html#l-74'>wking</a>,
+    18:25:04)</span></li>
+  <li><i class="itemtype">AGREED</i>: <span class="AGREED">next meeting
+    on Wed, 06 Jan, 2016</span> <span class="details">(<a
+    href='opencontainers.2015-12-16-18.00.log.html#l-75'>RobDolinMS</a>,
+    18:25:12)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">Validation of multiple implementations</b> <span class="details">(<a href='opencontainers.2015-12-16-18.00.log.html#l-76'>RobDolinMS</a>, 18:25:26)</span>
+<ol type="a">
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">RobDolinMS to
+    link jlb13 in on who at Oracle is getting them</span> <span
+    class="details">(<a
+    href='opencontainers.2015-12-16-18.00.log.html#l-99'>wking</a>,
+    18:33:54)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 18:35:14 UTC
+(<a href="opencontainers.2015-12-16-18.00.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>duglin to mail the list with ideas/times</li>
+  <li>vishh to open an issue with thoughts on container ID</li>
+  <li>vishh to open a PR with his approach</li>
+  <li>mrunalp open a 0.3.0 milestone listing these topics with a soft deadline</li>
+  <li>mrunalp to mail the list about that^</li>
+  <li>RobDolinMS to link jlb13 in on who at Oracle is getting them</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> duglin <ol>
+    <li>duglin to mail the list with ideas/times</li>
+  </ol></li>
+  <li> mrunalp <ol>
+    <li>mrunalp open a 0.3.0 milestone listing these topics with a soft deadline</li>
+    <li>mrunalp to mail the list about that^</li>
+  </ol></li>
+  <li> RobDolinMS <ol>
+    <li>RobDolinMS to link jlb13 in on who at Oracle is getting them</li>
+  </ol></li>
+  <li><b>UNASSIGNED</b><ol>
+    <li>vishh to open an issue with thoughts on container ID</li>
+    <li>vishh to open a PR with his approach</li>
+  </ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (68)</li>
+  <li>RobDolinMS (13)</li>
+  <li>collabot` (7)</li>
+  <li>duglin (5)</li>
+  <li>vbatts|mobile (4)</li>
+  <li>mrunalp (2)</li>
+  <li>lk4d4 (2)</li>
+  <li>vbatts (1)</li>
+  <li>crosbymichael (0)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

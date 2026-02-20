@@ -1,0 +1,27 @@
+22:03:08 <wking> #startmeeting 2017-01-04 discussion
+22:03:08 <collabot> Meeting started Wed Jan  4 22:03:08 2017 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+22:03:08 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+22:03:08 <collabot> The meeting name has been set to '2017_01_04_discussion'
+22:03:17 <wking> #chair mrunalp
+22:03:17 <collabot> Current chairs: mrunalp wking
+22:04:15 <wking> #topic runtime-spec issues for 1.0
+22:05:04 <wking> I think the command-line API is still blocking on crosbymichael / cyphar looking into the socket alternatives
+22:05:20 <wking> mrunalp: RobDolinMS also has an outstanding anchor-tag PR which needs a rebase
+22:05:37 <chatter> hey guys
+22:06:37 <chatter> Allah is doing
+22:06:44 <wking> #link https://github.com/opencontainers/runtime-spec/pull/427
+22:06:56 <wking> #link https://github.com/opencontainers/runtime-spec/pull/532
+22:07:00 <chatter> sun is not doing allah is doing
+22:07:03 <chatter> to accept Islam say that i bear witness that there is no deity worthy of worship except Allah and Muhammad peace be upon him is his slave and messenger
+22:08:35 <wking> it looks like there's good milestone tagging on issues, but not on PRs
+22:08:44 <wking> mrunalp: I'll look over the open PRs and milestone them
+22:08:49 <wking> mrunalp: any image-spec maintainers?
+22:09:00 <wking> mrunalp: any other topics?
+22:09:23 <wking> RobDolinMS: I just joined.  What's going on with anchors?
+22:09:30 <cracra> [caniszczyk, Open Container Initiative] I need to catch up with Stephen Day about go-digest, but I don't think he's back until tomorrow
+22:09:32 <wking> mrunalp: mostly they're merged, but one is still open
+22:09:57 <wking> #link https://github.com/opencontainers/runtime-spec/pull/635
+22:10:21 <wking> #link https://github.com/opencontainers/runtime-spec/pull/614
+22:10:36 <wking> ^ open anchor PRs
+22:11:06 <wking> mrunalp: anything else?
+22:11:21 <wking> #endmeeting

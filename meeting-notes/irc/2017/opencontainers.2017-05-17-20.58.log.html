@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">20:58:49</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2017-05-17 discussion</span>
+<a name="l-2"></a><span class="tm">20:58:49</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed May 17 20:58:49 2017 UTC.  The chair is vbatts|work. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">20:58:49</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">20:58:49</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2017_05_17_discussion'
+<a name="l-5"></a><span class="tm">20:59:02</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="hi">cracra:</span> yeah.
+<a name="l-6"></a><span class="tm">21:01:39</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, stevvooe: Joining?
+<a name="l-7"></a><span class="tm">21:03:50</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="hi">mrunalp:</span> im on
+<a name="l-8"></a><span class="tm">21:04:30</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/milestone/13</span>
+<a name="l-9"></a><span class="tm">21:07:11</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/678</span>
+<a name="l-10"></a><span class="tm">21:12:18</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">vbatts update #678 for semantic MAY</span>
+<a name="l-11"></a><span class="tm">21:14:14</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/671</span>
+<a name="l-12"></a><span class="tm">21:20:03</span><span class="nk"> &lt;vbatts|work&gt;</span> https://tools.ietf.org/html/rfc3986#appendix-A
+<a name="l-13"></a><span class="tm">21:21:01</span><span class="nk"> &lt;cyphar&gt;</span> You could do scheme://thing#blah
+<a name="l-14"></a><span class="tm">21:36:18</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="hi">vbatts|work:</span> we might be able to get https://github.com/opencontainers/image-spec/pull/650 merged
+<a name="l-15"></a><span class="tm">21:37:22</span><span class="nk"> &lt;vbatts|work&gt;</span> related to windows, i closed https://github.com/opencontainers/runtime-spec/pull/810
+<a name="l-16"></a><span class="tm">21:38:59</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/labels/platforms%2Fwindows</span>
+<a name="l-17"></a><span class="tm">21:39:07</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/issues/817
+<a name="l-18"></a><span class="tm">21:40:04</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/image-spec/pull/492</span>
+<a name="l-19"></a><span class="tm">21:46:07</span><span class="nk"> &lt;cyphar&gt;</span> <span class="cmd">#action </span><span class="cmdline">cyphar -&gt; relax the "user/converter" dichotomy in https://github.com/opencontainers/image-spec/pull/492</span>
+<a name="l-20"></a><span class="tm">21:48:31</span><span class="nk"> &lt;stevvooe&gt;</span> <span class="cmd">#action </span><span class="cmdline">vbatts -&gt; LGTM on https://github.com/opencontainers/image-spec/pull/650</span>
+<a name="l-21"></a><span class="tm">21:48:35</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] so is the plan to do an RC6 for both specs now and then call a freeze after the RC6 release?
+<a name="l-22"></a><span class="tm">21:49:10</span><span class="nk"> &lt;cracra&gt;</span> [caniszczyk, Open Container Initiative] do you want to set a time frame for the freeze before a final vote would be called?
+<a name="l-23"></a><span class="tm">21:50:49</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#action </span><span class="cmdline">_someone_ add some verbiage non-linux platforms are preview status</span>
+<a name="l-24"></a><span class="tm">21:59:05</span><span class="nk"> &lt;vbatts|work&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>

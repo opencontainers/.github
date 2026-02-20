@@ -1,0 +1,249 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers: 2015-10-07 discussion</title>
+<style type="text/css">
+/* This is for the .html in the HTML2 writer */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size:14px;
+}
+h1 {
+    text-align: center;
+}
+a {
+    color:navy;
+    text-decoration: none;
+    border-bottom:1px dotted navy;
+}
+a:hover {
+    text-decoration:none;
+    border-bottom: 0;
+    color:#0000B9;
+}
+hr {
+    border: 1px solid #ccc;
+}
+/* The (nick, time) item pairs, and other body text things. */
+.details {
+    font-size: 12px;
+    font-weight:bold;
+}
+/* The 'AGREED:', 'IDEA', etc, prefix to lines. */
+.itemtype {
+    font-style: normal;    /* un-italics it */
+    font-weight: bold;
+}
+/* Example: change single item types.  Capitalized command name.
+/* .TOPIC  {  color:navy;  } */
+/* .AGREED {  color:lime;  } */
+
+</style>
+</head>
+
+<body>
+<h1>#opencontainers: 2015-10-07 discussion</h1>
+<span class="details">
+Meeting started by vbatts|work at 17:02:30 UTC
+(<a href="opencontainers.2015-10-07-17.02.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Meeting summary</h3>
+<ol>
+<li>
+<ol type="a">
+  <li><span class="INFO">RobDolinMS_ from Microsoft in Seattle</span>
+    <span class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-15'>RobDolinMS_</a>,
+    17:04:20)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">duglin clarifying a couple of things</b> <span class="details">(<a href='opencontainers.2015-10-07-17.02.log.html#l-19'>vbatts|work</a>, 17:05:30)</span>
+<ol type="a">
+  <li><span class="INFO">duglin is Doug Davis from IBM</span> <span
+    class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-20'>RobDolinMS_</a>,
+    17:05:49)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/specs/pull/209">https://github.com/opencontainers/specs/pull/209</a>
+    <span class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-21'>duglin</a>,
+    17:06:08)</span></li>
+  <li><a
+    href="https://github.com/opencontainers/specs/pull/210">https://github.com/opencontainers/specs/pull/210</a>
+    <span class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-23'>duglin</a>,
+    17:08:59)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">anuthan to
+    mail the list with more details on how Solaris handles it</span>
+    <span class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-37'>wking</a>,
+    17:19:07)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">anuthan to
+    send an mail elaborating on this</span> <span class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-38'>RobDolinMS</a>,
+    17:19:14)</span></li>
+  <li><span class="INFO">duglin asks: If through runc spec we can
+    produce valid defaults, why require runtime.json to be
+    present?</span> <span class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-58'>RobDolinMS</a>,
+    17:33:12)</span></li>
+  <li><span class="INFO">We don't currently have default values in
+    spec.</span> <span class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-60'>RobDolinMS</a>,
+    17:33:47)</span></li>
+  <li><span class="INFO">(said mrunalp)</span> <span class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-61'>RobDolinMS</a>,
+    17:34:11)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">everyone to
+    add optional/required comments for fields that are missing them
+    ;)</span> <span class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-85'>wking</a>,
+    17:40:23)</span></li>
+  <li><span class="INFO">Everyone should continue reviewing :)</span>
+    <span class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-86'>RobDolinMS</a>,
+    17:40:24)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">vbatts - top-down docs</b> <span class="details">(<a href='opencontainers.2015-10-07-17.02.log.html#l-89'>vbatts|work</a>, 17:40:58)</span>
+<ol type="a">
+  <li><span class="INFO">vbatts|work has been working on this</span>
+    <span class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-90'>RobDolinMS</a>,
+    17:41:40)</span></li>
+  <li><span class="INFO">vbatts|work hoping to have a PR in the next
+    week or two</span> <span class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-92'>RobDolinMS</a>,
+    17:43:09)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">vbatts|work
+    to continue work on the top-down spec</span> <span
+    class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-94'>wking</a>,
+    17:43:50)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">wking - lifecycle updates</b> <span class="details">(<a href='opencontainers.2015-10-07-17.02.log.html#l-97'>vbatts|work</a>, 17:44:09)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/opencontainers/specs/pull/207">https://github.com/opencontainers/specs/pull/207</a>
+    <span class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-99'>wking</a>,
+    17:44:37)</span></li>
+  <li><i class="itemtype">HELP</i>: <span class="HELP">people familiar
+    with lifecycle to review wking's PR</span> <span class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-103'>RobDolinMS</a>,
+    17:47:05)</span></li>
+  <li><span class="INFO">maintainers should review the PR</span> <span
+    class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-106'>RobDolinMS</a>,
+    17:48:17)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">virt containers</b> <span class="details">(<a href='opencontainers.2015-10-07-17.02.log.html#l-107'>vbatts|work</a>, 17:48:50)</span>
+<ol type="a">
+  <li><a
+    href="https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/gS-nvHPwJQ8">https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/gS-nvHPwJQ8</a>
+    <span class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-109'>wking</a>,
+    17:49:27)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">mrunalp - bundle validation</b> <span class="details">(<a href='opencontainers.2015-10-07-17.02.log.html#l-112'>vbatts|work</a>, 17:50:51)</span>
+<ol type="a">
+  <li><a
+    href="https://github.com/mrunalp/ocitools">https://github.com/mrunalp/ocitools</a>
+    <span class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-127'>wking</a>,
+    17:56:34)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">vishh to
+    create and issue/mailing-list-thread to discuss further</span> <span
+    class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-132'>wking</a>,
+    17:58:06)</span></li>
+</ol>
+<br></li>
+<li><b class="TOPIC">vbatts - hacking session</b> <span class="details">(<a href='opencontainers.2015-10-07-17.02.log.html#l-134'>vbatts|work</a>, 17:58:53)</span>
+<ol type="a">
+  <li><span class="INFO">Bunch of folks in Mt. View on/around Oct 21st;
+    may coordinate a hacking session.</span> <span class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-136'>RobDolinMS</a>,
+    17:59:04)</span></li>
+  <li><i class="itemtype">ACTION</i>: <span class="ACTION">vbatts|work
+    to send more details</span> <span class="details">(<a
+    href='opencontainers.2015-10-07-17.02.log.html#l-138'>RobDolinMS</a>,
+    17:59:42)</span></li>
+</ol>
+</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">
+Meeting ended at 18:01:14 UTC
+(<a href="opencontainers.2015-10-07-17.02.log.html">full logs</a>).</span>
+
+<br><br>
+
+
+
+<h3>Action items</h3>
+<ol>
+  <li>anuthan to mail the list with more details on how Solaris handles it</li>
+  <li>anuthan to send an mail elaborating on this</li>
+  <li>everyone to add optional/required comments for fields that are missing them ;)</li>
+  <li>vbatts|work to continue work on the top-down spec</li>
+  <li>vishh to create and issue/mailing-list-thread to discuss further</li>
+  <li>vbatts|work to send more details</li>
+</ol>
+<br><br>
+
+
+
+<h3>Action items, by person</h3>
+<ol>
+  <li> anuthan <ol>
+    <li>anuthan to mail the list with more details on how Solaris handles it</li>
+    <li>anuthan to send an mail elaborating on this</li>
+  </ol></li>
+  <li> vbatts|work <ol>
+    <li>vbatts|work to continue work on the top-down spec</li>
+    <li>vbatts|work to send more details</li>
+  </ol></li>
+  <li> vishh <ol>
+    <li>vishh to create and issue/mailing-list-thread to discuss further</li>
+  </ol></li>
+</ol>
+<br><br>
+
+
+
+<h3>People present (lines said)</h3>
+<ol>
+  <li>wking (64)</li>
+  <li>RobDolinMS (25)</li>
+  <li>vbatts|work (12)</li>
+  <li>lk4d4 (8)</li>
+  <li>jlb13 (5)</li>
+  <li>vishh (5)</li>
+  <li>duglin (5)</li>
+  <li>collabot (4)</li>
+  <li>RobDolinMS_ (3)</li>
+  <li>anuthan (3)</li>
+  <li>mrunalp (3)</li>
+  <li>mikebrow (1)</li>
+  <li>Stefan (1)</li>
+  <li>jojy_mesos (1)</li>
+  <li>julz (1)</li>
+</ol>
+<br><br>
+
+
+
+<span class="details">Generated by <a href="http://wiki.debian.org/MeetBot">MeetBot</a> 0.1.4.</span>
+</body></html>

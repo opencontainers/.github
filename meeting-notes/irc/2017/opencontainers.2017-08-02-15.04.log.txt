@@ -1,0 +1,6 @@
+15:04:31 <stevvooe> #startmeeting 2017-08-02 discussion
+15:04:31 <collabot> Meeting started Wed Aug  2 15:04:31 2017 UTC.  The chair is stevvooe. Information about MeetBot at http://wiki.debian.org/MeetBot.
+15:04:31 <collabot> Useful Commands: #action #agreed #help #info #idea #link #topic.
+15:04:31 <collabot> The meeting name has been set to '2017_08_02_discussion'
+15:07:23 <crosbymichael> https://github.com/opencontainers/runc/pull/1279
+15:12:12 <stevvooe> #endmeeting

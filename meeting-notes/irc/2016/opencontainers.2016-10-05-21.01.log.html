@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>#opencontainers log</title>
+<style type="text/css">
+/* For the .log.html */
+pre { /*line-height: 125%;*/
+      white-space: pre-wrap; }
+body { background: #f0f0f0; }
+
+body .tm  { color: #007020 }                      /* time */
+body .nk  { color: #062873; font-weight: bold }   /* nick, regular */
+body .nka { color: #007020; font-weight: bold }  /* action nick */
+body .ac  { color: #00A000 }                      /* action line */
+body .hi  { color: #4070a0 }                 /* hilights */
+/* Things to make particular MeetBot commands stick out */
+body .topic     { color: #007020; font-weight: bold }
+body .topicline { color: #000080; font-weight: bold }
+body .cmd       { color: #007020; font-weight: bold }
+body .cmdline  { font-weight: bold }
+
+</style>
+</head>
+
+<body>
+<pre><a name="l-1"></a><span class="tm">21:01:03</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#startmeeting </span><span class="cmdline">2016-08-05 discussion</span>
+<a name="l-2"></a><span class="tm">21:01:03</span><span class="nk"> &lt;collabot&gt;</span> Meeting started Wed Oct  5 21:01:03 2016 UTC.  The chair is wking. Information about MeetBot at http://wiki.debian.org/MeetBot.
+<a name="l-3"></a><span class="tm">21:01:03</span><span class="nk"> &lt;collabot&gt;</span> Useful Commands: #action #agreed #help #info #idea #link #topic.
+<a name="l-4"></a><span class="tm">21:01:03</span><span class="nk"> &lt;collabot&gt;</span> The meeting name has been set to '2016_08_05_discussion'
+<a name="l-5"></a><span class="tm">21:01:14</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#chair </span><span class="cmdline">mrunalp vbatts RobDolinMS</span>
+<a name="l-6"></a><span class="tm">21:01:14</span><span class="nk"> &lt;collabot&gt;</span> Current chairs: RobDolinMS mrunalp vbatts wking
+<a name="l-7"></a><span class="tm">21:02:33</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/518
+<a name="l-8"></a><span class="tm">21:02:42</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">/dev/console handling in runtime-spec</span>
+<a name="l-9"></a><span class="tm">21:02:49</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#link </span><span class="cmdline">https://github.com/opencontainers/runtime-spec/pull/518</span>
+<a name="l-10"></a><span class="tm">21:03:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> do we need a switch to toggle bind mounting?
+<a name="l-11"></a><span class="tm">21:03:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I don't think we need a special case in the docs.  Do we create the bind mounts by default?
+<a name="l-12"></a><span class="tm">21:03:46</span><span class="nk"> &lt;wking&gt;</span> second sentence there was mrunalp^
+<a name="l-13"></a><span class="tm">21:04:06</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> The bind-mount doesn't matter.  It's that way because we used to pass in a terminal from outside
+<a name="l-14"></a><span class="tm">21:04:14</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> so we should leave it up to the runtime?
+<a name="l-15"></a><span class="tm">21:04:28</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> yeah, it can be bind mounted or the runtime can create the terminal inside
+<a name="l-16"></a><span class="tm">21:04:50</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> with the bind mounting, we're talking about bind-mounting the slave (regardless of whether it's from outside or inside)
+<a name="l-17"></a><span class="tm">21:05:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> the real console (c5/1) is not namespaced, and that's dangerous
+<a name="l-18"></a><span class="tm">21:05:35</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'm not saying we should mount c5/1, I'm saying that something has to be at /dev/console, but what is implementation-determined
+<a name="l-19"></a><span class="tm">21:05:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> in cyphar's runC PR it's bind-mounting the internally-sourced pseudoterminal slave
+<a name="l-20"></a><span class="tm">21:06:37</span><span class="nk"> &lt;wking&gt;</span> I think something should at /dev/console there regardless of process.terminal
+<a name="l-21"></a><span class="tm">21:10:55</span><span class="nk"> &lt;duglin&gt;</span> I think this topic is upsetting someone  :-)
+<a name="l-22"></a><span class="tm">21:11:05</span><span class="nk"> &lt;wking&gt;</span> Is there a reason why logging to the system console would depend on whether the container process needed a terminal?
+<a name="l-23"></a><span class="tm">21:11:21</span><span class="nk"> &lt;duglin&gt;</span> the baby in the background is clearly not happy about it
+<a name="l-24"></a><span class="tm">21:11:35</span><span class="nk"> &lt;mrunalp&gt;</span> :D
+<a name="l-25"></a><span class="tm">21:13:46</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, legacy applications use /dev/console
+<a name="l-26"></a><span class="tm">21:13:53</span><span class="nk"> &lt;mrunalp&gt;</span> crosbymichael, It is not just for logging
+<a name="l-27"></a><span class="tm">21:15:30</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pulls?q=is%3Aopen+is%3Apr+milestone%3A1.0.0
+<a name="l-28"></a><span class="tm">21:15:38</span><span class="nk"> &lt;wking&gt;</span> I see no /dev/console hits in OpenSSH 7.2
+<a name="l-29"></a><span class="tm">21:15:46</span><span class="nk"> &lt;mrunalp&gt;</span> https://github.com/opencontainers/runtime-spec/pull/513
+<a name="l-30"></a><span class="tm">21:15:59</span><span class="nk"> &lt;wking&gt;</span> <span class="topic">#topic </span><span class="topicline">runtime-spec 1.0.0 milestone</span>
+<a name="l-31"></a><span class="tm">21:16:08</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I think #513 should be part of 1.0
+<a name="l-32"></a><span class="tm">21:17:36</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> any other PRs for 1.0?
+<a name="l-33"></a><span class="tm">21:18:02</span><span class="nk"> &lt;crosbymichael&gt;</span> https://github.com/opencontainers/runc/issues/1094
+<a name="l-34"></a><span class="tm">21:19:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> there's also https://github.com/opencontainers/runc/pull/1082
+<a name="l-35"></a><span class="tm">21:21:00</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I think most of the people use the cgroups package
+<a name="l-36"></a><span class="tm">21:21:37</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> kube uses libcontainer.  If upstream libcontainer doesn't support that use case, we might fork it.
+<a name="l-37"></a><span class="tm">21:21:52</span><span class="nk"> &lt;wking&gt;</span> I'm not sure who else is using it, but we should at least keep the cgroups interfaces
+<a name="l-38"></a><span class="tm">21:22:05</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> I'm just suggesting changing libcontainer to depend on the runtime-spec
+<a name="l-39"></a><span class="tm">21:22:17</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> we need a way to extend the spec to add more features to libcontainer
+<a name="l-40"></a><span class="tm">21:22:32</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> maybe we can embed the struct to get some breathing room
+<a name="l-41"></a><span class="tm">21:22:46</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> that's fine.  As long as there's a way to extend cleanly, that's ok
+<a name="l-42"></a><span class="tm">21:22:59</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I don't think libcontainer extends the spec now
+<a name="l-43"></a><span class="tm">21:23:26</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> I see the argument for leaning on the spec, but I want the ability to safely extend the spec to be there if we need it
+<a name="l-44"></a><span class="tm">21:23:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> maybe post 1.0?
+<a name="l-45"></a><span class="tm">21:23:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> any other 1.0 PRs?
+<a name="l-46"></a><span class="tm">21:24:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> any other topics?  I don't see any image people...
+<a name="l-47"></a><span class="tm">21:24:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">vishh:</span> what is the timeline for 1.0?
+<a name="l-48"></a><span class="tm">21:24:47</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we have a few open PRs (mostly around console and the API)
+<a name="l-49"></a><span class="tm">21:25:02</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I don't know if there's a timeline beyond those blockers
+<a name="l-50"></a><span class="tm">21:25:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> maybe target end of October?
+<a name="l-51"></a><span class="tm">21:26:37</span><span class="nk"> &lt;wking&gt;</span> I don't know if landing #513 resets the rc* clock.  We probalby want to let that cook a bit after it lands
+<a name="l-52"></a><span class="tm">21:27:01</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> With the console stuff landing soon, we'll have something very close to 1.0 by the end of the month
+<a name="l-53"></a><span class="tm">21:27:20</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> we should look at interoperable implementations (e.g. having multiple rc2-based tools that work together)
+<a name="l-54"></a><span class="tm">21:27:31</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> we have runC and ccon
+<a name="l-55"></a><span class="tm">21:27:39</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">?:</span> what about rkt?
+<a name="l-56"></a><span class="tm">21:27:57</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I think rkt will have most of the features, but may not support the API
+<a name="l-57"></a><span class="tm">21:28:10</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> there are lots of spec-generating tools, but I think most of them use runC
+<a name="l-58"></a><span class="tm">21:28:23</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> there's a lot of low-level code in runC that most people don't care about
+<a name="l-59"></a><span class="tm">21:28:44</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I agree with crosbymichael.  I don't think we need to wait for more than runC on the Linux side
+<a name="l-60"></a><span class="tm">21:29:19</span><span class="nk"> &lt;wking&gt;</span> should we wait until runtime-tools is ready to start stamping certifications?
+<a name="l-61"></a><span class="tm">21:29:29</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I'm not sure that is a blocker
+<a name="l-62"></a><span class="tm">21:29:56</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> it hasn't been explicitly stated, but I think the expectation is to have tooling stabilized within a few months of the spec stabilizing
+<a name="l-63"></a><span class="tm">21:30:54</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> if you find issues in the tooling, we may end up with 1.0.1 or 1.0.2
+<a name="l-64"></a><span class="tm">21:31:18</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> The further along the tooling is, the more confidence there will be in the spec's stability
+<a name="l-65"></a><span class="tm">21:31:21</span><span class="nk"> &lt;wking&gt;</span> agreed^
+<a name="l-66"></a><span class="tm">21:31:55</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> to close this out, we'll look at getting the console and API stuff cut by the end of the month, and then we'll revist stability
+<a name="l-67"></a><span class="tm">21:32:02</span><span class="nk"> &lt;wking&gt;</span> sounds good to me^
+<a name="l-68"></a><span class="tm">21:32:16</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">RobDolinMS:</span> what's the long pull now?  Is it just the console stuff?
+<a name="l-69"></a><span class="tm">21:32:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> yeah.  We don't want to break existing consumers
+<a name="l-70"></a><span class="tm">21:32:41</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> the concerns are regressions from the console changes
+<a name="l-71"></a><span class="tm">21:33:15</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">duglin:</span> julz_ works on Garden
+<a name="l-72"></a><span class="tm">21:33:25</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">crosbymichael:</span> we need to contact him to make sure he's ok with the console changes
+<a name="l-73"></a><span class="tm">21:33:48</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> crosbymichael, you can check Docker vs. the new console stuff
+<a name="l-74"></a><span class="tm">21:33:53</span><span class="nk"> &lt;wking&gt;</span> <span class="hi">mrunalp:</span> I'll check kubernetes
+<a name="l-75"></a><span class="tm">21:33:59</span><span class="nk"> &lt;wking&gt;</span> <span class="cmd">#endmeeting</span><span class="cmdline"></span></pre>
+</body></html>
