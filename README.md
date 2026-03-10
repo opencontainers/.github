@@ -67,7 +67,10 @@ Gain access to OCI Slack here: [Slack inviter][slack-inviter]
 
 ## Technical Oversight Board (TOB)
 
-The [TOB](https://github.com/opencontainers/tob) is responsible for managing conflicts, violations of procedures or guidelines and any cross-project or high-level issues that cannot be resolved in the TDC for OCI Projects. The TOB shall also be responsible for adding, removing or reorganizing OCI Projects.
+The [TOB](https://github.com/opencontainers/tob) is responsible for managing conflicts, violations of procedures or guidelines and any cross-project or high-level issues that cannot be resolved in the TDC for OCI Projects.
+The TOB shall also be responsible for adding, removing or reorganizing OCI Projects.
+
+Archived minutes from TOB meetings can be found in [meeting-notes/tob](./meeting-notes/tob/).
 
 ## Security
 
